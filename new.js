@@ -79,25 +79,6 @@ const apps = [
             </div>
             <div class="absolute bottom-6 text-xs text-gray-400 uppercase tracking-widest">Click for next</div>
         </div>
-        <script>
-            const whys = [
-                "You show up, even when tired.",
-                "You listen without fixing.",
-                "You stay.",
-                "Your silence is safe.",
-                "You are valid."
-            ];
-            let wIdx = 0;
-            function nextWhy() {
-                const el = document.getElementById('why-text');
-                el.style.opacity = 0;
-                setTimeout(() => {
-                    wIdx = (wIdx + 1) % whys.length;
-                    el.innerText = whys[wIdx];
-                    el.style.opacity = 1;
-                }, 500);
-            }
-        </script>
     `},
 
     {
@@ -233,10 +214,10 @@ const apps = [
 
     /* CLUSTER 4: GROWTH & 19 (Mature) */
     {
-        id: '19-exe', title: '19.exe', icon: '🧠', dock: true, width: 500, height: 400, content: `
-        <div class="h-full bg-white p-10 flex flex-col justify-center">
-            <h1 class="text-6xl font-black text-gray-100 absolute top-4 left-4 -z-10 select-none">19</h1>
-            <div class="space-y-6 text-gray-700 font-medium">
+        id: 'app-19', title: '19.exe', icon: '🧠', dock: true, width: 500, height: 400, content: `
+        <div class="h-full bg-white p-10 flex flex-col justify-center relative">
+            <h1 class="text-6xl font-black text-gray-100 absolute top-4 left-4 select-none">19</h1>
+            <div class="relative space-y-6 text-gray-700 font-medium">
                 <p>You’re allowed to grow slowly.</p>
                 <p>You don’t need all answers.</p>
                 <p>It’s okay to be a work in progress.</p>
@@ -536,6 +517,25 @@ document.addEventListener('click', (e) => {
 /* === STATE === */
 const state = { appsOpened: new Set(), countdownFinished: false };
 const affirmations = ["You stay kind, even when things get heavy.", "You don’t give up easily.", "You carry storms quietly.", "You are enough, exactly as you are."];
+
+const whys = [
+    "You show up, even when tired.",
+    "You listen without fixing.",
+    "You stay.",
+    "Your silence is safe.",
+    "You are valid."
+];
+let wIdx = 0;
+function nextWhy() {
+    const el = document.getElementById('why-text');
+    if (!el) return;
+    el.style.opacity = 0;
+    setTimeout(() => {
+        wIdx = (wIdx + 1) % whys.length;
+        el.innerText = whys[wIdx];
+        el.style.opacity = 1;
+    }, 500);
+}
 
 /* === DEV UTILS === */
 function skipToDesktop() {
