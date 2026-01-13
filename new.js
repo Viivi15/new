@@ -1,5 +1,5 @@
 /* === CONFIGURATION === */
-const CONFIG = { apiKey: "" };
+
 
 /* === SETTINGS STATE === */
 const settingsState = {
@@ -235,6 +235,24 @@ const apps = [
                 rCount++;
             }, 600);
         </script>
+    `},
+
+    /* CLUSTER 2.5: INTERACTIVE */
+    {
+        id: 'quiz', title: 'The Us Quiz', icon: '🧩', dock: true, width: 450, height: 400, onOpen: startQuiz, content: `
+        <div class="h-full bg-white p-8 flex flex-col items-center justify-center text-center select-none" id="quiz-container">
+            <div class="text-4xl mb-4 animate-bounce">🧩</div>
+            <h3 class="text-xl font-bold mb-2 text-gray-800">Friendship Protocol</h3>
+            <p class="text-xs text-gray-500 mb-6">Verify you know the system admin.</p>
+            
+            <div id="q-box" class="w-full max-w-xs transition-all duration-300">
+                <p id="q-text" class="text-lg font-serif mb-6 text-gray-800 leading-relaxed">System Check: Ready?</p>
+                <input type="text" id="q-input" class="w-full p-3 border-2 border-gray-100 rounded-xl mb-4 text-center focus:outline-none focus:border-blue-500 transition-colors bg-gray-50 text-gray-700 placeholder-gray-300" placeholder="Type here..." onkeypress="if(event.key==='Enter') submitAnswer()">
+                <button onclick="submitAnswer()" class="bg-black text-white px-8 py-2 rounded-full text-sm hover:bg-gray-800 transition transform hover:scale-105 active:scale-95 shadow-lg">Verify</button>
+                <p id="q-feedback" class="text-xs mt-4 h-4 font-bold tracking-wide transition-colors"></p>
+            </div>
+            <div class="absolute bottom-4 text-[10px] text-gray-300">Security Clearance: Level 19</div>
+        </div>
     `},
 
     /* FOLDERS */
@@ -955,65 +973,7 @@ function doDrag(e) { if (dragItem) { dragItem.style.left = (e.clientX - offX) + 
 function stopDrag() { dragItem = null; document.removeEventListener('mousemove', doDrag); document.removeEventListener('mouseup', stopDrag); }
 
 
-/* === HARSHIT AI LOGIC === */
-async function handleAIChat() {
-    const input = document.getElementById('ai-input');
-    const chat = document.getElementById('ai-chat');
-    const msg = input.value.trim();
-    if (!msg) return;
 
-    // 1. Add User Message
-    const userDiv = document.createElement('div');
-    userDiv.className = 'msg user';
-    userDiv.innerText = msg;
-    chat.appendChild(userDiv);
-    input.value = '';
-    chat.scrollTop = chat.scrollHeight;
-
-    // 2. Simulate "Thinking" (or call API)
-    const aiDiv = document.createElement('div');
-    aiDiv.className = 'msg ai';
-    aiDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Thinking...';
-    chat.appendChild(aiDiv);
-    chat.scrollTop = chat.scrollHeight;
-
-    // 3. Generate Response (Mock Logic for now, can swap with real Gemini API)
-    setTimeout(() => {
-        let response = "I'm analyzing... but honestly, you should know this.";
-        const m = msg.toLowerCase();
-
-        // KNOWLEDGE BASE (Sassy Mode)
-        if (m.includes('who are you')) response = "I'm HarshitAI. The brain of this operation. Obviously.";
-        else if (m.includes('meet') || m.includes('met') || m.includes('date')) response = "June 20, 2024. 12:21 AM. On Discord. Don't pretend you forgot.";
-        else if (m.includes('bhindi')) response = "Ew. No. Please respect yourself. Trash bin is that way -> 🗑️";
-        else if (m.includes('snow') || m.includes('nickname')) response = "Mr. Snow ❄️. Because I'm cool, calm, and slightly distant until you get to know me.";
-        else if (m.includes('shravani') || m.includes('shravii')) response = "She's the drama queen who built this OS. She handles you like a kid but treats you like a king. You're lucky.";
-        else if (m.includes('birthday') || m.includes('age')) response = "19. You're officially old enough to know better, but you probably won't.";
-        else if (m.includes('strength') || m.includes('strong')) response = "Infinite. World's Strongest. It's in the database, look at your ID card.";
-        else if (m.includes('love') || m.includes('like')) response = "Sub sandwiches, Huskies, Cold places, Shoes, Peaky Blinders. Simple man.";
-        else if (m.includes('hello') || m.includes('hi')) response = "Sup. Ready to be productive or just annoying me?";
-        else {
-            // Default "Smart" responses
-            const fallbacks = [
-                "I'm processing that... results inconclusive. Try again.",
-                "That's a question for Google, not your personal OS.",
-                "I'm 100% loyal, but 0% interested in answering that.",
-                "Check the 'Memories' folder. The answer might be there."
-            ];
-            response = fallbacks[Math.floor(Math.random() * fallbacks.length)];
-        }
-
-        aiDiv.innerHTML = response;
-        chat.scrollTop = chat.scrollHeight;
-
-        // Optional: If real API key exists
-        if (CONFIG.apiKey) {
-            // Call Gemini API here with system instruction:
-            // "You are HarshitAI, a sassy personal assistant for Harshit. You know he dislikes bhindi, loves huskies..."
-        }
-
-    }, 1000);
-}
 
 
 
@@ -1208,6 +1168,73 @@ async function runSystemBoot() {
             playJourneyIntro();
         }, 1500);
     }, 7500);
+}
+
+/* === QUIZ LOGIC === */
+let qIdx = 0;
+const quizData = [
+    { q: "What is the one vegetable I absolutely hate?", a: ["bhindi", "okra", "lady finger", "ladyfinger"] },
+    { q: "What date did we first talk? (Month Day)", a: ["june 20", "20 june", "20th june", "jun 20"] },
+    { q: "What is my 'Winter' nickname?", a: ["snow", "mr. snow", "mr snow", "husky"] },
+    { q: "Who is the Drama Queen of this OS?", a: ["shravii", "shravani", "you", "author"] }
+];
+
+function startQuiz() {
+    qIdx = 0;
+    setTimeout(updateQuizUI, 100);
+}
+
+function updateQuizUI() {
+    const text = document.getElementById('q-text');
+    const inp = document.getElementById('q-input');
+    const feed = document.getElementById('q-feedback');
+    if (!text) return;
+
+    text.innerText = quizData[qIdx].q;
+    inp.value = '';
+    feed.innerText = '';
+    feed.className = "text-xs mt-4 h-4 font-bold tracking-wide transition-colors";
+    inp.focus();
+}
+
+function submitAnswer() {
+    const inp = document.getElementById('q-input');
+    const feed = document.getElementById('q-feedback');
+    if (!inp) return;
+
+    if (qIdx >= quizData.length) return;
+
+    const val = inp.value.trim().toLowerCase();
+    if (!val) return;
+
+    const correct = quizData[qIdx].a.some(ans => val.includes(ans));
+
+    if (correct) {
+        feed.innerText = "Accepted.";
+        feed.className = "text-xs mt-4 h-4 font-bold tracking-wide text-green-500";
+        setTimeout(() => {
+            qIdx++;
+            if (qIdx < quizData.length) {
+                updateQuizUI();
+            } else {
+                document.getElementById('quiz-container').innerHTML = `
+                    <div class="scale-up-center">
+                        <div class="text-6xl mb-4">🏆</div>
+                        <div class="text-2xl font-bold text-gray-800">Verified Best Friend.</div>
+                        <p class="text-sm text-gray-600 mt-4 leading-relaxed">You know me better than I thought.<br>System Access: UNLIMITED.</p>
+                        <div class="mt-8 p-4 bg-gray-50 rounded-xl border border-gray-100 text-xs text-gray-400">
+                             ID: THE_CHOSEN_ONE<br>Status: Permanent
+                        </div>
+                    </div>
+                `;
+            }
+        }, 800);
+    } else {
+        feed.innerText = "Access Denied. Try again.";
+        feed.className = "text-xs mt-4 h-4 font-bold tracking-wide text-red-500";
+        inp.classList.add('shake');
+        setTimeout(() => inp.classList.remove('shake'), 500);
+    }
 }
 
 // START HERE

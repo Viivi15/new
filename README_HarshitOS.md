@@ -15,15 +15,9 @@ Your gift is ready! This is a complete, interactive "Operating System" designed 
 This OS is built for Harshit, but you can add the final touches:
 1. **Music**: Replace the default track with his favorite song. Find the line `<source src="...` and paste the link to his MP3.
 2. **Photos**: To update the photos in the "Memories" app, find the `img src` tags in the `photos` app section and replace them with links to your own photos.
-3. **API Key**: Don't forget to add your Gemini API Key for the smart features!
 
-### 🤖 Setting up AI Features (Optional)
-To make the "AI Assistant" and "Gen Script" work, you need a free key:
-1. Go to [aistudio.google.com](https://aistudio.google.com/app/apikey) and get an API Key.
-2. Right-click `harshit_birthday.html` -> Open with Notepad.
-3. Find this line (near the bottom): `const apiKey = "";`
-4. Paste your key inside the quotes: `const apiKey = "YOUR_KEY_HERE";`
-5. Save and refresh the page!
+
+
 
 6. **Play the Games!**
     *   **Smash Bhindi**: Click the desktop icon `🔨`. Bhindis will pop up randomly. Smash them before they disappear!
@@ -56,10 +50,10 @@ Currently, the website uses some online images (GIFs for the bears, wallpapers).
 - **Identity Card**: His profile as "World's Strongest".
 - **The Letter**: Your heartfelt message (opens automatically).
 - **Iron Gym**: A clicker game to lift weights.
-- **Harshit AI**: A chatbot that knows everything about him.
+
 - **Complaint Box**: A place to complain (spoiler: he deletes them).
 - **The "Us" Quiz**: A fun quiz to test his friendship knowledge.
-- **Harshit AI**: Now with 50% more sass and reaction GIFs.
+
 - **Music Player**: Pre-loaded with "Tu Hai Kahan".
 - **Tic-Tac-Toe**: Playable game.
 - **Python Script**: A code editor window celebrating him.
