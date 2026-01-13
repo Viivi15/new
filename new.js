@@ -378,6 +378,57 @@ const apps = [
             </div>
         </div>
     `}
+    ,
+    /* === NEW APPS === */
+    {
+        id: 'inkpot', title: 'The Inkpot', icon: '🖋️', dock: true, width: 500, height: 600, onOpen: initInkpot, content: `
+        <div class="inkpot-bg">
+            <div id="inkpot-text" class="poem-text"></div>
+            <div class="inkpot-quill" onclick="nextPoem()">🖋️</div>
+        </div>
+    `},
+
+    {
+        id: 'radio-harshit', title: 'Radio Harshit', icon: '📻', dock: true, width: 400, height: 500, onOpen: initRadio, content: `
+        <div class="radio-ui">
+            <div class="radio-display" id="radio-screen">WAITING FOR SIGNAL...</div>
+            <div class="radio-buttons">
+                <button class="radio-btn tired" onclick="playRadio('tired')">Tired 😴</button>
+                <button class="radio-btn happy" onclick="playRadio('happy')">Happy 😄</button>
+                <button class="radio-btn annoyed" onclick="playRadio('annoyed')">Annoyed 😤</button>
+                <button class="radio-btn proud" onclick="playRadio('proud')">Proud 🦁</button>
+            </div>
+        </div>
+    `},
+
+    {
+        id: 'the-path', title: 'The Path', icon: '🧭', dock: true, width: 600, height: 400, onOpen: startPathGame, content: `
+        <div class="path-game" id="path-container" onclick="handlePathClick(event)">
+            <!-- Dynamic Content -->
+        </div>
+    `},
+    /* === EXPANSION APPS === */
+    {
+        id: 'word-spiral', title: 'Word Spiral', icon: '🌀', dock: false, width: 500, height: 600, onOpen: initWordSpiral, content: `
+        <div class="spiral-bg">
+            <div id="spiral-content" class="h-full flex flex-col items-center justify-center p-8 text-center text-white">
+                <div class="text-4xl mb-6 animate-spin-slow">🌀</div>
+                <div id="spiral-word" class="text-3xl font-serif font-bold mb-8">Growth</div>
+                <div id="spiral-opts" class="grid grid-cols-1 gap-4 w-full max-w-xs"></div>
+            </div>
+        </div>
+    `},
+
+    {
+        id: 'personality-quiz', title: 'Who Are You?', icon: '🔍', dock: false, width: 500, height: 600, onOpen: initPersonalityQuiz, content: `
+        <div class="quiz-bg">
+            <div id="p-quiz-content" class="h-full flex flex-col items-center justify-center p-8 text-center">
+                <div class="text-5xl mb-6">🔍</div>
+                <div id="p-quiz-q" class="text-xl font-bold text-gray-800 mb-8">System Check...</div>
+                <div id="p-quiz-opts" class="flex flex-col gap-3 w-full max-w-xs"></div>
+            </div>
+        </div>
+    `}
 ];
 
 /* === SETTINGS FUNCTIONS === */
@@ -1236,6 +1287,217 @@ function submitAnswer() {
         setTimeout(() => inp.classList.remove('shake'), 500);
     }
 }
+
+/* === BLUEPRINT LOGIC === */
+function openBlueprint() {
+    document.getElementById('blueprint-window').style.display = 'flex';
+}
+
+function closeBlueprint() {
+    document.getElementById('blueprint-window').style.display = 'none';
+}
+
+/* === INKPOT LOGIC === */
+let poemIdx = 0;
+const poems = [
+    "Some days are heavy,\nBut you carry them well.\nKeep going.",
+    "The world is loud,\nBut your peace is real.\nProtect it.",
+    "Not perfect.\nNot finished.\nJust right.",
+    "You are the best kind of chaos.\nNever change."
+];
+function initInkpot() {
+    poemIdx = 0;
+    const el = document.getElementById('inkpot-text');
+    if (el) el.innerText = "Click the quill...";
+}
+function nextPoem() {
+    const el = document.getElementById('inkpot-text');
+    if (!el) return;
+    el.innerText = "";
+    const txt = poems[poemIdx % poems.length];
+    poemIdx++;
+
+    let i = 0;
+    function type() {
+        if (i < txt.length) {
+            el.innerText += txt.charAt(i);
+            i++;
+            setTimeout(type, 50);
+        }
+    }
+    type();
+}
+
+/* === RADIO LOGIC === */
+function initRadio() {
+    const el = document.getElementById('radio-screen');
+    if (el) el.innerText = "WAITING FOR SIGNAL...";
+}
+function playRadio(mood) {
+    const el = document.getElementById('radio-screen');
+    if (!el) return;
+    el.innerText = "TUNING...";
+    setTimeout(() => {
+        let msg = "";
+        switch (mood) {
+            case 'tired': msg = "🎵 Playing: SoftRain.mp3\n(Relax, Harshit.)"; break;
+            case 'happy': msg = "🎵 Playing: Celebration.wav\n(Heck yeah!)"; break;
+            case 'annoyed': msg = "🎵 Playing: Silence.flac\n(People are dumb.)"; break;
+            case 'proud': msg = "🎵 Playing: Applause.ogg\n(You did good.)"; break;
+        }
+        el.innerText = msg;
+    }, 500);
+}
+
+/* === PATH LOGIC === */
+const pathStory = {
+    start: {
+        text: "You stand at a crossroad. It's late.",
+        opts: [
+            { txt: "Go to Gym", next: 'gym' },
+            { txt: "Go to Sleep", next: 'sleep' }
+        ]
+    },
+    gym: {
+        text: "You lift things. Heavy things. The sadness leaves your body with the sweat.\nYou feel stronger.",
+        opts: [
+            { txt: "Go Home", next: 'home_strong' }
+        ]
+    },
+    sleep: {
+        text: "You lie down. The thoughts come, but you are too tired to fight them. You drift off.",
+        opts: [
+            { txt: "Dream", next: 'dream' }
+        ]
+    },
+    home_strong: {
+        text: "You walk home. The stars look nice. You realize you can handle tomorrow.",
+        opts: [
+            { txt: "Restart", next: 'start' }
+        ]
+    },
+    dream: {
+        text: "You dream of a place where assignments finish themselves. It is beautiful.",
+        opts: [
+            { txt: "Wake Up", next: 'start' }
+        ]
+    }
+};
+
+function startPathGame() {
+    renderPath('start');
+}
+
+function renderPath(id) {
+    const scene = pathStory[id];
+    const con = document.getElementById('path-container');
+    if (!con) return;
+
+    let html = `<div class="path-text">${scene.text}</div><div class="path-options">`;
+    scene.opts.forEach(o => {
+        html += `<button class="path-btn" onclick="renderPath('${o.next}')">${o.txt}</button>`;
+    });
+    html += `</div>`;
+    con.innerHTML = html;
+}
+
+/* === WORD SPIRAL LOGIC === */
+const spiralWords = {
+    "Growth": ["Pain", "Change", "Better", "You"],
+    "Pain": ["Temporary", "Necessary", "Stronger", "Growth"],
+    "Change": ["Scary", "Good", "New", "Future"],
+    "Better": ["Work", "Time", "Patience", "Focus"],
+    "You": ["Enough", "Real", "Here", "Growth"],
+    "Temporary": ["Rain", "Night", "Feelings", "Pain"],
+    "Necessary": ["Rain", "Discipline", "Focus", "Better"],
+    "Stronger": ["Gym", "Mind", "Heart", "You"],
+    "Scary": ["Unknown", "Dark", "Space", "Change"],
+    "Good": ["Food", "Sleep", "Friends", "Better"],
+    "New": ["Day", "Start", "Chance", "Change"],
+    "Future": ["Blind", "Bright", "Yours", "Change"],
+    // Default fallback
+    "DEFAULT": ["Growth", "You", "Better", "Change"]
+};
+function initWordSpiral() {
+    renderSpiral("Growth");
+}
+function renderSpiral(word) {
+    const main = document.getElementById('spiral-word');
+    const opts = document.getElementById('spiral-opts');
+    if (!main) return;
+
+    // Animation reset
+    main.style.opacity = 0;
+    setTimeout(() => {
+        main.innerText = word;
+        main.style.opacity = 1;
+    }, 200);
+
+    const nextWords = spiralWords[word] || spiralWords["DEFAULT"];
+    opts.innerHTML = nextWords.map(w =>
+        `<button class="spiral-btn" onclick="renderSpiral('${w}')">${w}</button>`
+    ).join('');
+}
+
+/* === PERSONALITY QUIZ LOGIC === */
+const pQuizData = [
+    { q: "When things break, you...", a: [{ t: "Fix them quietly", s: "Builder" }, { t: "Feel everything", s: "Healer" }, { t: "Ignore it", s: "Dreamer" }] },
+    { q: "Your best quality?", a: [{ t: "Loyalty", s: "Builder" }, { t: "Empathy", s: "Healer" }, { t: "Imagination", s: "Dreamer" }] },
+    { q: "What do you need right now?", a: [{ t: "Peace", s: "Healer" }, { t: "Progress", s: "Builder" }, { t: "Escape", s: "Dreamer" }] }
+];
+let pQuizIdx = 0;
+let pScores = {};
+
+function initPersonalityQuiz() {
+    pQuizIdx = 0;
+    pScores = { "Builder": 0, "Healer": 0, "Dreamer": 0 };
+    renderPQuiz();
+}
+
+function renderPQuiz() {
+    const qEl = document.getElementById('p-quiz-q');
+    const oEl = document.getElementById('p-quiz-opts');
+    if (!qEl) return;
+
+    if (pQuizIdx >= pQuizData.length) {
+        // Result
+        const winner = Object.keys(pScores).reduce((a, b) => pScores[a] > pScores[b] ? a : b);
+        let msg = "";
+        if (winner === "Builder") msg = "You are The Architect.\nYou build strong things. You protect.";
+        if (winner === "Healer") msg = "You are The Anchor.\nYou keep people safe. You care deeply.";
+        if (winner === "Dreamer") msg = "You are The Visionary.\nYou see what could be. You hope.";
+
+        qEl.innerText = winner;
+        oEl.innerHTML = `<div class="text-sm text-gray-600 leading-relaxed">${msg}</div><button class="mt-4 px-4 py-2 bg-black text-white rounded" onclick="initPersonalityQuiz()">Restart</button>`;
+        return;
+    }
+
+    const curr = pQuizData[pQuizIdx];
+    qEl.innerText = curr.q;
+    oEl.innerHTML = curr.a.map(opt =>
+        `<button class="p-quiz-btn" onclick="handlePQuiz('${opt.s}')">${opt.t}</button>`
+    ).join('');
+}
+
+function handlePQuiz(type) {
+    pScores[type]++;
+    pQuizIdx++;
+    renderPQuiz();
+}
+
+// Global Exports
+window.handlePQuiz = handlePQuiz;
+window.initPersonalityQuiz = initPersonalityQuiz;
+window.renderSpiral = renderSpiral;
+window.initWordSpiral = initWordSpiral;
+
+// Global Exports
+window.renderPath = renderPath;
+window.startPathGame = startPathGame;
+window.playRadio = playRadio;
+window.initRadio = initRadio;
+window.initInkpot = initInkpot;
+window.nextPoem = nextPoem;
 
 // START HERE
 window.Apps = Apps; // Global exposure
