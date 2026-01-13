@@ -16,76 +16,310 @@ const wallpapers = [
     { thumb: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=200', full: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=2069' }  // Colors
 ];
 
-/* === APP REGISTRY === */
+/* === APP REGISTRY (Personalized for Harshit) === */
 const apps = [
-    /* --- ORIGINAL APPS --- */
-    { id: 'about', title: 'About You', icon: '👤', dock: true, width: 500, height: 400, content: `<div class="p-10 text-center bg-[#fafafa] h-full flex flex-col justify-center"><h2 class="text-2xl font-serif mb-6 text-gray-800">Who You Are</h2><div class="space-y-4 text-gray-600 leading-relaxed font-light"><p>Not just the achievements.</p><p>But the resilience behind them.</p><p>The honesty you keep when it's hard.</p><p>The depth you carry instantly.</p></div><div class="mt-8 text-xs text-gray-400 tracking-widest uppercase">Growth • Silence • Strength</div></div>` },
-    { id: 'letter', title: 'To Harshit', icon: '💌', dock: true, width: 600, height: 500, content: `<div class="h-full p-10 bg-white overflow-y-auto custom-scroll"><div class="max-w-md mx-auto space-y-6 text-gray-700 font-serif leading-loose"><p class="text-xl">Harshit,</p><p>I promised to write this slowly, because that’s how you deserve to be read. Not in a rush.</p><p>I look at you and I see someone who has built himself from the ground up. I see the pressure you take on, the expectations you manage, and the silence you keep so others don't have to worry.</p><p>I want you to know: You are protected here. You are understood here.</p><p>I am proud clearly, not just of what you do, but of who you are becoming.</p><p class="pt-6 text-right text-sm text-gray-400">— always here.</p></div></div>` },
-    { id: 'affirmations', title: 'Seen', icon: '👁️', dock: true, width: 450, height: 400, dark: true, content: `<div class="h-full bg-[#111] text-gray-300 flex flex-col items-center justify-center p-8 text-center" id="aff-container"><div id="aff-text" class="text-xl font-light italic transition-opacity duration-1000">"Hover to see."</div><div class="mt-8 flex gap-2 justify-center"><div class="w-2 h-2 rounded-full bg-gray-700 hover:bg-white transition-colors cursor-pointer" onmouseover="showAffirmation(0)"></div><div class="w-2 h-2 rounded-full bg-gray-700 hover:bg-white transition-colors cursor-pointer" onmouseover="showAffirmation(1)"></div><div class="w-2 h-2 rounded-full bg-gray-700 hover:bg-white transition-colors cursor-pointer" onmouseover="showAffirmation(2)"></div><div class="w-2 h-2 rounded-full bg-gray-700 hover:bg-white transition-colors cursor-pointer" onmouseover="showAffirmation(3)"></div></div></div>` },
-    { id: 'phases', title: 'Phases', icon: '🌘', dock: true, width: 600, height: 450, content: `<div class="h-full bg-gray-50 p-8 grid grid-cols-1 divide-y divide-gray-200"><div class="flex items-center py-4 group hover:bg-white transition-colors px-4 rounded"><div class="w-12 text-2xl opacity-50">🌑</div><div><div class="text-sm font-bold text-gray-800">The Heavy Days</div><div class="text-xs text-gray-500 mt-1">When things were too much, but you stood.</div></div></div><div class="flex items-center py-4 group hover:bg-white transition-colors px-4 rounded"><div class="w-12 text-2xl opacity-50">🌓</div><div><div class="text-sm font-bold text-gray-800">The Silence</div><div class="text-xs text-gray-500 mt-1">When you kept it all inside. I saw you.</div></div></div><div class="flex items-center py-4 group hover:bg-white transition-colors px-4 rounded"><div class="w-12 text-2xl opacity-50">🌕</div><div><div class="text-sm font-bold text-gray-800">The Growth</div><div class="text-xs text-gray-500 mt-1">Where you are now. Stronger.</div></div></div></div>` },
-    { id: 'music', title: 'Presence', icon: '🎵', dock: true, width: 400, height: 300, content: `<div class="h-full bg-white p-6 flex flex-col justify-center text-center"><p class="text-xs text-gray-400 mb-6 tracking-widest uppercase">Play this if you want</p><div class="space-y-3"><button onclick="playMusic('calm')" class="w-full py-3 border border-gray-100 hover:bg-blue-50 hover:border-blue-200 rounded transition text-sm text-gray-600 flex items-center justify-between px-4"><span>Calm</span><i class="fas fa-play text-xs opacity-50"></i></button><button onclick="playMusic('strength')" class="w-full py-3 border border-gray-100 hover:bg-red-50 hover:border-red-200 rounded transition text-sm text-gray-600 flex items-center justify-between px-4"><span>Strength</span><i class="fas fa-play text-xs opacity-50"></i></button><button onclick="playMusic('hope')" class="w-full py-3 border border-gray-100 hover:bg-yellow-50 hover:border-yellow-200 rounded transition text-sm text-gray-600 flex items-center justify-between px-4"><span>Reflection</span><i class="fas fa-play text-xs opacity-50"></i></button></div></div>` },
-    { id: 'future', title: 'Future', icon: '🌱', dock: true, width: 400, height: 400, content: `<div class="h-full bg-[#f8f9fa] p-8 flex items-center justify-center"><ul class="space-y-6 text-center"><li class="text-gray-700 font-serif">Take care of yourself.</li><li class="w-8 h-[1px] bg-gray-300 mx-auto"></li><li class="text-gray-700 font-serif">Take care of your family.</li><li class="w-8 h-[1px] bg-gray-300 mx-auto"></li><li class="text-gray-700 font-serif">You are allowed to rest.</li><li class="w-8 h-[1px] bg-gray-300 mx-auto"></li><li class="text-gray-700 font-serif">You are allowed to grow.</li></ul></div>` },
-    { id: 'hidden-unlock', title: 'key.sys', icon: '🔒', dock: false, width: 300, height: 200, dark: true, content: `<div class="h-full bg-black text-gray-500 flex items-center justify-center text-center p-4"><div id="lock-msg"><div class="text-2xl mb-2">🔒</div><div class="text-xs">Explore the space first.</div><div class="text-[10px] mt-2 opacity-50">(Open all apps + Wait for time)</div></div><div id="unlock-msg" class="hidden animate-fade-in"><p class="text-white font-serif italic">"This space stays."</p><p class="text-xs mt-4 text-gray-400">Come back whenever you need quiet.</p></div></div>`, onOpen: checkUnlock },
-    { id: 'trash', title: 'Trash', icon: '🗑️', dock: false, width: 200, height: 150, content: `<div class="p-4 text-center text-xs text-gray-400">Empty</div>` },
+    /* 0. HARSHIT AI (PERSONAL ASSISTANT) */
+    {
+        id: 'harshit-ai',
+        title: 'HarshitAI',
+        icon: '🧠',
+        dock: true,
+        width: 450, height: 600,
+        content: `
+            <div class="ai-container">
+                <div class="ai-header">
+                    <div class="ai-avatar"><i class="fas fa-brain"></i></div>
+                    <div class="ai-info">
+                        <h3>HarshitAI v2.0</h3>
+                        <p>Powered by Gemini Flash • Sassy Mode: ON</p>
+                    </div>
+                </div>
+                <div class="ai-chat-window custom-scroll" id="ai-chat">
+                    <div class="msg ai">Hello Mr. Snow. ❄️<br>I'm your personal brain. I know everything about you (scary, right?).<br>Ask me something, or don't. I'm busy calculating how amazing you are.</div>
+                </div>
+                <div class="ai-input-area">
+                    <input type="text" class="ai-input" id="ai-input" placeholder="Ask HarshitAI..." onkeypress="if(event.key==='Enter') handleAIChat()">
+                    <button class="ai-send" onclick="handleAIChat()"><i class="fas fa-arrow-up"></i></button>
+                </div>
+            </div>
+        `
+    },
 
-    /* --- FOLDERS & UTILITIES --- */
-    { role: 'folder', id: 'system-folder', title: 'System', icon: '⚙️', dock: false, width: 500, height: 350, children: ['settings', 'hidden-unlock'] },
-    { role: 'folder', id: 'games-folder', title: 'Games', icon: '🎮', dock: true, width: 600, height: 450, children: ['folder-arcade', 'folder-creative', 'folder-challenges', 'folder-puzzles', 'folder-tabletop'] },
+    /* 0.5. TERMINAL.SH (CLI) */
+    {
+        id: 'terminal',
+        title: 'Terminal.sh',
+        icon: '💻',
+        dock: true,
+        width: 600, height: 400,
+        content: `
+            <div class="terminal-app" onclick="document.getElementById('term-input').focus()">
+                <div class="term-output custom-scroll" id="term-output">
+                    <div>Welcome to HarshitOS Kernel v19.0.0</div>
+                    <div>Type 'help' for available commands.</div>
+                    <br>
+                </div>
+                <div class="term-prompt-line">
+                    <div class="term-prompt">root@harshit:~$</div>
+                    <input type="text" class="term-input" id="term-input" autocomplete="off" spellcheck="false" onkeypress="if(event.key==='Enter') handleTerminalCommand()">
+                </div>
+            </div>
+        `
+    },
 
-    /* --- SETTINGS --- */
+    /* 1. IDENTITY & PROFILE -> ABOUT US */
+    {
+        id: 'about', title: 'About Us', icon: '👥', dock: true, width: 550, height: 600, content: `
+        <div class="id-card">
+            <div class="id-photo" style="background-image: url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=200');"></div>
+            <div class="id-name">The Bond</div>
+            <div class="id-role">June 20, 2024 • 12:21 AM</div>
+            <div class="mt-8 text-left w-full px-6 space-y-6">
+                <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
+                    <h4 class="font-bold text-blue-800 mb-1">Shravii (The Anchor)</h4>
+                    <p class="text-xs text-gray-600 leading-relaxed">The one who listened without rushing. Who remembered the dates, the moods, and the silences. The safe place.</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-400">
+                    <h4 class="font-bold text-purple-800 mb-1">Harshit (The Responder)</h4>
+                    <p class="text-xs text-gray-600 leading-relaxed">The one who was emotionally expressive, vulnerable, and romantic. Who treated you like a queen and made you feel protected.</p>
+                </div>
+                <div class="text-center text-xs text-gray-400 italic mt-4">"Neither was disposable."</div>
+            </div>
+        </div>
+    `},
+
+    /* 2. OUR JOURNEY (Timeline) */
+    {
+        id: 'journey-timeline', title: 'OurJourney', icon: '🚀', dock: true, width: 650, height: 550, content: `
+        <div class="h-full overflow-y-auto custom-scroll timeline-container">
+            <div class="timeline-item">
+                <div class="timeline-date">June 20, 2024 • 12:21 AM</div>
+                <div class="timeline-title">The Midnight Spark</div>
+                <div class="timeline-content">It started quietly on Discord. No announcements, just late-night talks that felt surprisingly real. Strangers to something familiar in hours.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">The Accumulation</div>
+                <div class="timeline-title">The Shared World</div>
+                <div class="timeline-content">Shared music, creating playlists, sub sandwiches, and discussing emotions. Mr. Ota, Mr. Snow, and Rabbit 🐰 nicknames were born here.</div>
+            </div>
+             <div class="timeline-item">
+                <div class="timeline-date">The Heavy Days</div>
+                <div class="timeline-title">Safe Space</div>
+                <div class="timeline-content">You became the anchor. I became the listener. We fought, we misunderstood, but we reconciled because neither was disposable.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Now</div>
+                <div class="timeline-title">Deep Truths</div>
+                <div class="timeline-content">Even if silence exists, the bond remains. You are home to a part of me.</div>
+            </div>
+        </div>
+    `},
+
+    /* 3. LETTER (ReadMe.txt) */
+    {
+        id: 'letter', title: 'ReadMe.txt', icon: '📜', dock: true, width: 600, height: 600, content: `
+        <div class="h-full p-10 bg-[#fffef0] overflow-y-auto custom-scroll" style="font-family: 'Handlee', cursive;">
+            <div class="max-w-md mx-auto space-y-6 text-gray-800 text-lg leading-loose">
+                <h1 class="text-3xl font-bold mb-6 border-b-2 border-gray-300 pb-2">My Bestest Friend,</h1>
+                <p>I promised to write this slowly.</p>
+                <p>You are a combination of sweetness and spiciness. You don't entertain lies. You handle me like a kid, but treat me like a queen.</p>
+                <p>You are the world's strongest person. The fastest person. The person who remembers every tiny detail (seriously, how is your memory that good?).</p>
+                <p>At times you overdo it—100% care, 100% dedication—and I worry, but I admire it. You know exactly which card to play, which silence to hold.</p>
+                <p>Thank you for being my safe space. For the 12:21 AM talks. For the fights that made us stronger. For being Mr. Chuha and Mr. Snow.</p>
+                <p class="font-bold">Happy 19th Birthday. You deserve the world.</p>
+                <p class="pt-6 text-right text-base text-gray-500">— Shravii (Your drama queen)</p>
+            </div>
+        </div>
+    `},
+
+    /* 4. DEEP TRUTHS (Notes) */
+    {
+        id: 'favs', title: 'DeepTruths', icon: '⭐', dock: false, width: 650, height: 500, content: `
+        <div class="h-full sticky-grid custom-scroll bg-[#f0f0f0]">
+            <!-- Generated Notes -->
+            <div class="sticky-note" style="--rot: -2deg; background: #fff;">
+                <div class="sticky-title">Everything I Know</div>
+                "This document exists because you mattered enough to be noticed."
+            </div>
+            <div class="sticky-note" style="--rot: 3deg">
+                <div class="sticky-title">The Vibe ❄️</div>
+                Siberian Huskies 🐺<br>Cold Places<br>Silence over Noise<br>Hoodies
+            </div>
+             <div class="sticky-note" style="--rot: -1deg">
+                <div class="sticky-title">The Memory 🧠</div>
+                You notice every tiny detail.<br>You remember dates.<br>You remember moods.
+            </div>
+            <div class="sticky-note" style="--rot: 2deg">
+                <div class="sticky-title">Food 🥪</div>
+                Sub Sandwiches (Practical!)<br>Euros<br>NO Bhindi ❌
+            </div>
+        </div>
+    `},
+
+    /* 5. VS CODE (Engineering) */
+    {
+        id: 'code', title: 'birthday_script.py', icon: '👨‍💻', dock: true, width: 700, height: 500, content: `
+        <div class="code-editor custom-scroll">
+            <div class="flex justify-between items-center mb-4 border-b border-gray-700 pb-2">
+                <span class="text-xs text-gray-400">main.py</span>
+                <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs flex items-center gap-2 transition" onclick="runCode()">
+                    <i class="fas fa-play"></i> Run Code
+                </button>
+            </div>
+            <div id="code-content">
+                <div class="code-line"><span class="line-num">1</span><span class="c-keyword">import</span> <span class="c-func">life</span></div>
+                <div class="code-line"><span class="line-num">2</span></div>
+                <div class="code-line"><span class="line-num">3</span><span class="c-keyword">def</span> <span class="c-func">analyze_dna</span>(<span class="c-string">person</span>):</div>
+                <div class="code-line"><span class="line-num">4</span>    <span class="c-keyword">if</span> <span class="c-string">person</span>.name == <span class="c-string">"Harshit"</span>:</div>
+                <div class="code-line"><span class="line-num">5</span>        <span class="c-string">person</span>.status = <span class="c-string">"World's Strongest"</span></div>
+                <div class="code-line"><span class="line-num">6</span>        <span class="c-string">person</span>.level = <span class="c-func">19</span></div>
+                <div class="code-line"><span class="line-num">7</span>        <span class="c-keyword">return</span> <span class="c-string">"HAPPY BIRTHDAY HARSHIT! 🎉"</span></div>
+                <div class="code-line"><span class="line-num">8</span></div>
+                <div class="code-line"><span class="line-num">9</span><span class="c-keyword">print</span>(<span class="c-func">analyze_dna</span>(<span class="c-func">user</span>))</div>
+            </div>
+            <div id="code-output" class="mt-4 border-t border-gray-700 pt-4 hidden">
+                <div class="text-gray-400 text-xs mb-2">OUTPUT:</div>
+                <div class="text-green-400 font-mono">>> Analyzing DNA sequence...</div>
+                <div class="text-green-400 font-mono">>> Match Found: Level 19 Engineer detected.</div>
+                <div class="text-xl text-yellow-400 font-bold mt-2 typing-effect">>> HAPPY BIRTHDAY HARSHIT! 🎂</div>
+            </div>
+        </div>
+        <script>
+            function runCode() {
+                document.getElementById('code-output').classList.remove('hidden');
+            }
+        </script>
+    `},
+
+    /* 6. CRAVINGS (Food Dashboard) */
+    {
+        id: 'food', title: 'Cravings', icon: '🍔', dock: true, width: 600, height: 500, content: `
+        <div class="food-dashboard custom-scroll">
+            <div class="food-section food-good">
+                <div class="food-title">The Good Stuff ✅</div>
+                <div class="food-grid">
+                    <div class="food-item"><span class="food-emoji">🥪</span><span class="food-name">Sub Sandwiches</span></div>
+                    <div class="food-item"><span class="food-emoji">💶</span><span class="food-name">Euros</span></div>
+                    <div class="food-item"><span class="food-emoji">🍗</span><span class="food-name">Chicken</span></div>
+                    <div class="food-item"><span class="food-emoji">🧊</span><span class="food-name">Cold Water</span></div>
+                </div>
+            </div>
+            <div class="food-section food-bad">
+                <div class="food-title">Trash Bin 🗑️</div>
+                <div class="food-grid">
+                    <div class="food-item"><span class="food-emoji">🍚</span><span class="food-name">Rice</span></div>
+                    <div class="food-item"><span class="food-emoji">🤢</span><span class="food-name">Bhindi</span></div>
+                    <div class="food-item"><span class="food-emoji">🍬</span><span class="food-name">Too Sweet</span></div>
+                </div>
+            </div>
+        </div>
+    `},
+
+    /* 7. STRESS RELIEF (Bubble Wrap) */
+    {
+        id: 'stress', title: 'Bubble Wrap', icon: '🫧', dock: true, width: 400, height: 400, content: `
+        <div class="bubble-wrap-container custom-scroll" id="bubble-container">
+            <!-- Bubbles injected via JS -->
+        </div>
+    `, onOpen: initBubbleWrap
+    },
+
+    /* 8. BIN (Trash) -> Updated Content */
+    {
+        id: 'trash', title: 'Bin', icon: '🗑️', dock: true, width: 400, height: 300, content: `
+        <div class="h-full bg-white flex flex-col items-center justify-center text-center p-6">
+            <div class="text-6xl mb-4">🗑️</div>
+            <h3 class="text-lg font-bold text-gray-800 mb-2">Permanently Deleted</h3>
+            <ul class="text-gray-500 text-sm space-y-2">
+                <li>❌ Liars <span class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded">GONE</span></li>
+                <li>❌ Weak Vibes <span class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded">GONE</span></li>
+                <li>❌ Bhindi <span class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded">BURNED</span></li>
+            </ul>
+            <div class="mt-6 text-xs text-gray-400">Auto-emptying enabled.</div>
+        </div>
+    `},
+
+    /* 9. MASTI / BEAR (Memories/Gifs) */
+    {
+        id: 'masti', title: 'Shravii Mode', icon: '🐻', dock: true, width: 400, height: 500, content: `
+        <div class="bear-container custom-scroll">
+            <div class="chat-bubble">Hehehe Happy Birthday! 🎉</div>
+            <div class="chat-bubble">Remember this? (Imagine me annoying you)</div>
+            <img src="assets/bear_poke.gif" class="w-32 rounded mb-4" onerror="this.src='https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif'"> <!-- Fallback to online gif -->
+            <div class="chat-bubble">You handling my drama like:</div>
+            <img src="assets/bear_pat.gif" class="w-32 rounded mb-4" onerror="this.src='https://media.tenor.com/-pMrF1h8YVAAAAAj/milk-and-mocha-bear-couple.gif'">
+            <div class="chat-bubble">Me feeling safe around you:</div>
+            <img src="assets/bear_hug.gif" class="w-32 rounded" onerror="this.src='https://media.tenor.com/J7e9j0A7b0kAAAAj/hugs.gif'">
+        </div>
+    `},
+
+    /* 10. MUSIC PLAYER */
+    {
+        id: 'music-player', title: 'Vibes', icon: '🎧', dock: true, width: 400, height: 400, content: `
+        <div class="music-player">
+            <div class="album-art" style="background-image: url('https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=400');">🎵</div>
+            <div class="track-info">
+                <h3>Our Playlist</h3>
+                <p>Songs that explain feelings</p>
+            </div>
+            <div class="player-controls">
+                <div class="text-2xl cursor-pointer opacity-70 hover:opacity-100">⏮️</div>
+                <div class="play-btn" onclick="document.getElementById('bg-audio').play()">▶</div>
+                <div class="text-2xl cursor-pointer opacity-70 hover:opacity-100">⏭️</div>
+            </div>
+            <div class="mt-6 text-xs text-gray-400">Put 'music.mp3' in the folder to play real audio!</div>
+        </div>
+    `},
+
+    /* 11. GALLERY (Memories Grid) */
+    {
+        id: 'gallery', title: 'Memories', icon: '🖼️', dock: false, width: 700, height: 500, content: `
+        <div class="h-full bg-black p-4 grid grid-cols-3 gap-2 overflow-y-auto custom-scroll">
+            <div class="aspect-square bg-gray-800 rounded flex items-center justify-center text-gray-500 hover:opacity-80 transition cursor-pointer">Place photos in assets/</div>
+            <div class="aspect-square bg-gray-700 rounded"></div>
+            <div class="aspect-square bg-gray-600 rounded"></div>
+            <div class="aspect-square bg-gray-900 rounded"></div>
+            <div class="aspect-square bg-gray-800 rounded"></div>
+        </div>
+    `},
+
+    /* UTILITIES */
+    { id: 'discord', title: 'Discord 2024', icon: '💬', dock: false, width: 400, height: 500, content: `<div class="p-4 bg-[#36393f] h-full text-white"><div class="border-b border-gray-700 pb-2 mb-4 font-bold"># general</div><div class="space-y-4 text-sm"><div class="flex gap-3"><div class="w-8 h-8 rounded-full bg-blue-500"></div><div><span class="font-bold text-red-400">Harshit</span> <span class="text-xs text-gray-400">Today at 12:21 AM</span><div class="text-gray-300">Hey.</div></div></div><div class="flex gap-3"><div class="w-8 h-8 rounded-full bg-pink-500"></div><div><span class="font-bold text-yellow-400">Shravii</span><span class="text-xs text-gray-400">Today at 12:22 AM</span><div class="text-gray-300">Hi! Stranger.</div></div></div></div></div>` },
+    { id: 'calc', title: 'Calculator', icon: '🧮', dock: false, width: 250, height: 350, content: `<div class="h-full bg-gray-900 flex items-center justify-center text-white">0</div>` },
+
+
+    /* SYSTEM SETTINGS */
     {
         id: 'settings', title: 'System Preferences', icon: '⚙️', dock: false, width: 700, height: 500,
-        content: `<div class="settings-container bg-[#f5f5f7]"><div class="settings-sidebar"><div class="settings-nav-item active">General</div></div><div class="settings-content custom-scroll"><div class="settings-section"><div class="settings-title">Appearance</div><div class="appearance-options"><div class="appearance-card active" onclick="setTheme('light', this)"><div class="theme-preview light"></div><div class="theme-label">Light</div></div><div class="appearance-card" onclick="setTheme('dark', this)"><div class="theme-preview dark"></div><div class="theme-label">Dark</div></div></div></div><div class="settings-section"><div class="settings-title">Accent Color</div><div class="accent-colors"><div class="accent-dot bg-blue-500 active" onclick="setAccent('#3b82f6', this)"></div><div class="accent-dot bg-purple-500" onclick="setAccent('#a855f7', this)"></div><div class="accent-dot bg-pink-500" onclick="setAccent('#ec4899', this)"></div><div class="accent-dot bg-green-500" onclick="setAccent('#22c55e', this)"></div><div class="accent-dot bg-orange-500" onclick="setAccent('#f97316', this)"></div></div></div><div class="settings-section"><div class="settings-title">Wallpaper</div><div class="wallpaper-grid" id="wp-grid"></div></div></div></div>`,
+        content: `
+            <div class="settings-container bg-[#f5f5f7]">
+                <div class="settings-sidebar">
+                    <div class="settings-nav-item active">General</div>
+                </div>
+                <div class="settings-content custom-scroll">
+                    <div class="settings-section">
+                        <div class="settings-title">Appearance</div>
+                        <div class="appearance-options">
+                            <div class="appearance-card active" onclick="setTheme('light', this)"><div class="theme-preview light"></div><div class="theme-label">Light</div></div>
+                            <div class="appearance-card" onclick="setTheme('dark', this)"><div class="theme-preview dark"></div><div class="theme-label">Dark</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>`,
         onOpen: renderSettings
     },
 
-    /* --- GAME CATEGORY FOLDERS --- */
-    { role: 'folder', id: 'folder-arcade', title: 'Arcade', icon: '🕹️', dock: false, width: 600, height: 400, children: ['game-brick', 'game-bounce', 'game-bird', 'game-insect', 'game-dino', 'game-shoot', 'game-rabbit', 'game-snake'] },
-    { role: 'folder', id: 'folder-creative', title: 'Creative', icon: '🎨', dock: false, width: 600, height: 400, children: ['game-draw', 'game-piano', 'game-board'] },
-    { role: 'folder', id: 'folder-challenges', title: 'Challenges', icon: '🏆', dock: false, width: 600, height: 400, children: ['game-hangman', 'game-math', 'game-quiz', 'game-type'] },
-    { role: 'folder', id: 'folder-puzzles', title: 'Puzzles', icon: '🧩', dock: false, width: 600, height: 400, children: ['game-2048', 'game-color', 'game-disney', 'game-guess', 'game-memory', 'game-puzzle', 'game-simon', 'game-sudoku'] },
-    { role: 'folder', id: 'folder-tabletop', title: 'Tabletop', icon: '🎲', dock: false, width: 600, height: 400, children: ['game-blackjack', 'game-tictactoe-bot', 'game-chess', 'game-dice', 'game-bingo', 'game-rps', 'game-tictactoe', 'game-score'] },
+    /* FOLDER: SYSTEM */
+    { role: 'folder', id: 'system-folder', title: 'System', icon: '🖥️', dock: false, children: ['settings', 'trash', 'calc', 'calendar'] },
 
-    /* --- ARCADE GAMES --- */
+    /* FOLDER: GAMES (Collapsed to be less prominent but still there if wanted) */
+    { role: 'folder', id: 'arcade-folder', title: 'Arcade', icon: '🕹️', dock: true, children: ['game-brick', 'game-snake', 'game-2048', 'game-chess'] },
+
+    /* GAMES (Hidden from desktop, inside folder) */
     { id: 'game-brick', title: 'Brick Breaker', icon: '🧱', url: 'D:/games/Arcade/2D-break-breaker-master/index.html' },
-    { id: 'game-bounce', title: 'Bounce It', icon: '🎾', url: 'D:/games/Arcade/bounce it back/index.html' },
-    { id: 'game-bird', title: 'Clumsy Bird', icon: '🐦', url: 'D:/games/Arcade/clumsy-bird-master/index.html' },
-    { id: 'game-insect', title: 'Insect Catch', icon: '🕸️', url: 'D:/games/Arcade/insect-catch-game/index.html' },
-    { id: 'game-dino', title: 'Dino Jump', icon: '🦖', url: 'D:/games/Arcade/JAVASCRIPT GAME/index.html' },
-    { id: 'game-shoot', title: 'Shooter', icon: '🔫', url: 'D:/games/Arcade/JS- Shooting Game/index.html' },
-    { id: 'game-rabbit', title: 'Rabbit Race', icon: '🐇', url: 'D:/games/Arcade/Rabbit Race/index.html' },
     { id: 'game-snake', title: 'Snake', icon: '🐍', url: 'D:/games/Arcade/Snake-Game/index.html' },
-
-    /* --- CREATIVE GAMES --- */
-    { id: 'game-draw', title: 'Drawing App', icon: '✏️', url: 'D:/games/Creative/DrawingApp/index.html' },
-    { id: 'game-piano', title: 'Piano', icon: '🎹', url: 'D:/games/Creative/Piano/index.html' },
-    { id: 'game-board', title: 'Whiteboard', icon: '🖊️', url: 'D:/games/Creative/White-Board/index.html' },
-
-    /* --- CHALLENGE GAMES --- */
-    { id: 'game-hangman', title: 'Hangman', icon: '😵', url: 'D:/games/Challenges/Hangman-Game/index.html' },
-    { id: 'game-math', title: 'Math Quiz', icon: '➗', url: 'D:/games/Challenges/Maths quiz game/index.html' },
-    { id: 'game-quiz', title: 'General Quiz', icon: '❓', url: 'D:/games/Challenges/quiz-app/index.html' },
-    { id: 'game-type', title: 'Typing Test', icon: '⌨️', url: 'D:/games/Challenges/Typing Speed Test Website/index.html' },
-
-    /* --- PUZZLE GAMES --- */
     { id: 'game-2048', title: '2048', icon: '🔢', url: 'D:/games/Puzzles/2048-lite-master/index.html' },
-    { id: 'game-color', title: 'Color Game', icon: '🎨', url: 'D:/games/Puzzles/Color Game/index.html' },
-    { id: 'game-disney', title: 'Disney Char', icon: '🏰', url: 'D:/games/Puzzles/disney-character-game/index.html' },
-    { id: 'game-guess', title: 'Guess Number', icon: '#️⃣', url: 'D:/games/Puzzles/GuessTheNumber/index.html' },
-    { id: 'game-memory', title: 'Memory Cards', icon: '🃏', url: 'D:/games/Puzzles/Memory Card Game/index.html' },
-    { id: 'game-puzzle', title: 'Puzzle', icon: '🧩', url: 'D:/games/Puzzles/puzzle-main/index.html' },
-    { id: 'game-simon', title: 'Simon', icon: '🔴', url: 'D:/games/Puzzles/SimonGame/index.html' },
-    { id: 'game-sudoku', title: 'Sudoku', icon: '9️⃣', url: 'D:/games/Puzzles/Sudoku solver/index.html' },
-
-    /* --- TABLETOP GAMES --- */
-    { id: 'game-blackjack', title: 'Blackjack', icon: '♠️', url: 'D:/games/Tabletop/Blackjack/index.html' },
-    { id: 'game-tictactoe-bot', title: 'TicTacToe (Bot)', icon: '🤖', url: 'D:/games/Tabletop/bot-human-tictactoe/index.html' },
-    { id: 'game-chess', title: 'Chess', icon: '♟️', url: 'D:/games/Tabletop/Grandmaster Chess Arena/index.html' },
-    { id: 'game-dice', title: 'Dice Roll', icon: '🎲', url: 'D:/games/Tabletop/Dice Roll Simulator/index.html' },
-    { id: 'game-bingo', title: 'Bingo', icon: '🅱️', url: 'D:/games/Tabletop/Picture Bingo Blast/index.html' },
-    { id: 'game-rps', title: 'Rock Paper S.', icon: '✊', url: 'D:/games/Tabletop/RPS Battle Arena/index.html' },
-    { id: 'game-tictactoe', title: 'TicTacToe', icon: '❌', url: 'D:/games/Tabletop/Tic-Tac-Toe Classic/index.html' },
-    { id: 'game-score', title: 'Scorekeeper', icon: '📝', url: 'D:/games/Tools/Scorekeeper/Score_keeper.html' }
+    { id: 'game-chess', title: 'Chess', icon: '♟️', url: 'D:/games/Tabletop/Grandmaster Chess Arena/index.html' }
 ];
 
 /* === SETTINGS FUNCTIONS === */
@@ -207,22 +441,32 @@ function skipToDesktop() {
 }
 
 /* === PHASE 1: COUNTDOWN GATEKEEPER === */
+/* === PHASE 1: COUNTDOWN GATEKEEPER (Real-time to Jan 30) === */
 function startCountdownGatekeeper() {
     const cdScreen = document.getElementById('countdown-phase');
     const cdDisplay = document.getElementById('countdown-display');
     const cdSub = document.getElementById('countdown-sub');
 
     cdScreen.classList.remove('hidden');
-    let count = 19;
+    // Adjust font size for longer text
+    cdDisplay.classList.remove('text-6xl', 'md:text-8xl');
+    cdDisplay.classList.add('text-4xl', 'md:text-6xl');
     cdDisplay.classList.add('countdown-glow');
     cdSub.style.opacity = 1;
 
+    // Target: Jan 30, 2026 00:00:00
+    // Note: Assuming 2026 based on current system time.
+    const targetDate = new Date('January 30, 2026 00:00:00').getTime();
+
     const int = setInterval(() => {
         if (document.getElementById('desktop').style.display === 'block') { clearInterval(int); return; } // Stop if skipped
-        count--;
-        cdDisplay.innerText = count < 10 ? `0${count}` : count;
-        if (count <= 0) {
+
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
             clearInterval(int);
+            cdDisplay.innerText = "IT'S TIME";
             cdSub.innerText = "The wait is over.";
             setTimeout(() => {
                 cdScreen.style.opacity = 0;
@@ -232,7 +476,16 @@ function startCountdownGatekeeper() {
                     playJourneyIntro();
                 }, 1500);
             }, 1000);
+            return;
         }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        cdDisplay.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        cdSub.innerText = "UNTIL JANUARY 30";
     }, 1000);
 }
 
@@ -352,7 +605,15 @@ const Apps = {
             contentHTML = `<div class="p-6 grid grid-cols-4 gap-4 bg-[#f5f5f7] h-full overflow-y-auto custom-scroll">${childItems}</div>`;
         }
 
-        win.innerHTML = `<div class="title-bar" onmousedown="startDrag(event, '${win.id}')"><div class="traffic-lights"><div class="traffic-light close" onclick="closeApp('${id}')"></div></div><div class="text-xs text-center w-full absolute pt-1 pointer-events-none opacity-50 font-medium">${app.title}</div></div><div class="win-content custom-scroll" style="height: calc(100% - 30px);">${contentHTML}</div>`;
+        win.innerHTML = `<div class="title-bar" onmousedown="startDrag(event, '${win.id}')">
+            <div class="traffic-lights">
+                <div class="traffic-light close" onclick="closeApp('${id}')"></div>
+                <div class="traffic-light minimize" onclick="minimizeApp('${id}')"></div>
+                <div class="traffic-light maximize" onclick="maximizeApp('${id}')"></div>
+            </div>
+            <div class="text-xs text-center w-full absolute pt-1 pointer-events-none opacity-50 font-medium">${app.title}</div>
+        </div>
+        <div class="win-content custom-scroll" style="height: calc(100% - 30px);">${contentHTML}</div>`;
         document.getElementById('desktop').appendChild(win);
         if (app.onOpen) app.onOpen();
         const dot = document.getElementById(`dot-${id}`); if (dot) dot.parentElement.classList.add('active');
@@ -360,6 +621,30 @@ const Apps = {
 };
 
 function closeApp(id) { const win = document.getElementById(`win-${id}`); win.style.opacity = 0; setTimeout(() => win.remove(), 300); const dot = document.getElementById(`dot-${id}`); if (dot) dot.parentElement.classList.remove('active'); }
+function minimizeApp(id) {
+    const win = document.getElementById(`win-${id}`);
+    win.style.transform = 'scale(0.8) translateY(200px)';
+    win.style.opacity = 0;
+    setTimeout(() => { win.style.display = 'none'; }, 300);
+}
+function maximizeApp(id) {
+    const win = document.getElementById(`win-${id}`);
+    if (win.getAttribute('data-maximized') === 'true') {
+        win.style.width = win.getAttribute('data-prev-w');
+        win.style.height = win.getAttribute('data-prev-h');
+        win.style.left = win.getAttribute('data-prev-l');
+        win.style.top = win.getAttribute('data-prev-t');
+        win.removeAttribute('data-maximized');
+    } else {
+        win.setAttribute('data-prev-w', win.style.width);
+        win.setAttribute('data-prev-h', win.style.height);
+        win.setAttribute('data-prev-l', win.style.left);
+        win.setAttribute('data-prev-t', win.style.top);
+        win.style.width = '100vw'; win.style.height = 'calc(100vh - 40px)';
+        win.style.left = '0'; win.style.top = '30px';
+        win.setAttribute('data-maximized', 'true');
+    }
+}
 function showAffirmation(i) { const el = document.getElementById('aff-text'); if (el) { el.style.opacity = 0; setTimeout(() => { el.innerText = `"${affirmations[i]}"`; el.style.opacity = 1; }, 300); } }
 function playMusic(m) { alert(`Playing ${m}`); }
 function checkUnlock() { if (state.countdownFinished && state.appsOpened.size >= 5) { document.getElementById('lock-msg').style.display = 'none'; document.getElementById('unlock-msg').classList.remove('hidden'); } }
@@ -367,5 +652,150 @@ let dragItem = null, offX = 0, offY = 0;
 function startDrag(e, id) { if (e.target.closest('.traffic-lights')) return; dragItem = document.getElementById(id); offX = e.clientX - dragItem.offsetLeft; offY = e.clientY - dragItem.offsetTop; dragItem.style.zIndex = ++zIndex; document.addEventListener('mousemove', doDrag); document.addEventListener('mouseup', stopDrag); }
 function doDrag(e) { if (dragItem) { dragItem.style.left = (e.clientX - offX) + 'px'; dragItem.style.top = (e.clientY - offY) + 'px'; } }
 function stopDrag() { dragItem = null; document.removeEventListener('mousemove', doDrag); document.removeEventListener('mouseup', stopDrag); }
+
+
+/* === HARSHIT AI LOGIC === */
+async function handleAIChat() {
+    const input = document.getElementById('ai-input');
+    const chat = document.getElementById('ai-chat');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // 1. Add User Message
+    const userDiv = document.createElement('div');
+    userDiv.className = 'msg user';
+    userDiv.innerText = msg;
+    chat.appendChild(userDiv);
+    input.value = '';
+    chat.scrollTop = chat.scrollHeight;
+
+    // 2. Simulate "Thinking" (or call API)
+    const aiDiv = document.createElement('div');
+    aiDiv.className = 'msg ai';
+    aiDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Thinking...';
+    chat.appendChild(aiDiv);
+    chat.scrollTop = chat.scrollHeight;
+
+    // 3. Generate Response (Mock Logic for now, can swap with real Gemini API)
+    setTimeout(() => {
+        let response = "I'm analyzing... but honestly, you should know this.";
+        const m = msg.toLowerCase();
+
+        // KNOWLEDGE BASE (Sassy Mode)
+        if (m.includes('who are you')) response = "I'm HarshitAI. The brain of this operation. Obviously.";
+        else if (m.includes('meet') || m.includes('met') || m.includes('date')) response = "June 20, 2024. 12:21 AM. On Discord. Don't pretend you forgot.";
+        else if (m.includes('bhindi')) response = "Ew. No. Please respect yourself. Trash bin is that way -> 🗑️";
+        else if (m.includes('snow') || m.includes('nickname')) response = "Mr. Snow ❄️. Because I'm cool, calm, and slightly distant until you get to know me.";
+        else if (m.includes('shravani') || m.includes('shravii')) response = "She's the drama queen who built this OS. She handles you like a kid but treats you like a king. You're lucky.";
+        else if (m.includes('birthday') || m.includes('age')) response = "19. You're officially old enough to know better, but you probably won't.";
+        else if (m.includes('strength') || m.includes('strong')) response = "Infinite. World's Strongest. It's in the database, look at your ID card.";
+        else if (m.includes('love') || m.includes('like')) response = "Sub sandwiches, Huskies, Cold places, Shoes, Peaky Blinders. Simple man.";
+        else if (m.includes('hello') || m.includes('hi')) response = "Sup. Ready to be productive or just annoying me?";
+        else {
+            // Default "Smart" responses
+            const fallbacks = [
+                "I'm processing that... results inconclusive. Try again.",
+                "That's a question for Google, not your personal OS.",
+                "I'm 100% loyal, but 0% interested in answering that.",
+                "Check the 'Memories' folder. The answer might be there."
+            ];
+            response = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+        }
+
+        aiDiv.innerHTML = response;
+        chat.scrollTop = chat.scrollHeight;
+
+        // Optional: If real API key exists
+        if (CONFIG.apiKey) {
+            // Call Gemini API here with system instruction:
+            // "You are HarshitAI, a sassy personal assistant for Harshit. You know he dislikes bhindi, loves huskies..."
+        }
+
+    }, 1000);
+}
+
+
+
+/* === TERMINAL LOGIC === */
+function handleTerminalCommand() {
+    const input = document.getElementById('term-input');
+    const output = document.getElementById('term-output');
+    const cmd = input.value.trim();
+    if (!cmd) return;
+
+    // Echo command
+    output.innerHTML += `<div><span class="term-prompt">root@harshit:~$</span> ${cmd}</div>`;
+
+    // Process Command
+    let response = '';
+    const args = cmd.split(' ');
+    const command = args[0].toLowerCase();
+
+    switch (command) {
+        case 'help':
+            response = `
+                <div class="term-info">Available Commands:</div>
+                <div>  help       - Show this list</div>
+                <div>  whois      - Identify the user</div>
+                <div>  secret     - Unlock hidden data</div>
+                <div>  cake       - Initiate birthday sequence</div>
+                <div>  date       - Show critical dates</div>
+                <div>  clear      - Clear the terminal</div>
+            `;
+            break;
+        case 'whois':
+            if (args[1] === 'shravii') response = "User: Shravii<br>Role: The Architect / The Drama Queen<br>Status: Bestest Friend";
+            else response = "User: Harshit (Mr. Snow)<br>Role: System Admin / Birthday Boy<br>Strength: Infinite";
+            break;
+        case 'secret':
+            response = `<span class="term-success">Access Granted.</span><br>Code: 1221<br>Meaning: The time it all started.`;
+            break;
+        case 'cake':
+            response = `🎂 Initiating Cake Protocol...<br>Happy 19th Birthday Harshit! 🎉`;
+            // Trigger confetti if possible
+            if (typeof confetti === 'function') confetti();
+            break;
+        case 'date':
+            response = `Critical Date: June 20, 2024 (Origin)`;
+            break;
+        case 'clear':
+            output.innerHTML = '';
+            input.value = '';
+            return;
+        case 'sudo':
+            response = `<span class="term-error">Permission denied: You are already the strongest user.</span>`;
+            break;
+        default:
+            response = `<span class="term-error">Command not found: ${command}</span>`;
+    }
+
+    if (response) output.innerHTML += `<div>${response}</div>`;
+
+    // Scroll and reset
+    input.value = '';
+    output.scrollTop = output.scrollHeight;
+}
+
+
+
+/* === BUBBLE WRAP LOGIC === */
+function initBubbleWrap() {
+    const container = document.getElementById('bubble-container');
+    if (container.children.length > 0) return; // Already generated
+
+    for (let i = 0; i < 48; i++) {
+        const b = document.createElement('div');
+        b.className = 'bubble';
+        b.onclick = function () {
+            if (!this.classList.contains('popped')) {
+                this.classList.add('popped');
+                // Play pop sound if audio file exists
+                // new Audio('assets/pop.mp3').play().catch(() => {});
+            }
+        };
+        container.appendChild(b);
+    }
+}
+
 
 window.onload = startCountdownGatekeeper;
