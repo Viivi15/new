@@ -29,6 +29,17 @@
         🚧 DEV: SKIP TO DESKTOP
     </button>
 
+
+    <!-- PHASE 1: SYSTEM BOOT (Green / Mechanical) -->
+    <div id="boot-sequence" style="display:none; opacity:0;">
+        <p class="boot-line">initializing system…</p>
+        <p class="boot-line delay1">loading memories…</p>
+        <p class="boot-line delay2">checking time reference…</p>
+        <p class="boot-line delay3">June 20, 2024 • 12:21 AM</p>
+        <p class="boot-line delay4">connection stable.</p>
+        <p class="boot-line delay5">space preparing<span class="boot-cursor"></span></p>
+    </div>
+
     <!-- PHASE 0: SPACE BACKGROUND (Persistent) -->
     <div id="space-bg" class="fixed inset-0 z-[0]">
         <div class="stars-small"></div>
@@ -105,14 +116,14 @@
         <div id="terminal-content"></div>
     </div>
 
-    <!-- PHASE 3: COUNTDOWN (Threshold) -->
+    <!-- PHASE 0: COUNTDOWN (Gatekeeper) -->
     <div id="countdown-phase"
-        class="fixed inset-0 bg-black z-[12000] hidden flex flex-col items-center justify-center text-white transition-opacity duration-1000">
+        class="fixed inset-0 bg-[#1e3c72] z-[60000] flex flex-col items-center justify-center text-white transition-opacity duration-1000">
         <div id="countdown-display"
             class="text-6xl md:text-8xl font-thin font-mono tracking-widest text-blue-50 drop-shadow-[0_0_15px_rgba(100,200,255,0.5)]">
             19</div>
         <div id="countdown-sub"
-            class="mt-8 text-xs text-gray-500 tracking-[0.3em] uppercase opacity-50 transition-opacity duration-1000">
+            class="mt-8 text-xs text-blue-200/50 tracking-[0.3em] uppercase opacity-50 transition-opacity duration-1000">
             Approaching</div>
     </div>
 
@@ -171,6 +182,12 @@
 
             <!-- Right: Status Icons -->
             <div class="macos-menu-right">
+                <!-- System Status -->
+                <span id="system-status"
+                    class="text-xs text-white/50 tracking-wide font-medium mr-4 cursor-default select-none"
+                    onclick="this.innerText='Even when things feel paused.'; setTimeout(()=>this.innerText='Status: Still running', 3500)">
+                    Status: Still running</span>
+
                 <!-- Battery -->
                 <div class="relative group cursor-default">
                     <i class="fas fa-battery-full text-[14px] opacity-80"></i>
@@ -239,6 +256,13 @@
                         <input type="range" class="w-full h-1 bg-white/20 rounded-full appearance-none cursor-pointer"
                             min="1" max="100" value="60">
                     </div>
+
+                    <!-- System Uptime -->
+                    <div class="system-uptime">
+                        <p class="uptime-label">Uptime</p>
+                        <p class="uptime-main">Since June 20, 2024</p>
+                        <p class="uptime-sub">No unexpected shutdowns.</p>
+                    </div>
                 </div>
 
                 <!-- Clock -->
@@ -256,6 +280,8 @@
 
         <!-- Broken Screen Overlay -->
         <div id="crack" class="crack"></div>
+
+
 
     </main>
 

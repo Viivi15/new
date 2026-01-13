@@ -17,320 +17,433 @@ const wallpapers = [
 ];
 
 /* === APP REGISTRY (Personalized for Harshit) === */
+/* === APP REGISTRY (Curated System) === */
 const apps = [
-    /* 0. HARSHIT AI (PERSONAL ASSISTANT) */
+    /* CLUSTER 1: EMOTIONAL BUT SOFT (The Heart) */
     {
-        id: 'harshit-ai',
-        title: 'HarshitAI',
-        icon: '🧠',
-        dock: true,
-        width: 450, height: 600,
-        content: `
-            <div class="ai-container">
-                <div class="ai-header">
-                    <div class="ai-avatar"><i class="fas fa-brain"></i></div>
-                    <div class="ai-info">
-                        <h3>HarshitAI v2.0</h3>
-                        <p>Powered by Gemini Flash • Sassy Mode: ON</p>
-                    </div>
-                </div>
-                <div class="ai-chat-window custom-scroll" id="ai-chat">
-                    <div class="msg ai">Hello Mr. Snow. ❄️<br>I'm your personal brain. I know everything about you (scary, right?).<br>Ask me something, or don't. I'm busy calculating how amazing you are.</div>
-                </div>
-                <div class="ai-input-area">
-                    <input type="text" class="ai-input" id="ai-input" placeholder="Ask HarshitAI..." onkeypress="if(event.key==='Enter') handleAIChat()">
-                    <button class="ai-send" onclick="handleAIChat()"><i class="fas fa-arrow-up"></i></button>
-                </div>
-            </div>
-        `
-    },
-
-    /* 0.5. TERMINAL.SH (CLI) */
-    {
-        id: 'terminal',
-        title: 'Terminal.sh',
-        icon: '💻',
-        dock: true,
-        width: 600, height: 400,
-        content: `
-            <div class="terminal-app" onclick="document.getElementById('term-input').focus()">
-                <div class="term-output custom-scroll" id="term-output">
-                    <div>Welcome to HarshitOS Kernel v19.0.0</div>
-                    <div>Type 'help' for available commands.</div>
-                    <br>
-                </div>
-                <div class="term-prompt-line">
-                    <div class="term-prompt">root@harshit:~$</div>
-                    <input type="text" class="term-input" id="term-input" autocomplete="off" spellcheck="false" onkeypress="if(event.key==='Enter') handleTerminalCommand()">
-                </div>
-            </div>
-        `
-    },
-
-    /* 1. IDENTITY & PROFILE -> ABOUT US */
-    {
-        id: 'about', title: 'About Us', icon: '👥', dock: true, width: 550, height: 600, content: `
-        <div class="id-card">
-            <div class="id-photo" style="background-image: url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=200');"></div>
-            <div class="id-name">The Bond</div>
-            <div class="id-role">June 20, 2024 • 12:21 AM</div>
-            <div class="mt-8 text-left w-full px-6 space-y-6">
-                <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
-                    <h4 class="font-bold text-blue-800 mb-1">Shravii (The Anchor)</h4>
-                    <p class="text-xs text-gray-600 leading-relaxed">The one who listened without rushing. Who remembered the dates, the moods, and the silences. The safe place.</p>
-                </div>
-                <div class="bg-purple-50 p-4 rounded-lg border-l-4 border-purple-400">
-                    <h4 class="font-bold text-purple-800 mb-1">Harshit (The Responder)</h4>
-                    <p class="text-xs text-gray-600 leading-relaxed">The one who was emotionally expressive, vulnerable, and romantic. Who treated you like a queen and made you feel protected.</p>
-                </div>
-                <div class="text-center text-xs text-gray-400 italic mt-4">"Neither was disposable."</div>
-            </div>
+        id: 'timeline-1221', title: '12:21 AM', icon: '🕒', dock: true, width: 400, height: 350, content: `
+        <div class="h-full flex flex-col items-center justify-center text-center p-8 bg-black text-white">
+            <div class="text-xs tracking-[0.3em] uppercase opacity-50 mb-4">Origin</div>
+            <div class="text-4xl font-serif mb-6">12:21 AM</div>
+            <div id="timeline-text" class="text-sm font-light text-gray-300 space-y-4"></div>
         </div>
+        <script>
+            setTimeout(() => {
+                const lines = ["A conversation began.", "No expectations.", "Just honesty.", "Still here."];
+                let i = 0;
+                const el = document.getElementById('timeline-text');
+                const tInt = setInterval(() => {
+                    if (i >= lines.length) { clearInterval(tInt); return; }
+                    el.innerHTML += '<div class="fade-in-up">' + lines[i] + '</div>';
+                    i++;
+                }, 1200);
+            }, 500);
+        </script>
     `},
 
-    /* 2. OUR JOURNEY (Timeline) */
     {
-        id: 'journey-timeline', title: 'OurJourney', icon: '🚀', dock: true, width: 650, height: 550, content: `
-        <div class="h-full overflow-y-auto custom-scroll timeline-container">
-            <div class="timeline-item">
-                <div class="timeline-date">June 20, 2024 • 12:21 AM</div>
-                <div class="timeline-title">The Midnight Spark</div>
-                <div class="timeline-content">It started quietly on Discord. No announcements, just late-night talks that felt surprisingly real. Strangers to something familiar in hours.</div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">The Accumulation</div>
-                <div class="timeline-title">The Shared World</div>
-                <div class="timeline-content">Shared music, creating playlists, sub sandwiches, and discussing emotions. Mr. Ota, Mr. Snow, and Rabbit 🐰 nicknames were born here.</div>
-            </div>
-             <div class="timeline-item">
-                <div class="timeline-date">The Heavy Days</div>
-                <div class="timeline-title">Safe Space</div>
-                <div class="timeline-content">You became the anchor. I became the listener. We fought, we misunderstood, but we reconciled because neither was disposable.</div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">Now</div>
-                <div class="timeline-title">Deep Truths</div>
-                <div class="timeline-content">Even if silence exists, the bond remains. You are home to a part of me.</div>
-            </div>
-        </div>
-    `},
-
-    /* 3. LETTER (ReadMe.txt) */
-    {
-        id: 'letter', title: 'ReadMe.txt', icon: '📜', dock: true, width: 600, height: 600, content: `
-        <div class="h-full p-10 bg-[#fffef0] overflow-y-auto custom-scroll" style="font-family: 'Handlee', cursive;">
-            <div class="max-w-md mx-auto space-y-6 text-gray-800 text-lg leading-loose">
-                <h1 class="text-3xl font-bold mb-6 border-b-2 border-gray-300 pb-2">My Bestest Friend,</h1>
-                <p>I promised to write this slowly.</p>
-                <p>You are a combination of sweetness and spiciness. You don't entertain lies. You handle me like a kid, but treat me like a queen.</p>
-                <p>You are the world's strongest person. The fastest person. The person who remembers every tiny detail (seriously, how is your memory that good?).</p>
-                <p>At times you overdo it—100% care, 100% dedication—and I worry, but I admire it. You know exactly which card to play, which silence to hold.</p>
-                <p>Thank you for being my safe space. For the 12:21 AM talks. For the fights that made us stronger. For being Mr. Chuha and Mr. Snow.</p>
-                <p class="font-bold">Happy 19th Birthday. You deserve the world.</p>
-                <p class="pt-6 text-right text-base text-gray-500">— Shravii (Your drama queen)</p>
-            </div>
-        </div>
-    `},
-
-    /* 4. DEEP TRUTHS (Notes) */
-    {
-        id: 'favs', title: 'DeepTruths', icon: '⭐', dock: false, width: 650, height: 500, content: `
-        <div class="h-full sticky-grid custom-scroll bg-[#f0f0f0]">
-            <!-- Generated Notes -->
-            <div class="sticky-note" style="--rot: -2deg; background: #fff;">
-                <div class="sticky-title">Everything I Know</div>
-                "This document exists because you mattered enough to be noticed."
-            </div>
-            <div class="sticky-note" style="--rot: 3deg">
-                <div class="sticky-title">The Vibe ❄️</div>
-                Siberian Huskies 🐺<br>Cold Places<br>Silence over Noise<br>Hoodies
-            </div>
-             <div class="sticky-note" style="--rot: -1deg">
-                <div class="sticky-title">The Memory 🧠</div>
-                You notice every tiny detail.<br>You remember dates.<br>You remember moods.
-            </div>
-            <div class="sticky-note" style="--rot: 2deg">
-                <div class="sticky-title">Food 🥪</div>
-                Sub Sandwiches (Practical!)<br>Euros<br>NO Bhindi ❌
-            </div>
-        </div>
-    `},
-
-    /* 5. VS CODE (Engineering) */
-    {
-        id: 'code', title: 'birthday_script.py', icon: '👨‍💻', dock: true, width: 700, height: 500, content: `
-        <div class="code-editor custom-scroll">
-            <div class="flex justify-between items-center mb-4 border-b border-gray-700 pb-2">
-                <span class="text-xs text-gray-400">main.py</span>
-                <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs flex items-center gap-2 transition" onclick="runCode()">
-                    <i class="fas fa-play"></i> Run Code
-                </button>
-            </div>
-            <div id="code-content">
-                <div class="code-line"><span class="line-num">1</span><span class="c-keyword">import</span> <span class="c-func">life</span></div>
-                <div class="code-line"><span class="line-num">2</span></div>
-                <div class="code-line"><span class="line-num">3</span><span class="c-keyword">def</span> <span class="c-func">analyze_dna</span>(<span class="c-string">person</span>):</div>
-                <div class="code-line"><span class="line-num">4</span>    <span class="c-keyword">if</span> <span class="c-string">person</span>.name == <span class="c-string">"Harshit"</span>:</div>
-                <div class="code-line"><span class="line-num">5</span>        <span class="c-string">person</span>.status = <span class="c-string">"World's Strongest"</span></div>
-                <div class="code-line"><span class="line-num">6</span>        <span class="c-string">person</span>.level = <span class="c-func">19</span></div>
-                <div class="code-line"><span class="line-num">7</span>        <span class="c-keyword">return</span> <span class="c-string">"HAPPY BIRTHDAY HARSHIT! 🎉"</span></div>
-                <div class="code-line"><span class="line-num">8</span></div>
-                <div class="code-line"><span class="line-num">9</span><span class="c-keyword">print</span>(<span class="c-func">analyze_dna</span>(<span class="c-func">user</span>))</div>
-            </div>
-            <div id="code-output" class="mt-4 border-t border-gray-700 pt-4 hidden">
-                <div class="text-gray-400 text-xs mb-2">OUTPUT:</div>
-                <div class="text-green-400 font-mono">>> Analyzing DNA sequence...</div>
-                <div class="text-green-400 font-mono">>> Match Found: Level 19 Engineer detected.</div>
-                <div class="text-xl text-yellow-400 font-bold mt-2 typing-effect">>> HAPPY BIRTHDAY HARSHIT! 🎂</div>
+        id: 'mr-snow', title: 'Mr. Snow', icon: '❄️', dock: true, width: 350, height: 450, content: `
+        <div class="h-full relative overflow-hidden bg-gradient-to-b from-[#e6e9f0] to-[#eef1f5] p-8 flex flex-col justify-center items-center text-center">
+            <div class="absolute inset-0 pointer-events-none" id="snow-container"></div>
+            <div class="text-5xl mb-6">🐺</div>
+            <h3 class="font-serif text-xl border-b border-gray-300 pb-2 mb-4">The Nature</h3>
+            <div class="text-sm text-gray-600 space-y-3 font-light">
+                <p>Calm on the surface.</p>
+                <p>Soft when trusted.</p>
+                <p>Quiet strength.</p>
             </div>
         </div>
         <script>
-            function runCode() {
-                document.getElementById('code-output').classList.remove('hidden');
+            // Simple snowflakes
+            const sc = document.getElementById('snow-container');
+            for(let i=0; i<15; i++) {
+                const s = document.createElement('div');
+                s.innerText = '❄';
+                s.style.position = 'absolute';
+                s.style.left = Math.random()*100 + '%';
+                s.style.top = -10 + 'px';
+                s.style.opacity = Math.random();
+                s.style.fontSize = (Math.random()*10 + 10) + 'px';
+                s.style.animation = 'fall ' + (Math.random()*5 + 5) + 's linear infinite';
+                sc.appendChild(s);
+            }
+        </script>
+        <style> @keyframes fall { to { transform: translateY(500px); } } </style>
+    `},
+
+    {
+        id: 'why-matter', title: 'Why You Matter', icon: '💭', dock: false, width: 600, height: 400, content: `
+        <div class="h-full bg-white p-12 flex items-center justify-center text-center cursor-pointer" onclick="nextWhy()">
+            <div id="why-text" class="text-xl font-serif text-gray-800 leading-relaxed transition-opacity duration-500">
+                You show up, even when tired.
+            </div>
+            <div class="absolute bottom-6 text-xs text-gray-400 uppercase tracking-widest">Click for next</div>
+        </div>
+        <script>
+            const whys = [
+                "You show up, even when tired.",
+                "You listen without fixing.",
+                "You stay.",
+                "Your silence is safe.",
+                "You are valid."
+            ];
+            let wIdx = 0;
+            function nextWhy() {
+                const el = document.getElementById('why-text');
+                el.style.opacity = 0;
+                setTimeout(() => {
+                    wIdx = (wIdx + 1) % whys.length;
+                    el.innerText = whys[wIdx];
+                    el.style.opacity = 1;
+                }, 500);
             }
         </script>
     `},
 
-    /* 6. CRAVINGS (Food Dashboard) */
     {
-        id: 'food', title: 'Cravings', icon: '🍔', dock: true, width: 600, height: 500, content: `
-        <div class="food-dashboard custom-scroll">
-            <div class="food-section food-good">
-                <div class="food-title">The Good Stuff ✅</div>
-                <div class="food-grid">
-                    <div class="food-item"><span class="food-emoji">🥪</span><span class="food-name">Sub Sandwiches</span></div>
-                    <div class="food-item"><span class="food-emoji">💶</span><span class="food-name">Euros</span></div>
-                    <div class="food-item"><span class="food-emoji">🍗</span><span class="food-name">Chicken</span></div>
-                    <div class="food-item"><span class="food-emoji">🧊</span><span class="food-name">Cold Water</span></div>
-                </div>
+        id: 'shravii', title: 'Shravii.exe', icon: '🫧', dock: true, width: 400, height: 500, content: `
+        <div class="h-full bg-[#fff0f5] p-6 custom-scroll">
+            <div class="bg-white p-4 rounded-lg shadow-sm mb-4">
+                <div class="text-xs text-gray-400 mb-1">System User</div>
+                <div class="font-bold text-pink-500 mb-2">Shravii</div>
+                <p class="text-sm text-gray-700 leading-relaxed">
+                    Hi.<br>
+                    I’m the part of your life that won’t stop caring.<br>
+                    Sorry. Not sorry.<br><br>
+                    (Also, drink water.)
+                </p>
             </div>
-            <div class="food-section food-bad">
-                <div class="food-title">Trash Bin 🗑️</div>
-                <div class="food-grid">
-                    <div class="food-item"><span class="food-emoji">🍚</span><span class="food-name">Rice</span></div>
-                    <div class="food-item"><span class="food-emoji">🤢</span><span class="food-name">Bhindi</span></div>
-                    <div class="food-item"><span class="food-emoji">🍬</span><span class="food-name">Too Sweet</span></div>
-                </div>
+            <div class="flex justify-center mt-8">
+                <img src="https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif" class="w-32 rounded-lg opacity-80 mix-blend-multiply">
             </div>
         </div>
     `},
 
-    /* 7. STRESS RELIEF (Bubble Wrap) */
     {
-        id: 'stress', title: 'Bubble Wrap', icon: '🫧', dock: true, width: 400, height: 400, content: `
-        <div class="bubble-wrap-container custom-scroll" id="bubble-container">
-            <!-- Bubbles injected via JS -->
-        </div>
-    `, onOpen: initBubbleWrap
-    },
-
-    /* 8. BIN (Trash) -> Updated Content */
-    {
-        id: 'trash', title: 'Bin', icon: '🗑️', dock: true, width: 400, height: 300, content: `
-        <div class="h-full bg-white flex flex-col items-center justify-center text-center p-6">
-            <div class="text-6xl mb-4">🗑️</div>
-            <h3 class="text-lg font-bold text-gray-800 mb-2">Permanently Deleted</h3>
-            <ul class="text-gray-500 text-sm space-y-2">
-                <li>❌ Liars <span class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded">GONE</span></li>
-                <li>❌ Weak Vibes <span class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded">GONE</span></li>
-                <li>❌ Bhindi <span class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded">BURNED</span></li>
+        id: 'admire', title: 'Things I Admire', icon: '🌟', dock: false, width: 500, height: 400, content: `
+        <div class="h-full bg-[#fafafa] p-10">
+            <h3 class="font-bold text-gray-800 mb-6 border-l-4 border-yellow-400 pl-3">Confirmed Data</h3>
+            <ul class="space-y-4 text-gray-600 text-sm list-disc pl-5">
+                <li>Your honesty (rare).</li>
+                <li>How you protect people quietly (noticed).</li>
+                <li>How you keep going (respected).</li>
+                <li>Your memory (scary but cool).</li>
             </ul>
-            <div class="mt-6 text-xs text-gray-400">Auto-emptying enabled.</div>
         </div>
     `},
 
-    /* 9. MASTI / BEAR (Memories/Gifs) */
+    /* CLUSTER 2: FUN / MASTI (Lightweight) */
     {
-        id: 'masti', title: 'Shravii Mode', icon: '🐻', dock: true, width: 400, height: 500, content: `
-        <div class="bear-container custom-scroll">
-            <div class="chat-bubble">Hehehe Happy Birthday! 🎉</div>
-            <div class="chat-bubble">Remember this? (Imagine me annoying you)</div>
-            <img src="assets/bear_poke.gif" class="w-32 rounded mb-4" onerror="this.src='https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif'"> <!-- Fallback to online gif -->
-            <div class="chat-bubble">You handling my drama like:</div>
-            <img src="assets/bear_pat.gif" class="w-32 rounded mb-4" onerror="this.src='https://media.tenor.com/-pMrF1h8YVAAAAAj/milk-and-mocha-bear-couple.gif'">
-            <div class="chat-bubble">Me feeling safe around you:</div>
-            <img src="assets/bear_hug.gif" class="w-32 rounded" onerror="this.src='https://media.tenor.com/J7e9j0A7b0kAAAAj/hugs.gif'">
+        id: 'facts', title: 'Harshit Facts.txt', icon: '📄', dock: false, width: 400, height: 400, content: `
+        <div class="h-full bg-white font-mono text-sm p-6 text-gray-700 whitespace-pre-line custom-scroll">
+            <span class="font-bold text-black border-b border-black">SYSTEM NOTES: Harshit</span>
+
+            > Needs hoodie > people
+            > Eats silently
+            > Pretends not to care (FAILED)
+            > 90% water, 10% attitude
+            > Actually soft (Do not reveal)
         </div>
     `},
 
-    /* 10. MUSIC PLAYER */
     {
-        id: 'music-player', title: 'Vibes', icon: '🎧', dock: true, width: 400, height: 400, content: `
-        <div class="music-player">
-            <div class="album-art" style="background-image: url('https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=400');">🎵</div>
-            <div class="track-info">
-                <h3>Our Playlist</h3>
-                <p>Songs that explain feelings</p>
+        id: 'not-dumb', title: 'Not Dumb', icon: '🤨', dock: false, width: 300, height: 200, content: `
+        <div class="h-full flex items-center justify-center bg-gray-100 text-center p-4">
+            <div>
+                <div class="text-3xl mb-2">🤨</div>
+                <div class="font-bold">Not Dumb At All</div>
+                <div class="text-xs text-gray-500 mt-2">Just stubborn.</div>
             </div>
-            <div class="player-controls">
-                <div class="text-2xl cursor-pointer opacity-70 hover:opacity-100">⏮️</div>
-                <div class="play-btn" onclick="document.getElementById('bg-audio').play()">▶</div>
-                <div class="text-2xl cursor-pointer opacity-70 hover:opacity-100">⏭️</div>
+        </div>
+    `},
+
+    {
+        id: 'flash', title: 'Fastest Alive', icon: '⚡', dock: false, width: 500, height: 300, content: `
+        <div class="h-full bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center relative overflow-hidden">
+            <div class="text-white text-6xl font-black italic tracking-tighter" id="zoom-text">ZOOM</div>
+            <div class="absolute inset-0 bg-white opacity-0" id="flash-overlay"></div>
+        </div>
+        <script>
+            setTimeout(() => {
+                const t = document.getElementById('zoom-text');
+                t.style.transition = 'transform 0.2s';
+                t.style.transform = 'scale(10) skewX(-20deg)';
+                t.style.opacity = 0;
+            }, 1000);
+        </script>
+    `},
+
+    {
+        id: 'rabbit', title: 'Rabbit Mode', icon: '🐰', dock: false, width: 400, height: 400, content: `
+        <div class="h-full bg-white p-4 flex flex-wrap gap-2 content-center justify-center overflow-hidden relative" id="rabbit-den">
+            <div class="z-10 bg-white/90 p-4 rounded text-center shadow-lg border border-gray-100">
+                <div class="text-2xl mb-2">🐰</div>
+                <p class="text-xs text-gray-500">Releasing chaos...</p>
             </div>
-            <div class="mt-6 text-xs text-gray-400">Put 'music.mp3' in the folder to play real audio!</div>
+        </div>
+        <script>
+            let rCount = 0;
+            const rInt = setInterval(() => {
+                if(rCount > 8) { clearInterval(rInt); return; }
+                const r = document.createElement('div');
+                r.innerText = '🐰';
+                r.style.position = 'absolute';
+                r.style.left = Math.random()*80 + 10 + '%';
+                r.style.top = Math.random()*80 + 10 + '%';
+                r.style.fontSize = '2rem';
+                document.getElementById('rabbit-den').appendChild(r);
+                rCount++;
+            }, 600);
+        </script>
+    `},
+
+    /* CLUSTER 3: COMFORT & CALM (Safe Spaces) */
+    {
+        id: 'music-night', title: 'Late Night', icon: '🌙', dock: true, width: 350, height: 200, content: `
+        <div class="h-full bg-[#0F172A] text-slate-300 flex flex-col items-center justify-center gap-4">
+            <div class="text-xs tracking-widest uppercase opacity-50">Instrumental Only</div>
+            <i class="fas fa-play-circle text-4xl text-white opacity-80 hover:opacity-100 cursor-pointer transition" onclick="alert('Playing soft piano...')"></i>
         </div>
     `},
 
-    /* 11. GALLERY (Memories Grid) */
     {
-        id: 'gallery', title: 'Memories', icon: '🖼️', dock: false, width: 700, height: 500, content: `
-        <div class="h-full bg-black p-4 grid grid-cols-3 gap-2 overflow-y-auto custom-scroll">
-            <div class="aspect-square bg-gray-800 rounded flex items-center justify-center text-gray-500 hover:opacity-80 transition cursor-pointer">Place photos in assets/</div>
-            <div class="aspect-square bg-gray-700 rounded"></div>
-            <div class="aspect-square bg-gray-600 rounded"></div>
-            <div class="aspect-square bg-gray-900 rounded"></div>
-            <div class="aspect-square bg-gray-800 rounded"></div>
+        id: 'tired', title: 'When Tired', icon: '😴', dock: true, width: 450, height: 350, content: `
+        <div class="h-full bg-[#202020] text-gray-300 flex items-center justify-center text-center p-10 font-serif text-lg leading-loose">
+            "You don’t have to be strong right now."
         </div>
     `},
 
-    /* UTILITIES */
-    { id: 'discord', title: 'Discord 2024', icon: '💬', dock: false, width: 400, height: 500, content: `<div class="p-4 bg-[#36393f] h-full text-white"><div class="border-b border-gray-700 pb-2 mb-4 font-bold"># general</div><div class="space-y-4 text-sm"><div class="flex gap-3"><div class="w-8 h-8 rounded-full bg-blue-500"></div><div><span class="font-bold text-red-400">Harshit</span> <span class="text-xs text-gray-400">Today at 12:21 AM</span><div class="text-gray-300">Hey.</div></div></div><div class="flex gap-3"><div class="w-8 h-8 rounded-full bg-pink-500"></div><div><span class="font-bold text-yellow-400">Shravii</span><span class="text-xs text-gray-400">Today at 12:22 AM</span><div class="text-gray-300">Hi! Stranger.</div></div></div></div></div>` },
-    { id: 'calc', title: 'Calculator', icon: '🧮', dock: false, width: 250, height: 350, content: `<div class="h-full bg-gray-900 flex items-center justify-center text-white">0</div>` },
-
-
-    /* SYSTEM SETTINGS */
     {
-        id: 'settings', title: 'System Preferences', icon: '⚙️', dock: false, width: 700, height: 500,
-        content: `
-            <div class="settings-container bg-[#f5f5f7]">
-                <div class="settings-sidebar">
-                    <div class="settings-nav-item active">General</div>
-                </div>
-                <div class="settings-content custom-scroll">
-                    <div class="settings-section">
-                        <div class="settings-title">Appearance</div>
-                        <div class="appearance-options">
-                            <div class="appearance-card active" onclick="setTheme('light', this)"><div class="theme-preview light"></div><div class="theme-label">Light</div></div>
-                            <div class="appearance-card" onclick="setTheme('dark', this)"><div class="theme-preview dark"></div><div class="theme-label">Dark</div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>`,
-        onOpen: renderSettings
-    },
+        id: 'dream-snow', title: 'Snow Place', icon: '❄️', dock: false, width: 700, height: 500, content: `
+        <div class="h-full bg-gradient-to-b from-[#cfd9df] to-[#e2ebf0] relative overflow-hidden">
+           <!-- Visual Only: Calm snow loop -->
+           <div class="absolute inset-0 flex items-center justify-center text-gray-500/20 font-serif text-4xl italic">
+                Silence.
+           </div>
+        </div>
+    `},
 
-    /* FOLDER: SYSTEM */
-    { role: 'folder', id: 'system-folder', title: 'System', icon: '🖥️', dock: false, children: ['settings', 'trash', 'calc', 'calendar'] },
+    {
+        id: 'hoodie', title: 'Hoodie Mode', icon: '🧥', dock: true, width: 400, height: 300, content: `
+        <div class="h-full bg-gray-800 text-gray-200 flex flex-col items-center justify-center p-8 text-center">
+            <div class="text-4xl mb-4 opacity-50">🧥</div>
+            <p class="text-sm font-light">"This is the part of life that doesn’t ask questions."</p>
+        </div>
+    `},
 
-    /* FOLDER: GAMES (Collapsed to be less prominent but still there if wanted) */
-    { role: 'folder', id: 'arcade-folder', title: 'Arcade', icon: '🕹️', dock: true, children: ['game-brick', 'game-snake', 'game-2048', 'game-chess'] },
+    /* CLUSTER 4: GROWTH & 19 (Mature) */
+    {
+        id: '19-exe', title: '19.exe', icon: '🧠', dock: true, width: 500, height: 400, content: `
+        <div class="h-full bg-white p-10 flex flex-col justify-center">
+            <h1 class="text-6xl font-black text-gray-100 absolute top-4 left-4 -z-10 select-none">19</h1>
+            <div class="space-y-6 text-gray-700 font-medium">
+                <p>You’re allowed to grow slowly.</p>
+                <p>You don’t need all answers.</p>
+                <p>It’s okay to be a work in progress.</p>
+            </div>
+        </div>
+    `},
 
-    /* GAMES (Hidden from desktop, inside folder) */
-    { id: 'game-brick', title: 'Brick Breaker', icon: '🧱', url: 'D:/games/Arcade/2D-break-breaker-master/index.html' },
-    { id: 'game-snake', title: 'Snake', icon: '🐍', url: 'D:/games/Arcade/Snake-Game/index.html' },
-    { id: 'game-2048', title: '2048', icon: '🔢', url: 'D:/games/Puzzles/2048-lite-master/index.html' },
-    { id: 'game-chess', title: 'Chess', icon: '♟️', url: 'D:/games/Tabletop/Grandmaster Chess Arena/index.html' }
+    {
+        id: 'future', title: 'Future You', icon: '🔮', dock: false, width: 400, height: 300, content: `
+        <div class="h-full bg-indigo-50 p-8 flex items-center justify-center text-center">
+            <div class="text-indigo-800 font-serif italic">"I wonder what we'll laugh about next year."</div>
+        </div>
+    `},
+
+    {
+        id: 'engineering', title: 'Engineering', icon: '💻', dock: true, width: 600, height: 400, content: `
+        <div class="h-full bg-[#1e1e1e] text-green-400 font-mono text-sm p-6 custom-scroll">
+            <div>> npm install adulthood --save-dev</div>
+            <div class="text-yellow-500 mt-2">WARN: Dependency 'sleep' outdated.</div>
+            <div class="text-blue-400 mt-2">INFO: Core values locked. integrity check passed.</div>
+            <br>
+            <div class="text-white opacity-70">// Debugging life takes time. Don't panic.</div>
+        </div>
+    `},
+
+    /* CLUSTER 5: EASTER EGGS (Hidden) */
+    {
+        id: 'do-not-open', title: 'Do Not Open', icon: '🚫', dock: false, width: 300, height: 200, content: `
+        <div class="h-full flex items-center justify-center bg-red-50 text-red-900 text-center p-6">
+            <div>
+                <div class="font-bold mb-2">You Opened It.</div>
+                <div class="text-xs">I knew you would. Stubborn. ❤️</div>
+            </div>
+        </div>
+    `},
+
+    {
+        id: 'playlist', title: 'Hidden Tracks', icon: '🎶', dock: false, width: 400, height: 300, content: `
+        <div class="h-full bg-black text-white p-6">
+            <div class="uppercase tracking-widest text-xs opacity-50 mb-4">Secret Collection</div>
+            <ul class="space-y-3 text-sm font-light opacity-80">
+                <li>1. The Silence (Original Mix)</li>
+                <li>2. 12:21 AM (lo-fi)</li>
+                <li>3. That one song we shared</li>
+            </ul>
+        </div>
+    `},
+
+    {
+        id: 'last-thing', title: 'One Last Thing', icon: '🖤', dock: true, width: 400, height: 300, content: `
+        <div class="h-full bg-white flex items-center justify-center text-center p-8 cursor-pointer hover:bg-gray-50 transition" onclick="Apps.open('thank-you')">
+            Click here.
+        </div>
+    `},
+
+    {
+        id: 'thank-you', title: 'Thank You', icon: '✨', dock: false, width: 450, height: 350, content: `
+        <div class="h-full flex items-center justify-center text-center p-10 bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
+            <div>
+                <div class="text-2xl font-serif mb-4">Thank you for existing.</div>
+                <div class="text-sm opacity-80">Really.</div>
+            </div>
+        </div>
+    `}
 ];
 
 /* === SETTINGS FUNCTIONS === */
+function showUpdate(el) {
+    if (el) {
+        el.parentElement.querySelectorAll('div').forEach(d => {
+            d.classList.remove('bg-[#007aff]', 'text-white');
+            d.classList.add('text-gray-700');
+        });
+        el.classList.remove('text-gray-700');
+        el.classList.add('bg-[#007aff]', 'text-white');
+    }
+
+    const area = document.getElementById('settings-area');
+    area.innerHTML = `
+        <div class="system-update">
+            <h2>Harshit OS 19.0</h2>
+            <p class="update-subtitle">System Update</p>
+            <pre class="patch-notes" id="patchNotes"></pre>
+        </div>
+    `;
+
+    const patchText = "• Improved emotional resilience under pressure\\n• Fixed issue where self-doubt appeared late at night\\n• Added support for silence without loneliness\\n• Optimized strength — quieter, more stable\\n• Enhanced responsibility handling\\n• Known issue: still carries more than necessary";
+
+    let i = 0;
+    const speed = 30;
+    const patchEl = document.getElementById("patchNotes");
+
+    function typePatch() {
+        if (i < patchText.length) {
+            patchEl.textContent += patchText.charAt(i);
+            i++;
+            setTimeout(typePatch, speed);
+        }
+    }
+    typePatch();
+}
+
+function resetSettingsView(el) {
+    if (el) {
+        el.parentElement.querySelectorAll('div').forEach(d => {
+            d.classList.remove('bg-[#007aff]', 'text-white');
+            d.classList.add('text-gray-700');
+        });
+        el.classList.remove('text-gray-700');
+        el.classList.add('bg-[#007aff]', 'text-white');
+    }
+    const area = document.getElementById('settings-area');
+    area.innerHTML = `
+        <div class="settings-section">
+            <div class="settings-title">Appearance</div>
+            <div class="appearance-options">
+                <div class="appearance-card active" onclick="setTheme('light', this)"><div class="theme-preview light"></div><div class="theme-label">Light</div></div>
+                <div class="appearance-card" onclick="setTheme('dark', this)"><div class="theme-preview dark"></div><div class="theme-label">Dark</div></div>
+            </div>
+            <div class="mt-8">
+                <div class="settings-title">WALLPAPER</div>
+                <div id="wp-grid" class="grid grid-cols-3 gap-3"></div>
+            </div>
+        </div>
+    `;
+    renderSettings();
+}
 function renderSettings() {
     const grid = document.getElementById('wp-grid');
     if (grid) {
         grid.innerHTML = wallpapers.map((wp, i) => `
-            <div class="wallpaper-thumb" onclick="setWallpaper('${wp.full}', this)">
-                <img src="${wp.thumb}">
+    < div class="wallpaper-thumb" onclick = "setWallpaper('${wp.full}', this)" >
+        <img src="${wp.thumb}">
+        </div>
+`).join('');
+    }
+}
+
+/* === SETTINGS FUNCTIONS === */
+function showUpdate(el) {
+    if (el) {
+        el.parentElement.querySelectorAll('div').forEach(d => {
+            d.classList.remove('bg-[#007aff]', 'text-white');
+            d.classList.add('text-gray-700');
+        });
+        el.classList.remove('text-gray-700');
+        el.classList.add('bg-[#007aff]', 'text-white');
+    }
+
+    const area = document.getElementById('settings-area');
+    area.innerHTML = `
+        <div class="system-update">
+            <h2>Harshit OS 19.0</h2>
+            <p class="update-subtitle">System Update</p>
+            <pre class="patch-notes" id="patchNotes"></pre>
+        </div>
+    `;
+
+    const patchText = "• Improved emotional resilience under pressure\\n• Fixed issue where self-doubt appeared late at night\\n• Added support for silence without loneliness\\n• Optimized strength — quieter, more stable\\n• Enhanced responsibility handling\\n• Known issue: still carries more than necessary";
+
+    let i = 0;
+    const speed = 30;
+    const patchEl = document.getElementById("patchNotes");
+
+    function typePatch() {
+        if (i < patchText.length) {
+            patchEl.textContent += patchText.charAt(i);
+            i++;
+            setTimeout(typePatch, speed);
+        }
+    }
+    typePatch();
+}
+
+function resetSettingsView(el) {
+    if (el) {
+        el.parentElement.querySelectorAll('div').forEach(d => {
+            d.classList.remove('bg-[#007aff]', 'text-white');
+            d.classList.add('text-gray-700');
+        });
+        el.classList.remove('text-gray-700');
+        el.classList.add('bg-[#007aff]', 'text-white');
+    }
+    const area = document.getElementById('settings-area');
+    area.innerHTML = `
+        <div class="settings-section">
+            <div class="settings-title">Appearance</div>
+            <div class="appearance-options">
+                <div class="appearance-card active" onclick="setTheme('light', this)"><div class="theme-preview light"></div><div class="theme-label">Light</div></div>
+                <div class="appearance-card" onclick="setTheme('dark', this)"><div class="theme-preview dark"></div><div class="theme-label">Dark</div></div>
             </div>
-        `).join('');
+            <div class="mt-8">
+                <div class="settings-title">WALLPAPER</div>
+                <div id="wp-grid" class="grid grid-cols-3 gap-3"></div>
+            </div>
+        </div>
+    `;
+    renderSettings();
+}
+function renderSettings() {
+    const grid = document.getElementById('wp-grid');
+    if (grid) {
+        grid.innerHTML = wallpapers.map((wp, i) => `
+    < div class="wallpaper-thumb" onclick = "setWallpaper('${wp.full}', this)" >
+        <img src="${wp.thumb}">
+        </div>
+`).join('');
     }
 }
 
@@ -373,7 +486,7 @@ function updateClock() {
     const time = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
     const date = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
     const clockEl = document.getElementById('clock');
-    if (clockEl) clockEl.innerText = `${date}  ${time}`;
+    if (clockEl) clockEl.innerText = `${date}  ${time} `;
 }
 setInterval(updateClock, 1000);
 updateClock(); // Initial call
@@ -441,21 +554,17 @@ function skipToDesktop() {
 }
 
 /* === PHASE 1: COUNTDOWN GATEKEEPER === */
-/* === PHASE 1: COUNTDOWN GATEKEEPER (Real-time to Jan 30) === */
+/* === PHASE 0: COUNTDOWN GATEKEEPER (FIRST) === */
+/* Starts immediately on load */
 function startCountdownGatekeeper() {
     const cdScreen = document.getElementById('countdown-phase');
     const cdDisplay = document.getElementById('countdown-display');
     const cdSub = document.getElementById('countdown-sub');
 
-    cdScreen.classList.remove('hidden');
-    // Adjust font size for longer text
-    cdDisplay.classList.remove('text-6xl', 'md:text-8xl');
-    cdDisplay.classList.add('text-4xl', 'md:text-6xl');
-    cdDisplay.classList.add('countdown-glow');
-    cdSub.style.opacity = 1;
+    // Ensure visible
+    if (cdScreen) cdScreen.style.display = 'flex';
 
     // Target: Jan 30, 2026 00:00:00
-    // Note: Assuming 2026 based on current system time.
     const targetDate = new Date('January 30, 2026 00:00:00').getTime();
 
     const int = setInterval(() => {
@@ -466,15 +575,17 @@ function startCountdownGatekeeper() {
 
         if (distance < 0) {
             clearInterval(int);
-            cdDisplay.innerText = "IT'S TIME";
-            cdSub.innerText = "The wait is over.";
+            cdDisplay.innerText = "Now.";
+            cdDisplay.style.fontSize = "3rem";
+            cdSub.innerText = ""; // Clear subtext
             setTimeout(() => {
                 cdScreen.style.opacity = 0;
                 setTimeout(() => {
                     cdScreen.style.display = 'none';
                     state.countdownFinished = true;
-                    playJourneyIntro();
-                }, 1500);
+                    // Trigger Phase 1: Boot
+                    runSystemBoot();
+                }, 1000);
             }, 1000);
             return;
         }
@@ -485,7 +596,7 @@ function startCountdownGatekeeper() {
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
         cdDisplay.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        cdSub.innerText = "UNTIL JANUARY 30";
+        cdSub.innerText = "Processing Arrival";
     }, 1000);
 }
 
@@ -620,7 +731,39 @@ const Apps = {
     }
 };
 
-function closeApp(id) { const win = document.getElementById(`win-${id}`); win.style.opacity = 0; setTimeout(() => win.remove(), 300); const dot = document.getElementById(`dot-${id}`); if (dot) dot.parentElement.classList.remove('active'); }
+
+
+function closeApp(id) {
+    const win = document.getElementById(`win-${id}`);
+    if (win) {
+        win.style.opacity = 0;
+        setTimeout(() => win.remove(), 300);
+    }
+    const dot = document.getElementById(`dot-${id}`);
+    if (dot) dot.parentElement.classList.remove('active');
+
+    state.appsOpened.delete(id);
+    if (state.appsOpened.size === 0) {
+        setTimeout(triggerQuietEnding, 2000);
+    }
+}
+
+function triggerQuietEnding() {
+    const term = document.getElementById('term-input');
+    if (term) term.blur(); // Unfocus inputs
+
+    // Removed dimming effect per user request ("No dim thing")
+    // document.body.style.filter = 'brightness(0.1)';
+
+    const msg = document.createElement('div');
+    msg.className = 'fixed bottom-10 left-10 text-white/40 font-mono text-xs z-[99999]';
+    msg.style.opacity = 0;
+    msg.style.transition = 'opacity 2s ease 2s'; // Delay 2s
+    msg.innerText = 'This space stays.';
+    document.body.appendChild(msg);
+
+    requestAnimationFrame(() => msg.style.opacity = 1);
+}
 function minimizeApp(id) {
     const win = document.getElementById(`win-${id}`);
     win.style.transform = 'scale(0.8) translateY(200px)';
@@ -646,7 +789,7 @@ function maximizeApp(id) {
     }
 }
 function showAffirmation(i) { const el = document.getElementById('aff-text'); if (el) { el.style.opacity = 0; setTimeout(() => { el.innerText = `"${affirmations[i]}"`; el.style.opacity = 1; }, 300); } }
-function playMusic(m) { alert(`Playing ${m}`); }
+function playMusic(m) { alert(`Playing ${m} `); }
 function checkUnlock() { if (state.countdownFinished && state.appsOpened.size >= 5) { document.getElementById('lock-msg').style.display = 'none'; document.getElementById('unlock-msg').classList.remove('hidden'); } }
 let dragItem = null, offX = 0, offY = 0;
 function startDrag(e, id) { if (e.target.closest('.traffic-lights')) return; dragItem = document.getElementById(id); offX = e.clientX - dragItem.offsetLeft; offY = e.clientY - dragItem.offsetTop; dragItem.style.zIndex = ++zIndex; document.addEventListener('mousemove', doDrag); document.addEventListener('mouseup', stopDrag); }
@@ -724,7 +867,7 @@ function handleTerminalCommand() {
     if (!cmd) return;
 
     // Echo command
-    output.innerHTML += `<div><span class="term-prompt">root@harshit:~$</span> ${cmd}</div>`;
+    output.innerHTML += `< div > <span class="term-prompt">root@harshit:~$</span> ${cmd}</div > `;
 
     // Process Command
     let response = '';
@@ -732,23 +875,45 @@ function handleTerminalCommand() {
     const command = args[0].toLowerCase();
 
     switch (command) {
+        case 'hold':
+            input.disabled = true;
+            output.innerHTML += `<div>...</div>`;
+            setTimeout(() => {
+                if (output.lastElementChild.innerText === '...') output.lastElementChild.remove();
+                input.disabled = false;
+                input.focus();
+            }, 7000);
+            return;
         case 'help':
             response = `
-                <div class="term-info">Available Commands:</div>
+    < div class="term-info" > Available Commands:</div >
                 <div>  help       - Show this list</div>
+                <div>  update     - Check for system updates</div>
                 <div>  whois      - Identify the user</div>
                 <div>  secret     - Unlock hidden data</div>
                 <div>  cake       - Initiate birthday sequence</div>
                 <div>  date       - Show critical dates</div>
                 <div>  clear      - Clear the terminal</div>
-            `;
+                <div>  carry      - [Hidden]</div>
+                <div>  sleep      - [System Legacy]</div>
+`;
             break;
+        case 'update':
+            output.innerHTML += `< div > <span class="term-info">Checking for updates...</span></div > `;
+            setTimeout(() => {
+                output.innerHTML += `< div > Harshit OS 19.0 is already up to date.</div > `;
+                setTimeout(() => {
+                    output.innerHTML += `< div > <span class="term-info">Some improvements take time.</span></div > `;
+                }, 1000);
+            }, 1000);
+            input.value = '';
+            return;
         case 'whois':
             if (args[1] === 'shravii') response = "User: Shravii<br>Role: The Architect / The Drama Queen<br>Status: Bestest Friend";
             else response = "User: Harshit (Mr. Snow)<br>Role: System Admin / Birthday Boy<br>Strength: Infinite";
             break;
         case 'secret':
-            response = `<span class="term-success">Access Granted.</span><br>Code: 1221<br>Meaning: The time it all started.`;
+            response = `< span class="term-success" > Access Granted.</span > <br>Code: 1221<br>Meaning: The time it all started.`;
             break;
         case 'cake':
             response = `🎂 Initiating Cake Protocol...<br>Happy 19th Birthday Harshit! 🎉`;
@@ -758,9 +923,21 @@ function handleTerminalCommand() {
         case 'date':
             response = `Critical Date: June 20, 2024 (Origin)`;
             break;
+        case 'carry': // EASTER EGG
+            // 7. Hidden Message
+            const egg = document.createElement('div');
+            egg.className = 'fixed inset-0 z-[60000] flex items-center justify-center pointer-events-none text-2xl font-light text-white tracking-widest bg-black/80 fade-in-out';
+            egg.innerText = "You never had to be strong alone.";
+            document.body.appendChild(egg);
+            setTimeout(() => egg.remove(), 5000);
+            output.innerHTML += `<div><span class="term-success">Message received.</span></div>`;
+            return;
         case 'clear':
             output.innerHTML = '';
             input.value = '';
+            return; // Return early
+        case 'sleep':
+            triggerQuietEnding();
             return;
         case 'sudo':
             response = `<span class="term-error">Permission denied: You are already the strongest user.</span>`;
@@ -790,7 +967,7 @@ function initBubbleWrap() {
             if (!this.classList.contains('popped')) {
                 this.classList.add('popped');
                 // Play pop sound if audio file exists
-                // new Audio('assets/pop.mp3').play().catch(() => {});
+                // new Audio('assets/pop.mp3').play().catch(() => { });
             }
         };
         container.appendChild(b);
@@ -798,4 +975,85 @@ function initBubbleWrap() {
 }
 
 
+/* === POLAROID GALLERY LOGIC === */
+function initGallery() {
+    const container = document.getElementById('gallery-container');
+    if (!container || container.children.length > 0) return; // Prevent duplicates
+
+    const photos = [
+        { src: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400', caption: "Mr. Snow" },
+        { src: 'https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=400', caption: "Doggo Mode" },
+        { src: 'https://images.unsplash.com/photo-1523307730650-594bc63f9d67?q=80&w=400', caption: "Smart Stuff" },
+        { src: 'https://images.unsplash.com/photo-1478737270239-2f02b77ac6d5?q=80&w=400', caption: "Cold Vibes" },
+        { src: 'https://images.unsplash.com/photo-1492571350019-22de08371fd3?q=80&w=400', caption: "Focus." },
+        { src: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400', caption: "(Place real photos here)" }
+    ];
+
+    photos.forEach(photo => {
+        const card = document.createElement('div');
+        card.className = 'polaroid-card';
+        card.innerHTML = `<img src="${photo.src}"><div class="caption">${photo.caption}</div>`;
+
+        // Random Scatter
+        const randomRot = Math.random() * 20 - 10; // -10 to +10 deg
+        const randomTop = Math.random() * 200;
+        const randomLeft = Math.random() * (container.clientWidth - 230); // Prevent overflow
+
+        card.style.transform = `rotate(${randomRot}deg)`;
+        card.style.top = `${randomTop + 50}px`;
+        card.style.left = `${randomLeft}px`;
+
+        // Draggable Logic (Simple)
+        card.onmousedown = function (e) {
+            card.style.zIndex = 200;
+            const offX = e.clientX - card.getBoundingClientRect().left;
+            const offY = e.clientY - card.getBoundingClientRect().top;
+
+            function move(ev) {
+                // Determine container bounds
+                const rect = container.getBoundingClientRect();
+                card.style.left = (ev.clientX - offX - rect.left) + 'px';
+                card.style.top = (ev.clientY - offY - rect.top) + 'px';
+            }
+            function stop() {
+                document.removeEventListener('mousemove', move);
+                document.removeEventListener('mouseup', stop);
+                card.style.zIndex = "";
+            }
+            document.addEventListener('mousemove', move);
+            document.addEventListener('mouseup', stop);
+        }
+
+        container.appendChild(card);
+    });
+}
+
+/* === PHASE -1: SYSTEM BOOT (Silence) === */
+/* === PHASE -1: SYSTEM BOOT (Refined) === */
+/* === PHASE 1: SYSTEM BOOT (Green Text) === */
+async function runSystemBoot() {
+    const bootScreen = document.getElementById('boot-sequence');
+    if (!bootScreen) return;
+
+    bootScreen.style.display = 'flex';
+    // Small delay to allow opacity transition if needed
+    requestAnimationFrame(() => bootScreen.style.opacity = 1);
+
+    // Boot lasts ~7-8s then triggers Journey
+    setTimeout(() => {
+        bootScreen.style.transition = 'opacity 1.5s ease';
+        bootScreen.style.opacity = 0;
+
+        setTimeout(() => {
+            bootScreen.style.display = 'none';
+            // Trigger Phase 2: Journey
+            playJourneyIntro();
+        }, 1500);
+    }, 7500);
+}
+
+// START HERE
 window.onload = startCountdownGatekeeper;
+
+
+

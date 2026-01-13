@@ -11,7 +11,8 @@ body {
     padding: 0;
     overflow: hidden;
     font-family: 'Inter', sans-serif;
-    background: #000;
+    background: #1e3c72;
+    /* Soft Night Blue fallback */
     user-select: none;
     cursor: default;
 }
@@ -394,7 +395,8 @@ body {
     flex-direction: column;
     min-width: 300px;
     min-height: 200px;
-    animation: winOpen 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    /* UPDATE: Fade + scale only, no bounce */
+    animation: winOpen 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     resize: both;
     overflow: hidden;
 }
@@ -414,12 +416,12 @@ body {
 
 @keyframes winOpen {
     from {
-        transform: scale(0.95) translateY(10px);
+        transform: scale(0.98);
         opacity: 0;
     }
 
     to {
-        transform: scale(1) translateY(0);
+        transform: scale(1);
         opacity: 1;
     }
 }
@@ -451,24 +453,50 @@ body {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
-    transition: transform 0.1s;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.1s, opacity 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    color: rgba(0, 0, 0, 0.5);
+    font-family: sans-serif;
+    font-weight: 900;
 }
 
-.traffic-light:active {
-    transform: scale(0.9);
+.title-bar:hover .traffic-light::before {
+    opacity: 1;
 }
 
-.close {
-    background: #FF5F57;
+.traffic-light::before {
+    opacity: 0;
+    transition: opacity 0.1s;
 }
 
-.minimize {
-    background: #FEBC2E;
+.traffic-light.close {
+    background: #ff5f56;
 }
 
-.maximize {
-    background: #28C840;
+.traffic-light.close::before {
+    content: '×';
+    font-size: 10px;
+}
+
+.traffic-light.minimize {
+    background: #ffbd2e;
+}
+
+.traffic-light.minimize::before {
+    content: '−';
+}
+
+.traffic-light.maximize {
+    background: #27c93f;
+}
+
+.traffic-light.maximize::before {
+    content: '+';
+    font-size: 9px;
 }
 
 .win-title {
@@ -757,7 +785,8 @@ body {
 
 /* === PHASE 0: SPACE BACKGROUND (Intro Only) === */
 #space-bg {
-    background: radial-gradient(ellipse at bottom, #0f1729 0%, #020205 100%);
+    /* Revised: Calm, neutral, soft night blue gradient. Not harsh black. */
+    background: linear-gradient(to bottom, #2a5298, #1e3c72);
     overflow: hidden;
     position: fixed;
     inset: 0;
@@ -1333,4 +1362,294 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* === NEW: STORYBOOK APP === */
+.storybook-container {
+    height: 100%;
+    background: linear-gradient(to right, #fdfbfb, #ebedee);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Playfair Display', serif;
+}
+
+.story-slide {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.story-slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+    z-index: 10;
+}
+
+.story-slide h2 {
+    font-size: 32px;
+    color: #2d3748;
+    margin-bottom: 20px;
+}
+
+.story-slide p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #4a5568;
+    font-style: italic;
+    max-width: 80%;
+}
+
+.story-controls {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 20;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.story-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #718096;
+    transition: color 0.2s;
+}
+
+.story-btn:hover {
+    color: #2d3748;
+}
+
+/* === NEW: POLAROID GALLERY === */
+.polaroid-gallery {
+    height: 100%;
+    background: #e2e8f0;
+    position: relative;
+    overflow: hidden;
+    padding: 40px;
+    perspective: 1000px;
+}
+
+.polaroid-card {
+    background: white;
+    padding: 12px 12px 40px 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    position: absolute;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+    width: 200px;
+    backface-visibility: hidden;
+    border-radius: 2px;
+}
+
+.polaroid-card img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    background: #f7fafc;
+    border: 1px solid #edf2f7;
+}
+
+.polaroid-card .caption {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-family: 'Handlee', cursive;
+    font-size: 14px;
+    color: #4a5568;
+}
+
+.polaroid-card:hover {
+    z-index: 100 !important;
+    transform: scale(1.1) rotate(0deg) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* === BOOT SEQUENCE === */
+#boot-sequence {
+    transition: opacity 1.5s ease;
+}
+
+.boot-cursor::after {
+    content: '_';
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* === BOOT SEQUENCE (Refined) === */
+#boot-sequence {
+    position: fixed;
+    inset: 0;
+    background: black;
+    /* Mechanical boot */
+    color: #4ade80;
+    /* Green text */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    /* Align left for terminal feel */
+    padding-left: 20%;
+    z-index: 50000;
+    font-family: 'Fira Code', monospace;
+}
+
+.boot-line {
+    opacity: 0;
+    font-size: 13px;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 8px;
+    animation: fadeIn 1.5s forwards;
+}
+
+.delay1 {
+    animation-delay: 1.0s;
+}
+
+.delay2 {
+    animation-delay: 2.5s;
+}
+
+.delay3 {
+    animation-delay: 4.0s;
+}
+
+.delay4 {
+    animation-delay: 5.5s;
+}
+
+.delay5 {
+    animation-delay: 7.0s;
+}
+
+.boot-cursor::after {
+    content: '_';
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* === SYSTEM UPDATE SECTION === */
+.system-update {
+    padding: 20px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont;
+    color: #333;
+    /* Ensure text is visible in light mode */
+}
+
+.system-update h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.update-subtitle {
+    font-size: 12px;
+    opacity: 0.6;
+    margin-bottom: 16px;
+}
+
+.patch-notes {
+    font-family: "SF Mono", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    background: rgba(0, 0, 0, 0.04);
+    padding: 14px;
+    border-radius: 6px;
+    white-space: pre-wrap;
+    color: #444;
+}
+
+.window.dark .system-update {
+    color: white;
+}
+
+.window.dark .patch-notes {
+    background: rgba(255, 255, 255, 0.06);
+    color: #ddd;
+}
+
+/* === PRESENCE UPDATES === */
+/* 1. System Status */
+.system-uptime {
+    margin-top: 16px;
+    font-size: 13px;
+    opacity: 0.75;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 12px;
+}
+
+.uptime-label {
+    font-weight: 500;
+}
+
+.uptime-sub {
+    margin-top: 4px;
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+/* 2. Micro-Story */
+.micro-story {
+    max-width: 420px;
+    margin: auto;
+    font-size: 16px;
+    line-height: 1.9;
+    opacity: 0;
+    animation: fadeInStory 1.8s ease forwards;
+    text-align: center;
+    color: #333;
+}
+
+.window.dark .micro-story {
+    color: #ddd;
+}
+
+@keyframes fadeInStory {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* 4. Notes App (Empty) */
+.notes-window {
+    width: 100%;
+    height: 100%;
+    background: white;
+}
+
+.window.dark .notes-window {
+    background: #1e1e1e;
 }
