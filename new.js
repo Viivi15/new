@@ -907,10 +907,15 @@ const Apps = {
         state.appsOpened.add(id);
         const exist = document.getElementById(`win-${id}`);
         if (exist) {
+            // Restore if minimized or hidden
             exist.style.display = 'flex';
-            exist.style.zIndex = ++zIndex;
-            exist.style.opacity = 1;
-            exist.style.transform = 'scale(1)';
+            exist.classList.remove('minimized', 'closing');
+
+            requestAnimationFrame(() => {
+                exist.style.zIndex = ++zIndex;
+                exist.style.opacity = 1;
+                exist.style.transform = 'scale(1) translateY(0)';
+            });
             return;
         }
 
@@ -930,18 +935,12 @@ const Apps = {
             contentHTML = `<iframe src="${app.url}" class="w-full h-full border-0 bg-white"></iframe>`;
         }
 
-        // Handle Folders
+        // Handle Folders - GRID VIEW UPDATE
         if (app.role === 'folder' && app.children) {
-            const childItems = app.children.map(cid => {
-                const c = apps.find(x => x.id === cid);
-                if (!c) return '';
-                return `<div onclick="Apps.open('${c.id}')" class="flex flex-col items-center gap-2 p-3 hover:bg-black/5 rounded-lg cursor-pointer transition">
-                    <div class="text-3xl">${c.icon}</div>
-                    <div class="text-xs text-gray-700 text-center font-medium">${c.title}</div>
-                </div>`;
-            }).join('');
-            contentHTML = `<div class="p-6 grid grid-cols-4 gap-4 bg-[#f5f5f7] h-full overflow-y-auto custom-scroll">${childItems}</div>`;
+            /* Legacy fallback if needed, but 'content' property on apps usually handles this now */
         }
+
+        // Use pre-defined content logic from apps array (which includes the grid layout for folders)
 
         win.innerHTML = `<div class="title-bar" onmousedown="startDrag(event, '${win.id}')">
             <div class="traffic-lights">
@@ -958,13 +957,11 @@ const Apps = {
     }
 };
 
-
-
 function closeApp(id) {
     const win = document.getElementById(`win-${id}`);
     if (win) {
-        win.style.opacity = 0;
-        setTimeout(() => win.remove(), 300);
+        win.classList.add('closing'); // Trigger CSS Animation
+        setTimeout(() => win.remove(), 400); // Wait for animation (0.4s)
     }
     const dot = document.getElementById(`dot-${id}`);
     if (dot) dot.parentElement.classList.remove('active');
@@ -977,41 +974,50 @@ function closeApp(id) {
 
 function triggerQuietEnding() {
     const term = document.getElementById('term-input');
-    if (term) term.blur(); // Unfocus inputs
-
-    // Removed dimming effect per user request ("No dim thing")
-    // document.body.style.filter = 'brightness(0.1)';
+    if (term) term.blur();
 
     const msg = document.createElement('div');
     msg.className = 'fixed bottom-10 left-10 text-white/40 font-mono text-xs z-[99999]';
     msg.style.opacity = 0;
-    msg.style.transition = 'opacity 2s ease 2s'; // Delay 2s
+    msg.style.transition = 'opacity 2s ease 2s';
     msg.innerText = 'This space stays.';
     document.body.appendChild(msg);
 
     requestAnimationFrame(() => msg.style.opacity = 1);
 }
+
 function minimizeApp(id) {
     const win = document.getElementById(`win-${id}`);
-    win.style.transform = 'scale(0.8) translateY(200px)';
-    win.style.opacity = 0;
-    setTimeout(() => { win.style.display = 'none'; }, 300);
+    if (win) {
+        win.classList.add('minimized'); // Trigger CSS Animation
+        // Don't set display:none immediately, let it sit there invisible or handle via listener if prefered
+        // But for dock restoration to work simpler, we keep it in DOM but hidden
+        // const dot is active, so user clicks dock to restore
+    }
 }
+
 function maximizeApp(id) {
     const win = document.getElementById(`win-${id}`);
+
+    // Smooth transition handles width/height change
     if (win.getAttribute('data-maximized') === 'true') {
         win.style.width = win.getAttribute('data-prev-w');
         win.style.height = win.getAttribute('data-prev-h');
         win.style.left = win.getAttribute('data-prev-l');
         win.style.top = win.getAttribute('data-prev-t');
         win.removeAttribute('data-maximized');
+        win.style.borderRadius = "14px"; // Restore rounded corners
     } else {
         win.setAttribute('data-prev-w', win.style.width);
         win.setAttribute('data-prev-h', win.style.height);
         win.setAttribute('data-prev-l', win.style.left);
         win.setAttribute('data-prev-t', win.style.top);
-        win.style.width = '100vw'; win.style.height = 'calc(100vh - 40px)';
-        win.style.left = '0'; win.style.top = '30px';
+
+        win.style.width = '100vw';
+        win.style.height = 'calc(100vh - 32px)'; // Minus menu bar
+        win.style.left = '0';
+        win.style.top = '32px';
+        win.style.borderRadius = "0px"; // Square corners when full
         win.setAttribute('data-maximized', 'true');
     }
 }
