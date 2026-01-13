@@ -43,7 +43,7 @@ const apps = [
 
     /* THE CHOSEN BOND (Progressive Reveal) */
     {
-        id: 'connection-log', title: 'Connection.log', icon: '📜', dock: true, width: 650, height: 500, content: `
+        id: 'connection-log', title: 'Connection.log', icon: '📜', onOpen: resetBond, dock: true, width: 650, height: 500, content: `
         <div class="h-full bg-black text-white p-8 flex flex-col items-center justify-center text-center cursor-pointer select-none relative overflow-hidden" onclick="advanceBond()">
             <div id="bond-content" class="transition-opacity duration-1000 ease-in-out">
                 <div class="text-xs uppercase tracking-[0.3em] text-gray-500 mb-6">System Memory</div>
@@ -133,7 +133,7 @@ const apps = [
 
     /* CLUSTER 2: FUN / MASTI (Lightweight) */
     {
-        id: 'facts', title: 'Harshit Facts.txt', icon: '📄', dock: false, width: 400, height: 400, content: `
+        id: 'facts', title: 'Harshit Facts.txt', icon: '📄', folder: 'system', dock: false, width: 400, height: 400, content: `
         <div class="h-full bg-white font-mono text-sm p-6 text-gray-700 whitespace-pre-line custom-scroll">
             <span class="font-bold text-black border-b border-black">SYSTEM NOTES: Harshit</span>
 
@@ -146,7 +146,7 @@ const apps = [
     `},
 
     {
-        id: 'not-dumb', title: 'Not Dumb', icon: '🤨', dock: false, width: 300, height: 200, content: `
+        id: 'not-dumb', title: 'Not Dumb', icon: '🤨', folder: 'system', dock: false, width: 300, height: 200, content: `
         <div class="h-full flex items-center justify-center bg-gray-100 text-center p-4">
             <div>
                 <div class="text-3xl mb-2">🤨</div>
@@ -198,7 +198,7 @@ const apps = [
     `},
 
     {
-        id: 'flash', title: 'Fastest Alive', icon: '⚡', dock: false, width: 500, height: 300, content: `
+        id: 'flash', title: 'Fastest Alive', icon: '⚡', folder: 'system', dock: false, width: 500, height: 300, content: `
         <div class="h-full bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center relative overflow-hidden">
             <div class="text-white text-6xl font-black italic tracking-tighter" id="zoom-text">ZOOM</div>
             <div class="absolute inset-0 bg-white opacity-0" id="flash-overlay"></div>
@@ -214,7 +214,7 @@ const apps = [
     `},
 
     {
-        id: 'rabbit', title: 'Rabbit Mode', icon: '🐰', dock: false, width: 400, height: 400, content: `
+        id: 'rabbit', title: 'Rabbit Mode', icon: '🐰', folder: 'system', dock: false, width: 400, height: 400, content: `
         <div class="h-full bg-white p-4 flex flex-wrap gap-2 content-center justify-center overflow-hidden relative" id="rabbit-den">
             <div class="z-10 bg-white/90 p-4 rounded text-center shadow-lg border border-gray-100">
                 <div class="text-2xl mb-2">🐰</div>
@@ -235,6 +235,25 @@ const apps = [
                 rCount++;
             }, 600);
         </script>
+    `},
+
+    /* FOLDERS */
+    {
+        id: 'app-system', title: 'System Files', icon: '📁', dock: false, width: 500, height: 400, content: `
+        <div class="folder-window-grid">
+            <div class="win-icon" onclick="Apps.open('facts')"><div class="icon-img">📄</div><div class="icon-label">Harshit<br>Facts.txt</div></div>
+            <div class="win-icon" onclick="Apps.open('not-dumb')"><div class="icon-img">🤨</div><div class="icon-label">Not Dumb</div></div>
+            <div class="win-icon" onclick="Apps.open('flash')"><div class="icon-img">⚡</div><div class="icon-label">Fastest<br>Alive</div></div>
+            <div class="win-icon" onclick="Apps.open('rabbit')"><div class="icon-img">🐰</div><div class="icon-label">Rabbit<br>Mode</div></div>
+        </div>
+    `},
+
+    {
+        id: 'app-vault', title: 'Vault', icon: '🔒', dock: false, width: 500, height: 350, content: `
+        <div class="folder-window-grid">
+            <div class="win-icon" onclick="Apps.open('do-not-open')"><div class="icon-img">🚫</div><div class="icon-label">Do Not<br>Open</div></div>
+            <div class="win-icon" onclick="Apps.open('playlist')"><div class="icon-img">🎶</div><div class="icon-label">Hidden<br>Tracks</div></div>
+        </div>
     `},
 
     /* CLUSTER 3: COMFORT & CALM (Safe Spaces) */
@@ -273,9 +292,9 @@ const apps = [
 
     /* CLUSTER 4: GROWTH & 19 (Mature) */
     {
-        id: 'app-19', title: '19.exe', icon: '🧠', dock: true, width: 500, height: 400, content: `
-        <div class="h-full bg-white p-10 flex flex-col justify-center relative">
-            <h1 class="text-6xl font-black text-gray-100 absolute top-4 left-4 select-none">19</h1>
+        id: 'app-grown', title: '19.exe', icon: '🧠', dock: true, width: 500, height: 400, content: `
+        <div class="h-full bg-white p-10 flex flex-col justify-center">
+            <h1 class="text-5xl font-black text-gray-100 mb-6 select-none">19</h1>
             <div class="relative space-y-6 text-gray-700 font-medium">
                 <p>You’re allowed to grow slowly.</p>
                 <p>You don’t need all answers.</p>
@@ -304,7 +323,7 @@ const apps = [
 
     /* CLUSTER 5: EASTER EGGS (Hidden) */
     {
-        id: 'do-not-open', title: 'Do Not Open', icon: '🚫', dock: false, width: 300, height: 200, content: `
+        id: 'do-not-open', title: 'Do Not Open', icon: '🚫', folder: 'vault', dock: false, width: 300, height: 200, content: `
         <div class="h-full flex items-center justify-center bg-red-50 text-red-900 text-center p-6">
             <div>
                 <div class="font-bold mb-2">You Opened It.</div>
@@ -314,11 +333,11 @@ const apps = [
     `},
 
     {
-        id: 'playlist', title: 'Hidden Tracks', icon: '🎶', dock: false, width: 400, height: 300, content: `
+        id: 'playlist', title: 'Hidden Tracks', icon: '🎶', folder: 'vault', dock: false, width: 400, height: 300, content: `
         <div class="h-full bg-black text-white p-6">
             <div class="uppercase tracking-widest text-xs opacity-50 mb-4">Secret Collection</div>
             <ul class="space-y-3 text-sm font-light opacity-80">
-                <li>1. The Silence (Original Mix)</li>
+            <li>1. The Silence (Original Mix)</li>
                 <li>2. 12:21 AM (lo-fi)</li>
                 <li>3. That one song we shared</li>
             </ul>
@@ -606,6 +625,21 @@ const bondSequence = [
     { type: 'final', content: "You were home to each other for a while." }
 ];
 
+function resetBond() {
+    bondStep = 0;
+    const c = document.getElementById('bond-content');
+    if (c) {
+        c.style.opacity = 0;
+        setTimeout(() => {
+            c.innerHTML = `<div class="text-xs uppercase tracking-[0.3em] text-gray-500 mb-6">System Memory</div>
+                <div id="bond-line" class="text-2xl font-serif font-light leading-relaxed">
+                    This wasn’t accidental.
+                </div>`;
+            c.style.opacity = 1;
+        }, 300);
+    }
+}
+
 function advanceBond() {
     const container = document.getElementById('bond-content');
     if (!container) return;
@@ -775,7 +809,8 @@ function initDesktop() {
     const dock = document.getElementById('dock');
     grid.innerHTML = ''; dock.innerHTML = '';
     apps.forEach(app => {
-        if (!app.dock || app.id === 'hidden-unlock') {
+        // Desktop Icons: Not in dock, Not hidden, Not inside a folder
+        if (!app.dock && app.id !== 'hidden-unlock' && !app.folder) {
             const icon = document.createElement('div');
             icon.className = 'desktop-icon group';
             icon.innerHTML = `<div class="icon-img text-3xl mb-2 filter grayscale group-hover:grayscale-0 transition duration-500">${app.icon}</div><div class="icon-label bg-black/20 text-white/80 px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm">${app.title}</div>`;
@@ -796,9 +831,19 @@ function initDesktop() {
 const Apps = {
     open: (id) => {
         const app = apps.find(a => a.id === id); if (!app) return;
+
+        // Hook for resets
+        if (app.onOpen) app.onOpen();
+
         state.appsOpened.add(id);
         const exist = document.getElementById(`win-${id}`);
-        if (exist) { exist.style.display = 'flex'; exist.style.zIndex = ++zIndex; return; }
+        if (exist) {
+            exist.style.display = 'flex';
+            exist.style.zIndex = ++zIndex;
+            exist.style.opacity = 1;
+            exist.style.transform = 'scale(1)';
+            return;
+        }
 
         const win = document.createElement('div');
         win.className = `window ${app.dark ? 'dark' : ''}`;
@@ -1166,6 +1211,7 @@ async function runSystemBoot() {
 }
 
 // START HERE
+window.Apps = Apps; // Global exposure
 window.onload = startCountdownGatekeeper;
 
 
