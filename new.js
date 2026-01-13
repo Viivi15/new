@@ -41,6 +41,24 @@ const apps = [
         </script>
     `},
 
+    /* THE CHOSEN BOND (Progressive Reveal) */
+    {
+        id: 'connection-log', title: 'Connection.log', icon: '📜', dock: true, width: 650, height: 500, content: `
+        <div class="h-full bg-black text-white p-8 flex flex-col items-center justify-center text-center cursor-pointer select-none relative overflow-hidden" onclick="advanceBond()">
+            <div id="bond-content" class="transition-opacity duration-1000 ease-in-out">
+                <div class="text-xs uppercase tracking-[0.3em] text-gray-500 mb-6">System Memory</div>
+                <div id="bond-line" class="text-2xl font-serif font-light leading-relaxed">
+                    This wasn’t accidental.
+                </div>
+            </div>
+            <div class="absolute bottom-8 text-[10px] text-gray-600 uppercase tracking-widest animate-pulse">Click to proceed</div>
+        </div>
+        <style> 
+            .fade-in-up { animation: fadeInUp 0.8s ease forwards; opacity: 0; transform: translateY(10px); } 
+            @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } } 
+        </style>
+    `},
+
     {
         id: 'mr-snow', title: 'Mr. Snow', icon: '❄️', dock: true, width: 350, height: 450, content: `
         <div class="h-full relative overflow-hidden bg-gradient-to-b from-[#e6e9f0] to-[#eef1f5] p-8 flex flex-col justify-center items-center text-center">
@@ -134,6 +152,47 @@ const apps = [
                 <div class="text-3xl mb-2">🤨</div>
                 <div class="font-bold">Not Dumb At All</div>
                 <div class="text-xs text-gray-500 mt-2">Just stubborn.</div>
+            </div>
+        </div>
+    `},
+
+    {
+        id: 'madrid', title: 'HalaMadrid.exe', icon: '⚽', dock: false, width: 450, height: 400, content: `
+        <div class="h-full bg-white text-gray-800 p-6 flex flex-col font-mono text-sm border-t-8 border-blue-600">
+            <div class="flex justify-between items-center mb-6">
+                 <span class="font-bold text-lg text-blue-900">REAL MADRID FAN LOG</span>
+                 <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">STATUS: ULTRA</span>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="flex justify-between border-b pb-2">
+                    <span>Passion Level:</span>
+                    <span class="font-bold">110% (Crazy)</span>
+                </div>
+                <div class="flex justify-between border-b pb-2">
+                    <span>Matches Watched:</span>
+                    <span class="font-bold">All of them*</span>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-gray-50 p-4 rounded border border-gray-200">
+                <div class="text-red-500 font-bold mb-2 text-xs uppercase">⚠️ System Anomaly Detected</div>
+                <p class="text-xs text-gray-600 mb-2">*Warning: Multiple matches marked as "MISSED" in logs.</p>
+                
+                <div class="flex gap-2 items-start mt-3">
+                    <span class="text-gray-400">></span>
+                    <div>
+                        <div class="font-bold text-gray-900">Cause of Absence:</div>
+                        <div class="italic text-gray-600">"Prioritized talking to Her."</div>
+                    </div>
+                </div>
+                 <div class="flex gap-2 items-start mt-2">
+                    <span class="text-gray-400">></span>
+                    <div>
+                        <div class="font-bold text-gray-900">Result:</div>
+                        <div class="text-blue-600 font-bold">No Regrets.</div>
+                    </div>
+                </div>
             </div>
         </div>
     `},
@@ -535,6 +594,60 @@ function nextWhy() {
         el.innerText = whys[wIdx];
         el.style.opacity = 1;
     }, 500);
+}
+
+let bondStep = 0;
+const bondSequence = [
+    { type: 'text', content: "You and Harshit weren’t just best friends." },
+    { type: 'text', content: "What you shared was a chosen bond.<br><span class='text-sm text-blue-400 mt-4 block'>June 20, 2024 · 12:21 AM</span>" },
+    { type: 'statements', title: 'About You', items: ["Emotional anchor.", "Listener.", "Rememberer.", "Giver, without keeping score.", "<br>That’s how you love."] },
+    { type: 'statements', title: 'About Harshit', items: ["Soft, with you.", "Expressive.", "Protective.", "Honest.", "<br>With you, he didn’t guard himself."] },
+    { type: 'memories', title: 'The Bond', items: ["Late nights", "Music", "Fights that mattered", "Staying", "<br><span class='text-lg italic'>You didn’t just pass time. You changed each other.</span>"] },
+    { type: 'final', content: "You were home to each other for a while." }
+];
+
+function advanceBond() {
+    const container = document.getElementById('bond-content');
+    if (!container) return;
+
+    if (bondStep >= bondSequence.length) {
+        // Close quietly
+        container.style.opacity = 0;
+        setTimeout(() => {
+            const win = document.getElementById('win-connection-log');
+            if (win) {
+                win.style.transition = "opacity 1s, transform 1s";
+                win.style.opacity = 0;
+                win.style.transform = "scale(0.9)";
+                setTimeout(() => win.style.display = "none", 1000);
+                // Reset for next open if desired, or keep closed.
+                // To reset: bondStep = 0;
+            }
+        }, 1000);
+        return;
+    }
+
+    container.style.opacity = 0;
+
+    setTimeout(() => {
+        const data = bondSequence[bondStep];
+        let html = '';
+
+        if (data.type === 'text' || data.type === 'final') {
+            html = `<div class="text-2xl font-serif font-light leading-relaxed">${data.content}</div>`;
+        } else if (data.type === 'statements' || data.type === 'memories') {
+            html = `<div class="text-sm uppercase tracking-widest text-gray-500 mb-6">${data.title}</div>`;
+            html += `<div class="space-y-4 text-xl font-light">`;
+            data.items.forEach((item, idx) => {
+                html += `<div class="fade-in-up" style="animation-delay: ${idx * 0.4}s">${item}</div>`;
+            });
+            html += `</div>`;
+        }
+
+        container.innerHTML = html;
+        container.style.opacity = 1;
+        bondStep++;
+    }, 1000);
 }
 
 /* === DEV UTILS === */
