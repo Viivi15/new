@@ -431,6 +431,27 @@ const apps = [
     `},
 
     {
+        id: 'rabbit-runner', title: 'RabbitRunner.exe', icon: '🐰', dock: true, width: 800, height: 500, onOpen: initRabbitGame, content: `
+        <div id="rr-container" class="relative w-full h-full bg-[#e0f7fa] overflow-hidden select-none font-sans">
+             <div id="rr-score" class="absolute top-4 left-4 text-2xl font-bold text-gray-700 z-10">Score: 0</div>
+             <div id="rr-start-screen" class="absolute inset-0 flex flex-col items-center justify-center bg-black/50 z-20 text-white">
+                <h2 class="text-4xl font-bold mb-4">Rabbit Run 🐰</h2>
+                <div class="space-y-2 text-center text-sm mb-6 opacity-90">
+                    <p>Hop on messages! 💬</p>
+                    <p>Collect Subs 🥪</p>
+                    <p>Dodge Bhindi 🥒</p>
+                </div>
+                <button onclick="startRabbitGame()" class="px-6 py-3 bg-blue-500 rounded-full font-bold hover:bg-blue-600 transition transform hover:scale-105">START GAME</button>
+             </div>
+             
+             <!-- Player -->
+             <div id="rr-player" class="absolute text-4xl transition-transform" style="bottom: 100px; left: 50px;">🐰</div>
+             
+             <!-- Game World (Platforms, Items added via JS) -->
+             <div id="rr-world"></div>
+        </div>
+    `},
+    {
         id: 'terminal-app', title: 'Terminal.sh', icon: '💻', dock: true, width: 600, height: 450, content: `
         <div class="terminal-app" onclick="document.getElementById('term-input-app').focus()">
             <div id="term-output-app" class="term-output custom-scroll">
@@ -959,13 +980,13 @@ const Apps = {
     open: (id) => {
         const app = apps.find(a => a.id === id); if (!app) return;
 
-        // Hook for resets
-        if (app.onOpen) app.onOpen();
+        // Hook for resets - REMOVED PREMATURE CALL
 
         state.appsOpened.add(id);
         const exist = document.getElementById(`win-${id}`);
         if (exist) {
             // Restore if minimized or hidden
+            if (app.onOpen) app.onOpen(); // Call here if restoring (optional, but consistent with 'open')
             exist.style.display = 'flex';
             exist.classList.remove('minimized', 'closing');
 
@@ -1640,6 +1661,33 @@ function handleTerminalAppCommand() {
 }
 
 
+// Launch Desktop
+function launchDesktop() {
+    // 1. Hide Terminal & Space (if active)
+    const term = document.getElementById('terminal-boot');
+    if (term) term.style.display = 'none';
+
+    // 2. Fade OUT Space Background
+    const space = document.getElementById('space-bg');
+    if (space) space.style.opacity = 0;
+
+    // 3. Fade IN Light Desktop Background
+    const desktopBg = document.getElementById('desktop-bg');
+    if (desktopBg) { desktopBg.style.display = 'block'; requestAnimationFrame(() => desktopBg.style.opacity = 1); }
+
+    // 4. Show and Fade IN Desktop Content
+    const desk = document.getElementById('desktop');
+    desk.style.display = 'block';
+
+    // Using simple opacity transition
+    desk.style.opacity = 0;
+    requestAnimationFrame(() => {
+        desk.style.transition = "opacity 2.5s ease";
+        desk.style.opacity = 1;
+    });
+
+    initDesktop();
+}
 // Dev Tool
 function skipToDesktop() {
     const phases = ['boot-sequence', 'countdown-phase', 'journey-intro', 'terminal-boot'];
@@ -1655,7 +1703,176 @@ function skipToDesktop() {
     launchDesktop();
 }
 
+/* === RABBIT RUNNER LOGIC === */
+let rrActive = false;
+let rrScore = 0;
+let rrLoopIdx;
+let rrPlayerY = 0;
+let rrVelocity = 0;
+let rrGravity = 0.6;
+let rrJumpStrength = -10;
+let rrPlatforms = [];
+let rrItems = []; // {type: 'sub'|'bhindi', x, y}
+const rrSpeed = 3;
+
+function initRabbitGame() {
+    rrActive = false;
+    document.getElementById('rr-start-screen').style.display = 'flex';
+    document.getElementById('rr-world').innerHTML = '';
+}
+
+function startRabbitGame() {
+    rrActive = true;
+    rrScore = 0;
+    rrPlayerY = 300; // Start mid-air
+    rrVelocity = 0;
+    rrPlatforms = [];
+    rrItems = [];
+    document.getElementById('rr-start-screen').style.display = 'none';
+    document.getElementById('rr-score').innerText = 'Score: 0';
+
+    // Spawn initial platform
+    spawnPlatform(50, 400, 200);
+    spawnPlatform(300, 350, 150);
+    spawnPlatform(550, 300, 150);
+
+    if (rrLoopIdx) cancelAnimationFrame(rrLoopIdx);
+    rrGameLoop();
+
+    // Controls
+    document.getElementById('rr-container').onmousedown = jumpRabbit;
+    document.addEventListener('keydown', (e) => { if (e.code === 'Space') jumpRabbit(); });
+}
+
+function jumpRabbit() {
+    if (!rrActive) return;
+    rrVelocity = rrJumpStrength;
+}
+
+function spawnPlatform(x, y, w) {
+    const msgs = ["Good morning", "Take care", "Hydrate", "Proud of you", "Remember me?", "Keep going", "You got this", "Stay safe"];
+    const txt = msgs[Math.floor(Math.random() * msgs.length)];
+    rrPlatforms.push({ x, y, w, text: txt, passed: false });
+
+    // Spawn item? 40% chance
+    if (Math.random() > 0.6) {
+        const type = Math.random() > 0.3 ? 'sub' : 'bhindi'; // 70% Sub, 30% Bhindi
+        rrItems.push({ type, x: x + w / 2 - 15, y: y - 40, collected: false });
+    }
+}
+
+function rrGameLoop() {
+    if (!rrActive) return;
+
+    // Update Player
+    rrVelocity += rrGravity;
+    rrPlayerY += rrVelocity;
+
+    // Floor Collision (Game Over)
+    if (rrPlayerY > 480) {
+        gameOverRabbit("You fell into the void!");
+        return;
+    }
+
+    const playerEl = document.getElementById('rr-player');
+    if (playerEl) {
+        playerEl.style.top = rrPlayerY + 'px';
+        playerEl.style.transform = `rotate(${rrVelocity * 2}deg)`;
+    }
+
+    // Update Platforms
+    const world = document.getElementById('rr-world');
+    world.innerHTML = ''; // Clear & Redraw (Naive but functional for simple DOM game)
+
+    // --- RENDER & LOGIC LOOP ---
+    // 1. New Platform Spawning
+    const lastPlat = rrPlatforms[rrPlatforms.length - 1];
+    if (lastPlat && lastPlat.x < 600) {
+        const newY = Math.max(150, Math.min(400, lastPlat.y + (Math.random() * 200 - 100)));
+        spawnPlatform(800 + Math.random() * 100, newY, 120 + Math.random() * 80);
+    }
+
+    // 2. Platforms Logic
+    rrPlatforms.forEach((p, i) => {
+        p.x -= rrSpeed;
+
+        // Render
+        if (p.x + p.w > 0 && p.x < 800) {
+            const div = document.createElement('div');
+            div.className = 'absolute bg-white border-2 border-gray-200 rounded-2xl flex items-center justify-center text-xs font-bold text-gray-500 shadow-sm';
+            div.style.left = p.x + 'px';
+            div.style.top = p.y + 'px';
+            div.style.width = p.w + 'px';
+            div.style.height = '40px';
+            div.innerText = p.text;
+            world.appendChild(div);
+        }
+
+        // Collision: Rabbit landing on Platform
+        // Rabbit is ~40x40 at x=50
+        if (rrVelocity > 0 &&
+            rrPlayerY + 40 >= p.y &&
+            rrPlayerY + 40 <= p.y + 20 &&
+            50 + 30 > p.x &&
+            50 < p.x + p.w) {
+            rrVelocity = 0;
+            rrPlayerY = p.y - 40;
+            // Jump Auto check? No, manual jump only
+        }
+
+        // Cleanup
+        if (p.x + p.w < -100) rrPlatforms.splice(i, 1);
+    });
+
+    // 3. Items Logic
+    rrItems.forEach((item, i) => {
+        item.x -= rrSpeed;
+
+        // Render
+        if (!item.collected && item.x > 0 && item.x < 800) {
+            const el = document.createElement('div');
+            el.className = 'absolute text-2xl animate-bounce';
+            el.innerText = item.type === 'sub' ? '🥪' : '🥒';
+            el.style.left = item.x + 'px';
+            el.style.top = item.y + 'px';
+            world.appendChild(el);
+
+            // Collision with Player
+            // Dist check
+            const dx = (50 + 20) - (item.x + 15);
+            const dy = (rrPlayerY + 20) - (item.y + 15);
+            if (Math.sqrt(dx * dx + dy * dy) < 40) {
+                item.collected = true;
+                if (item.type === 'sub') {
+                    rrScore += 10;
+                    document.getElementById('rr-score').innerText = `Score: ${rrScore}`;
+                } else {
+                    gameOverRabbit("You ate Bhindi! 🤢");
+                }
+            }
+        }
+
+        if (item.x < -50) rrItems.splice(i, 1);
+    });
+
+    rrLoopIdx = requestAnimationFrame(rrGameLoop);
+}
+
+function gameOverRabbit(reason) {
+    rrActive = false;
+    const screen = document.getElementById('rr-start-screen');
+    screen.style.display = 'flex';
+    screen.innerHTML = `
+        <h2 class="text-3xl font-bold mb-2 text-red-300">Game Over</h2>
+        <p class="text-xl mb-6">${reason}</p>
+        <p class="text-2xl font-bold mb-8">Score: ${rrScore}</p>
+        <button onclick="startRabbitGame()" class="px-6 py-3 bg-white text-black rounded-full font-bold hover:bg-gray-200">Try Again</button>
+    `;
+}
+
 // Global Exports
+window.startRabbitGame = startRabbitGame;
+window.initRabbitGame = initRabbitGame;
 window.handleTerminalAppCommand = handleTerminalAppCommand;
 window.handlePQuiz = handlePQuiz;
 window.initPersonalityQuiz = initPersonalityQuiz;
