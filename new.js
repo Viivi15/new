@@ -119,7 +119,7 @@ const apps = [
     `},
 
     {
-        id: 'admire', title: 'Things I Admire', icon: '🌟', dock: false, width: 500, height: 400, content: `
+        id: 'admire', title: 'Deep Truths', icon: '🌟', dock: false, width: 500, height: 400, content: `
         <div class="h-full bg-[#fafafa] p-10">
             <h3 class="font-bold text-gray-800 mb-6 border-l-4 border-yellow-400 pl-3">Confirmed Data</h3>
             <ul class="space-y-4 text-gray-600 text-sm list-disc pl-5">
@@ -427,6 +427,50 @@ const apps = [
                 <div id="p-quiz-q" class="text-xl font-bold text-gray-800 mb-8">System Check...</div>
                 <div id="p-quiz-opts" class="flex flex-col gap-3 w-full max-w-xs"></div>
             </div>
+        </div>
+    `},
+
+    /* === REQUESTED MISSING APPS === */
+    {
+        id: 'readme-letter', title: 'ReadMe.txt', icon: '💌', dock: true, width: 600, height: 700, content: `
+        <div class="h-full bg-white p-10 font-serif text-gray-800 leading-relaxed custom-scroll overflow-y-auto" style="background-image: linear-gradient(#999 1px, transparent 1px); background-size: 100% 2em; line-height: 2em;">
+            <div class="text-3xl font-bold text-red-500 mb-6 handwritten" style="font-family: 'Dancing Script', cursive;">Dear Harshit,</div>
+            <p>If you are reading this, the system is working. But more importantly, <i>we</i> are working.</p>
+            <p>I wanted to write this because sometimes code isn't enough to say what I mean. You are the "sweet" to my "spicy". The calm to my storm. The person who notices the small things when the world is too busy looking at the big ones.</p>
+            <p>Thank you for being my anchor. For knowing when to joke and when to just be there. For the late night talks and the quiet understanding.</p>
+            <p>You make this OS (and my life) better just by running in the background.</p>
+            <br>
+            <p class="text-right font-bold">- Shravii</p>
+        </div>
+    `},
+
+    {
+        id: 'memories-gallery', title: 'Memories', icon: '📸', dock: true, width: 800, height: 600, onOpen: initGallery, content: `
+        <div id="gallery-container" class="polaroid-gallery custom-scroll">
+            <!-- Dynamic Polaroids will be injected here -->
+        </div>
+    `},
+
+    {
+        id: 'about-us', title: 'About Us', icon: '👥', dock: false, width: 500, height: 400, content: `
+        <div class="h-full bg-white p-8 flex flex-col items-center justify-center text-center border-4 border-double border-gray-200">
+            <h2 class="text-2xl font-serif font-bold mb-8 text-gray-800">The Dynamic</h2>
+            
+            <div class="grid grid-cols-2 gap-8 w-full">
+                <div class="flex flex-col items-center">
+                    <div class="text-4xl mb-2">🎀</div>
+                    <div class="font-bold text-pink-500 uppercase tracking-widest text-xs mb-1">Shravii</div>
+                    <div class="text-sm text-gray-600">The Spark.<br>The Heart.<br>The Responder.</div>
+                </div>
+                
+                <div class="flex flex-col items-center border-l border-gray-200">
+                    <div class="text-4xl mb-2">🐺</div>
+                    <div class="font-bold text-blue-500 uppercase tracking-widest text-xs mb-1">Harshit</div>
+                    <div class="text-sm text-gray-600">The Anchor.<br>The Calm.<br>The Protector.</div>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-xs text-gray-400 italic">"Two different operating systems. One perfect network."</div>
         </div>
     `}
 ];
