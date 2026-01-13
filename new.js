@@ -430,7 +430,21 @@ const apps = [
         </div>
     `},
 
-    /* === REQUESTED MISSING APPS === */
+    {
+        id: 'terminal-app', title: 'Terminal.sh', icon: '💻', dock: true, width: 600, height: 450, content: `
+        <div class="terminal-app" onclick="document.getElementById('term-input-app').focus()">
+            <div id="term-output-app" class="term-output custom-scroll">
+                <div>Welcome to Harshit OS v19.0 (Kernel 20.06.24)</div>
+                <div>Type 'help' to see available commands.</div>
+                <br>
+            </div>
+            <div class="term-prompt-line">
+                <span class="term-prompt">root@harshit:~$</span>
+                <input type="text" id="term-input-app" class="term-input" autocomplete="off" onkeypress="if(event.key==='Enter') handleTerminalAppCommand()">
+            </div>
+        </div>
+    `},
+
     {
         id: 'readme-letter', title: 'ReadMe.txt', icon: '💌', dock: true, width: 600, height: 700, content: `
         <div class="h-full bg-white p-10 font-serif text-gray-800 leading-relaxed custom-scroll overflow-y-auto" style="background-image: linear-gradient(#999 1px, transparent 1px); background-size: 100% 2em; line-height: 2em;">
@@ -1571,7 +1585,78 @@ function handlePQuiz(type) {
     renderPQuiz();
 }
 
+/* === TERMINAL APP LOGIC === */
+function handleTerminalAppCommand() {
+    const input = document.getElementById('term-input-app');
+    const output = document.getElementById('term-output-app');
+    if (!input || !output) return;
+
+    const cmd = input.value.trim();
+    if (!cmd) return;
+
+    // Echo command
+    output.innerHTML += `<div><span class="term-prompt">root@harshit:~$</span> ${cmd}</div>`;
+
+    // Process
+    let response = '';
+    const command = cmd.toLowerCase().split(' ')[0];
+
+    switch (command) {
+        case 'help':
+            response = `<div class="term-info">
+    Available Commands:
+    - help: Show this list
+    - whois: Identify the user
+    - strength: Analyze core metrics
+    - secret: Unlock hidden directory
+    - clear: Clear screen
+</div>`;
+            break;
+        case 'whois':
+            response = `User: Harshit (Admin)\nAttributes: [Loyal, Stubborn, Protective]\nStatus: Currently Loading...`;
+            break;
+        case 'strength':
+            response = `Analysis Complete:\n- Physical: 85%\n- Emotional: Hidden (High)\n- Resilience: 99.9%`;
+            break;
+        case 'secret':
+            response = `<span class="term-success">Access Granted. Check 'Vault' folder.</span>`;
+            setTimeout(() => Apps.open('app-vault'), 1000);
+            break;
+        case 'clear':
+            output.innerHTML = '';
+            input.value = '';
+            return;
+        case 'sudo':
+            response = `<span class="term-error">Error: You are already the highest authority here.</span>`;
+            break;
+        default:
+            response = `<span class="term-error">Command not found: ${command}</span>`;
+    }
+
+    if (response) output.innerHTML += `<div>${response}</div>`;
+
+    input.value = '';
+    output.scrollTop = output.scrollHeight;
+}
+
+
+// Dev Tool
+function skipToDesktop() {
+    const phases = ['boot-sequence', 'countdown-phase', 'journey-intro', 'terminal-boot'];
+    phases.forEach(p => {
+        const el = document.getElementById(p);
+        if (el) el.style.display = 'none';
+    });
+
+    // Force set state
+    state.countdownFinished = true;
+
+    // Launch Desktop
+    launchDesktop();
+}
+
 // Global Exports
+window.handleTerminalAppCommand = handleTerminalAppCommand;
 window.handlePQuiz = handlePQuiz;
 window.initPersonalityQuiz = initPersonalityQuiz;
 window.renderSpiral = renderSpiral;
