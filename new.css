@@ -1,0 +1,735 @@
+/* === SYSTEM CORE === */
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    --dock-bg: rgba(255, 255, 255, 0.3);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    background: #000;
+    user-select: none;
+    cursor: default;
+}
+
+/* Main Desktop Container */
+#desktop {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: none;
+    overflow: hidden;
+    animation: fadeIn 2s ease;
+    z-index: 10;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Desktop Grid */
+#desktop-grid {
+    position: absolute;
+    top: 40px;
+    left: 20px;
+    bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-content: flex-start;
+    width: 100%;
+    pointer-events: none;
+}
+
+.desktop-icon {
+    width: 85px;
+    height: 95px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    pointer-events: auto;
+    border-radius: 12px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    color: white;
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.desktop-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    transform: scale(1.05);
+}
+
+.icon-img {
+    font-size: 42px;
+    margin-bottom: 6px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+}
+
+.icon-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.3;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Windows */
+.window {
+    position: absolute;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 14px;
+    box-shadow: var(--glass-shadow), 0 0 0 1px var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    min-height: 200px;
+    animation: winOpen 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    resize: both;
+    overflow: hidden;
+}
+
+.window.dark {
+    background: rgba(20, 20, 25, 0.92);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.window.note-bg {
+    background: #fef9c3;
+    color: #4b3d3b;
+}
+
+/* Post-it yellow */
+
+@keyframes winOpen {
+    from {
+        transform: scale(0.95) translateY(10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Title Bar */
+.title-bar {
+    height: 38px;
+    background: rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    cursor: grab;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+}
+
+.window.dark .title-bar {
+    background: rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.traffic-lights {
+    display: flex;
+    gap: 8px;
+    margin-right: 16px;
+}
+
+.traffic-light {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+    transition: transform 0.1s;
+}
+
+.traffic-light:active {
+    transform: scale(0.9);
+}
+
+.close {
+    background: #FF5F57;
+}
+
+.minimize {
+    background: #FEBC2E;
+}
+
+.maximize {
+    background: #28C840;
+}
+
+.win-title {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0.8;
+    letter-spacing: -0.01em;
+}
+
+/* Content Area */
+.win-content {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+    scroll-behavior: smooth;
+}
+
+.custom-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+/* In-Window Grid (Folders) */
+.win-content .grid {
+    display: grid;
+}
+
+/* Ensure grid works inside */
+.win-content .select-none {
+    user-select: none;
+}
+
+/* Bear Stickers & Effects */
+.crack {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10000;
+    display: none;
+    background: url('https://png.pngtree.com/png-clipart/20230427/original/pngtree-broken-glass-effect-png-image_9116120.png') center/cover;
+    opacity: 0.9;
+}
+
+/* Boot/Entry Animations */
+.fade-in-up {
+    animation: fadeInUp 1s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dock */
+#dock-container {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 2000;
+    pointer-events: none;
+}
+
+#dock {
+    background: var(--dock-bg);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 24px;
+    padding: 10px 14px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-end;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    pointer-events: auto;
+    transform-origin: bottom;
+}
+
+.dock-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 14px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.dock-icon:hover {
+    transform: scale(1.25) translateY(-20px);
+    margin: 0 10px;
+    z-index: 10;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dock-tooltip {
+    position: absolute;
+    top: -40px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+}
+
+.dock-icon:hover .dock-tooltip {
+    opacity: 1;
+    top: -50px;
+}
+
+.dock-dot {
+    position: absolute;
+    bottom: -6px;
+    width: 5px;
+    height: 5px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.dock-icon.active .dock-dot {
+    opacity: 1;
+}
+
+/* Chat Bubbles */
+.msg-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+}
+
+.msg {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.4;
+    animation: popIn 0.3s ease;
+}
+
+.msg-me {
+    align-self: flex-end;
+    background: #007AFF;
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.msg-him {
+    align-self: flex-start;
+    background: #E9E9EB;
+    color: black;
+    border-bottom-left-radius: 4px;
+}
+
+.window.dark .msg-him {
+    background: #333;
+    color: white;
+}
+
+@keyframes popIn {
+    from {
+        scale: 0.9;
+        opacity: 0;
+    }
+
+    to {
+        scale: 1;
+        opacity: 1;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.window.dark ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Letter Styling */
+.letter-text {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    font-size: 15px;
+}
+
+.letter-text h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 28px;
+    color: #d946ef;
+    margin-top: 20px;
+}
+
+.letter-text h3 {
+    font-weight: 700;
+    color: #444;
+    margin-top: 20px;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.letter-quote {
+    border-left: 3px solid #d946ef;
+    padding-left: 14px;
+    font-style: italic;
+    color: #666;
+    margin: 20px 0;
+}
+
+/* === JOURNEY INTRO === */
+#journey-intro {
+    background: black;
+    color: white;
+}
+
+.journey-screen {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.journey-screen.active {
+    opacity: 1;
+}
+
+.journey-star-bg {
+    background: radial-gradient(white 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.2;
+}
+
+/* Bear Stickers */
+.bear-sticker {
+    position: fixed;
+    width: 150px;
+    z-index: 9999;
+    pointer-events: none;
+    animation: floatBear 4s ease-in-out infinite;
+}
+
+@keyframes floatBear {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+}
+
+/* === PHASE 0: SPACE BACKGROUND (Intro Only) === */
+#space-bg {
+    background: radial-gradient(ellipse at bottom, #0f1729 0%, #020205 100%);
+    overflow: hidden;
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    transition: opacity 2s ease;
+}
+
+.stars-small,
+.stars-medium,
+.stars-large {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: transparent;
+}
+
+.stars-small {
+    background-image: radial-gradient(#fff 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.3;
+    animation: starMove 100s linear infinite;
+}
+
+.stars-medium {
+    background-image: radial-gradient(#fff 2px, transparent 2px);
+    background-size: 100px 100px;
+    opacity: 0.2;
+    animation: starMove 150s linear infinite;
+}
+
+.stars-large {
+    background-image: radial-gradient(#a5b4fc 2px, transparent 2px);
+    background-size: 150px 150px;
+    opacity: 0.1;
+    animation: starMove 200s linear infinite;
+}
+
+@keyframes starMove {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-200px);
+    }
+}
+
+/* === DESKTOP THEME (Light Blue) === */
+#desktop-bg {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to bottom, #a8c0ff, #3f2b96);
+    /* Fallback */
+    background: linear-gradient(180deg, #bccbf9 0%, #dbe4ff 100%);
+    /* Periwinkle/Light Blue */
+    z-index: 1;
+    /* Above space-bg (once visible) */
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+#desktop {
+    z-index: 10;
+    /* Content above grid */
+    color: #333;
+    /* Dark text for light bg */
+}
+
+/* Updated Glassmorphism for Light Theme */
+.glass-panel,
+.window,
+.dock-icon {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+
+.dock-icon:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: translateY(-5px) scale(1.1);
+}
+
+.icon-label {
+    background: rgba(0, 0, 0, 0.1) !important;
+    /* Softer label background */
+    color: #333 !important;
+    font-weight: 500;
+}
+
+/* === PHASE 1: JOURNEY INTRO === */
+#journey-intro {
+    background: transparent;
+}
+
+.journey-screen.active {
+    opacity: 1;
+}
+
+.journey-sub {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.journey-sub.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* === PHASE 2: TERMINAL BOOT === */
+#terminal-boot {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    z-index: 15000;
+}
+
+.term-line {
+    opacity: 0;
+    animation: fadeTerm 0.1s forwards;
+}
+
+@keyframes fadeTerm {
+    to {
+        opacity: 1;
+    }
+}
+
+/* === PHASE 3: COUNTDOWN === */
+#countdown-phase {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.countdown-glow {
+    animation: pulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        opacity: 0.8;
+        text-shadow: 0 0 20px rgba(100, 200, 255, 0.3);
+    }
+
+    50% {
+        opacity: 1;
+        text-shadow: 0 0 40px rgba(100, 200, 255, 0.6);
+    }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeInUp 1s forwards;
+}
+
+/* Context Menu */
+#ctx-menu {
+    position: fixed;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 99999;
+    padding: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.ctx-item {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #333;
+}
+
+.ctx-item:hover {
+    background: #007AFF;
+    color: white;
+}
+
+.ctx-sep {
+    background: #eee;
+    margin: 4px 6px;
+}
+
+/* === MACOS MENU BAR (Spacing Fixes) === */
+.macos-menu-bar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 32px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: row !important;
+    /* FORCE ROW */
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 5000;
+    user-select: none;
+}
+
+.macos-menu-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    /* Fixed: 24px gap for left items */
+    position: relative;
+    height: 100%;
+}
+
+.macos-menu-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    /* Fixed: 20px gap for right items */
+    height: 100%;
+}
+
+.menu-item-base {
+    padding: 0 8px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    cursor: default;
+    transition: background 0.2s;
+}
+
+.menu-item-base:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.menu-item-apple {
+    font-size: 16px;
+    padding: 0 4px;
+    /* Slightly tighter for the Apple logo */
+}
+
+/* Ensure standard Tailwind utilities don't override our specific flex gaps if we mix them */
+.gap-fix-left>*+* {
+    margin-left: 24px;
+}
+
+.gap-fix-right>*+* {
+    margin-left: 20px;
+}

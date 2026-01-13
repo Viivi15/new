@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HarshitOS v19.0 - The World's Strongest Platform</title>
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Fira+Code&family=Handlee&display=swap"
+        rel="stylesheet">
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="boot-sequence">
+        <div class="logo-container">
+            <i class="fa-solid fa-snowflake fa-3x fa-spin" style="--fa-animation-duration: 3s;"></i>
+            <h1 style="margin-top:20px;">HarshitOS <span style="font-size: 12px; opacity: 0.7;">v19.0 (Mr. Snow
+                    Edition)</span></h1>
+        </div>
+        <div class="boot-log" id="boot-log">Initialize Core...</div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+    </div>
+
+    <main id="desktop">
+        <div id="desktop-mascot" onclick="Nakhre.hitMascot()">
+            <div class="speech-bubble" id="mascot-speech">Hiii Shravii's Bestie! ❤️</div>
+            <img id="mascot-img" src="assets/gifs/milk-wave.gif" alt="Milk Bear">
+        </div>
+    </main>
+
+    <nav id="dock">
+        <div class="glass-panel" id="dock-container">
+            <!-- Populated by JS -->
+        </div>
+    </nav>
+
+    <div id="context-menu" class="glass-panel">
+        <div class="menu-item" onclick="AppsManager.open('profile')">Who is Harshit?</div>
+        <div class="menu-item" onclick="AppsManager.open('gym')">Test Strength</div>
+        <div class="menu-item highlight" onclick="AppsManager.open('letter')">Open Secret Letter 💌</div>
+    </div>
+
+    <!-- Audio Engine -->
+    <audio id="bg-music" loop>
+        <source src="assets/audio/bg-music.mp3" type="audio/mpeg">
+        <!-- Fallback to online url if strictly needed by user but for now we follow file structure requested -->
+    </audio>
+    <audio id="sfx-pop" src="assets/audio/pop.mp3"></audio>
+    <audio id="sfx-bite" src="assets/audio/bite.mp3"></audio>
+    <audio id="sfx-error" src="assets/audio/error.mp3"></audio>
+    <audio id="sfx-win" src="assets/audio/win.mp3"></audio>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

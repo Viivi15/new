@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harshit OS v19.0 - The Bestest Edition</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@600&family=Permanent+Marker&family=Handlee&display=swap"
+        rel="stylesheet">
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="new.css">
+    <link rel="stylesheet" href="settings.css">
+</head>
+
+<body>
+
+    <!-- DEV SKIP BUTTON (Remove in Production) -->
+    <button onclick="skipToDesktop()"
+        style="position: fixed; top: 10px; left: 10px; z-index: 99999; background: red; color: white; border: none; padding: 5px 10px; cursor: pointer; font-size: 10px; font-family: sans-serif; opacity: 0.5;">
+        🚧 DEV: SKIP TO DESKTOP
+    </button>
+
+    <!-- PHASE 0: SPACE BACKGROUND (Persistent) -->
+    <div id="space-bg" class="fixed inset-0 z-[0]">
+        <div class="stars-small"></div>
+        <div class="stars-medium"></div>
+        <div class="stars-large"></div>
+    </div>
+
+    <!-- DESKTOP BACKGROUND (Light Blue - Initially Hidden) -->
+    <div id="desktop-bg"></div>
+
+    <!-- PHASE 1: JOURNEY INTRO (Text over Space) -->
+    <div id="journey-intro"
+        class="fixed inset-0 z-[20000] flex items-center justify-center text-center pointer-events-none">
+
+        <div class="journey-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
+            data-screen="1">
+            <p class="journey-text text-2xl md:text-3xl font-serif text-blue-100 drop-shadow-lg tracking-wide">Some
+                journeys don’t start loudly.</p>
+        </div>
+
+        <div class="journey-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
+            data-screen="2">
+            <p class="journey-text small text-sm text-blue-300/70 mb-6 tracking-[0.2em] uppercase font-light">June 20,
+                2024 &nbsp;•&nbsp; 12:21 AM</p>
+            <p class="journey-text text-3xl font-serif text-white drop-shadow-xl">A conversation began.</p>
+        </div>
+
+        <div class="journey-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
+            data-screen="3">
+            <p class="journey-text text-2xl font-serif text-blue-100 mb-10 leading-relaxed">It wasn’t instant.<br>It
+                became real slowly.</p>
+            <div class="space-y-4">
+                <p
+                    class="journey-sub opacity-0 transform translate-y-4 transition-all duration-1000 text-lg text-blue-200/80 font-light">
+                    Through talks.</p>
+                <p
+                    class="journey-sub opacity-0 transform translate-y-4 transition-all duration-1000 delay-500 text-lg text-blue-200/80 font-light">
+                    Through silence.</p>
+                <p
+                    class="journey-sub opacity-0 transform translate-y-4 transition-all duration-1000 delay-1000 text-lg text-blue-200/80 font-light">
+                    Through staying.</p>
+            </div>
+        </div>
+
+        <div class="journey-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
+            data-screen="4">
+            <p class="journey-text text-2xl font-serif text-white/90 leading-relaxed mb-4">Not every connection survives
+                misunderstandings.</p>
+            <p
+                class="journey-sub opacity-0 transition-opacity duration-1000 delay-1000 text-2xl font-serif text-white font-semibold drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
+                This one did.</p>
+        </div>
+
+        <div class="journey-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
+            data-screen="5">
+            <p class="journey-text text-3xl font-serif text-white mb-10">So I made a place for it.</p>
+            <div class="space-y-3">
+                <p
+                    class="journey-sub opacity-0 transform translate-y-2 transition-all duration-1000 text-sm text-blue-300 tracking-widest uppercase">
+                    For the memories.</p>
+                <p
+                    class="journey-sub opacity-0 transform translate-y-2 transition-all duration-1000 delay-300 text-sm text-blue-300 tracking-widest uppercase">
+                    For the laughter.</p>
+                <p
+                    class="journey-sub opacity-0 transform translate-y-2 transition-all duration-1000 delay-600 text-sm text-blue-300 tracking-widest uppercase">
+                    For today.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHASE 2: TERMINAL BOOT (Green Text) -->
+    <div id="terminal-boot"
+        class="fixed inset-0 bg-black z-[15000] hidden p-8 font-mono text-green-500 text-xs md:text-sm leading-tight overflow-hidden cursor-none">
+        <div id="terminal-content"></div>
+    </div>
+
+    <!-- PHASE 3: COUNTDOWN (Threshold) -->
+    <div id="countdown-phase"
+        class="fixed inset-0 bg-black z-[12000] hidden flex flex-col items-center justify-center text-white transition-opacity duration-1000">
+        <div id="countdown-display"
+            class="text-6xl md:text-8xl font-thin font-mono tracking-widest text-blue-50 drop-shadow-[0_0_15px_rgba(100,200,255,0.5)]">
+            19</div>
+        <div id="countdown-sub"
+            class="mt-8 text-xs text-gray-500 tracking-[0.3em] uppercase opacity-50 transition-opacity duration-1000">
+            Approaching</div>
+    </div>
+
+    <!-- AUDIO -->
+    <audio id="bg-music" loop>
+        <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3">
+    </audio>
+
+    <!-- MAIN DESKTOP -->
+    <main id="desktop">
+
+        <!-- Menu Bar -->
+        <div class="macos-menu-bar">
+
+            <!-- Left: App Menus -->
+            <div class="macos-menu-left">
+                <!-- Apple Menu -->
+                <div class="menu-item-apple cursor-pointer px-2" onclick="toggleMenu('apple-menu')">
+                    <i class="fab fa-apple text-[16px]"></i>
+                </div>
+                <!-- Dropdown: Apple -->
+                <div id="apple-menu"
+                    class="absolute top-8 left-0 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer border-b border-white/10 pb-2 mb-1"
+                        onclick="Apps.open('about')">About This Mac</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="Apps.open('settings')">System Preferences...</div>
+                    <div class="h-[1px] bg-white/10 my-1"></div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="alert('Sleep Mode active...')">Sleep</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer" onclick="location.reload()">
+                        Restart...</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer text-red-400 hover:text-white"
+                        onclick="document.body.style.display='none'">Shut Down...</div>
+                </div>
+
+                <!-- App Name -->
+                <span class="font-bold px-1 cursor-default">Finder</span>
+
+                <!-- Standard Menus -->
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2 hidden md:block"
+                    onclick="toggleMenu('file-menu')">File</span>
+                <!-- Dropdown: File -->
+                <div id="file-menu"
+                    class="absolute top-8 left-20 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer">New Finder Window</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer">New Folder</div>
+                </div>
+
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2 hidden md:block">Edit</span>
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2 hidden md:block">View</span>
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2 hidden md:block">Go</span>
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2 hidden md:block">Window</span>
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2 hidden md:block">Help</span>
+            </div>
+
+            <!-- Right: Status Icons -->
+            <div class="macos-menu-right">
+                <!-- Battery -->
+                <div class="relative group cursor-default">
+                    <i class="fas fa-battery-full text-[14px] opacity-80"></i>
+                    <div
+                        class="absolute top-6 right-0 bg-black/80 text-white text-[10px] px-2 py-1 rounded hidden group-hover:block whitespace-nowrap">
+                        100%</div>
+                </div>
+
+                <!-- Wi-Fi -->
+                <div class="cursor-pointer" onclick="alert('Wi-Fi: Connected to HarshitOS_5G')">
+                    <i class="fas fa-wifi text-[14px]"></i>
+                </div>
+
+                <!-- Search/Spotlight -->
+                <div class="cursor-pointer" onclick="alert('Spotlight Search coming soon...')">
+                    <i class="fas fa-search text-[14px]"></i>
+                </div>
+
+                <!-- Control Center Toggle -->
+                <div class="cursor-pointer" onclick="toggleControlCenter()">
+                    <i class="fas fa-sliders-h text-[14px]"></i>
+                </div>
+
+                <!-- Control Center Panel -->
+                <div id="control-center"
+                    class="absolute top-10 right-0 w-80 bg-[rgba(30,30,30,0.8)] backdrop-blur-2xl rounded-2xl border border-white/10 shadow-2xl hidden p-4 z-[9999] transition-all duration-200">
+                    <div class="grid grid-cols-2 gap-3 mb-4">
+                        <!-- Connectivity Block -->
+                        <div class="bg-white/10 rounded-xl p-3 flex flex-col gap-3">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
+                                    <i class="fas fa-wifi"></i>
+                                </div>
+                                <div class="flex flex-col"><span class="text-xs font-semibold">Wi-Fi</span><span
+                                        class="text-[10px] opacity-60">Home</span></div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
+                                    <i class="fab fa-bluetooth-b"></i>
+                                </div>
+                                <div class="flex flex-col"><span class="text-xs font-semibold">Bluetooth</span><span
+                                        class="text-[10px] opacity-60">On</span></div>
+                            </div>
+                        </div>
+                        <!-- DND Block -->
+                        <div
+                            class="bg-white/10 rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-white/20 transition">
+                            <div
+                                class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white mb-2">
+                                <i class="fas fa-moon"></i>
+                            </div>
+                            <span class="text-xs font-semibold">Do Not Disturb</span>
+                        </div>
+                    </div>
+
+                    <!-- Sliders -->
+                    <div class="bg-white/10 rounded-xl p-3 mb-3">
+                        <div class="text-[10px] font-semibold mb-2 uppercase opacity-50 tracking-wide">Display</div>
+                        <input type="range" class="w-full h-1 bg-white/20 rounded-full appearance-none cursor-pointer"
+                            min="1" max="100" value="80">
+                    </div>
+                    <div class="bg-white/10 rounded-xl p-3">
+                        <div class="text-[10px] font-semibold mb-2 uppercase opacity-50 tracking-wide">Sound</div>
+                        <input type="range" class="w-full h-1 bg-white/20 rounded-full appearance-none cursor-pointer"
+                            min="1" max="100" value="60">
+                    </div>
+                </div>
+
+                <!-- Clock -->
+                <span id="clock" class="text-[13px] font-medium min-w-[130px] text-right">Mon Oct 11 9:41 AM</span>
+            </div>
+        </div>
+
+        <!-- Desktop Icons -->
+        <div id="desktop-grid"></div>
+
+        <!-- Dock -->
+        <div id="dock-container">
+            <div id="dock"></div>
+        </div>
+
+        <!-- Broken Screen Overlay -->
+        <div id="crack" class="crack"></div>
+
+    </main>
+
+    <!-- CONTEXT MENU -->
+    <div id="ctx-menu">
+        <div class="ctx-item" onclick="Apps.open('profile')"><i class="fas fa-user-circle"></i> View Identity</div>
+        <div class="ctx-item" onclick="Apps.open('gemini')"><i class="fas fa-sparkles text-purple-500"></i> Ask AI
+            Assistant</div>
+        <div class="ctx-sep"></div>
+        <div class="ctx-item" onclick="spawnBears()"><i class="fas fa-paw text-brown-500"></i> Masti Mode</div>
+        <div class="ctx-item" onclick="location.reload()"><i class="fas fa-redo"></i> Restart System</div>
+    </div>
+
+    <!-- Main Logic -->
+    <script src="new.js"></script>
+</body>
+
+</html>

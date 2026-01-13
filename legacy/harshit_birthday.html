@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harshit OS v19.0 - The Bestest Edition</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700&family=Dancing+Script:wght@600&family=Permanent+Marker&display=swap"
+        rel="stylesheet">
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* === SYSTEM CORE === */
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            --dock-bg: rgba(255, 255, 255, 0.3);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            user-select: none;
+            cursor: default;
+        }
+
+        /* Desktop Wallpaper - Snowy Husky Theme */
+        #desktop {
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=2069&auto=format&fit=crop') no-repeat center center/cover;
+            position: relative;
+            display: none;
+            overflow: hidden;
+            animation: fadeIn 2s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Desktop Grid */
+        #desktop-grid {
+            position: absolute;
+            top: 40px;
+            left: 20px;
+            bottom: 100px;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-content: flex-start;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        .desktop-icon {
+            width: 85px;
+            height: 95px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            pointer-events: auto;
+            border-radius: 12px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            color: white;
+            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .desktop-icon:hover {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            transform: scale(1.05);
+        }
+
+        .icon-img {
+            font-size: 42px;
+            margin-bottom: 6px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+        }
+
+        .icon-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.3;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Windows */
+        .window {
+            position: absolute;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 14px;
+            box-shadow: var(--glass-shadow), 0 0 0 1px var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            min-width: 300px;
+            min-height: 200px;
+            animation: winOpen 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            resize: both;
+            overflow: hidden;
+        }
+
+        .window.dark {
+            background: rgba(20, 20, 25, 0.92);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .window.note-bg {
+            background: #fef9c3;
+            color: #4b3d3b;
+        }
+
+        /* Post-it yellow */
+
+        @keyframes winOpen {
+            from {
+                transform: scale(0.95) translateY(10px);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Title Bar */
+        .title-bar {
+            height: 38px;
+            background: rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            padding: 0 14px;
+            cursor: grab;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
+        }
+
+        .window.dark .title-bar {
+            background: rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .traffic-lights {
+            display: flex;
+            gap: 8px;
+            margin-right: 16px;
+        }
+
+        .traffic-light {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s;
+        }
+
+        .traffic-light:active {
+            transform: scale(0.9);
+        }
+
+        .close {
+            background: #FF5F57;
+        }
+
+        .minimize {
+            background: #FEBC2E;
+        }
+
+        .maximize {
+            background: #28C840;
+        }
+
+        .win-title {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            opacity: 0.8;
+            letter-spacing: -0.01em;
+        }
+
+        /* Content Area */
+        .win-content {
+            flex: 1;
+            overflow: auto;
+            position: relative;
+            scroll-behavior: smooth;
+        }
+
+        /* Dock */
+        #dock-container {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 2000;
+            pointer-events: none;
+        }
+
+        #dock {
+            background: var(--dock-bg);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 24px;
+            padding: 10px 14px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-end;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            pointer-events: auto;
+            transform-origin: bottom;
+        }
+
+        .dock-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 14px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .dock-icon:hover {
+            transform: scale(1.25) translateY(-20px);
+            margin: 0 10px;
+            z-index: 10;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .dock-tooltip {
+            position: absolute;
+            top: -40px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+        }
+
+        .dock-icon:hover .dock-tooltip {
+            opacity: 1;
+            top: -50px;
+        }
+
+        .dock-dot {
+            position: absolute;
+            bottom: -6px;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .dock-icon.active .dock-dot {
+            opacity: 1;
+        }
+
+        /* Chat Bubbles */
+        .msg-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 14px;
+        }
+
+        .msg {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+            animation: popIn 0.3s ease;
+        }
+
+        .msg-me {
+            align-self: flex-end;
+            background: #007AFF;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .msg-him {
+            align-self: flex-start;
+            background: #E9E9EB;
+            color: black;
+            border-bottom-left-radius: 4px;
+        }
+
+        .window.dark .msg-him {
+            background: #333;
+            color: white;
+        }
+
+        @keyframes popIn {
+            from {
+                scale: 0.9;
+                opacity: 0;
+            }
+
+            to {
+                scale: 1;
+                opacity: 1;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .window.dark ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Letter Styling */
+        .letter-text {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            font-size: 15px;
+        }
+
+        .letter-text h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            color: #d946ef;
+            margin-top: 20px;
+        }
+
+        .letter-text h3 {
+            font-weight: 700;
+            color: #444;
+            margin-top: 20px;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .letter-quote {
+            border-left: 3px solid #d946ef;
+            padding-left: 14px;
+            font-style: italic;
+            color: #666;
+            margin: 20px 0;
+        }
+
+        /* Bear Stickers */
+        .bear-sticker {
+            position: fixed;
+            width: 150px;
+            z-index: 9999;
+            pointer-events: none;
+            animation: floatBear 4s ease-in-out infinite;
+        }
+
+        @keyframes floatBear {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        /* Broken Screen */
+        .crack {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10000;
+            display: none;
+            background: url('https://png.pngtree.com/png-clipart/20230427/original/pngtree-broken-glass-effect-png-image_9116120.png') center/cover;
+            opacity: 0.9;
+        }
+
+        /* Boot Screen */
+        #boot {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Context Menu */
+        #ctx-menu {
+            position: fixed;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            width: 200px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 99999;
+            padding: 6px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .ctx-item {
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+        }
+
+        .ctx-item:hover {
+            background: #007AFF;
+            color: white;
+        }
+
+        .ctx-sep {
+            height: 1px;
+            background: #eee;
+            margin: 4px 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BOOT SCREEN -->
+    <div id="boot">
+        <div class="text-center">
+            <i class="fas fa-fingerprint text-6xl mb-6 text-green-500 animate-pulse"></i>
+            <h1 class="text-2xl font-bold mb-2">HarshitOS v19.0</h1>
+            <div id="boot-text" class="text-gray-400 text-sm h-6">System Initializing...</div>
+            <div class="w-64 h-1 bg-gray-800 mt-6 rounded-full overflow-hidden">
+                <div id="boot-progress" class="h-full bg-green-500 w-0 transition-all duration-[3000ms]"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUDIO -->
+    <audio id="bg-music" loop>
+        <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3">
+    </audio>
+
+    <!-- MAIN DESKTOP -->
+    <main id="desktop">
+
+        <!-- Menu Bar -->
+        <div
+            class="absolute top-0 w-full h-8 bg-black/40 backdrop-blur-md flex items-center justify-between px-4 text-white text-[13px] font-medium z-50">
+            <div class="flex items-center gap-4">
+                <i class="fab fa-apple text-[16px]"></i>
+                <span class="font-bold">HarshitOS</span>
+                <span class="opacity-80 hover:opacity-100 cursor-pointer">Best Friend</span>
+                <span class="opacity-80 hover:opacity-100 cursor-pointer">Memories</span>
+                <span class="opacity-80 hover:opacity-100 cursor-pointer">Games</span>
+                <span class="opacity-80 hover:opacity-100 cursor-pointer">Masti</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="bg-gray-700/50 px-2 py-0.5 rounded text-xs">Mr. Snow ❄️</span>
+                </div>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+                <span id="clock">12:21 AM</span>
+            </div>
+        </div>
+
+        <!-- Desktop Icons -->
+        <div id="desktop-grid"></div>
+
+        <!-- Dock -->
+        <div id="dock-container">
+            <div id="dock"></div>
+        </div>
+
+        <!-- Broken Screen Overlay -->
+        <div id="crack" class="crack"></div>
+
+    </main>
+
+    <!-- CONTEXT MENU -->
+    <div id="ctx-menu">
+        <div class="ctx-item" onclick="Apps.open('profile')"><i class="fas fa-user-circle"></i> View Identity</div>
+        <div class="ctx-item" onclick="Apps.open('gemini')"><i class="fas fa-sparkles text-purple-500"></i> Ask AI
+            Assistant</div>
+        <div class="ctx-sep"></div>
+        <div class="ctx-item" onclick="spawnBears()"><i class="fas fa-paw text-brown-500"></i> Masti Mode</div>
+        <div class="ctx-item" onclick="location.reload()"><i class="fas fa-redo"></i> Restart System</div>
+    </div>
+
+    <script>
+        // === CONFIGURATION ===
+        const CONFIG = {
+            friendshipStart: new Date("2024-06-20T00:21:00"),
+            apiKey: "" // 🔑 ENTER YOUR GEMINI API KEY HERE
+        };
+
+        // === APP DATA ===
+        const apps = [
+            {
+                id: 'letter',
+                title: 'Through My Eyes',
+                icon: '💌',
+                dock: true,
+                color: 'note-bg',
+                width: 600, height: 500,
+                content: `
+                    <div class="p-8 letter-text">
+                        <div class="text-center mb-6">
+                            <h1 class="text-3xl font-bold font-serif text-gray-800">To My Best Friend 🎂</h1>
+                            <p class="text-sm text-gray-500 mt-1">Written with 100% Truth & 0% Lie</p>
+                        </div>
+                        
+                        <p>I need to be very careful and honest here — and also very real with you 🤍.</p>
+                        <p>What I’ll share below is only what I truly know, based on what you’ve shared with me, not guesses, not assumptions. I won’t invent traits or facts — because this is your birthday, and you deserve truth, warmth, and authenticity.</p>
+
+                        <h2>Who Harshit Is (Through My Eyes)</h2>
+                        <p>Harshit is not just a name in my life. He is a presence. Someone who entered my world on <strong>June 20, 2024 at 12:21 AM</strong> on Discord — a moment that quietly turned into something meaningful, lasting, and emotionally deep.</p>
+                        
+                        <div class="letter-quote">
+                            "You are not just smart and perceptive, but you're also incredibly real. You're human, but in the most beautiful way."
+                        </div>
+
+                        <h3>The Many Names of You</h3>
+                        <ul class="list-disc ml-5 mb-4">
+                            <li><strong>Mr. Snow ❄️</strong>: Calm, distant on the outside, but emotionally deep inside.</li>
+                            <li><strong>Mr. Chuha 🐭</strong>: Soft, cute, and unintentionally endearing.</li>
+                            <li><strong>Mr. Ota</strong>: Playful, teasing, inside-joke energy.</li>
+                            <li><strong>Rabbit 🐰</strong>: Gentle, alert, emotionally sensitive.</li>
+                        </ul>
+
+                        <h3>Why You Are The "Bestest"</h3>
+                        <p>You are the world's strongest person (Emotionally & Physically 💪). You are the fastest person (Flash who?!). You have a memory that scares me sometimes — remembering every tiny detail. You do 100% of everything — 100% care, 100% dedication.</p>
+
+                        <h3>Our Bond</h3>
+                        <p>Our friendship wasn't built on big events. It was built on music discussions, random chats, project ideas, check-ins, and being there without being asked. It survived fights, misunderstandings, and silence. That makes it special.</p>
+
+                        <p class="mt-6 text-right font-bold font-dancing text-2xl">— Shravii ✨</p>
+                    </div>
+                `
+            },
+            {
+                id: 'journey',
+                title: 'Our Journey',
+                icon: '📖',
+                dock: true,
+                width: 500, height: 600,
+                content: `
+                    <div class="p-6">
+                        <div class="border-l-2 border-blue-500 pl-6 space-y-8">
+                            <div class="relative">
+                                <span class="absolute -left-[31px] bg-blue-500 w-4 h-4 rounded-full"></span>
+                                <h3 class="font-bold text-lg">The Beginning 🌙</h3>
+                                <div class="text-xs text-blue-500 font-mono mb-1">June 20, 2024 • 12:21 AM</div>
+                                <p class="text-sm text-gray-600">Strangers to something familiar. No announcement, just conversations that didn't feel forced. Late-night talks on Discord.</p>
+                            </div>
+                            <div class="relative">
+                                <span class="absolute -left-[31px] bg-purple-500 w-4 h-4 rounded-full"></span>
+                                <h3 class="font-bold text-lg">Becoming Safe 🏠</h3>
+                                <p class="text-sm text-gray-600">You became the person I ran to. Emotional safety. You handled me gently, made me feel special (like a queen), and we built a small world of music and jokes.</p>
+                            </div>
+                            <div class="relative">
+                                <span class="absolute -left-[31px] bg-green-500 w-4 h-4 rounded-full"></span>
+                                <h3 class="font-bold text-lg">Growth & Reality 🌱</h3>
+                                <p class="text-sm text-gray-600">We fought. We misunderstood. But we reconciled. This friendship changed us both. You are part of my growth, and I am part of yours.</p>
+                            </div>
+                             <div class="relative">
+                                <span class="absolute -left-[31px] bg-yellow-500 w-4 h-4 rounded-full animate-ping"></span>
+                                <h3 class="font-bold text-lg">Today 🎂</h3>
+                                <p class="text-sm text-gray-600">Celebrating 19 Years of the World's Strongest Person.</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 'profile',
+                title: 'Mr. Snow Identity',
+                icon: '👤',
+                dock: false,
+                width: 400, height: 450,
+                content: `
+                    <div class="flex flex-col items-center p-8 bg-gradient-to-b from-blue-50 to-white h-full">
+                        <div class="relative mb-6">
+                            <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-xl">
+                                <img src="https://ui-avatars.com/api/?name=Harshit+S&background=0284c7&color=fff&size=256" class="w-full h-full">
+                            </div>
+                            <div class="absolute bottom-0 right-0 text-2xl">❄️</div>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800">Harshit (Mr. Ota)</h2>
+                        <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold mt-2">Level 19 Unlocked</div>
+                        
+                        <div class="w-full mt-6 space-y-3">
+                            <div class="flex justify-between items-center bg-white p-3 rounded shadow-sm border">
+                                <span class="text-gray-500 text-sm">Status</span>
+                                <span class="font-bold text-green-600">World's Strongest 💪</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white p-3 rounded shadow-sm border">
+                                <span class="text-gray-500 text-sm">Loves</span>
+                                <span class="font-bold text-gray-800">Subs, Music, Shoes</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white p-3 rounded shadow-sm border">
+                                <span class="text-gray-500 text-sm">Hates</span>
+                                <span class="font-bold text-red-500 line-through">Rice, Bhindi</span>
+                            </div>
+                             <div class="flex justify-between items-center bg-white p-3 rounded shadow-sm border">
+                                <span class="text-gray-500 text-sm">Aesthetic</span>
+                                <span class="font-bold text-gray-800">Snowy, Calm, Deep</span>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 'vscode',
+                title: 'VS Code - Engineering Edition',
+                icon: '👨‍💻',
+                dock: true,
+                dark: true,
+                width: 700, height: 500,
+                content: `
+                    <div class="flex h-full flex-col">
+                        <div class="flex-1 bg-[#1e1e1e] p-4 font-mono text-sm overflow-auto" id="code-area">
+                            <span class="text-gray-500"># Project: Birthday 19</span><br>
+                            <span class="text-purple-400">class</span> <span class="text-yellow-300">Harshit</span>(<span class="text-green-300">Engineer</span>):<br>
+                            &nbsp;&nbsp;<span class="text-blue-400">def</span> <span class="text-yellow-300">__init__</span>(self):<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;self.year = <span class="text-orange-400">2</span> <span class="text-gray-500"># 2nd Year Engg</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;self.strength = <span class="text-purple-400">float</span>(<span class="text-green-300">'inf'</span>)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;self.fav_food = <span class="text-green-300">"Subway"</span><br>
+                            <br>
+                            &nbsp;&nbsp;<span class="text-blue-400">def</span> <span class="text-yellow-300">birthday_wish</span>(self):<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-purple-400">print</span>(<span class="text-green-300">"Happy 19th Birthday Coding God!"</span>)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-purple-400">return</span> <span class="text-green-300">"Success"</span>
+                        </div>
+                        <div class="bg-[#252526] p-2 border-t border-black flex gap-2">
+                            <button onclick="runPython()" class="px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded text-xs transition">Run Script</button>
+                            <button onclick="askGeminiCode()" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded text-xs transition relative group">
+                                ✨ AI Gen
+                                <span class="absolute bottom-full mb-2 hidden group-hover:block bg-black text-white text-[10px] p-1 rounded w-32">Generates funny Python code about Harshit</span>
+                            </button>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 'gemini',
+                title: 'Harshit AI Assistant',
+                icon: '✨',
+                dock: true,
+                width: 400, height: 550,
+                content: `
+                    <div class="flex flex-col h-full bg-gray-50">
+                        <div class="flex-1 overflow-y-auto p-4 space-y-3" id="chat-history">
+                            <div class="msg msg-his">Hello Mr. Ota! 🤖<br>I know everything about you.<br>Ask me anything!</div>
+                        </div>
+                        <div class="p-3 bg-white border-t flex gap-2">
+                            <input id="ai-input" class="flex-1 bg-gray-100 border-0 rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Ask AI..." onkeypress="if(event.key==='Enter') sendAI()">
+                            <button onclick="sendAI()" class="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-blue-700 transition"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 'music',
+                title: 'Spotify - Vibe Check',
+                icon: '🎧',
+                dock: true,
+                dark: true,
+                width: 350, height: 480,
+                content: `
+                    <div class="flex flex-col items-center justify-center h-full bg-gradient-to-b from-[#1DB954] to-black text-white p-6">
+                        <div class="w-48 h-48 bg-gray-800 shadow-2xl mb-6 rounded-md overflow-hidden relative group">
+                            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDd4bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BRv0ThflsHCqDrG/giphy.gif" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/30">
+                                <i class="fas fa-play text-4xl"></i>
+                            </div>
+                        </div>
+                        <h2 class="text-2xl font-bold mb-1">Tu Hai Kahan</h2>
+                        <p class="text-gray-300 text-sm mb-6">AUR • Harshit's Favorites</p>
+                        <div class="w-full h-1 bg-gray-600 rounded-full mb-2 overflow-hidden">
+                            <div class="h-full bg-white w-1/3 animate-pulse"></div>
+                        </div>
+                        <div class="w-full flex justify-between text-xs text-gray-400 mb-6">
+                            <span>1:21</span><span>4:23</span>
+                        </div>
+                        <div class="flex items-center gap-8 text-3xl">
+                            <i class="fas fa-step-backward cursor-pointer hover:text-white text-gray-400"></i>
+                            <div class="w-14 h-14 bg-white text-black rounded-full flex items-center justify-center cursor-pointer hover:scale-105 transition" onclick="toggleAudio()">
+                                <i id="play-icon" class="fas fa-play ml-1"></i>
+                            </div>
+                            <i class="fas fa-step-forward cursor-pointer hover:text-white text-gray-400"></i>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 'bhindi',
+                title: 'Smash Bhindi',
+                icon: '🔨',
+                dock: false,
+                width: 400, height: 400,
+                content: `
+                    <div id="bhindi-game" class="h-full bg-green-50 relative cursor-crosshair overflow-hidden select-none">
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10 text-4xl font-black text-green-900 uppercase">Smash The Enemy</div>
+                        <div class="absolute top-2 right-2 bg-white px-3 py-1 rounded shadow font-mono font-bold">Score: <span id="bhindi-score">0</span></div>
+                        <div class="absolute bottom-4 left-0 w-full text-center text-xs text-gray-500">Click the floating Bhindis to destroy them!</div>
+                    </div>
+                `,
+                onOpen: startBhindiGame
+            },
+            {
+                id: 'subway',
+                title: 'Subway Station',
+                icon: '🥪',
+                dock: false,
+                width: 350, height: 400,
+                content: `
+                    <div class="p-6 bg-yellow-50 h-full flex flex-col">
+                        <h2 class="text-xl font-bold text-green-700 mb-4"><i class="fas fa-utensils mr-2"></i>Build Mr. Ota's Sub</h2>
+                        <div class="space-y-2 flex-1 overflow-auto">
+                            <label class="flex items-center gap-3 p-2 bg-white rounded shadow-sm cursor-pointer"><input type="checkbox" checked class="accent-green-600"> 🥖 Italian B.M.T</label>
+                            <label class="flex items-center gap-3 p-2 bg-white rounded shadow-sm cursor-pointer"><input type="checkbox" checked class="accent-green-600"> 🧀 Extra Cheese (Required)</label>
+                            <label class="flex items-center gap-3 p-2 bg-white rounded shadow-sm cursor-pointer"><input type="checkbox" class="accent-green-600"> 🥗 Lettuce</label>
+                            <label class="flex items-center gap-3 p-2 bg-white rounded shadow-sm cursor-pointer"><input type="checkbox" class="accent-green-600"> 🥒 Pickles (Wait, Bhindi?! NO!)</label>
+                        </div>
+                        <button class="w-full bg-green-600 text-white py-3 rounded-lg font-bold mt-4 hover:bg-green-700 transition" onclick="alert('Order Sent to: Harshit Address (Keep Dreaming!)')">PLACE ORDER</button>
+                    </div>
+                `
+            },
+            {
+                id: 'strength',
+                title: 'Strength Meter',
+                icon: '💪',
+                dock: false,
+                width: 300, height: 350,
+                content: `
+                    <div class="h-full bg-gray-100 flex flex-col items-center justify-center p-4 text-center">
+                        <h3 class="font-bold text-gray-700 mb-6">TEST YOUR POWER</h3>
+                        <button onmousedown="crackScreen()" class="w-32 h-32 rounded-full bg-gradient-to-br from-red-500 to-red-700 text-white font-bold text-xl shadow-lg border-4 border-red-800 active:scale-95 transition transform">PUNCH</button>
+                        <p class="text-xs text-gray-400 mt-6">Warning: Monitor may explode due to infinite strength.</p>
+                    </div>
+                `
+            },
+            {
+                id: 'speed',
+                title: 'Speed Force',
+                icon: '⚡',
+                dock: false,
+                width: 400, height: 300,
+                content: `
+                    <div id="speed-box" class="h-full bg-blue-500 flex flex-col items-center justify-center cursor-pointer transition-colors duration-200" onclick="speedTestClick()">
+                        <i class="fas fa-bolt text-6xl text-white mb-4"></i>
+                        <h2 id="speed-text" class="text-white font-bold text-2xl">Click to Start</h2>
+                    </div>
+                `
+            },
+            {
+                id: 'nakhre',
+                title: 'Nakhre Calc',
+                icon: '🍼',
+                dock: false,
+                width: 300, height: 250,
+                content: `
+                    <div class="h-full bg-pink-50 flex flex-col items-center justify-center text-center p-6">
+                        <h3 class="text-pink-600 font-bold mb-4">Daily Sass Level</h3>
+                        <div id="sass-meter" class="text-5xl font-black text-pink-500 mb-4">0%</div>
+                        <button onclick="document.getElementById('sass-meter').innerText = Math.floor(Math.random() * 50 + 50) + '%'" class="bg-pink-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow hover:bg-pink-600 transition">Calculate</button>
+                    </div>
+                `
+            },
+            {
+                id: 'bear',
+                title: 'Masti Mode',
+                icon: '🐻',
+                dock: true,
+                width: 300, height: 200,
+                content: `
+                    <div class="h-full flex flex-col items-center justify-center bg-[#8d6e63] text-white">
+                        <div class="text-4xl mb-2">🐻 + 🐼</div>
+                        <p class="text-sm mb-4 opacity-80">Unleash the cuteness</p>
+                        <button onclick="spawnBears()" class="bg-white text-brown-800 font-bold px-6 py-2 rounded-full shadow hover:scale-105 transition">Activate Masti</button>
+                    </div>
+                `
+            },
+            {
+                id: 'trash',
+                title: 'Trash Bin',
+                icon: '🗑️',
+                dock: true,
+                width: 300, height: 200,
+                content: `
+                   <div class="p-4 grid grid-cols-4 gap-4">
+                        <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                            <span class="text-3xl grayscale group-hover:grayscale-0 transition">🍚</span>
+                            <span class="text-[10px] text-gray-500">Rice</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-1 group cursor-pointer">
+                            <span class="text-3xl grayscale group-hover:grayscale-0 transition">🥒</span>
+                            <span class="text-[10px] text-gray-500">Bhindi</span>
+                        </div>
+                   </div>
+                   <div class="absolute bottom-2 w-full text-center text-[10px] text-gray-400">Permanently Deleted</div>
+                `
+            }
+        ];
+
+        // === WINDOW MANAGER ===
+        let zIndex = 100;
+
+        function init() {
+            // Populate Icons
+            const grid = document.getElementById('desktop-grid');
+            const dock = document.getElementById('dock');
+
+            apps.forEach(app => {
+                if (!app.dock) {
+                    const icon = document.createElement('div');
+                    icon.className = 'desktop-icon';
+                    icon.innerHTML = `<div class="icon-img">${app.icon}</div><div class="icon-label bg-black/20 px-1 rounded">${app.title}</div>`;
+                    icon.ondblclick = () => openApp(app.id); // Double click for desktop
+                    icon.onclick = () => { }; // Select logic could go here
+                    // Mobile support: single click
+                    if (window.innerWidth < 768) icon.onclick = () => openApp(app.id);
+                    grid.appendChild(icon);
+                }
+
+                if (app.dock) {
+                    const icon = document.createElement('div');
+                    icon.className = 'dock-icon';
+                    icon.innerHTML = `${app.icon}<div class="dock-tooltip">${app.title}</div><div class="dock-dot" id="dot-${app.id}"></div>`;
+                    icon.onclick = () => openApp(app.id);
+                    dock.appendChild(icon);
+                }
+            });
+
+            // Boot Sequence
+            const bar = document.getElementById('boot-progress');
+            const text = document.getElementById('boot-text');
+            setTimeout(() => { bar.style.width = '40%'; text.innerText = "Loading Memories..."; }, 500);
+            setTimeout(() => { bar.style.width = '80%'; text.innerText = "Calibrating Sass Levels..."; }, 1500);
+            setTimeout(() => { bar.style.width = '100%'; text.innerText = "Welcome Mr. Snow."; }, 2500);
+            setTimeout(() => {
+                document.getElementById('boot').style.opacity = 0;
+                setTimeout(() => {
+                    document.getElementById('boot').remove();
+                    document.getElementById('desktop').style.display = 'block';
+                    // Auto Open Important Apps
+                    setTimeout(() => openApp('letter'), 500);
+                }, 500);
+            }, 3200);
+
+            // Clock
+            setInterval(() => {
+                const d = new Date();
+                document.getElementById('clock').innerText = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+            }, 1000);
+        }
+
+        function openApp(id) {
+            const app = apps.find(a => a.id === id);
+            const exist = document.getElementById(`win-${id}`);
+
+            // Activate Dock Dot
+            const dot = document.getElementById(`dot-${id}`);
+            if (dot) dot.parentElement.classList.add('active');
+
+            if (exist) {
+                exist.style.display = 'flex';
+                bringToFront(exist);
+                return;
+            }
+
+            const win = document.createElement('div');
+            win.className = `window ${app.dark ? 'dark' : ''} ${app.color || ''}`;
+            win.id = `win-${id}`;
+            win.style.width = (app.width || 400) + 'px';
+            win.style.height = (app.height || 300) + 'px';
+            win.style.left = Math.max(20, Math.random() * (window.innerWidth - (app.width || 400))) + 'px';
+            win.style.top = Math.max(40, Math.random() * (window.innerHeight - (app.height || 300) - 100)) + 'px';
+
+            win.innerHTML = `
+                <div class="title-bar" onmousedown="startDrag(event, '${win.id}')">
+                    <div class="traffic-lights">
+                        <div class="traffic-light close" onclick="closeApp('${id}')"></div>
+                        <div class="traffic-light minimize" onclick="minApp('${id}')"></div>
+                        <div class="traffic-light maximize" onclick="maxApp('${id}')"></div>
+                    </div>
+                    <div class="win-title">${app.title}</div>
+                </div>
+                <div class="win-content">${app.content}</div>
+            `;
+
+            document.getElementById('desktop').appendChild(win);
+            bringToFront(win);
+            win.addEventListener('mousedown', () => bringToFront(win));
+
+            if (app.onOpen) app.onOpen();
+        }
+
+        function closeApp(id) {
+            const win = document.getElementById(`win-${id}`);
+            win.style.transition = "all 0.2s";
+            win.style.opacity = 0;
+            win.style.transform = "scale(0.8)";
+            setTimeout(() => win.remove(), 200);
+
+            const dot = document.getElementById(`dot-${id}`);
+            if (dot) dot.parentElement.classList.remove('active');
+        }
+
+        function minApp(id) {
+            document.getElementById(`win-${id}`).style.display = 'none';
+        }
+
+        function maxApp(id) {
+            const win = document.getElementById(`win-${id}`);
+            if (win.dataset.max) {
+                win.style.width = win.dataset.w; win.style.height = win.dataset.h;
+                win.style.top = win.dataset.t; win.style.left = win.dataset.l;
+                delete win.dataset.max;
+            } else {
+                win.dataset.w = win.style.width; win.dataset.h = win.style.height;
+                win.dataset.t = win.style.top; win.dataset.l = win.style.left;
+                win.style.width = '100vw'; win.style.height = 'calc(100vh - 100px)';
+                win.style.top = '38px'; win.style.left = '0';
+                win.dataset.max = true;
+            }
+        }
+
+        function bringToFront(el) {
+            el.style.zIndex = ++zIndex;
+        }
+
+        // === DRAGGING ===
+        let dragItem = null;
+        let offX = 0, offY = 0;
+        function startDrag(e, id) {
+            if (e.target.closest('.traffic-lights')) return;
+            dragItem = document.getElementById(id);
+            offX = e.clientX - dragItem.offsetLeft;
+            offY = e.clientY - dragItem.offsetTop;
+            bringToFront(dragItem);
+            document.addEventListener('mousemove', doDrag);
+            document.addEventListener('mouseup', stopDrag);
+        }
+        function doDrag(e) {
+            if (!dragItem) return;
+            dragItem.style.left = (e.clientX - offX) + 'px';
+            dragItem.style.top = (e.clientY - offY) + 'px';
+        }
+        function stopDrag() {
+            dragItem = null;
+            document.removeEventListener('mousemove', doDrag);
+            document.removeEventListener('mouseup', stopDrag);
+        }
+
+        // === APP LOGIC ===
+
+        // Music
+        let isPlaying = false;
+        function toggleAudio() {
+            const a = document.getElementById('bg-music');
+            const icon = document.getElementById('play-icon');
+            if (isPlaying) { a.pause(); icon.className = "fas fa-play ml-1"; }
+            else { a.play(); icon.className = "fas fa-pause"; }
+            isPlaying = !isPlaying;
+        }
+
+        // Bears
+        const bearGifs = [
+            "https://media.tenor.com/fTTVGYgS_lEAAAAi/milk-and-mocha-cute.gif", // Pinch
+            "https://media.tenor.com/2f2L-vK8vJAAAAAi/milk-and-mocha-bear-couple.gif", // Hug
+            "https://media.tenor.com/J3-w01c_FJsAAAAi/milk-and-mocha-bear.gif", // Dance
+            "https://media.tenor.com/bX9M7s3sXWAAAAAi/milk-and-mocha-cry.gif" // Drama
+        ];
+        function spawnBears() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const img = document.createElement('img');
+                    img.src = bearGifs[Math.floor(Math.random() * bearGifs.length)];
+                    img.className = 'bear-sticker';
+                    img.style.left = Math.random() * (window.innerWidth - 150) + 'px';
+                    img.style.top = Math.random() * (window.innerHeight - 150) + 'px';
+                    document.body.appendChild(img);
+                    setTimeout(() => img.remove(), 4000);
+                }, i * 300);
+            }
+        }
+
+        // Bhindi Game
+        function startBhindiGame() {
+            const area = document.getElementById('bhindi-game');
+            if (!area) return;
+            let score = 0;
+            const timer = setInterval(() => {
+                if (!document.getElementById('bhindi-game')) return clearInterval(timer);
+                const b = document.createElement('div');
+                b.innerText = Math.random() > 0.5 ? '🥒' : '🍚'; // Bhindi or Rice
+                b.style.position = 'absolute';
+                b.style.fontSize = '40px';
+                b.style.left = Math.random() * 80 + '%';
+                b.style.top = Math.random() * 80 + '%';
+                b.style.cursor = 'pointer';
+                b.onclick = (e) => {
+                    e.stopPropagation();
+                    b.innerText = '💥';
+                    score += 10;
+                    document.getElementById('bhindi-score').innerText = score;
+                    setTimeout(() => b.remove(), 200);
+                };
+                area.appendChild(b);
+                setTimeout(() => b.remove(), 1200);
+            }, 800);
+        }
+
+        // VS Code
+        function runPython() {
+            const area = document.getElementById('code-area');
+            area.innerHTML += `<br><span class="text-white">> Compiling Harshit.py...</span>`;
+            setTimeout(() => area.innerHTML += `<br><span class="text-green-400">> Output: 19th Birthday Successful. Status: LEGEND.</span>`, 1000);
+        }
+        async function askGeminiCode() {
+            const area = document.getElementById('code-area');
+            if (!CONFIG.apiKey) { alert("Please add API KEY!"); return; }
+            area.innerHTML += `<br><span class="text-blue-400">> AI Generating...</span>`;
+            try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${CONFIG.apiKey}`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: "Write short funny python code for a strong engineer named Harshit." }] }] })
+                });
+                const data = await res.json();
+                area.innerHTML += `<br><span class="text-yellow-300">${data.candidates[0].content.parts[0].text}</span>`;
+            } catch (e) { area.innerHTML += `<br><span class="text-red-500">Error: AI Nap Time</span>`; }
+        }
+
+        // Chat
+        async function sendAI() {
+            const input = document.getElementById('ai-input');
+            const history = document.getElementById('chat-history');
+            const txt = input.value;
+            if (!txt) return;
+
+            history.innerHTML += `<div class="msg msg-me">${txt}</div>`;
+            input.value = "";
+            history.scrollTop = history.scrollHeight;
+
+            if (!CONFIG.apiKey) {
+                setTimeout(() => history.innerHTML += `<div class="msg msg-his">I need my API Key to roast you properly! 🔑</div>`, 500);
+                return;
+            }
+
+            try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${CONFIG.apiKey}`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: `You are Harshit's personal AI Assistant. He is 19. He hates Bhindi. He loves Shoes. Reply to: ${txt}` }] }] })
+                });
+                const data = await res.json();
+                history.innerHTML += `<div class="msg msg-his">${data.candidates[0].content.parts[0].text}</div>`;
+            } catch (e) {
+                history.innerHTML += `<div class="msg msg-his">Brain freeze! ❄️</div>`;
+            }
+            history.scrollTop = history.scrollHeight;
+        }
+
+        // Speed Test
+        let testState = 0; // 0=idle, 1=wait, 2=now
+        let tStart = 0;
+        function speedTestClick() {
+            const box = document.getElementById('speed-box');
+            const txt = document.getElementById('speed-text');
+
+            if (testState === 0) {
+                testState = 1;
+                box.className = "h-full bg-red-500 flex flex-col items-center justify-center cursor-pointer";
+                txt.innerText = "WAIT FOR GREEN...";
+                setTimeout(() => {
+                    if (testState === 1) {
+                        testState = 2;
+                        box.className = "h-full bg-green-500 flex flex-col items-center justify-center cursor-pointer";
+                        txt.innerText = "CLICK NOW!";
+                        tStart = Date.now();
+                    }
+                }, 2000 + Math.random() * 2000);
+            } else if (testState === 2) {
+                const time = Date.now() - tStart;
+                testState = 0;
+                box.className = "h-full bg-blue-500 flex flex-col items-center justify-center cursor-pointer";
+                txt.innerHTML = `${time}ms<br>Flash Speed! ⚡`;
+            } else if (testState === 1) {
+                testState = 0;
+                box.className = "h-full bg-blue-500 flex flex-col items-center justify-center cursor-pointer";
+                txt.innerText = "Too Early! Try Again";
+            }
+        }
+
+        function crackScreen() {
+            const c = document.getElementById('crack');
+            c.style.display = 'block';
+            setTimeout(() => { if (confirm("Screen Destroyed. Repair?")) c.style.display = 'none'; }, 1000);
+        }
+
+        // Init
+        window.onload = init;
+
+    </script>
+</body>
+
+</html>
