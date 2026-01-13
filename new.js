@@ -1151,9 +1151,25 @@ function initBubbleWrap() {
 
 
 /* === POLAROID GALLERY LOGIC === */
+/* === POLAROID GALLERY LOGIC === */
 function initGallery() {
     const container = document.getElementById('gallery-container');
     if (!container || container.children.length > 0) return; // Prevent duplicates
+
+    // Add Upload Button
+    const uploadBtn = document.createElement('div');
+    uploadBtn.className = 'polaroid-card upload-card';
+    uploadBtn.innerHTML = `
+        <div class="flex flex-col items-center justify-center h-full text-gray-400 cursor-pointer" onclick="document.getElementById('photo-upload').click()">
+            <div class="text-4xl mb-2">+</div>
+            <div class="text-xs">Add Memory</div>
+        </div>
+        <input type="file" id="photo-upload" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this)">
+    `;
+    uploadBtn.style.top = '20px';
+    uploadBtn.style.left = '20px';
+    uploadBtn.style.zIndex = 1000;
+    container.appendChild(uploadBtn);
 
     const photos = [
         { src: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400', caption: "Mr. Snow" },
@@ -1161,46 +1177,66 @@ function initGallery() {
         { src: 'https://images.unsplash.com/photo-1523307730650-594bc63f9d67?q=80&w=400', caption: "Smart Stuff" },
         { src: 'https://images.unsplash.com/photo-1478737270239-2f02b77ac6d5?q=80&w=400', caption: "Cold Vibes" },
         { src: 'https://images.unsplash.com/photo-1492571350019-22de08371fd3?q=80&w=400', caption: "Focus." },
-        { src: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400', caption: "(Place real photos here)" }
+        // { src: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400', caption: "(Place real photos here)" }
     ];
 
-    photos.forEach(photo => {
-        const card = document.createElement('div');
-        card.className = 'polaroid-card';
-        card.innerHTML = `<img src="${photo.src}"><div class="caption">${photo.caption}</div>`;
+    photos.forEach(photo => createPolaroid(photo.src, photo.caption, container));
+}
 
-        // Random Scatter
-        const randomRot = Math.random() * 20 - 10; // -10 to +10 deg
-        const randomTop = Math.random() * 200;
-        const randomLeft = Math.random() * (container.clientWidth - 230); // Prevent overflow
-
-        card.style.transform = `rotate(${randomRot}deg)`;
-        card.style.top = `${randomTop + 50}px`;
-        card.style.left = `${randomLeft}px`;
-
-        // Draggable Logic (Simple)
-        card.onmousedown = function (e) {
-            card.style.zIndex = 200;
-            const offX = e.clientX - card.getBoundingClientRect().left;
-            const offY = e.clientY - card.getBoundingClientRect().top;
-
-            function move(ev) {
-                // Determine container bounds
-                const rect = container.getBoundingClientRect();
-                card.style.left = (ev.clientX - offX - rect.left) + 'px';
-                card.style.top = (ev.clientY - offY - rect.top) + 'px';
+function handlePhotoUpload(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const caption = prompt("Enter a caption for this memory:", "New Memory");
+            if (caption !== null) {
+                createPolaroid(e.target.result, caption, document.getElementById('gallery-container'));
             }
-            function stop() {
-                document.removeEventListener('mousemove', move);
-                document.removeEventListener('mouseup', stop);
-                card.style.zIndex = "";
-            }
-            document.addEventListener('mousemove', move);
-            document.addEventListener('mouseup', stop);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function createPolaroid(src, caption, container) {
+    const card = document.createElement('div');
+    card.className = 'polaroid-card';
+    card.innerHTML = `<img src="${src}"><div class="caption">${caption}</div>`;
+
+    // Random Scatter
+    const randomRot = Math.random() * 20 - 10; // -10 to +10 deg
+    const randomTop = Math.random() * 200;
+    // Ensure bounds
+    const maxLeft = container.clientWidth - 220;
+    const randomLeft = Math.random() * (maxLeft > 0 ? maxLeft : 100);
+
+    card.style.transform = `rotate(${randomRot}deg)`;
+    card.style.top = `${randomTop + 50}px`;
+    card.style.left = `${randomLeft}px`;
+
+    // Draggable Logic (Simple)
+    card.onmousedown = function (e) {
+        card.style.zIndex = 200;
+        const offX = e.clientX - card.getBoundingClientRect().left;
+        const offY = e.clientY - card.getBoundingClientRect().top;
+
+        function move(ev) {
+            const rect = container.getBoundingClientRect();
+            // Prevent dragging fully out
+            let newL = ev.clientX - offX - rect.left;
+            let newT = ev.clientY - offY - rect.top;
+
+            card.style.left = newL + 'px';
+            card.style.top = newT + 'px';
         }
+        function stop() {
+            document.removeEventListener('mousemove', move);
+            document.removeEventListener('mouseup', stop);
+            card.style.zIndex = "";
+        }
+        document.addEventListener('mousemove', move);
+        document.addEventListener('mouseup', stop);
+    }
 
-        container.appendChild(card);
-    });
+    container.appendChild(card);
 }
 
 /* === PHASE -1: SYSTEM BOOT (Silence) === */
