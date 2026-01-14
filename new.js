@@ -1507,6 +1507,9 @@ const Apps = {
     open: (id) => {
         const app = apps.find(a => a.id === id); if (!app) return;
 
+        // Dynamic Menu Bar Name
+        setAppName(app.title);
+
         // Hook for resets - REMOVED PREMATURE CALL
 
         state.appsOpened.add(id);
@@ -1627,13 +1630,57 @@ function maximizeApp(id) {
         win.setAttribute('data-maximized', 'true');
     }
 }
+/* === DYNAMIC APP NAME LOGIC === */
+function setAppName(name) {
+    const el = document.getElementById('menubar-app-name');
+    if (el) el.innerText = name;
+}
+
+/* Wrappers for Close/Minimize to reset name */
+// We use a safe check to avoid infinite recursion if re-evaluated
+if (typeof _origClose === 'undefined') {
+    var _origClose = closeApp;
+    closeApp = function (id) {
+        _origClose(id);
+        setTimeout(() => { if (state.appsOpened.size === 0) setAppName('Finder'); }, 100);
+    };
+}
+
+if (typeof _origMin === 'undefined') {
+    var _origMin = minimizeApp;
+    minimizeApp = function (id) {
+        _origMin(id);
+        setTimeout(() => { if (state.appsOpened.size === 0) setAppName('Finder'); }, 100);
+    };
+}
+
+/* Helpers */
 function showAffirmation(i) { const el = document.getElementById('aff-text'); if (el) { el.style.opacity = 0; setTimeout(() => { el.innerText = `"${affirmations[i]}"`; el.style.opacity = 1; }, 300); } }
-function playMusic(m) { createModal({ title: 'Now Playing', desc: `Playing ${m} 🎵`, icon: '🎧' }); }
+function playMusic(m) {
+    createModal({ title: 'Now Playing', desc: `Playing ${m} 🎵`, icon: '🎧' });
+    setSystemStatus(`Playing ${m}...`, 5000);
+}
 function checkUnlock() { if (state.countdownFinished && state.appsOpened.size >= 5) { document.getElementById('lock-msg').style.display = 'none'; document.getElementById('unlock-msg').classList.remove('hidden'); } }
+
+/* Drag with Focus Logic */
 let dragItem = null, offX = 0, offY = 0;
-function startDrag(e, id) { if (e.target.closest('.traffic-lights')) return; dragItem = document.getElementById(id); offX = e.clientX - dragItem.offsetLeft; offY = e.clientY - dragItem.offsetTop; dragItem.style.zIndex = ++zIndex; document.addEventListener('mousemove', doDrag); document.addEventListener('mouseup', stopDrag); }
-function doDrag(e) { if (dragItem) { dragItem.style.left = (e.clientX - offX) + 'px'; dragItem.style.top = (e.clientY - offY) + 'px'; } }
-function stopDrag() { dragItem = null; document.removeEventListener('mousemove', doDrag); document.removeEventListener('mouseup', stopDrag); }
+function startDrag(e, id) {
+    if (e.target.closest('.traffic-lights')) return;
+
+    // Focus App Name
+    const appId = id.replace('win-', '');
+    const app = apps.find(a => a.id === appId);
+    if (app) setAppName(app.title);
+
+    dragItem = document.getElementById(id);
+    offX = e.clientX - dragItem.offsetLeft;
+    offY = e.clientY - dragItem.offsetTop;
+    dragItem.style.zIndex = ++zIndex;
+    document.addEventListener('mousemove', doDrag);
+    document.addEventListener('mouseup', stopDrag);
+}
+function doDrag(e) { if (!dragItem) return; dragItem.style.left = (e.clientX - offX) + 'px'; dragItem.style.top = (e.clientY - offY) + 'px'; }
+function stopDrag() { document.removeEventListener('mousemove', doDrag); document.removeEventListener('mouseup', stopDrag); dragItem = null; }
 
 
 
@@ -2701,7 +2748,170 @@ function renderJourney() {
 
 // START HERE
 window.Apps = Apps; // Global exposure
-window.onload = startCountdownGatekeeper;
+window.onload = function () {
+    startCountdownGatekeeper();
+    initHappyMenuBar();
+};
+
+/* ========================================= */
+/* ==== ENHANCED MENU BAR LOGIC ==== */
+/* ========================================= */
+
+// 1. System Status
+function setSystemStatus(text, duration = 0) {
+    const el = document.getElementById('system-status');
+    if (!el) return;
+    el.innerText = 'Status: ' + text;
+    if (duration > 0) {
+        setTimeout(() => {
+            el.innerText = 'Status: Online';
+        }, duration);
+    }
+}
+
+// 2. Battery
+function initBattery() {
+    const icon = document.getElementById('battery-icon');
+    const level = document.getElementById('battery-level');
+
+    if (navigator.getBattery) {
+        navigator.getBattery().then(battery => {
+            const updateBattery = () => {
+                const pct = Math.round(battery.level * 100);
+                if (level) level.innerText = pct + '% ' + (battery.charging ? '(Charging)' : '');
+                if (icon) {
+                    if (battery.charging) icon.className = 'fas fa-bolt text-[14px] text-yellow-400';
+                    else if (pct > 75) icon.className = 'fas fa-battery-full text-[14px] opacity-80';
+                    else if (pct > 50) icon.className = 'fas fa-battery-three-quarters text-[14px] opacity-80';
+                    else if (pct > 25) icon.className = 'fas fa-battery-half text-[14px] opacity-80';
+                    else icon.className = 'fas fa-battery-quarter text-[14px] text-red-500';
+                }
+            };
+            updateBattery();
+            battery.addEventListener('levelchange', updateBattery);
+            battery.addEventListener('chargingchange', updateBattery);
+        });
+    } else {
+        // Fallback for non-supported browsers
+        if (level) level.innerText = '100% (External Power)';
+    }
+}
+
+// 3. Wi-Fi
+function initNetworkStatus() {
+    const icon = document.getElementById('wifi-icon');
+    const update = () => {
+        const isOnline = navigator.onLine;
+        if (icon) {
+            icon.className = isOnline ? 'fas fa-wifi text-[14px]' : 'fas fa-wifi text-[14px] text-red-500 opacity-50';
+            icon.parentElement.title = isOnline ? 'Wi-Fi: Connected (Strong)' : 'Wi-Fi: Disconnected';
+        }
+        setSystemStatus(isOnline ? 'Online' : 'Offline', 0);
+    };
+    window.addEventListener('online', update);
+    window.addEventListener('offline', update);
+    update();
+}
+
+// 4. Spotlight
+function toggleSpotlight() {
+    const overlay = document.getElementById('spotlight-overlay');
+    const input = document.getElementById('spotlight-input');
+    const results = document.getElementById('spotlight-results');
+
+    if (!overlay) return;
+
+    if (overlay.classList.contains('hidden')) {
+        overlay.classList.remove('hidden');
+        if (input) {
+            input.value = '';
+            input.focus();
+        }
+        if (results) {
+            results.innerHTML = '';
+            results.classList.add('hidden');
+        }
+    } else {
+        overlay.classList.add('hidden');
+    }
+}
+// Spotlight Input Listener
+document.getElementById('spotlight-input')?.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    const resultsContainer = document.getElementById('spotlight-results');
+    if (!resultsContainer) return;
+
+    if (query.length === 0) {
+        resultsContainer.innerHTML = '';
+        resultsContainer.classList.add('hidden');
+        return;
+    }
+
+    // Filter Apps
+    const matches = apps.filter(app => app.title.toLowerCase().includes(query));
+
+    const html = matches.map(app =>
+        '<div class=\'spotlight-result\' onclick=\'Apps.open(\"' + app.id + '\"); toggleSpotlight();\'>' +
+        '<div class=\'result-icon\'>' + (app.icon || '📱') + '</div>' +
+        '<div class=\'result-info\'><h4>' + app.title + '</h4><p>Application</p></div>' +
+        '</div>'
+    ).join('');
+
+    if (matches.length > 0) {
+        resultsContainer.innerHTML = html;
+        resultsContainer.classList.remove('hidden');
+    } else {
+        resultsContainer.innerHTML = '<div class=\'p-4 text-center text-white/50 text-sm\'>No results found.</div>';
+        resultsContainer.classList.remove('hidden');
+    }
+});
+
+// 5. Brightness
+document.getElementById('brightness-slider')?.addEventListener('input', (e) => {
+    const val = e.target.value;
+    const opacity = (100 - val) / 100;
+    const dimmer = document.getElementById('brightness-dimmer');
+    if (dimmer) dimmer.style.opacity = opacity;
+});
+
+// 6. Weather
+function initWeather() {
+    const wIcon = document.getElementById('weather-icon');
+    const wText = document.getElementById('weather-text');
+    const wTip = document.querySelector('.weather-tooltip');
+
+    const moods = [
+        { icon: 'fas fa-cloud-sun', text: 'Mostly Sunny', tip: 'Perfect day for a walk.' },
+        { icon: 'fas fa-cloud-moon', text: 'Clear Night', tip: 'Look at the stars.' },
+        { icon: 'fas fa-bolt', text: 'Stormy', tip: 'Stay inside and code.' },
+        { icon: 'fas fa-snowflake', text: 'Frosty', tip: 'Mr. Snow is chilling.' },
+        { icon: 'fas fa-coffee', text: 'Cozy', tip: 'Time for hot cocoa.' }
+    ];
+    const mood = moods[Math.floor(Math.random() * moods.length)];
+
+    if (wIcon && wText) {
+        wIcon.className = mood.icon + ' text-blue-300';
+        wText.innerText = mood.text;
+        if (wTip) wTip.innerText = mood.tip;
+    }
+}
+
+// 7. Clock
+function updateClock() {
+    const now = new Date();
+    const options = { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' };
+    const clock = document.getElementById('clock');
+    if (clock) clock.innerText = now.toLocaleDateString('en-US', options);
+}
+
+// Initialize Everything
+function initHappyMenuBar() {
+    initBattery();
+    initNetworkStatus();
+    initWeather();
+    setInterval(updateClock, 1000);
+    updateClock();
+}
 
 
 

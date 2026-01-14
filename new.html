@@ -161,7 +161,7 @@
                 </div>
 
                 <!-- App Name -->
-                <span class="font-bold px-1 cursor-default">Finder</span>
+                <span id="menubar-app-name" class="font-bold px-1 cursor-default">Finder</span>
 
                 <!-- File Menu -->
                 <span class="opacity-90 hover:opacity-100 cursor-pointer px-2"
@@ -256,25 +256,22 @@
             <div class="macos-menu-right">
                 <!-- System Status -->
                 <span id="system-status"
-                    class="text-xs text-white/50 tracking-wide font-medium mr-4 cursor-default select-none"
-                    onclick="this.innerText='Even when things feel paused.'; setTimeout(()=>this.innerText='Status: Still running', 3500)">
-                    Status: Still running</span>
+                    class="text-xs text-white/50 tracking-wide font-medium mr-4 cursor-default select-none">
+                    Status: Online</span>
 
                 <!-- Battery -->
-                <div class="relative group cursor-default">
-                    <i class="fas fa-battery-full text-[14px] opacity-80"></i>
-                    <div
-                        class="absolute top-6 right-0 bg-black/80 text-white text-[10px] px-2 py-1 rounded hidden group-hover:block whitespace-nowrap">
-                        100%</div>
+                <div class="flex items-center gap-2 cursor-default" title="Battery Utility">
+                    <span id="battery-level" class="text-xs font-medium opacity-80">--%</span>
+                    <i id="battery-icon" class="fas fa-battery-half text-[14px] opacity-80"></i>
                 </div>
 
                 <!-- Wi-Fi -->
-                <div class="cursor-pointer" onclick="alert('Wi-Fi: Connected to HarshitOS_5G')">
-                    <i class="fas fa-wifi text-[14px]"></i>
+                <div class="cursor-pointer" title="Network Status">
+                    <i id="wifi-icon" class="fas fa-wifi text-[14px]"></i>
                 </div>
 
                 <!-- Search/Spotlight -->
-                <div class="cursor-pointer" onclick="alert('Spotlight Search coming soon...')">
+                <div class="cursor-pointer" onclick="toggleSpotlight()">
                     <i class="fas fa-search text-[14px]"></i>
                 </div>
 
@@ -320,8 +317,9 @@
                     <!-- Sliders -->
                     <div class="bg-white/10 rounded-xl p-3 mb-3">
                         <div class="text-[10px] font-semibold mb-2 uppercase opacity-50 tracking-wide">Display</div>
-                        <input type="range" class="w-full h-1 bg-white/20 rounded-full appearance-none cursor-pointer"
-                            min="1" max="100" value="80">
+                        <input type="range" id="brightness-slider"
+                            class="w-full h-1 bg-white/20 rounded-full appearance-none cursor-pointer" min="10"
+                            max="100" value="100">
                     </div>
                     <div class="bg-white/10 rounded-xl p-3">
                         <div class="text-[10px] font-semibold mb-2 uppercase opacity-50 tracking-wide">Sound</div>
@@ -338,16 +336,39 @@
                 </div>
 
                 <!-- Weather Widget -->
-                <div class="weather-widget" title="Mr. Snow is in town.">
-                    <i class="fas fa-snowflake fa-spin-slow text-blue-300"></i>
-                    <span class="ml-2 font-medium">-19°C</span>
+                <div class="weather-widget" title="Current Mood">
+                    <i id="weather-icon" class="fas fa-cloud text-blue-300"></i>
+                    <span id="weather-text" class="ml-2 font-medium">Loading...</span>
                     <!-- Custom Tooltip -->
-                    <div class="weather-tooltip">Mr. Snow is in town. ❄️</div>
+                    <div class="weather-tooltip">Weather Mood System ⛅</div>
                 </div>
 
                 <!-- Clock -->
-                <span id="clock" class="text-[13px] font-medium min-w-[130px] text-right">Mon Oct 11 9:41 AM</span>
+                <span id="clock" class="text-[13px] font-medium min-w-[130px] text-right">--:--</span>
             </div>
+        </div>
+
+        <!-- Spotlight Search Overlay -->
+        <div id="spotlight-overlay" class="hidden fixed inset-0 z-[10000] flex items-start justify-center pt-[20vh]"
+            onclick="if(event.target === this) toggleSpotlight()">
+            <div
+                class="w-[600px] bg-[rgba(30,30,40,0.85)] backdrop-blur-3xl border border-white/20 rounded-xl shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
+                <div class="flex items-center p-4 border-b border-white/10">
+                    <i class="fas fa-search text-white/50 text-xl mr-4"></i>
+                    <input type="text" id="spotlight-input"
+                        class="bg-transparent border-none outline-none text-white text-2xl font-light w-full placeholder-white/30"
+                        placeholder="Spotlight Search" autocomplete="off">
+                </div>
+                <div id="spotlight-results" class="max-h-[300px] overflow-y-auto hidden">
+                    <!-- Results injected here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Brightness Overlay -->
+        <div id="brightness-dimmer"
+            class="fixed inset-0 bg-black pointer-events-none z-[999999] opacity-0 transition-opacity duration-100">
+        </div>
         </div>
 
         <!-- Desktop Icons -->
