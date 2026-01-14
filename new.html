@@ -148,12 +148,12 @@
                 <div id="apple-menu"
                     class="absolute top-8 left-0 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
                     <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer border-b border-white/10 pb-2 mb-1"
-                        onclick="Apps.open('about')">About This Mac</div>
+                        onclick="Apps.open('about-us')">About This Mac</div>
                     <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
                         onclick="Apps.open('settings')">System Preferences...</div>
                     <div class="h-[1px] bg-white/10 my-1"></div>
                     <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
-                        onclick="alert('Sleep Mode active...')">Sleep</div>
+                        onclick="triggerAction('sleep')">Sleep</div>
                     <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer" onclick="location.reload()">
                         Restart...</div>
                     <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer text-red-400 hover:text-white"
@@ -163,21 +163,93 @@
                 <!-- App Name -->
                 <span class="font-bold px-1 cursor-default">Finder</span>
 
-                <!-- Standard Menus -->
-                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2 hidden md:block"
+                <!-- File Menu -->
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2"
                     onclick="toggleMenu('file-menu')">File</span>
-                <!-- Dropdown: File -->
                 <div id="file-menu"
                     class="absolute top-8 left-20 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
-                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer">New Finder Window</div>
-                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer">New Folder</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="Apps.open('folder-system')">New Finder Window</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('new-folder')">New Folder</div>
                 </div>
 
-                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2 hidden md:block">Edit</span>
-                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2 hidden md:block">View</span>
-                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2 hidden md:block">Go</span>
-                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2 hidden md:block">Window</span>
-                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2 hidden md:block">Help</span>
+                <!-- Edit Menu -->
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2"
+                    onclick="toggleMenu('edit-menu')">Edit</span>
+                <div id="edit-menu"
+                    class="absolute top-8 left-32 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer opacity-50">Undo</div>
+                    <div
+                        class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer opacity-50 border-b border-white/10 pb-1 mb-1">
+                        Redo</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="createModal({ title: 'Cut', desc: 'Clipboard is empty.', icon: '✂️' })">Cut</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="createModal({ title: 'Copy', desc: 'Copied to imaginary clipboard.', icon: '📋' })">
+                        Copy</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="createModal({ title: 'Paste', desc: 'Nothing to paste.', icon: '📋' })">Paste</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('select-all')">Select All</div>
+                </div>
+
+                <!-- View Menu -->
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2"
+                    onclick="toggleMenu('view-menu')">View</span>
+                <div id="view-menu"
+                    class="absolute top-8 left-44 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('toggle-fullscreen')">Enter Full Screen</div>
+                    <div class="h-[1px] bg-white/10 my-1"></div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('zoom-in')">Zoom In</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('zoom-out')">Zoom Out</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('reset-zoom')">Actual Size</div>
+                </div>
+
+                <!-- Go Menu -->
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2" onclick="toggleMenu('go-menu')">Go</span>
+                <div id="go-menu"
+                    class="absolute top-8 left-56 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('go-back')">Back</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('go-forward')">Forward</div>
+                    <div class="h-[1px] bg-white/10 my-1"></div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="Apps.open('folder-system')">System Core</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="Apps.open('folder-feelings')">Soft Stuff</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="Apps.open('folder-fun')">Unstable Features</div>
+                    <div class="h-[1px] bg-white/10 my-1"></div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('min-all')">Desktop</div>
+                </div>
+
+                <!-- Window Menu -->
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2"
+                    onclick="toggleMenu('window-menu')">Window</span>
+                <div id="window-menu"
+                    class="absolute top-8 left-64 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('min-all')">Minimize All</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="triggerAction('close-all')">Close All</div>
+                </div>
+
+                <!-- Help Menu -->
+                <span class="opacity-90 hover:opacity-100 cursor-pointer px-2"
+                    onclick="toggleMenu('help-menu')">Help</span>
+                <div id="help-menu"
+                    class="absolute top-8 left-80 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
+                        onclick="createModal({ title: 'Harshit OS Help', desc: 'Welcome to Harshit OS v19.0! 🚀<br><br>• Explore apps via the Dock<br>• Right-click desktop for options<br>• Use the Menu Bar for quick actions<br><br>Enjoy your stay! ✨', icon: '💡' })">
+                        Harshit OS Help</div>
+                </div>
             </div>
 
             <!-- Right: Status Icons -->
@@ -325,12 +397,30 @@ OBJECTIVE:
 
     <!-- CONTEXT MENU -->
     <div id="ctx-menu">
-        <div class="ctx-item" onclick="Apps.open('profile')"><i class="fas fa-user-circle"></i> View Identity</div>
+        <div class="ctx-item" onclick="Apps.open('about-us')"><i class="fas fa-user-circle"></i> View Identity</div>
         <div class="ctx-item" onclick="Apps.open('quiz')"><i class="fas fa-puzzle-piece text-green-500"></i> Take
             Friendship Test</div>
         <div class="ctx-sep"></div>
+        <div id="ctx-delete" class="ctx-item text-red-500 hidden" onclick="deleteTarget()"><i
+                class="fas fa-trash-alt"></i> Delete</div>
         <div class="ctx-item" onclick="spawnBears()"><i class="fas fa-paw text-brown-500"></i> Masti Mode</div>
         <div class="ctx-item" onclick="location.reload()"><i class="fas fa-redo"></i> Restart System</div>
+    </div>
+
+    <!-- Custom Modal Overlay -->
+    <div id="custom-modal-overlay">
+        <div class="modal-box">
+            <div id="modal-icon" class="modal-icon">✨</div>
+            <div id="modal-title" class="modal-title">Notification</div>
+            <div id="modal-desc" class="modal-desc">This is a system message.</div>
+            <div id="modal-input-container" class="hidden">
+                <input type="text" id="modal-input" class="modal-input" placeholder="Type here...">
+            </div>
+            <div class="modal-buttons">
+                <button id="modal-btn-cancel" class="modal-btn secondary" onclick="closeModal()">Cancel</button>
+                <button id="modal-btn-confirm" class="modal-btn primary">OK</button>
+            </div>
+        </div>
     </div>
 
     <!-- Main Logic -->

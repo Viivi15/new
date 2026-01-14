@@ -16,6 +16,75 @@ const wallpapers = [
     { thumb: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=200', full: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=2069' }  // Colors
 ];
 
+/* === JOURNEY DATA === */
+const journeyData = [
+    {
+        type: 'landing',
+        text: ["Some conversations don’t announce themselves.", "They just stay."]
+    },
+    {
+        type: 'phase',
+        id: 'phase-1',
+        title: "THE BEGINNING 🌙",
+        date: "June 20, 2024 · 12:21 AM",
+        intro: [
+            "Strangers to something familiar.",
+            "No expectations.",
+            "Just late-night Discord conversations that didn’t feel forced."
+        ],
+        incidents: [
+            /* USER: Add logs here like: { type: 'chat', speaker: 'Him', text: "...", time: "..." } */
+        ]
+    },
+    {
+        type: 'phase',
+        id: 'phase-2',
+        title: "BECOMING SAFE 🏠",
+        intro: [
+            "You became the person I ran to.",
+            "Emotional safety without asking for it."
+        ],
+        incidents: []
+    },
+    {
+        type: 'phase',
+        id: 'phase-3',
+        title: "DAILY PRESENCE & BOND 🤍",
+        intro: ["Not dramatic. Just constant."],
+        incidents: []
+    },
+    {
+        type: 'phase',
+        id: 'phase-4',
+        title: "GROWTH, REALITY & FIGHTS 🌱",
+        intro: [
+            "We misunderstood.",
+            "We fought.",
+            "We learned."
+        ],
+        incidents: []
+    },
+    {
+        type: 'phase',
+        id: 'phase-5',
+        title: "STILL HERE ✨",
+        intro: [
+            "Changed.",
+            "Not broken."
+        ],
+        incidents: []
+    },
+    {
+        type: 'final',
+        title: "TODAY — HIS 19TH BIRTHDAY 🎂",
+        text: [
+            "Celebrating 19 years of the world’s strongest person.",
+            "Not because of muscles —",
+            "but because of the heart that became someone’s home."
+        ]
+    }
+];
+
 /* === APP REGISTRY (Refined for Harshit) === */
 const apps = [
     /* === FOLDERS === */
@@ -92,20 +161,10 @@ const apps = [
     },
 
     {
-        id: 'connection-log', title: 'Connection.log', icon: '📜', onOpen: resetBond, dock: true, folder: 'folder-system', width: 650, height: 500, content: `
-        <div class="h-full bg-black text-white p-8 flex flex-col items-center justify-center text-center cursor-pointer select-none relative overflow-hidden" onclick="advanceBond()">
-            <div id="bond-content" class="transition-opacity duration-1000 ease-in-out">
-                <div class="text-xs uppercase tracking-[0.3em] text-gray-500 mb-6">System Memory</div>
-                <div id="bond-line" class="text-2xl font-serif font-light leading-relaxed">
-                    This wasn’t accidental.
-                </div>
-            </div>
-            <div class="absolute bottom-8 text-[10px] text-gray-600 uppercase tracking-widest animate-pulse">Click to proceed</div>
+        id: 'connection-log', title: 'Connection.log', icon: '📜', dock: true, folder: 'folder-system', width: 500, height: 700, onOpen: renderJourney, content: `
+        <div id="journey-scroll" class="h-full bg-[#fcfcfc] overflow-y-auto scroll-smooth relative">
+            <div id="journey-container" class="min-h-full pb-20"></div>
         </div>
-        <style> 
-            .fade-in-up { animation: fadeInUp 0.8s ease forwards; opacity: 0; transform: translateY(10px); } 
-            @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } } 
-        </style>
     `},
 
     {
@@ -277,7 +336,7 @@ const apps = [
         id: 'music-night', title: 'Late Night', icon: '🌙', dock: true, width: 350, height: 200, content: `
         <div class="h-full bg-[#0F172A] text-slate-300 flex flex-col items-center justify-center gap-4">
             <div class="text-xs tracking-widest uppercase opacity-50">Instrumental Only</div>
-            <i class="fas fa-play-circle text-4xl text-white opacity-80 hover:opacity-100 cursor-pointer transition" onclick="alert('Playing soft piano...')"></i>
+            <i class="fas fa-play-circle text-4xl text-white opacity-80 hover:opacity-100 cursor-pointer transition" onclick="createModal({ title: 'Late Night Mode', desc: 'Playing soft piano...', icon: '🎹' })"></i>
         </div>
     `},
 
@@ -609,7 +668,7 @@ const apps = [
                 <div class="relative w-64">
                     <input type="password" id="vault-pass" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-center text-xl tracking-[0.5em] focus:outline-none focus:border-white/50 transition" placeholder="••••••" maxlength="6">
                 </div>
-                <p id="vault-hint" class="text-xs text-gray-500 hover:text-gray-300 cursor-pointer transition" onclick="alert('Hint: The day it all started (dd/mm/yy)')">Hint: dd/mm/yy</p>
+                <p id="vault-hint" class="text-xs text-gray-500 hover:text-gray-300 cursor-pointer transition" onclick="createModal({ title: 'Hint', desc: 'The day it all started (dd/mm/yy)', icon: '💡' })">Hint: dd/mm/yy</p>
                 <div id="vault-error" class="text-red-400 text-sm font-bold opacity-0 transition">Access Denied</div>
              </div>
 
@@ -894,6 +953,77 @@ document.addEventListener('click', (e) => {
     }
 });
 
+/* === MENU BAR ACTIONS === */
+function triggerAction(action) {
+    // Close menus first
+    document.querySelectorAll('[id$="-menu"]').forEach(el => el.classList.add('hidden'));
+
+    switch (action) {
+        // File
+        case 'new-folder':
+            const name = prompt("Enter folder name:", "Untitled Folder");
+            if (name) {
+                const grid = document.getElementById('desktop-grid');
+                const icon = document.createElement('div');
+                icon.className = 'desktop-icon group';
+                icon.innerHTML = `<div class="icon-img text-3xl mb-2">📁</div><div class="icon-label bg-black/20 text-white/80 px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm">${name}</div>`;
+                icon.onclick = () => alert("This folder is empty for now.");
+                grid.appendChild(icon);
+            }
+            break;
+
+        // Edit
+        case 'select-all':
+            // Simple visual selection of text in active window could be hard, 
+            // so we'll just focus the last opened window or do a visual effect
+            const activeId = Array.from(state.appsOpened).pop();
+            if (activeId) {
+                const win = document.getElementById(`win-${activeId}`);
+                if (win) win.classList.add('ring-2', 'ring-blue-500');
+                setTimeout(() => win && win.classList.remove('ring-2', 'ring-blue-500'), 500);
+            }
+            break;
+
+        // View
+        case 'toggle-fullscreen':
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+            break;
+        case 'zoom-in':
+            document.body.style.zoom = (parseFloat(document.body.style.zoom || 1) + 0.1);
+            break;
+        case 'zoom-out':
+            document.body.style.zoom = (parseFloat(document.body.style.zoom || 1) - 0.1);
+            break;
+        case 'reset-zoom':
+            document.body.style.zoom = 1;
+            break;
+
+        // Go
+        case 'go-back':
+            // Visual check only
+            break;
+
+        // Window
+        case 'min-all':
+            state.appsOpened.forEach(id => minimizeApp(id));
+            break;
+        case 'close-all':
+            // Create a copy array because closeApp modifies the set
+            Array.from(state.appsOpened).forEach(id => closeApp(id));
+            break;
+
+        case 'sleep':
+            triggerQuietEnding();
+            break;
+    }
+}
+
 /* === STATE === */
 const state = { appsOpened: new Set(), countdownFinished: false };
 const affirmations = ["You stay kind, even when things get heavy.", "You don’t give up easily.", "You carry storms quietly.", "You are enough, exactly as you are."];
@@ -1155,48 +1285,135 @@ function spawnBears() {
 }
 
 /* === FIRST CONVERSATION LOGIC === */
+/* === FIRST CONVERSATION LOGIC === */
 const firstConversation = [
     { user: 'system', text: 'connection first meet— 6/20/24, 12:21 AM' },
 
     { user: 'harshit', text: 'Hi\n— 6/20/24, 12:22 AM' },
     { user: 'shravii', text: 'Helloo\n— 6/20/24, 12:23 AM' },
-
     { user: 'harshit', text: 'sup\n— 6/20/24, 12:23 AM' },
     { user: 'harshit', text: 'is anyone watching euros?\n— 6/20/24, 12:32 AM' },
-
     { user: 'shravii', text: 'Umm euros?\nWhere ya from Harry?\n— 6/20/24, 12:33 AM' },
-
     { user: 'harshit', text: 'India\n— 6/20/24, 12:34 AM' },
     { user: 'shravii', text: ':o\n— 6/20/24, 12:35 AM' },
-
     { user: 'harshit', text: 'https://open.spotify.com/track/086myS9r57YsLbJpU0TgK9?si=ee77f9aba9b3405c\n\nany thoughts on this song\n— 6/20/24, 12:35 AM' },
-
     { user: 'shravii', text: "I'll hear and comment\n— 6/20/24, 12:39 AM" },
     { user: 'harshit', text: 'alr\n— 6/20/24, 12:39 AM' },
+    { user: 'shravii', text: "Why don't ya join us\n— 6/20/24, 12:40 AM" },
+    { user: 'harshit', text: "can't, i am watching the euros match 🥲\n— 6/20/24, 12:41 AM" },
+    { user: 'shravii', text: "Oooo\nAlr enjoy\nWhat is that tho\n— 6/20/24, 12:41 AM" },
+    { user: 'harshit', text: 'you too\n— 6/20/24, 12:42 AM' },
+    { user: 'harshit', text: 'football tournament\nplayed between the european nations\n— 6/20/24, 12:42 AM' },
+    { user: 'shravii', text: 'Oou\n— 6/20/24, 12:42 AM' },
+    { user: 'shravii', text: ':o\nYa like to watch cricket too?\n— 6/20/24, 12:43 AM' },
+    { user: 'harshit', text: 'umm... i never watched a cricket match😅\n— 6/20/24, 12:45 AM' },
+    { user: 'shravii', text: 'R ya born in india???\n— 6/20/24, 12:46 AM' },
+    { user: 'harshit', text: 'yeah\n— 6/20/24, 12:46 AM' },
+    { user: 'shravii', text: 'Xd okie okie\n— 6/20/24, 12:46 AM' },
+    { user: 'harshit', text: 'i have never been into sports, i only started watching football recently\n— 6/20/24, 12:47 AM' },
+    { user: 'shravii', text: "Ooo i see\nI don't watch sports\nI play\n— 6/20/24, 12:48 AM" },
+    { user: 'harshit', text: 'all sports, or you have a preference\n— 6/20/24, 12:49 AM' },
+    { user: 'shravii', text: 'sprint,volleyball,batminton,relay...some of it which i know\n— 6/20/24, 12:51 AM' },
 
-    { user: 'system', text: '— next day —' },
+    { user: 'system', text: 'next day...' },
 
     { user: 'shravii', text: ':Wg_peekaboo:  otaku\n— 6/20/24, 11:51 AM' },
     { user: 'harshit', text: 'you said my name you wanted me here i am\n— 6/20/24, 11:53 AM' },
-
     { user: 'shravii', text: 'I saw u typinn\n— 6/20/24, 11:53 AM' },
     { user: 'harshit', text: 'Ah, but idk what i was typing\n— 6/20/24, 11:54 AM' },
-
     { user: 'shravii', text: ':what_to_do~1:\n— 6/20/24, 11:54 AM' },
-
     { user: 'harshit', text: 'Btw mujhe ek baat yaad aai @YVI\n— 6/20/24, 11:55 AM' },
     { user: 'shravii', text: 'Hmm?\n— 6/20/24, 11:55 AM' },
+    { user: 'harshit', text: 'So, I attended a camp usme ek session ek to koi budha sa Banda tha, he had like PhD and like shyd ISRO s bhi kuch relation tha uska\nTo vo kehte ki 4 hours of sleep is enough, I have slept only 4 hours my whole life and it is perfectly fine\nAnd fer pta chala ki usko brain tumour hai💀\n— 6/20/24, 11:56 AM' },
+    { user: 'shravii', text: '4 hrs seriously \nKoi koi kar leta but everyday not possible :vi_think~1:\n— 6/20/24, 12:01 PM' },
+    { user: 'harshit', text: 'Hmm, vhi to\nMinimum everyday 6 hours sleep is a must\n— 6/20/24, 12:01 PM' },
 
-    {
-        user: 'harshit', text:
-            `So, I attended a camp usme ek session ek to koi budha sa Banda tha, he had like PhD and like shyd ISRO s bhi kuch relation tha uska
-To vo kehte ki 4 hours of sleep is enough, I have slept only 4 hours my whole life and it is perfectly fine
-And fer pta chala ki usko brain tumour hai💀
-— 6/20/24, 11:56 AM` },
+    { user: 'harshit', text: 'subh s jhule p?\n— 6/20/24, 3:01 PM' },
+    { user: 'shravii', text: 'Yes\n— 6/20/24, 3:01 PM' },
+    { user: 'harshit', text: 'itna jhula to mene puri jindagi m nhi jhula hoga\n— 6/20/24, 3:02 PM' },
+    { user: 'shravii', text: 'Lol meri fav cheej he gaon me 1 yr baad ayi hoon toh hehe:maze_hai~1:\n— 6/20/24, 3:04 PM' },
+    { user: 'harshit', text: 'lol enjoy\n— 6/20/24, 3:05 PM' },
 
-    { user: 'shravii', text: '4 hrs seriously\nKoi koi kar leta but everyday not possible :vi_think~1:\n— 6/20/24, 12:01 PM' },
+    { user: 'system', text: 'to truth and dares...' },
 
-    { user: 'harshit', text: 'Hmm, vhi to\nMinimum everyday 6 hours sleep is a must\n— 6/20/24, 12:01 PM' }
+    { user: 'game', text: 'Akinator APP\notaku_98103 \nWhat\'s something that you would be willing to stay up all night to do?' },
+    { user: 'harshit', text: 'BInge Watching any show or watching football match\n— 6/24/24, 9:30 PM' },
+    { user: 'game', text: 'Akinator APP\notaku_98103\nWhat is your favourite game to play?' },
+    { user: 'harshit', text: 'irl - football (even though i am not good), tennis (i am quite good in it) \nonline - i don\'t play that much but coc or gta ig\n— 6/24/24, 9:32 PM' },
+
+    { user: 'system', text: '— 6/27/24, 3:57 PM —' },
+    { user: 'game', text: 'Akinator APP\notaku_98103\nIf you could give up happiness to never be sad, would you?' },
+    { user: 'harshit', text: 'nah\n— 6/27/24, 3:57 PM' },
+
+    { user: 'system', text: 'to playing w me' },
+    { user: 'game', text: 'vivi15_09\nDo you hate/strongly dislike anyone here?\nType: Truth | Rating: PG' },
+    { user: 'shravii', text: 'yes\nno\nyes\nno\na bit\n— 7/4/24, 5:19 PM' },
+    { user: 'harshit', text: 'hmm\n— 7/4/24, 5:19 PM' },
+    { user: 'shravii', text: 'ig\nxd\nsomeoneee\n— 7/4/24, 5:19 PM' },
+    { user: 'harshit', text: 'tell me\n— 7/4/24, 5:19 PM' },
+    { user: 'shravii', text: 'myself\n:D\n— 7/4/24, 5:19 PM' },
+    { user: 'harshit', text: 'nah\n— 7/4/24, 5:19 PM' },
+    { user: 'shravii', text: ':D\n— 7/4/24, 5:20 PM' },
+    { user: 'harshit', text: 'hmm\nname to btaya nhi\n— 7/4/24, 5:20 PM' },
+    { user: 'shravii', text: 'but wait lemme think wh\nwho\n— 7/4/24, 5:20 PM' },
+    { user: 'harshit', text: 'hmm ok\n— 7/4/24, 5:20 PM' },
+    { user: 'harshit', text: 'last m kuch likha tha kya\n— 7/4/24, 5:29 PM' },
+
+    { user: 'game', text: 'vivi15_09\nIf you were put in a random place in your city/town, could you find your way home?\nType: Truth | Rating: PG' },
+    { user: 'shravii', text: 'yes\n— 7/4/24, 5:30 PM' },
+    { user: 'harshit', text: 'no\n— 7/4/24, 5:30 PM' },
+
+    { user: 'game', text: 'sirius_black007\nWhat\'s the worst decision you\'ve made?\nType: Truth | Rating: PG' },
+    { user: 'shravii', text: 'believing in otaku\nxd\n— 7/4/24, 5:31 PM' },
+    { user: 'harshit', text: ':khushi_kill~1:\n— 7/4/24, 5:32 PM' },
+    { user: 'harshit', text: 'not focusing on jee\n— 7/4/24, 5:31 PM' },
+
+    { user: 'game', text: 'vivi15_09\nWhere do you see yourself in 5 years?\nType: Truth | Rating: PG' },
+    { user: 'shravii', text: ':what_to_do~1:\nbuilding my business\nwhich i have no idea about\n— 7/4/24, 5:32 PM' },
+
+    { user: 'game', text: 'sirius_black007\nIn the group, who do you think fits the dumb role?\nType: Truth | Rating: PG13' },
+    { user: 'shravii', text: 'me ig\n— 7/4/24, 5:34 PM' },
+    { user: 'harshit', text: 'vi\n— 7/4/24, 5:34 PM' },
+    { user: 'shravii', text: 'i am too inno to understand what ppl are talkin sometimes\n:vi_crying:\nuntil they tell me what it means\n— 7/4/24, 5:34 PM' },
+    { user: 'harshit', text: 'me also\n— 7/4/24, 5:35 PM' },
+    { user: 'harshit', text: 'but you aren\'t dumb\nyou are innocent\n— 7/4/24, 5:36 PM' },
+
+    { user: 'system', text: 'to creating a diff server with a lot of storii times....truth and dares and fun' },
+
+    { user: 'game', text: 'snow30_01\nIf you could know one thing from the future what would it be?\nType: Truth | Rating: PG' },
+    { user: 'harshit', text: 'If i accomplished my dream \n— 7/13/2024 9:16 PM' },
+
+    { user: 'game', text: 'snow30_01\nHave you ever asked an ex out again?\nType: Truth | Rating: PG13' },
+    { user: 'harshit', text: 'never had one\n— 7/13/2024 9:16 PM' },
+
+    { user: 'game', text: 'snow30_01\nWho was your first crush?\nType: Truth | Rating: PG13' },
+    { user: 'harshit', text: '🤔\ndo you call that a crush, idk\nanyways, i am not gonna tell\n— 7/13/2024 9:16 PM' },
+
+    { user: 'game', text: 'snow30_01\nDo you overthink a lot?\nType: Truth | Rating: PG' },
+    { user: 'harshit', text: 'sometimes\n— 7/13/2024 9:17 PM' },
+
+    { user: 'game', text: 'snow30_01\nWhat do you find is the most boring part of your life at the moment?\nType: Truth | Rating: PG' },
+    { user: 'harshit', text: '🤔\nidk\n@Rose\n— 7/14/2024 7:46 PM' },
+    { user: 'shravii', text: 'following the same routime daily\nroutine*\n— 7/14/2024 7:48 PM' },
+    { user: 'harshit', text: 'yeah true\n— 7/14/2024 7:48 PM' },
+
+    { user: 'game', text: 'snow30_01\nHave you ever been caught cheating in school?\nType: Truth | Rating: PG13' },
+    { user: 'shravii', text: 'nope\nkari hi nahi he\n— 7/14/2024 7:48 PM' },
+    { user: 'harshit', text: 'nope, but i was caught while my friend was cheating from me\n— 7/14/2024 7:48 PM' },
+    { user: 'harshit', text: 'yep, mene bss krvai h cheating\nmeri sheet mere frnd k pass thi\nand sir ko pta tha ye\nto meri sheet k number count krlie the\n😂 :snow_sad:\n:what_to_do~2:\nxdd\nnext level\n— 7/14/2024 7:49 PM' },
+
+    { user: 'game', text: 'rain_220\nWho on this server do you talk to the most and why?\nType: Truth | Rating: PG' },
+    { user: 'shravii', text: 'Snow  he is an amazing listener, genuinely honest, and incredibly kind supportive person maybe not always confident abt himself but im here to encourage,support and be by his side always <3\n— 7/14/2024 9:41 PM' },
+    { user: 'harshit', text: 'Not only on this server but on dc I talk to Rain the most, cuz I enjoy and like talking with her and she is a real and the first friend I got here, and doesn\'t get mad on me cuz me is dumb :snow_sad: \n— 7/14/2024 10:00 PM' },
+
+    { user: 'game', text: 'rain_220\nWhat was the most physically painful experience of your life?\nType: Truth | Rating: PG13' },
+    { user: 'shravii', text: 'ummmmmmmmmmm\nwhen i jumped off the 6th floor\naaaaaaaaaaaaaaaaaaaaaaaaaaaa\n— 7/14/2024 11:31 PM' },
+    { user: 'harshit', text: 'What\n— 7/14/2024 11:31 PM' },
+    { user: 'shravii', text: 'ouch it was the most painful experience\nxd\njoking\numm\nidk\n— 7/14/2024 11:32 PM' },
+    { user: 'harshit', text: 'Shi m na\n— 7/14/2024 11:32 PM' },
+    { user: 'shravii', text: 'ofc lol\n— 7/14/2024 11:32 PM' },
+    { user: 'harshit', text: 'I thought I was talking to a ghost\n— 7/14/2024 11:32 PM' },
+    { user: 'shravii', text: 'haha\n— 7/14/2024 11:32 PM' }
 ];
 
 let convoIndex = 0;
@@ -1210,20 +1427,35 @@ function playFirstConversation(container) {
 
         const msg = firstConversation[convoIndex];
         const bubble = document.createElement('div');
+        let delay = 1000; // Base delay
 
         if (msg.user === 'system') {
-            bubble.className = 'chat-meta text-center my-4';
+            bubble.className = 'text-center my-6 text-xs uppercase tracking-widest opacity-60 font-medium text-gray-400';
             bubble.textContent = msg.text;
+            delay = 1500; // Pause longer for system messages
+        } else if (msg.user === 'game') {
+            // Game / Bot Cards
+            bubble.className = 'chat-game-card mx-auto my-4 p-4 bg-gray-50 border border-gray-200 rounded-lg text-center max-w-[80%] shadow-sm';
+            bubble.innerHTML = `<div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Game Card</div>
+                                <div class="font-bold text-gray-800 text-sm whitespace-pre-wrap">${msg.text}</div>`;
+            delay = 2000; // Longer pause to read the question
         } else {
+            // User Messages
             bubble.className = `chat-bubble ${msg.user === 'harshit' ? 'chat-left' : 'chat-right'}`;
+            // Convert newlines to breaks or handle naturally with whitespace-pre-wrap in CSS
+            bubble.style.whiteSpace = 'pre-wrap';
             bubble.textContent = msg.text;
+
+            // Calc dynamic reading time: ~50ms per char, min 800ms, max 3000ms
+            const readTime = Math.min(Math.max(msg.text.length * 40, 800), 3000);
+            delay = readTime;
         }
 
         container.appendChild(bubble);
         container.scrollTop = container.scrollHeight;
 
         convoIndex++;
-        setTimeout(nextMessage, 900);
+        setTimeout(nextMessage, delay);
     }
 
     nextMessage();
@@ -1396,7 +1628,7 @@ function maximizeApp(id) {
     }
 }
 function showAffirmation(i) { const el = document.getElementById('aff-text'); if (el) { el.style.opacity = 0; setTimeout(() => { el.innerText = `"${affirmations[i]}"`; el.style.opacity = 1; }, 300); } }
-function playMusic(m) { alert(`Playing ${m} `); }
+function playMusic(m) { createModal({ title: 'Now Playing', desc: `Playing ${m} 🎵`, icon: '🎧' }); }
 function checkUnlock() { if (state.countdownFinished && state.appsOpened.size >= 5) { document.getElementById('lock-msg').style.display = 'none'; document.getElementById('unlock-msg').classList.remove('hidden'); } }
 let dragItem = null, offX = 0, offY = 0;
 function startDrag(e, id) { if (e.target.closest('.traffic-lights')) return; dragItem = document.getElementById(id); offX = e.clientX - dragItem.offsetLeft; offY = e.clientY - dragItem.offsetTop; dragItem.style.zIndex = ++zIndex; document.addEventListener('mousemove', doDrag); document.addEventListener('mouseup', stopDrag); }
@@ -2397,6 +2629,75 @@ window.toggleSpotify = toggleSpotify;
 window.spawnBears = spawnBears;
 window.playFirstConversation = playFirstConversation;
 window.initLetterReveal = initLetterReveal;
+
+/* === JOURNEY LOGIC === */
+function renderJourney() {
+    const container = document.getElementById('journey-container');
+    if (!container) return;
+    container.innerHTML = ''; // Clear
+
+    journeyData.forEach((section, index) => {
+        const secDiv = document.createElement('div');
+        secDiv.className = 'journey-section opacity-0 translate-y-4 transition-all duration-1000 ease-out';
+        secDiv.style.transitionDelay = `${index * 200}ms`; // Stagger load
+
+        if (section.type === 'landing') {
+            secDiv.innerHTML = `
+                <div class="h-[600px] flex flex-col items-center justify-center text-center p-10 bg-gradient-to-b from-gray-50 to-white">
+                    <div class="text-3xl md:text-4xl font-serif text-gray-800 mb-4 leading-relaxed">${section.text[0]}</div>
+                    <div class="text-xl md:text-2xl font-serif text-gray-500 italic">${section.text[1]}</div>
+                    <div class="mt-12 animate-bounce text-gray-400 text-xs tracking-widest uppercase">Scroll</div>
+                </div>
+            `;
+        } else if (section.type === 'phase') {
+            let incidentsHtml = '';
+            if (section.incidents && section.incidents.length > 0) {
+                incidentsHtml = `<div class="journey-incidents space-y-6 mt-8 max-w-md mx-auto text-left">
+                    ${section.incidents.map(inc => {
+                    if (inc.type === 'chat') {
+                        return `<div class="bg-blue-50 p-4 rounded-xl border border-blue-100 shadow-sm relative"><div class="absolute -top-3 left-4 bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">${inc.time || ''}</div><div class="font-bold text-gray-800 text-xs mb-1">${inc.speaker}</div><div class="text-gray-700 text-sm">${inc.text}</div></div>`
+                    } else {
+                        return `<div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm text-center text-gray-600 italic font-serif">"${inc.text}"</div>`
+                    }
+                }).join('')}
+                 </div>`
+            } else {
+                incidentsHtml = `<div class="text-center text-gray-400 text-xs italic mt-8 p-4 border border-dashed border-gray-300 rounded-lg">Incidents loading... (Add to JSON)</div>`;
+            }
+
+            secDiv.innerHTML = `
+                <div class="py-20 px-6 border-b border-gray-100">
+                    <div class="text-center mb-10">
+                        <div class="text-4xl mb-4 grayscale hover:grayscale-0 transition duration-500">${section.title.split(' ').pop()}</div> <!-- Icon hack -->
+                        <h2 class="text-2xl font-bold text-gray-900 tracking-wide uppercase mb-2">${section.title.replace(/ .$/, '')}</h2>
+                        ${section.date ? `<div class="text-xs text-blue-500 font-mono mb-4 tracking-widest">${section.date}</div>` : ''}
+                        <div class="space-y-2 text-gray-600 font-light text-lg leading-relaxed max-w-lg mx-auto">
+                            ${section.intro.map(line => `<p>${line}</p>`).join('')}
+                        </div>
+                    </div>
+                    ${incidentsHtml}
+                </div>
+            `;
+        } else if (section.type === 'final') {
+            secDiv.innerHTML = `
+                <div class="h-[500px] flex flex-col items-center justify-center text-center p-10 bg-[#fff5f5]">
+                    <div class="text-6xl mb-6 animate-pulse">🎂</div>
+                    <div class="text-gray-800 font-bold text-xl uppercase tracking-widest mb-4">${section.title}</div>
+                    <div class="space-y-2 text-gray-600 font-serif italic text-xl">
+                        ${section.text.map(t => `<p>${t}</p>`).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        container.appendChild(secDiv);
+
+        // Trigger generic fade in
+        setTimeout(() => {
+            secDiv.classList.remove('opacity-0', 'translate-y-4');
+        }, 100 + (index * 100));
+    });
+}
 
 // START HERE
 window.Apps = Apps; // Global exposure
