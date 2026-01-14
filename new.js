@@ -260,7 +260,7 @@ const apps = [
              <div class="win-icon" onclick="Apps.open('not-dumb')"><div class="icon-img">🤨</div><div class="icon-label">Not Dumb</div></div>
             <div class="win-icon" onclick="Apps.open('madrid')"><div class="icon-img">⚽</div><div class="icon-label">HalaMadrid.exe</div></div>
             <div class="win-icon" onclick="Apps.open('app-grown')"><div class="icon-img">🧠</div><div class="icon-label">19.exe</div></div>
-            <div class="win-icon" onclick="Apps.open('engineering')"><div class="icon-img">💻</div><div class="icon-label">Engineering</div></div>
+            <div class="win-icon" onclick="Apps.open('blueprint')"><div class="icon-img">📐</div><div class="icon-label">Blueprint</div></div>
              <div class="win-icon" onclick="Apps.open('terminal-app')"><div class="icon-img">💻</div><div class="icon-label">Terminal.sh</div></div>
              <div class="w-full text-center text-xs text-gray-400 mt-4 col-span-full">System identity & base configuration</div>
         </div>
@@ -793,13 +793,24 @@ some things are felt, not meant to know.
     `},
 
     {
-        id: 'engineering', title: 'Engineering', icon: '💻', dock: true, width: 600, height: 400, content: `
-        <div class="h-full bg-[#1e1e1e] text-green-400 font-mono text-sm p-6 custom-scroll">
-            <div>> npm install adulthood --save-dev</div>
-            <div class="text-yellow-500 mt-2">WARN: Dependency 'sleep' outdated.</div>
-            <div class="text-blue-400 mt-2">INFO: Core values locked. integrity check passed.</div>
-            <br>
-            <div class="text-white opacity-70">// Debugging life takes time. Don't panic.</div>
+        id: 'blueprint', title: 'Blueprint.bp', icon: '📐', dock: true, width: 600, height: 400, content: `
+        <div class="h-full bg-[#1e1e1e] text-blue-300 font-mono text-sm p-6 custom-scroll select-text">
+            <pre class="whitespace-pre-wrap font-inherit">
+[Project: BLUEPRINT]
+[Version: 1.0]
+
+[BEGIN TRANSMISSION]
+
+STATUS: IN-PROGRESS
+
+OBJECTIVE:
+  - Phase 1: Establish Foundation
+  - Phase 2: Structural Integrity
+  - Phase 3: Systems Integration
+  - Phase 4: Finalization
+
+[END TRANSMISSION]
+            </pre>
         </div>
     `},
 
