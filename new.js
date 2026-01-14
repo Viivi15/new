@@ -393,15 +393,144 @@ some things are felt, not meant to know.
 
     /* CLUSTER 2: FUN / MASTI (Lightweight) */
     {
-        id: 'facts', title: 'Harshit Facts.txt', icon: '📄', folder: 'system', dock: false, width: 400, height: 400, content: `
-        <div class="h-full bg-white font-mono text-sm p-6 text-gray-700 whitespace-pre-line custom-scroll">
-            <span class="font-bold text-black border-b border-black">SYSTEM NOTES: Harshit</span>
+        id: 'facts', title: 'Harshit Facts.txt', icon: '📄', folder: 'system', dock: false, width: 600, height: 650, content: `
+        <div class="facts-app custom-scroll" id="facts-app-root">
+            <!-- Section 0: Terminal Entry -->
+            <div class="facts-terminal" id="facts-terminal">
+                <div class="facts-log-line" style="animation-delay: 0.2s">> Accessing system logs...</div>
+                <div class="facts-log-line" style="animation-delay: 0.8s">> User: Harshit</div>
+                <div class="facts-log-line" style="animation-delay: 1.4s">> Clearance: Granted</div>
+                <div class="facts-log-line" style="animation-delay: 2.0s; color: #fbbf24;">> Warning: Some files marked "Do Not Reveal"</div>
+                <button class="facts-enter-btn" onclick="startFactsApp()" style="opacity: 0; animation: factsFadeIn 0.5s forwards; animation-delay: 2.8s;">ENTER FACTS</button>
+            </div>
 
-            > Needs hoodie > people
-            > Eats silently
-            > Pretends not to care (FAILED)
-            > 90% water, 10% attitude
-            > Actually soft (Do not reveal)
+            <!-- Main Content -->
+            <div class="facts-content" id="facts-main-content">
+                
+                <!-- SECTION 1: CORE SYSTEM STATS -->
+                <div class="facts-section" id="section-1">
+                    <div class="facts-section-title">SECTION 1: CORE SYSTEM STATS 🧬</div>
+                    <div class="facts-grid">
+                        <div class="facts-card">
+                            <h4>Comfort Preference</h4>
+                            <div class="fact-val">Needs hoodie > people</div>
+                            <div class="sys-note">System confirms higher comfort in familiar warmth than social noise.</div>
+                        </div>
+                        <div class="facts-card">
+                            <h4>Stealth Mode</h4>
+                            <div class="fact-val">Eats silently</div>
+                            <div class="sys-note">No sound detected. No witnesses.</div>
+                        </div>
+                        <div class="facts-card">
+                            <h4>Emotional Mask</h4>
+                            <div class="fact-val">Pretends not to care — FAILED</div>
+                            <div class="sys-note" style="color: #ef4444;">System error: He cares. A lot.</div>
+                        </div>
+                        <div class="facts-card">
+                            <h4>Molecular Breakdown</h4>
+                            <div class="fact-val">90% Water · 10% Attitude</div>
+                            <div class="sys-note">Stable composition. Occasional emotional overflow.</div>
+                        </div>
+                        <div class="facts-card" style="border-style: dashed; opacity: 0.8;">
+                            <h4>Classified File</h4>
+                            <div class="fact-val">Actually soft</div>
+                            <div class="sys-note">Access denied. (But visible to trusted user.)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: DEEP TRUTHS -->
+                <div class="facts-section" id="section-2">
+                    <div class="facts-section-title">SECTION 2: DEEP TRUTHS 🌟</div>
+                    <div class="facts-truth-list">
+                        <div class="facts-truth-item">
+                            <span>Status: Rare</span>
+                            <h3>Honesty</h3>
+                            <p>System flags this as a non-replaceable trait. Genuine and unfiltered.</p>
+                        </div>
+                        <div class="facts-truth-item">
+                            <span>Observed Behavior</span>
+                            <h3>Quiet Protection</h3>
+                            <p>Protects without announcing. No credit taken. No noise made. Just there.</p>
+                        </div>
+                        <div class="facts-truth-item">
+                            <span>Status: Ongoing</span>
+                            <h3>Persistence</h3>
+                            <p>Keeps moving even when tired, hurt, or doubting. Built for endurance.</p>
+                        </div>
+                        <div class="facts-truth-item">
+                            <span>Warning: Scary Accuracy</span>
+                            <h3>Memory Module</h3>
+                            <p>Remembers tiny details others forget. Every word, every moment is logged.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 3: IDENTITY ALIASES -->
+                <div class="facts-section" id="section-3">
+                    <div class="facts-section-title">SECTION 3: IDENTITY ALIASES 🎭</div>
+                    <div class="facts-alias-slider">
+                        <div class="facts-alias-card">
+                            <div class="facts-alias-icon">❄️</div>
+                            <h3>Mr. Snow</h3>
+                            <p>Calm surface. Deep emotional layers underneath. Known by those who stay to see it fall.</p>
+                        </div>
+                        <div class="facts-alias-card">
+                            <div class="facts-alias-icon">🐭</div>
+                            <h3>Mr. Chuha</h3>
+                            <p>Soft. Cute. Unintentionally endearing. A personality prone to hiding but needing warmth.</p>
+                        </div>
+                        <div class="facts-alias-card">
+                            <div class="facts-alias-icon">🎮</div>
+                            <h3>Mr. Ota</h3>
+                            <p>Teasing. Playful. Built entirely from inside jokes and shared laughter.</p>
+                        </div>
+                        <div class="facts-alias-card">
+                            <div class="facts-alias-icon">🐰</div>
+                            <h3>Rabbit</h3>
+                            <p>Gentle. Alert. Emotionally sensitive but incredibly strong when protected.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 4: JOURNEY LOGS -->
+                <div class="facts-section" id="section-4">
+                    <div class="facts-section-title">SECTION 4: JOURNEY & LOG FACTS 📜</div>
+                    <div class="facts-timeline">
+                        <div class="facts-log-item">
+                            <div class="facts-log-date">June 20, 2024 · 12:21 AM</div>
+                            <div class="facts-log-title">Connection Established</div>
+                            <div class="facts-log-desc">Discord. First hello. System marks this as a critical event in history.</div>
+                        </div>
+                        <div class="facts-log-item">
+                            <div class="facts-log-date">DAILY STATUS</div>
+                            <div class="facts-log-title">The 4-Hour Rule</div>
+                            <div class="facts-log-desc">Claim: "4 hours is enough."<br>Reality: System unsure how he’s still functioning. Sleep debt high.</div>
+                        </div>
+                        <div class="facts-log-item">
+                            <div class="facts-log-date">LOG ANOMALY</div>
+                            <div class="facts-log-title">Real Madrid Ultra</div>
+                            <div class="facts-log-desc">Passion Level: 110%.<br>Observed anomaly: Missed matches detected.</div>
+                            <div class="log-anomaly">REASON: Talking to Her.</div>
+                        </div>
+                        <div class="facts-log-item">
+                            <div class="facts-log-date">SYSTEM QUIRK</div>
+                            <div class="facts-log-title">Sports Paradox</div>
+                            <div class="facts-log-desc">Can analyze football strategies for hours. Has never watched a single cricket match. Confusing logic.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 5: SYSTEM NOTE -->
+                <div class="facts-footer-note">
+                    <span class="sys-obs">System Observation</span>
+                    <blockquote>
+                        "Harshit is not loud. Not dramatic. Not careless.<br><br>
+                        But once he chooses someone,<br>the system never forgets them."
+                    </blockquote>
+                </div>
+
+            </div>
         </div>
     `},
 
@@ -417,45 +546,89 @@ some things are felt, not meant to know.
     `},
 
     {
-        id: 'madrid', title: 'HalaMadrid.exe', icon: '⚽', dock: false, width: 450, height: 400, content: `
-        <div class="h-full bg-white text-gray-800 p-6 flex flex-col font-mono text-sm border-t-8 border-blue-600">
-            <div class="flex justify-between items-center mb-6">
-                 <span class="font-bold text-lg text-blue-900">REAL MADRID FAN LOG</span>
-                 <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">STATUS: ULTRA</span>
+        id: 'madrid', title: 'HalaMadrid.exe', icon: '⚽', dock: false, width: 450, height: 600, content: `
+        <div class="madrid-dashboard custom-scroll" id="madrid-dash">
+            <div class="madrid-header">
+                <div class="madrid-title">
+                    <span id="madrid-logo-icon">⚽</span> <span id="madrid-head-text">HALAMADRID DASHBOARD</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="theme-toggle" onclick="toggleUCLMode()" title="Toggle UCL Mode">🏆</div>
+                    <div class="madrid-status" id="madrid-tier">Ultra Tier</div>
+                </div>
             </div>
             
-            <div class="space-y-4">
-                <div class="flex justify-between border-b pb-2">
-                    <span>Passion Level:</span>
-                    <span class="font-bold">110% (Crazy)</span>
+            <div class="madrid-scroll-area">
+                <div class="madrid-grid">
+                    <div class="madrid-card">
+                        <div class="card-label">Passion Level</div>
+                        <div class="card-value">110%</div>
+                        <div class="passion-meter">
+                            <div id="passion-fill" class="passion-fill"></div>
+                        </div>
+                    </div>
+                    <div class="madrid-card">
+                        <div class="card-label">Status</div>
+                        <div class="card-value">No Ceiling</div>
+                    </div>
                 </div>
-                <div class="flex justify-between border-b pb-2">
-                    <span>Matches Watched:</span>
-                    <span class="font-bold">All of them*</span>
+
+                <div class="loyalty-section">
+                    <div class="loyalty-title">System Analysis: Priority Check</div>
+                    <div class="graph-container">
+                        <div class="graph-bar active" style="height: 100%;">
+                            <div class="graph-label">Football</div>
+                        </div>
+                        <div class="graph-bar special" style="height: 110%;">
+                            <div class="graph-label">Talking to Her</div>
+                        </div>
+                    </div>
+                    <div class="no-regrets-badge">
+                        CONCLUSION: NO REGRETS. ✨
+                    </div>
+                </div>
+
+                <div class="mt-8 space-y-3">
+                    <div class="text-[10px] text-white/30 uppercase tracking-widest font-bold">Memory Trophies</div>
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-lg flex items-center gap-3">
+                        <span class="text-xl">🏆</span>
+                        <div>
+                            <div class="text-xs font-bold">The Missed Match Award</div>
+                            <div class="text-[10px] opacity-60">"Because talking to you was the bigger win."</div>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-lg flex items-center gap-3">
+                        <span class="text-xl">⭐</span>
+                        <div>
+                            <div class="text-xs font-bold">Top Scorer</div>
+                            <div class="text-[10px] opacity-60">Number of times you made him smile today.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="hala-btn" onclick="triggerMadridEffect(this)">Hala Madrid! 🚀</button>
+            </div>
+
+            <!-- NEWS TICKER -->
+            <div class="news-ticker-container">
+                <div class="news-ticker-wrapper">
+                    <div class="news-item">🚨 BREAKING: Harshit misses 89th minute goal to reply to a text.</div>
+                    <div class="news-item">⚽ UPDATE: "Siuuu" logic module improved by 200%.</div>
+                    <div class="news-item">⚠️ WARNING: Sleep schedule transfer listed for 2:00 AM conversations.</div>
+                    <div class="news-item">🏆 OFFICIAL: "Mr. Snow" alias renewed for another season.</div>
                 </div>
             </div>
 
-            <div class="mt-6 bg-gray-50 p-4 rounded border border-gray-200">
-                <div class="text-red-500 font-bold mb-2 text-xs uppercase">⚠️ System Anomaly Detected</div>
-                <p class="text-xs text-gray-600 mb-2">*Warning: Multiple matches marked as "MISSED" in logs.</p>
-                
-                <div class="flex gap-2 items-start mt-3">
-                    <span class="text-gray-400">></span>
-                    <div>
-                        <div class="font-bold text-gray-900">Cause of Absence:</div>
-                        <div class="italic text-gray-600">"Prioritized talking to Her."</div>
-                    </div>
-                </div>
-                 <div class="flex gap-2 items-start mt-2">
-                    <span class="text-gray-400">></span>
-                    <div>
-                        <div class="font-bold text-gray-900">Result:</div>
-                        <div class="text-blue-600 font-bold">No Regrets.</div>
-                    </div>
-                </div>
-            </div>
+            <audio id="madrid-siuuu" src="https://www.myinstants.com/media/sounds/cristiano-ronaldo-siuuu.mp3"></audio>
         </div>
-    `},
+    `,
+        onOpen() {
+            setTimeout(() => {
+                const fill = document.getElementById('passion-fill');
+                if (fill) fill.style.width = '100%';
+            }, 500);
+        }
+    },
 
     /* === FUN & CHAOS (Inside Folder) === */
     {
@@ -3450,8 +3623,84 @@ function initHappyMenuBar() {
     });
 }
 
+/* === FACTS APP INTERACTIVE LOGIC === */
+function startFactsApp() {
+    const term = document.getElementById('facts-terminal');
+    const main = document.getElementById('facts-main-content');
+    if (!term || !main) return;
+
+    term.classList.add('hidden');
+    main.classList.add('active');
+
+    // Auto-reveal sections with a slight delay
+    const sections = main.querySelectorAll('.facts-section');
+    sections.forEach((sec, i) => {
+        setTimeout(() => {
+            sec.classList.add('revealed');
+        }, 500 + (i * 300));
+    });
+}
 
 
 
 
 
+
+
+function triggerMadridEffect(btn) {
+    const balls = ['⚽', '⚽️', '🧤', '🏆'];
+    const rect = btn.getBoundingClientRect();
+
+    // Create particles
+    for (let i = 0; i < 20; i++) {
+        const p = document.createElement('div');
+        p.className = 'ball-particle';
+        p.innerText = balls[Math.floor(Math.random() * balls.length)];
+
+        const tx = (Math.random() - 0.5) * 400;
+        const ty = (Math.random() - 1) * 400;
+
+        p.style.setProperty('--tx', `${tx}px`);
+        p.style.setProperty('--ty', `${ty}px`);
+        p.style.left = `${rect.left + rect.width / 2}px`;
+        p.style.top = `${rect.top}px`;
+
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 1000);
+    }
+
+    // Audio
+    const audio = document.getElementById('madrid-siuuu');
+    if (audio) {
+        audio.volume = 0.5;
+        audio.currentTime = 0;
+        audio.play().catch(e => console.log("Audio play blocked", e));
+    }
+
+    // Feedback
+    btn.innerText = "SIUUUU!!! ⚽";
+    setTimeout(() => {
+        btn.innerText = "Hala Madrid! 🚀";
+    }, 2000);
+}
+
+function toggleUCLMode() {
+    const dash = document.getElementById('madrid-dash');
+    const headText = document.getElementById('madrid-head-text');
+    const logo = document.getElementById('madrid-logo-icon');
+    const tier = document.getElementById('madrid-tier');
+
+    if (dash.classList.contains('ucl-mode')) {
+        // Switch to La Liga
+        dash.classList.remove('ucl-mode');
+        headText.innerText = "HALAMADRID DASHBOARD";
+        logo.innerText = "⚽";
+        tier.innerText = "Ultra Tier";
+    } else {
+        // Switch to UCL
+        dash.classList.add('ucl-mode');
+        headText.innerText = "CHAMPIONS LEAGUE MODE";
+        logo.innerText = "🏆";
+        tier.innerText = "15 KINGS";
+    }
+}

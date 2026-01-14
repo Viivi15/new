@@ -2833,3 +2833,636 @@ body {
 .recipe-cinematic .step-reveal {
     transition: opacity 1s ease-out;
 }
+
+/* === FACTS.APP PREMIUM STYLES === */
+.facts-app {
+    height: 100%;
+    background: #0a0a0c;
+    color: #e2e8f0;
+    font-family: 'Inter', sans-serif;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+/* Entry Screen */
+.facts-terminal {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+    background: black !important;
+    font-family: 'Consolas', monospace;
+    transition: opacity 1s ease;
+    z-index: 10;
+}
+
+.facts-terminal.hidden {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+}
+
+.facts-log-line {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #4ade80;
+    opacity: 0;
+    animation: terminalLine 0.5s forwards;
+}
+
+@keyframes terminalLine {
+    to {
+        opacity: 1;
+    }
+}
+
+.facts-enter-btn {
+    margin-top: 30px;
+    padding: 12px 24px;
+    border: 1px solid #4ade80;
+    background: transparent;
+    color: #4ade80;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+    width: fit-content;
+    font-weight: bold;
+}
+
+.facts-enter-btn:hover {
+    background: rgba(74, 222, 128, 0.1);
+    box-shadow: 0 0 15px rgba(74, 222, 128, 0.4);
+}
+
+/* Main Content Wrapper */
+.facts-content {
+    display: none;
+    padding: 40px 20px;
+    animation: factsFadeIn 1.5s forwards;
+}
+
+.facts-content.active {
+    display: block;
+}
+
+@keyframes factsFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Sections Global */
+.facts-section {
+    margin-bottom: 80px;
+    opacity: 0;
+}
+
+.facts-section.revealed {
+    animation: factsFadeIn 1s forwards;
+}
+
+.facts-section-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #64748b;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 10px;
+    font-weight: 800;
+}
+
+/* Section 1: Grid Cards */
+.facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.facts-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    padding: 28px;
+    border-radius: 16px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.facts-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.02));
+    pointer-events: none;
+}
+
+.facts-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.facts-card h4 {
+    color: #64748b;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 14px;
+    font-weight: 700;
+}
+
+.facts-card .fact-val {
+    font-size: 20px;
+    font-weight: 800;
+    color: #f8fafc;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+.facts-card .sys-note {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.6;
+    font-family: 'Consolas', monospace;
+}
+
+/* Section 2: Deep Truths */
+.facts-truth-list {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.facts-truth-item {
+    margin-bottom: 50px;
+    padding-left: 28px;
+    border-left: 3px solid #6366f1;
+    transition: transform 0.3s;
+}
+
+.facts-truth-item:hover {
+    transform: translateX(10px);
+}
+
+.facts-truth-item span {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #6366f1;
+    margin-bottom: 6px;
+    font-weight: 800;
+}
+
+.facts-truth-item h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #f8fafc;
+}
+
+.facts-truth-item p {
+    font-size: 15px;
+    color: #94a3b8;
+    line-height: 1.7;
+}
+
+/* Section 3: Aliases */
+.facts-alias-slider {
+    display: flex;
+    overflow-x: auto;
+    gap: 24px;
+    padding: 20px 0;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+
+.facts-alias-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.facts-alias-card {
+    flex: 0 0 300px;
+    scroll-snap-align: center;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 35px;
+    border-radius: 24px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.facts-alias-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.facts-alias-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.3));
+}
+
+.facts-alias-card h3 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    color: #f8fafc;
+}
+
+.facts-alias-card p {
+    font-size: 14px;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+/* Section 4: Timeline */
+.facts-timeline {
+    position: relative;
+    padding-left: 40px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.facts-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.3), transparent);
+}
+
+.facts-log-item {
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.facts-log-item::before {
+    content: '';
+    position: absolute;
+    left: -44px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #3b82f6;
+    box-shadow: 0 0 15px #3b82f6;
+    border: 2px solid #0a0a0c;
+}
+
+.facts-log-date {
+    font-size: 12px;
+    color: #3b82f6;
+    font-weight: 800;
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+}
+
+.facts-log-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #f8fafc;
+}
+
+.facts-log-desc {
+    font-size: 14px;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+.log-anomaly {
+    display: inline-block;
+    background: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-top: 12px;
+    font-weight: 700;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* Section 5: Footer */
+.facts-footer-note {
+    margin-top: 120px;
+    text-align: center;
+    padding: 80px 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.facts-footer-note blockquote {
+    font-size: 22px;
+    font-style: italic;
+    color: #f1f5f9;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.8;
+    font-weight: 300;
+}
+
+.facts-footer-note .sys-obs {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    color: #475569;
+    margin-bottom: 30px;
+    display: block;
+}
+
+/* === MADRID DASHBOARD (Premium Sports UI) === */
+.madrid-dashboard {
+    background: linear-gradient(135deg, #001b44 0%, #004d98 100%);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.madrid-header {
+    background: rgba(254, 190, 16, 0.1);
+    border-bottom: 2px solid #FEBE10;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.madrid-title {
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #FEBE10;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.madrid-status {
+    background: #FEBE10;
+    color: #001b44;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.madrid-scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.madrid-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.madrid-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    transition: transform 0.3s ease;
+}
+
+.madrid-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.card-label {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.card-value {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+}
+
+.passion-meter {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.passion-fill {
+    height: 100%;
+    background: #FEBE10;
+    width: 0%;
+    /* Animates to 100%+ */
+    transition: width 2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.loyalty-section {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 20px;
+    border-left: 4px solid #ef4444;
+}
+
+.loyalty-title {
+    font-size: 12px;
+    font-weight: 900;
+    color: #ef4444;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.graph-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 60px;
+    gap: 20px;
+}
+
+.graph-bar {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    transition: height 1s ease;
+}
+
+.graph-bar.active {
+    background: #3b82f6;
+}
+
+.graph-bar.special {
+    background: #ec4899;
+}
+
+.graph-label {
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    white-space: nowrap;
+    opacity: 0.7;
+}
+
+.no-regrets-badge {
+    margin-top: 40px;
+    padding: 10px;
+    background: white;
+    color: #001b44;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 900;
+    font-size: 14px;
+    transform: rotate(-2deg);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hala-btn {
+    width: 100%;
+    padding: 15px;
+    background: #FEBE10;
+    color: #001b44;
+    border: none;
+    border-radius: 12px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.hala-btn:hover {
+    transform: scale(1.02);
+    background: #ffcc33;
+    box-shadow: 0 0 20px rgba(254, 190, 16, 0.4);
+}
+
+.ball-particle {
+    position: fixed;
+    font-size: 24px;
+    pointer-events: none;
+    z-index: 10000;
+    animation: ballFly 1s ease-out forwards;
+}
+
+@keyframes ballFly {
+    0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* === ULTRA ENHANCEMENTS (Phase 2) === */
+
+/* 1. UCL Mode */
+.madrid-dashboard.ucl-mode {
+    background: linear-gradient(135deg, #1e1e24 0%, #2a0a3b 100%);
+}
+
+.madrid-dashboard.ucl-mode .madrid-header {
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.madrid-dashboard.ucl-mode .madrid-title {
+    color: #e0e0e0;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.madrid-dashboard.ucl-mode .madrid-status {
+    background: #e0e0e0;
+    color: #2a0a3b;
+}
+
+.madrid-dashboard.ucl-mode .hala-btn {
+    background: #e0e0e0;
+    color: #2a0a3b;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* 2. News Ticker */
+.news-ticker-container {
+    background: #000;
+    overflow: hidden;
+    padding: 8px 0;
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.news-ticker-wrapper {
+    display: flex;
+    white-space: nowrap;
+    animation: tickerScroll 20s linear infinite;
+}
+
+.news-item {
+    color: #FEBE10;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-right: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.madrid-dashboard.ucl-mode .news-item {
+    color: #e0e0e0;
+}
+
+@keyframes tickerScroll {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* 3. Toggle Switch */
+.theme-toggle {
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    font-size: 14px;
+}
+
+.theme-toggle:hover {
+    opacity: 1;
+}
