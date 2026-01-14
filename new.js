@@ -271,8 +271,8 @@ const apps = [
         <div class="folder-window-grid">
             <div class="win-icon" onclick="Apps.open('why-matter')"><div class="icon-img">💭</div><div class="icon-label">Why You<br>Matter</div></div>
             <div class="win-icon" onclick="Apps.open('tired')"><div class="icon-img">😴</div><div class="icon-label">When Tired</div></div>
-            <div class="win-icon" onclick="Apps.open('dream-snow')"><div class="icon-img">❄️</div><div class="icon-label">Snow Place</div></div>
-            <div class="win-icon" onclick="Apps.open('hoodie')"><div class="icon-img">🧥</div><div class="icon-label">Hoodie Mode</div></div>
+
+
             <div class="win-icon" onclick="Apps.open('music-night')"><div class="icon-img">🌙</div><div class="icon-label">Late Night</div></div>
              <div class="win-icon" onclick="Apps.open('future')"><div class="icon-img">🔮</div><div class="icon-label">Future You</div></div>
              <div class="win-icon" onclick="Apps.open('thank-you')"><div class="icon-img">✨</div><div class="icon-label">Thank You</div></div>
@@ -721,27 +721,16 @@ some things are felt, not meant to know.
     {
         id: 'tired', title: 'When Tired', icon: '😴', dock: true, width: 450, height: 350, content: `
         <div class="h-full bg-[#202020] text-gray-300 flex items-center justify-center text-center p-10 font-serif text-lg leading-loose">
-            "You don’t have to be strong right now."
+            "Suno... Thak gaye ho na? Koi baat nahi.<br><br>
+            You don't always have to be strong.<br>
+            Aaj bas rest kar lo. You did enough.<br>
+            Main hoon na. ❤️"
         </div>
     `},
 
-    {
-        id: 'dream-snow', title: 'Snow Place', icon: '❄️', dock: false, width: 700, height: 500, content: `
-        <div class="h-full bg-gradient-to-b from-[#cfd9df] to-[#e2ebf0] relative overflow-hidden">
-           <!-- Visual Only: Calm snow loop -->
-           <div class="absolute inset-0 flex items-center justify-center text-gray-500/20 font-serif text-4xl italic">
-                Silence.
-           </div>
-        </div>
-    `},
 
-    {
-        id: 'hoodie', title: 'Hoodie Mode', icon: '🧥', dock: true, width: 400, height: 300, content: `
-        <div class="h-full bg-gray-800 text-gray-200 flex flex-col items-center justify-center p-8 text-center">
-            <div class="text-4xl mb-4 opacity-50">🧥</div>
-            <p class="text-sm font-light">"This is the part of life that doesn’t ask questions."</p>
-        </div>
-    `},
+
+
 
     /* CLUSTER 4: GROWTH & 19 (Mature) */
     {
