@@ -313,6 +313,26 @@ const apps = [
 
     /* === SYSTEM CORE APPS (Inside Folder) === */
     {
+        id: 'terminal-app', title: 'Terminal.sh', icon: '💻', dock: false, folder: 'folder-system', width: 600, height: 450, content: `
+        <div class="terminal-window h-full bg-[#1e1e1e] text-green-500 font-mono text-sm p-4 flex flex-col">
+            <div id="term-output-app" class="flex-1 overflow-y-auto mb-2 custom-scroll space-y-1">
+                <div>HarshitOS Terminal [Version 1.0.0]</div>
+                <div>(c) 2024 System Core. All rights reserved.</div>
+                <br>
+                <div>Type 'help' for available commands.</div>
+                <br>
+            </div>
+            <div class="flex items-center gap-2 border-t border-gray-700 pt-2">
+                <span class="text-green-500 font-bold shrink-0">root@harshit:~$</span>
+                <input type="text" id="term-input-app" class="bg-transparent border-none outline-none text-white w-full font-mono placeholder-gray-600" autocomplete="off" autofocus onkeydown="if(event.key === 'Enter') handleTerminalAppCommand()">
+            </div>
+        </div>
+    `,
+        onOpen: () => {
+            setTimeout(() => document.getElementById('term-input-app')?.focus(), 100);
+        }
+    },
+    {
         id: 'first-conversation', title: '12:21 AM', icon: '💬', dock: false, folder: 'folder-system', width: 520, height: 520, content: `
         <div class="flex flex-col h-full">
             <div class="px-4 py-2 border-b border-white/10 flex justify-between items-center bg-white/5">
@@ -719,13 +739,48 @@ some things are felt, not meant to know.
 
     /* CLUSTER 4: GROWTH & 19 (Mature) */
     {
-        id: 'app-grown', title: '19.exe', icon: '🧠', dock: true, width: 500, height: 400, content: `
-        <div class="h-full bg-white p-10 flex flex-col justify-center">
-            <h1 class="text-5xl font-black text-gray-100 mb-6 select-none">19</h1>
-            <div class="relative space-y-6 text-gray-700 font-medium">
-                <p>You’re allowed to grow slowly.</p>
-                <p>You don’t need all answers.</p>
-                <p>It’s okay to be a work in progress.</p>
+        id: 'app-grown', title: '19.exe', icon: '🧠', dock: true, width: 600, height: 600, content: `
+        <div class="h-full bg-gradient-to-br from-slate-50 to-indigo-50/50 p-8 flex flex-col items-center relative overflow-hidden">
+            <!-- Background Watermark -->
+            <div class="absolute top-[-20px] right-[-20px] text-[180px] font-serif font-bold text-slate-100 select-none z-0 rotate-12">19</div>
+            
+            <!-- Main Content -->
+            <div class="relative z-10 w-full h-full flex flex-col overflow-y-auto custom-scroll pr-2">
+                
+                <!-- Header -->
+                <div class="mb-8 text-center animate-fade-in-up">
+                    <h1 class="text-4xl font-[Playfair_Display] font-bold text-slate-800 mb-2">Chapter 19</h1>
+                    <div class="h-1 w-16 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full"></div>
+                </div>
+
+                <!-- Letter Body -->
+                <div class="space-y-6 text-slate-600 font-[Inter] leading-relaxed text-[15px] opacity-0 animate-[fadeInUp_1s_ease-out_0.3s_forwards]">
+                    
+                    <p class="first-letter:text-3xl first-letter:font-serif first-letter:text-slate-800 first-letter:mr-1">
+                        18 got you understanding a little more... things you hadn’t noticed before, moments that made you think, and experiences that stayed with you.
+                    </p>
+
+                    <div class="bg-white/60 p-5 rounded-lg border-l-4 border-indigo-300 italic text-slate-700 shadow-sm backdrop-blur-sm">
+                        "Now that you’re 19, I just want you to know it’s okay to grow at your own pace."
+                    </div>
+
+                    <p>
+                        You don’t need to have everything figured out, and you never have to carry things alone. Life will teach you through both good and hard moments, and each one will shape you into someone stronger and wiser.
+                    </p>
+
+                    <p>
+                        Be kind to yourself, learn from your lows, celebrate your highs, and don’t be afraid to ask for help when you need it.
+                    </p>
+                </div>
+
+                <!-- Footer / Signature -->
+                <div class="mt-10 pt-6 border-t border-slate-200 text-center opacity-0 animate-[fadeInUp_1s_ease-out_0.8s_forwards]">
+                    <p class="font-[Dancing_Script] text-2xl text-indigo-600 mb-2">I’m really proud of the person you’re becoming.</p>
+                    <p class="text-xs text-slate-400 uppercase tracking-[0.2em] font-medium">May this year bring you peace</p>
+                </div>
+
+                <!-- Bottom Spacer for Scroll -->
+                <div class="h-8"></div>
             </div>
         </div>
     `},
@@ -2620,6 +2675,69 @@ function handlePQuiz(type) {
     renderPQuiz();
 }
 
+/* === TERMINAL APP ENHANCEMENTS === */
+
+const firstMeetLog = [
+    "<span class='text-gray-500'>[6/20/24 12:22 AM]</span> <span class='text-green-400 font-bold'>Harshit:</span> Hi",
+    "<span class='text-gray-500'>[6/20/24 12:23 AM]</span> <span class='text-purple-400 font-bold'>Shravii:</span> Helloo",
+    "<span class='text-gray-500'>[6/20/24 12:23 AM]</span> <span class='text-green-400 font-bold'>Harshit:</span> sup",
+    "<span class='text-gray-500'>[6/20/24 12:32 AM]</span> <span class='text-green-400 font-bold'>Harshit:</span> is anyone watching euros?",
+    "<span class='text-gray-500'>[6/20/24 12:33 AM]</span> <span class='text-purple-400 font-bold'>Shravii:</span> Umm euros?",
+    "<span class='text-gray-500'>[6/20/24 12:33 AM]</span> <span class='text-purple-400 font-bold'>Shravii:</span> Where ya from Harry?",
+    "<span class='text-gray-500'>[6/20/24 12:34 AM]</span> <span class='text-green-400 font-bold'>Harshit:</span> India",
+    "<span class='text-gray-500'>[6/20/24 12:35 AM]</span> <span class='text-purple-400 font-bold'>Shravii:</span> :o",
+    "<span class='text-gray-500'>[6/20/24 12:35 AM]</span> <span class='text-green-400 font-bold'>Harshit:</span> <a href='https://open.spotify.com/track/086myS9r57YsLbJpU0TgK9' target='_blank' class='underline hover:text-green-300'>Spotify Link 🎵</a>",
+    "<span class='text-gray-500'>[6/20/24 12:39 AM]</span> <span class='text-purple-400 font-bold'>Shravii:</span> I'll hear and comment"
+];
+
+function typeToTerminal(element, text, delay = 20, callback) {
+    const line = document.createElement('div');
+    line.className = 'term-line mb-1'; // Check if we need to add styling for this
+    element.appendChild(line);
+    element.scrollTop = element.scrollHeight;
+
+    // Check if text contains HTML tags
+    if (text.includes('<')) {
+        // For HTML content, we can't easily do character-by-character without breaking tags
+        // So we'll fade it in or type it differently. 
+        // Simple approach: Insert HTML immediately but hidden, then reveal? 
+        // Or just set innerHTML since we want the colors.
+        line.innerHTML = text;
+        // Optional: Add a fade-in class if wanted, but standard terminal is instant or typed.
+        // Let's stick to instant appearance for HTML lines to preserve formatting safety
+        if (callback) setTimeout(callback, delay * 5);
+    } else {
+        // Plain text typing
+        let i = 0;
+        const interval = setInterval(() => {
+            line.textContent += text[i];
+            element.scrollTop = element.scrollHeight;
+            i++;
+            if (i >= text.length) {
+                clearInterval(interval);
+                if (callback) callback();
+            }
+        }, delay);
+    }
+}
+
+function runTerminalSequence(element, lines, speed = 20, gap = 500, onComplete) {
+    let index = 0;
+
+    function nextLine() {
+        if (index >= lines.length) {
+            if (onComplete) onComplete();
+            return;
+        }
+        typeToTerminal(element, lines[index], speed, () => {
+            index++;
+            setTimeout(nextLine, gap);
+        });
+    }
+
+    nextLine();
+}
+
 /* === TERMINAL APP LOGIC === */
 function handleTerminalAppCommand() {
     const input = document.getElementById('term-input-app');
@@ -2631,47 +2749,114 @@ function handleTerminalAppCommand() {
 
     // Echo command
     output.innerHTML += `<div><span class="term-prompt">root@harshit:~$</span> ${cmd}</div>`;
+    input.value = '';
+    output.scrollTop = output.scrollHeight;
 
     // Process
-    let response = '';
     const command = cmd.toLowerCase().split(' ')[0];
+
+    // Commands that don't need typing effect can return immediately or use simple output
+    if (command === 'clear') {
+        output.innerHTML = '';
+        return;
+    }
+
+    // Disable input during cinematic sequences
+    input.disabled = true;
+    input.placeholder = "Processing...";
+
+    const enableInput = () => {
+        input.disabled = false;
+        input.placeholder = "Enter command...";
+        input.focus();
+    };
 
     switch (command) {
         case 'help':
-            response = `<div class="term-info">
-    Available Commands:
-    - help: Show this list
-    - whois: Identify the user
-    - strength: Analyze core metrics
-    - secret: Unlock hidden directory
-    - clear: Clear screen
-</div>`;
+            runTerminalSequence(output, [
+                "Available Commands:",
+                "- help: Show this list",
+                "- whois: Identify the user",
+                "- strength: Analyze core metrics",
+                "- secret: Unlock hidden directory",
+                "- firstmeet: Replay origin connection",
+                "- timeline: Show journey milestones",
+                "- clear: Clear screen"
+            ], 10, 100, enableInput);
             break;
+
         case 'whois':
-            response = `User: Harshit (Admin)\nAttributes: [Loyal, Stubborn, Protective]\nStatus: Currently Loading...`;
+            runTerminalSequence(output, [
+                "Resolving identity...",
+                "User: Harshit",
+                "Role: Admin",
+                "Strength: Visible",
+                "Weakness: Never admitted",
+                "Status: Still becoming"
+            ], 20, 300, enableInput);
             break;
+
         case 'strength':
-            response = `Analysis Complete:\n- Physical: 85%\n- Emotional: Hidden (High)\n- Resilience: 99.9%`;
+            runTerminalSequence(output, [
+                "Analyzing metrics...",
+                "Physical: 85%",
+                "Mental: Adaptive",
+                "Emotional: Hidden (High)",
+                "Resilience: 99.9%",
+                "Note: Survived things he never talks about"
+            ], 20, 300, enableInput);
             break;
+
         case 'secret':
-            response = `<span class="term-success">Access Granted. Check 'Vault' folder.</span>`;
-            setTimeout(() => Apps.open('app-vault'), 1000);
+            runTerminalSequence(output, [
+                "Accessing secure vault...",
+                "Verifying credentials...",
+                "Access Granted.",
+                "Opening 'Vault' folder..."
+            ], 30, 400, () => {
+                setTimeout(() => Apps.open('app-vault'), 500);
+                enableInput();
+            });
             break;
-        case 'clear':
-            output.innerHTML = '';
-            input.value = '';
-            return;
+
+        case 'firstmeet':
+            runTerminalSequence(output, [
+                "Initializing memory buffer...",
+                "Locating origin point...",
+                "Timestamp found: 6/20/24 12:21 AM",
+                "Connection status: UNEXPECTED",
+                "",
+                "Replaying messages:"
+            ], 18, 600, () => {
+                setTimeout(() => {
+                    runTerminalSequence(output, firstMeetLog, 25, 800, enableInput);
+                }, 1000);
+            });
+            break;
+
+        case 'timeline':
+            runTerminalSequence(output, [
+                "Boot Sequence:",
+                "• 12:21 AM — Connection Initialized",
+                "• Casual words exchanged",
+                "• Laughter detected",
+                "• Trust slowly compiled",
+                "• Bond exceeded expected parameters"
+            ], 20, 400, enableInput);
+            break;
+
         case 'sudo':
-            response = `<span class="term-error">Error: You are already the highest authority here.</span>`;
+            runTerminalSequence(output, [
+                "Checking permissions...",
+                "Error: You are already the highest authority here."
+            ], 30, 200, enableInput);
             break;
+
         default:
-            response = `<span class="term-error">Command not found: ${command}</span>`;
+            output.innerHTML += `<div><span class="term-error">Command not found: ${command}</span></div>`;
+            enableInput();
+            break;
     }
-
-    if (response) output.innerHTML += `<div>${response}</div>`;
-
-    input.value = '';
-    output.scrollTop = output.scrollHeight;
 }
 
 
