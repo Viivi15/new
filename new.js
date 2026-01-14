@@ -388,11 +388,17 @@ some things are felt, not meant to know.
 
     {
         id: 'why-matter', title: 'Why You Matter', icon: '💭', dock: false, width: 600, height: 400, content: `
-        <div class="h-full bg-white p-12 flex items-center justify-center text-center cursor-pointer" onclick="nextWhy()">
-            <div id="why-text" class="text-xl font-serif text-gray-800 leading-relaxed transition-opacity duration-500">
+        <div class="h-full bg-white p-12 flex flex-col items-center justify-center text-center cursor-pointer relative" onclick="nextWhy()">
+            <div class="absolute top-6 left-0 w-full text-center">
+                <div class="text-[10px] uppercase tracking-widest text-gray-300 font-bold mb-1">System Log</div>
+                <div class="text-[10px] text-gray-400 italic">Realizations compiled over time.<br>Just the ones that stayed.</div>
+            </div>
+
+            <div id="why-text" class="text-xl font-serif text-gray-800 leading-relaxed transition-opacity duration-500 mt-4">
                 You show up, even when tired.
             </div>
-            <div class="absolute bottom-6 text-xs text-gray-400 uppercase tracking-widest">Click for next</div>
+            
+            <div class="absolute bottom-6 text-xs text-blue-300/50 uppercase tracking-widest animate-pulse">Click to continue</div>
         </div>
     `},
 
@@ -1441,7 +1447,10 @@ const whys = [
     "You listen without fixing.",
     "You stay.",
     "Your silence is safe.",
-    "You are valid."
+    "You are valid.",
+    "You didn’t disappear when things got heavy.",
+    "You learned me instead of labeling me.",
+    "You stayed even when staying wasn’t easy."
 ];
 let wIdx = 0;
 function nextWhy() {
