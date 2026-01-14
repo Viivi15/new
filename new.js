@@ -42,146 +42,210 @@ const wallpapers = [
 /* === JOURNEY DATA === */
 const journeyData = [
     {
-        type: 'phase',
-        title: "The Genesis 🌙",
-        date: "June 20, 2024",
+        chapter: 1,
+        title: "The First Spark",
+        subtitle: "Discord, Euros, and 12:21 AM",
         color: "#3b82f6",
-        intro: "A pleasant meeting over Euros and football. No cricket allowed! ⚽",
-        incidents: [
-            { type: 'chat', speaker: 'System', text: "Connection Established: 12:21 AM" },
-            { type: 'note', text: "You talked about Euros and football. I found out you've never watched cricket in your life! We chatted until 3 AM." },
-            { type: 'note', text: "Next day: You woke up at 11, pinged a 'hated' girl by mistake, and shared those... 'achhe achhe shabd'. 😂" },
-            { type: 'chat', speaker: 'Harshit', text: "4 hours of sleep is enough, I've done it my whole life... (until the brain tumor story 💀)" }
+        items: [
+            { type: 'title', text: "Chapter 1: The First Spark" },
+            { type: 'chat', speaker: 'System', text: "Connection Established: June 20, 2024 • 12:21 AM" },
+            { type: 'scene', text: "It was a pleasant meeting. You talked about Euros and football tournaments. I found out you'd never watched cricket in your life!" },
+            { type: 'chat', speaker: 'Harshit', text: "4 hours of sleep is enough, I've slept only 4 hours my whole life... (and then the brain tumor story 💀)" },
+            { type: 'scene', text: "Next day: You woke up at 11, pinged a 'hated' girl by mistake, and shared some... choice words. 😂" }
         ]
     },
     {
-        type: 'phase',
-        title: "Finding Resonance 🏠",
-        date: "July 2024",
+        chapter: 2,
+        title: "Building the Bridge",
+        subtitle: "From Strangers to Admin Buddies",
         color: "#a855f7",
-        intro: "Vibing over music, games, and the first signs of a deep bond.",
-        incidents: [
-            { type: 'note', text: "Haryana, Sirsa. You got along with Kuro and we vibed with music. Playing Atlas while counting was fun!" },
-            { type: 'note', text: "I gave you Admin so Twi wouldn't kick you. I trusted you with my account — the first time I ever did that." },
-            { type: 'chat', speaker: 'Harshit', text: "You are quite popular." },
-            { type: 'note', text: "The deleted message: 'You don't have any IRL friends so I won't leave DC.' I got mad, but you explained." },
-            { type: 'note', text: "Our first promise: Not to delete or hide things." }
+        items: [
+            { type: 'title', text: "Chapter 2: Building the Bridge" },
+            { type: 'scene', text: "Haryana, Sirsa. You got along with Kuro and we vibed with music. Playing Atlas while counting was fun!" },
+            { type: 'chat', speaker: 'Shravii', text: "Aapne server ke growth me... sabme help kari <:cutu_twi_watching_cutu_queen_vi:1250504172323995739>" },
+            { type: 'scene', text: "The first promise: Not to delete or hide things. I gave you Admin so you wouldn't get banned. Trust was building." }
         ]
     },
     {
-        type: 'phase',
-        title: "The Protector 🌱",
-        date: "July 18, 2024",
+        chapter: 3,
+        title: "The Protector",
+        subtitle: "Fighting Battles, Real & Digital",
         color: "#22c55e",
-        intro: "When things got heavy, you stood your ground.",
-        incidents: [
-            { type: 'note', text: "Mikey said something to me... I was overthinking, and you actually came and fought with him. It touched my heart. ❤️" },
-            { type: 'chat', speaker: 'Harshit', text: "Good morning! (Sent at 3 AM so you'd see it first thing when you wake up) ☀️" }
+        items: [
+            { type: 'title', text: "Chapter 3: The Protector" },
+            { type: 'scene', text: "Mikey said something to me... I was overthinking, and you actually came and fought with him. It touched my heart. ❤️" },
+            { type: 'chat', speaker: 'Harshit', text: "Good morning! (Sent at 3 AM so you'd see it when you wake up) ☀️" },
+            { type: 'scene', text: "July 6: Your diagnosis for my self-doubt. 'You don't have to tell people what they want to hear.' It stayed with me." }
         ]
     },
     {
-        type: 'phase',
-        title: "The Diagnosis 🩺",
-        date: "July 6, 2024",
+        chapter: 4,
+        title: "Comfort & Rules",
+        subtitle: "Becoming Comfy",
         color: "#f59e0b",
-        intro: "Analyzing why I self-doubt.",
-        incidents: [
-            { type: 'chat', speaker: 'Shravii', text: "Why do I self-doubt? I feel my replies aren't what people want to hear." },
-            { type: 'chat', speaker: 'Harshit', text: "Diagnosis: You don't have to tell people what they want to hear. And I never get bored talking to you." }
-        ]
-    },
-    {
-        type: 'phase',
-        title: "Memories & Mores 🧩",
-        date: "July 14, 2024",
-        color: "#14b8a6",
-        intro: "Daily routines and the 'Truth or Dare' chronicles.",
-        incidents: [
-            { type: 'note', text: "You knew my daily routine so well you'd tell me what I was doing at any given hour! 😂" },
-            { type: 'chat', speaker: 'Truth/PGRose', text: "Snow is an amazing listener, genuinely honest, and supportive. I'll always be by his side. <3" },
-            { type: 'chat', speaker: 'Harshit', text: "I talk to Rain the most because she doesn't get mad when I'm dumb. 🐰" }
-        ]
-    },
-    {
-        type: 'phase',
-        title: "The OWO Marriage 💍",
-        date: "July 18, 2024",
-        color: "#ec4899",
-        intro: "Hints, deleted messages, and and a big 'Yes'.",
-        incidents: [
-            { type: 'note', text: "I asked 'Will you marry me?' in OWO... then deleted it instantly. Oops! 5 days later you gave me hints until I guessed what I missed." },
-            { type: 'note', text: "Quickfire: English over Hindi, Night Owl, Horror over Comedy, Mountains over Beach... and Tea is an emotion. ☕" }
-        ]
-    },
-    {
-        type: 'phase',
-        title: "The Accident & Care 🏥",
-        date: "July 30, 2024",
-        color: "#ef4444",
-        intro: "Keeping the pain away with 'Pew Pew' games.",
-        incidents: [
-            { type: 'note', text: "Our 'accident' day. To distract me from the pain, we played a guessing game. You guessed my whole evening routine perfectly while I was resting. 🤕" },
-            { type: 'note', text: "You always thought a lot before telling me things, scared I'd think you're a bad person. But you changed that with me. ✨" }
-        ]
-    },
-    {
-        type: 'phase',
-        title: "Cravings & Chaos 🍔",
-        date: "August 15, 2024",
-        color: "#6366f1",
-        intro: "The Daksh incident and your 'Moms-approved' rules.",
-        incidents: [
-            { type: 'note', text: "The fake Daksh complaint. You got so angry! Then the apology: 'I am so sorry I ruined the fun.' ❤️" },
+        items: [
+            { type: 'title', text: "Chapter 4: Becoming Comfy" },
             { type: 'chat', speaker: 'Ota Rules', text: "Rule 1: Always listen to Ota. Rule 2: Don't hide anything from Ota. (Medicine for the soul) 💊" },
-            { type: 'note', text: "Aug 16: The name reveal! Guess the name via a song. 🎶" }
+            { type: 'recipe', title: "Ota's Egg Fried Rice", items: ["1. Add oil to kadhai", "2. Garlic and onion vgera", "3. Add eggs", "4. Rice + Masale", "5. Spring onion + Chilli", "6. Eat! 🍳"] }
         ]
     },
     {
-        type: 'phase',
-        title: "Dreams & Reality 🌊",
-        date: "August 2024",
-        color: "#8b5cf6",
-        intro: "Gulabjamuns, Maps, and staying forever.",
-        incidents: [
-            { type: 'note', text: "I gave you a fake address for Gulabjamuns and you actually searched it on maps! 😂" },
-            { type: 'note', text: "Aug 20: 'I can't leave anyone just like that.' Mala khup lavkar lala lagto. ❤️" },
-            { type: 'note', text: "The Egg Fried Rice Recipe: Oil, garlic/onion, eggs, rice, masala, spring onion. Simple. 🍳" }
-        ]
-    },
-    {
-        type: 'phase',
-        title: "The Nepali Lesson 🇳🇵",
-        date: "September 6, 2024",
-        color: "#ef4444",
-        intro: "Learning the language of the heart.",
-        incidents: [
-            { type: 'chat', speaker: 'Harshit', text: "Kaha xas to? (Where are you?) Mo Snow ho. (I am Snow.) To riruru ho. Timro vs Mero. 🇳🇵" },
-            { type: 'note', text: "The Dare Poem: 'In the garden of our days...' (A bit of GPT touch, but I loved it). 🌸" }
-        ]
-    },
-    {
-        type: 'phase',
-        title: "A Night of Letters 🎂",
-        date: "January 30, 2025",
+        chapter: 5,
+        title: "11:59 AM",
+        subtitle: "The Birthday Math",
         color: "#3b82f6",
-        intro: "The 12:21 AM 'Happy Birthday' countdown.",
-        incidents: [
-            { type: 'note', text: "You tried to send one letter per minute to end 'Y' at 12 AM... but the math failed and it ended at 11:59! Still the best wish. 🎈" },
-            { type: 'note', text: "The Birthday Poem: 'Happiest Birthday Vi, so bright...' I was the first one to wish you. ✨" }
-        ]
-    },
-    {
-        type: 'phase',
-        title: "Today: 18 Transitions 🎂",
-        date: "Present",
-        color: "#cbd5e1",
-        intro: "Entering adulthood, but the bond remains constant.",
-        incidents: [
-            { type: 'chat', speaker: 'Feb 9', text: "What's your favorite entertainment? Pareshan karna (to me)! 😂" },
-            { type: 'note', text: "Everything I provided... and more to come. This journey is infinite. 'Hate you' always meant its opposite. ❤️" }
+        items: [
+            { type: 'title', text: "Chapter 5: 11:59 AM" },
+            { type: 'scene', text: "You tried to send 'Happy Birthday' letter-by-letter to end at 12:00... but your math failed and it ended at 11:59! 🎈" },
+            { type: 'poem', text: "Happiest Birthday Vi, so bright,\nMay success and dreams take endless flight.\nWith each sunrise, may you find anew,\nThe joy and wonders waiting for you." },
+            { type: 'chat', speaker: 'Harshit', text: "Thankyou sm aapki vajah s hi me dc chalata hu and khush hota hu. ❤️" }
         ]
     }
 ];
+
+
+/* === STATE === */
+const state = { appsOpened: new Set(), countdownFinished: false };
+
+/* === MR. SNOW APP LOGIC === */
+function initMrSnowApp() {
+    const canvas = document.getElementById('snow-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const container = canvas.parentElement;
+
+    let width, height;
+    let particles = [];
+    let mouse = { x: -200, y: -200 };
+
+    function resize() {
+        width = canvas.width = container.offsetWidth;
+        height = canvas.height = container.offsetHeight;
+    }
+
+    function createParticles() {
+        particles = [];
+        const count = 60;
+        for (let i = 0; i < count; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                r: Math.random() * 3 + 1,
+                d: Math.random() * 6.28,
+                v: Math.random() * 0.5 + 0.2
+            });
+        }
+    }
+
+    function draw() {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+        ctx.beginPath();
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            ctx.moveTo(p.x, p.y);
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, true);
+        }
+        ctx.fill();
+        update();
+    }
+
+    function update() {
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            p.y += p.v;
+            p.x += Math.sin(p.d) * 0.3;
+            p.d += 0.01;
+
+            // Mouse Interaction: Drift away from cursor
+            const dx = p.x - mouse.x;
+            const dy = p.y - mouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 80) {
+                p.x += dx / 15;
+                p.y += dy / 15;
+            }
+
+            if (p.y > height) {
+                p.y = -10;
+                p.x = Math.random() * width;
+            }
+            if (p.x > width) p.x = 0;
+            if (p.x < 0) p.x = width;
+        }
+    }
+
+    function animate() {
+        const win = document.getElementById('win-mr-snow');
+        if (!win || win.style.display === 'none') return;
+        draw();
+        requestAnimationFrame(animate);
+    }
+
+    container.onmousemove = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+    };
+
+    container.onmouseleave = () => {
+        mouse.x = -200;
+        mouse.y = -200;
+    };
+
+    window.addEventListener('resize', resize);
+    resize();
+    createParticles();
+    animate();
+}
+
+const mrSnowQuotes = [
+    "You stay kind, even when things get heavy.",
+    "The world is loud, but your peace is real.",
+    "Quiet strength is still strength.",
+    "Soft when trusted, calm on the surface.",
+    "You carry storms quietly, and that's okay.",
+    "You are the best kind of chaos.",
+    "Mr. Snow is chilling, and you should too."
+];
+
+function mrSnowComfort() {
+    const el = document.getElementById('comfort-msg');
+    if (!el) return;
+    const quote = mrSnowQuotes[Math.floor(Math.random() * mrSnowQuotes.length)];
+    el.innerText = '\"' + quote + '\"';
+    el.classList.add('active');
+    setTimeout(() => el.classList.remove('active'), 4000);
+}
+
+function mrSnowFlurry() {
+    if (typeof confetti === 'function') {
+        const end = Date.now() + (1.5 * 1000);
+        const colors = ['#ffffff', '#e0f2fe', '#bae6fd'];
+
+        (function frame() {
+            confetti({
+                particleCount: 4,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0.1, y: 0.7 },
+                colors: colors
+            });
+            confetti({
+                particleCount: 4,
+                angle: 120,
+                spread: 55,
+                origin: { x: 0.9, y: 0.7 },
+                colors: colors
+            });
+
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        }());
+    }
+}
 
 /* === APP REGISTRY (Refined for Harshit) === */
 const apps = [
@@ -276,33 +340,30 @@ const apps = [
     `},
 
     {
-        id: 'mr-snow', title: 'Mr. Snow', icon: '❄️', dock: true, width: 350, height: 450, content: `
-        <div class="h-full relative overflow-hidden bg-gradient-to-b from-[#e6e9f0] to-[#eef1f5] p-8 flex flex-col justify-center items-center text-center">
-            <div class="absolute inset-0 pointer-events-none" id="snow-container"></div>
-            <div class="text-5xl mb-6">🐺</div>
-            <h3 class="font-serif text-xl border-b border-gray-300 pb-2 mb-4">The Nature</h3>
-            <div class="text-sm text-gray-600 space-y-3 font-light">
-                <p>Calm on the surface.</p>
-                <p>Soft when trusted.</p>
-                <p>Quiet strength.</p>
+        id: 'mr-snow', title: 'Mr. Snow', icon: '❄️', dock: true, width: 350, height: 480, onOpen: initMrSnowApp, content: `
+        <div class="mr-snow-view">
+            <canvas id="snow-canvas"></canvas>
+            <h3 class="mr-snow-title">The Nature</h3>
+            <div class="mr-snow-text">
+In the hush of winter, he found himself.
+He kept the name, held close to Rain.
+Silent, steady, he learned to remain.
+
+Gentle enough to hold the fall,
+strong enough to stay through all.
+
+Mr. Snow
+— known by those
+who stay to see it fall.
+A name that shows
+some things are felt, not meant to know.
             </div>
+            <div class="mr-snow-controls">
+                <button class="snow-btn" onclick="mrSnowComfort()">Get Comfort</button>
+                <button class="snow-btn" onclick="mrSnowFlurry()">Snow Flurry</button>
+            </div>
+            <div id="comfort-msg"></div>
         </div>
-        <script>
-            // Simple snowflakes
-            const sc = document.getElementById('snow-container');
-            for(let i=0; i<15; i++) {
-                const s = document.createElement('div');
-                s.innerText = '❄';
-                s.style.position = 'absolute';
-                s.style.left = Math.random()*100 + '%';
-                s.style.top = -10 + 'px';
-                s.style.opacity = Math.random();
-                s.style.fontSize = (Math.random()*10 + 10) + 'px';
-                s.style.animation = 'fall ' + (Math.random()*5 + 5) + 's linear infinite';
-                sc.appendChild(s);
-            }
-        </script>
-        <style> @keyframes fall { to { transform: translateY(500px); } } </style>
     `},
 
     {
@@ -1123,8 +1184,7 @@ function triggerAction(action) {
     }
 }
 
-/* === STATE === */
-const state = { appsOpened: new Set(), countdownFinished: false };
+/* === AFFIRMATIONS === */
 const affirmations = ["You stay kind, even when things get heavy.", "You don’t give up easily.", "You carry storms quietly.", "You are enough, exactly as you are."];
 
 const whys = [
@@ -1216,20 +1276,7 @@ function advanceBond() {
 }
 
 /* === DEV UTILS === */
-function skipToDesktop() {
-    // Hide ALL intro elements immediately
-    const intros = ['countdown-phase', 'journey-intro', 'terminal-boot'];
-    intros.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) { el.style.display = 'none'; el.style.opacity = 0; }
-    });
 
-    // Logic bypass
-    state.countdownFinished = true;
-
-    // Show Desktop with Light BG
-    enterDesktop();
-}
 
 /* === PHASE 1: COUNTDOWN GATEKEEPER === */
 /* === PHASE 0: COUNTDOWN GATEKEEPER (FIRST) === */
@@ -2892,44 +2939,169 @@ window.playFirstConversation = playFirstConversation;
 window.initLetterReveal = initLetterReveal;
 
 /* === JOURNEY LOGIC === */
+/* === AUTOMATED MOVIE SEQUENCER === */
+let movieTimer = null;
+let currentMovieIndex = 0;
+let movieItems = [];
+
 function renderJourney() {
     const container = document.getElementById('journey-container');
     if (!container) return;
 
-    // Set up the timeline structure
-    container.innerHTML = `
-        <div class="journey-timeline-wrapper p-8 relative">
-            <div class="timeline-line absolute left-10 top-10 bottom-10 w-0.5 bg-blue-400 opacity-60"></div>
-            <div id="timeline-content" class="space-y-12"></div>
-        </div>
-    `;
-
-    const content = container.querySelector('#timeline-content');
-
-    journeyData.forEach((section, index) => {
-        const item = document.createElement('div');
-        item.className = 'timeline-item relative pl-12 opacity-0 translate-x-4 transition-all duration-700 ease-out';
-        item.style.transitionDelay = `${index * 150}ms`;
-
-        item.innerHTML = `
-            <div class="timeline-node absolute left-[-13px] top-1.5 w-6 h-6 rounded-full border-4 border-white shadow-md z-10" 
-                 style="background-color: ${section.color || '#3b82f6'}"></div>
-            <div class="timeline-body">
-                <h3 class="text-xl font-bold text-gray-900 mb-1">${section.title}</h3>
-                ${section.date ? `<div class="text-xs font-mono text-blue-500 mb-3 tracking-wide">${section.date}</div>` : ''}
-                <p class="text-sm text-gray-600 leading-relaxed font-medium opacity-90">${section.text}</p>
-            </div>
-        `;
-
-        content.appendChild(item);
-
-        // Trigger animation
-        requestAnimationFrame(() => {
-            setTimeout(() => {
-                item.classList.remove('opacity-0', 'translate-x-4');
-            }, 100);
+    // Reset and Flatten
+    currentMovieIndex = 0;
+    movieItems = [];
+    journeyData.forEach(ch => {
+        ch.items.forEach(item => {
+            movieItems.push({ ...item, chapterColor: ch.color });
         });
     });
+
+    container.innerHTML = `
+        <div class="movie-viewport relative h-full w-full bg-black flex flex-col items-center justify-center overflow-hidden">
+            <!-- Movie Screen -->
+            <div id="movie-screen" class="w-full max-w-4xl h-full flex items-center justify-center relative">
+                <div id="movie-start" class="text-center cursor-pointer group" onclick="startAutomatedMovie()">
+                    <div class="text-7xl mb-6 group-hover:scale-110 transition-transform duration-500">📀</div>
+                    <div class="text-3xl font-black text-white tracking-[0.3em] uppercase mb-2">The Journey</div>
+                    <div class="text-[10px] text-blue-400 font-mono tracking-[0.5em] animate-pulse">CLICK TO ENTER CINEMA</div>
+                </div>
+            </div>
+
+            <!-- Cinematic Vignette -->
+            <div class="absolute inset-0 pointer-events-none shadow-[inset_0_0_150px_rgba(0,0,0,1)]"></div>
+        </div>
+    `;
+}
+
+function startAutomatedMovie() {
+    const startBtn = document.getElementById('movie-start');
+    if (startBtn) startBtn.classList.add('opacity-0', 'pointer-events-none');
+
+    setTimeout(() => {
+        if (startBtn) startBtn.remove();
+        playNextMovieScene();
+    }, 1000);
+}
+
+function playNextMovieScene() {
+    const screen = document.getElementById('movie-screen');
+    if (!screen) return;
+
+    if (currentMovieIndex >= movieItems.length) {
+        showTheEnd();
+        return;
+    }
+
+    const item = movieItems[currentMovieIndex];
+    screen.innerHTML = '';
+
+    const frame = document.createElement('div');
+    frame.className = 'movie-frame opacity-0 transition-opacity duration-1000 flex flex-col items-center justify-center text-center w-full h-full p-12';
+
+    // Automatic Timing Logic (Base delay)
+    let displayDuration = 3000; // default 3s
+
+    if (item.type === 'title') {
+        frame.innerHTML = `
+            <div class="movie-title-card scale-90 transition-transform duration-[3s] ease-out">
+                <h1 class="text-6xl font-black text-white mb-4 tracking-tighter">${item.text}</h1>
+                <div class="w-24 h-1 mx-auto rounded-full" style="background: ${item.chapterColor}"></div>
+            </div>
+        `;
+        displayDuration = 4000;
+    } else if (item.type === 'chat') {
+        frame.innerHTML = `
+            <div class="movie-chat border-l-4 border-blue-500 bg-white/5 p-8 rounded-r-2xl max-w-lg text-left backdrop-blur-sm">
+                <div class="text-[10px] font-bold text-blue-400 uppercase mb-2 opacity-50 tracking-widest">${item.speaker}</div>
+                <div id="typewriter-id" class="text-2xl font-medium text-white/90"></div>
+            </div>
+        `;
+        // Timing depends on text length
+        displayDuration = 2000 + (item.text.length * 60);
+    } else if (item.type === 'scene') {
+        frame.innerHTML = `
+            <div class="text-3xl font-light italic text-white/70 leading-relaxed px-10">"${item.text}"</div>
+        `;
+        displayDuration = 4500;
+    } else if (item.type === 'poem') {
+        frame.innerHTML = `
+            <div class="poem-scroll-card py-16 px-10 border-y border-white/5">
+                <div class="text-2xl font-serif italic text-white/60 leading-[3] tracking-widest whitespace-pre-line">
+                    ${item.text}
+                </div>
+            </div>
+        `;
+        displayDuration = 6000;
+    } else if (item.type === 'recipe') {
+        frame.innerHTML = `
+            <div class="recipe-cinematic text-left">
+                <div class="text-xs font-black text-yellow-500 uppercase tracking-widest mb-6 border-b border-yellow-500/20 pb-2">${item.title}</div>
+                <div class="space-y-4 text-2xl font-serif italic text-yellow-100/40">
+                    ${item.items.map((i, idx) => `<div class="step-reveal opacity-0" style="transition-delay: ${idx * 0.8}s">• ${i}</div>`).join('')}
+                </div>
+            </div>
+        `;
+        displayDuration = 2000 + (item.items.length * 1500);
+    }
+
+    screen.appendChild(frame);
+
+    // Fade In
+    requestAnimationFrame(() => {
+        frame.classList.remove('opacity-0');
+        if (item.type === 'title') {
+            setTimeout(() => frame.querySelector('.movie-title-card').classList.remove('scale-90'), 50);
+        }
+        if (item.type === 'chat') {
+            runTypewriterMovie('typewriter-id', item.text);
+        }
+        if (item.type === 'recipe') {
+            setTimeout(() => {
+                frame.querySelectorAll('.step-reveal').forEach(el => el.classList.remove('opacity-0', 'translate-x-4'));
+                // Use a different reveal for recipe
+                frame.querySelectorAll('.step-reveal').forEach(el => {
+                    el.style.transition = 'opacity 1s, transform 1s';
+                    el.style.opacity = '1';
+                });
+            }, 100);
+        }
+    });
+
+    // Auto Advance
+    movieTimer = setTimeout(() => {
+        frame.classList.add('opacity-0');
+        setTimeout(() => {
+            currentMovieIndex++;
+            playNextMovieScene();
+        }, 1000);
+    }, displayDuration);
+}
+
+function runTypewriterMovie(id, text) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    let i = 0;
+    function type() {
+        if (i < text.length) {
+            el.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, 40);
+        }
+    }
+    type();
+}
+
+function showTheEnd() {
+    const screen = document.getElementById('movie-screen');
+    screen.innerHTML = `
+        <div class="text-center animate-fade-in-slow">
+            <div class="text-sm font-mono text-white/30 tracking-[1.5em] mb-6">THE END</div>
+            <h1 class="text-5xl font-black text-white mb-2 tracking-tighter">To Be Continued... ❤️</h1>
+            <p class="text-blue-500/50 text-xs tracking-widest uppercase mt-12">Closed System Reflections</p>
+            <button onclick="renderJourney()" class="mt-8 text-[10px] text-white/20 hover:text-white transition uppercase tracking-[0.3em]">Replay Film</button>
+        </div>
+    `;
 }
 
 // START HERE

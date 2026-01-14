@@ -2632,3 +2632,204 @@ body {
     background: rgba(30, 41, 59, 0.85) !important;
     backdrop-filter: blur(8px);
 }
+
+/* === MR. SNOW ENHANCEMENTS === */
+.mr-snow-view {
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    color: #f1f5f9;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+#snow-canvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+
+.mr-snow-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+    z-index: 2;
+    letter-spacing: 0.05em;
+}
+
+.mr-snow-text {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    font-weight: 300;
+    opacity: 0.85;
+    max-width: 280px;
+    z-index: 2;
+    margin-bottom: 2rem;
+    white-space: pre-line;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+}
+
+.mr-snow-controls {
+    display: flex;
+    gap: 1rem;
+    z-index: 10;
+}
+
+.snow-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 99px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+
+.snow-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+#comfort-msg {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1.25rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-italic: italic;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+    z-index: 5;
+    white-space: nowrap;
+}
+
+#comfort-msg.active {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-10px);
+}
+
+@keyframes snowDrift {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(15px, 10px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+
+/* === JOURNEY MOVIE MODE STYLES === */
+.movie-viewport {
+    background: radial-gradient(circle at center, #0f172a 0%, #000 100%) !important;
+}
+
+.movie-frame {
+    transform: scale(0.98);
+}
+
+.movie-frame.opacity-0 {
+    opacity: 0;
+}
+
+.movie-frame {
+    opacity: 1;
+}
+
+.movie-title-card h1 {
+    text-shadow: 0 0 40px rgba(59, 130, 246, 0.4);
+    animation: movieTitleReveal 2.5s ease-out forwards;
+}
+
+@keyframes movieTitleReveal {
+    0% {
+        letter-spacing: 0.8em;
+        opacity: 0;
+        filter: blur(15px);
+    }
+
+    100% {
+        letter-spacing: -0.02em;
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+#typewriter-id::after {
+    content: '_';
+    animation: blink 0.8s infinite;
+    margin-left: 2px;
+    color: #3b82f6;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.movie-chat {
+    box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.5);
+    animation: slideInChat 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes slideInChat {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.poem-scroll-card {
+    font-family: 'Times New Roman', serif;
+    mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+}
+
+.animate-fade-in-slow {
+    animation: fadeInSlow 4s ease-in forwards;
+}
+
+@keyframes fadeInSlow {
+    from {
+        opacity: 0;
+        filter: blur(5px);
+    }
+
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+.recipe-cinematic .step-reveal {
+    transition: opacity 1s ease-out;
+}
