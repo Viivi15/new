@@ -534,13 +534,23 @@ some things are felt, not meant to know.
         </div>
     `},
 
+    // Internal filename: emotionally_dumb_but_lovable.js
     {
-        id: 'not-dumb', title: 'Not Dumb', icon: '🤨', folder: 'system', dock: false, width: 300, height: 200, content: `
-        <div class="h-full flex items-center justify-center bg-gray-100 text-center p-4">
-            <div>
-                <div class="text-3xl mb-2">🤨</div>
-                <div class="font-bold">Not Dumb At All</div>
-                <div class="text-xs text-gray-500 mt-2">Just stubborn.</div>
+        id: 'not-dumb', title: 'Not Dumb', icon: '🤨', folder: 'system', dock: false, width: 450, height: 600, onOpen: initNotDumb, content: `
+        <div id="not-dumb-container" class="h-full bg-gray-50 text-gray-800 font-mono text-sm relative overflow-hidden flex flex-col">
+            <!-- Dynamic Content Area -->
+            <div id="not-dumb-content" class="flex-1 p-8 flex flex-col justify-center relative z-10">
+                <!-- Content injected via JS -->
+            </div>
+
+            <!-- Global Watermark -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none select-none">
+                <div class="text-[200px] grayscale rotate-12">🤨</div>
+            </div>
+
+            <!-- Navigation (Hidden initially) -->
+            <div id="not-dumb-nav" class="p-4 flex justify-end opacity-0 transition duration-500 relative z-20">
+                <button onclick="nextNotDumbSlide()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded text-xs font-bold uppercase tracking-wider transition">Next ➜</button>
             </div>
         </div>
     `},
