@@ -24,7 +24,7 @@
 <body>
 
     <!-- DEV SKIP BUTTON (Remove in Production) -->
-    <button onclick="skipToDesktop()"
+    <button id="dev-skip-btn" onclick="skipToDesktop()"
         style="position: fixed; top: 10px; left: 10px; z-index: 99999; background: red; color: white; border: none; padding: 5px 10px; cursor: pointer; font-size: 10px; font-family: sans-serif; opacity: 0.5;">
         🚧 DEV: SKIP TO DESKTOP
     </button>
@@ -146,18 +146,19 @@
                 </div>
                 <!-- Dropdown: Apple -->
                 <div id="apple-menu"
-                    class="absolute top-8 left-0 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
-                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer border-b border-white/10 pb-2 mb-1"
-                        onclick="Apps.open('about-us')">About This Mac</div>
-                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
-                        onclick="Apps.open('settings')">System Preferences...</div>
+                    class="absolute top-8 left-0 w-56 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer" onclick="System.about()">About
+                        This Mac</div>
                     <div class="h-[1px] bg-white/10 my-1"></div>
-                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer"
-                        onclick="triggerAction('sleep')">Sleep</div>
-                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer" onclick="location.reload()">
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer" onclick="System.settings()">
+                        System Preferences...</div>
+                    <div class="h-[1px] bg-white/10 my-1"></div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer" onclick="System.sleep()">Sleep
+                    </div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer" onclick="System.restart()">
                         Restart...</div>
-                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer text-red-400 hover:text-white"
-                        onclick="document.body.style.display='none'">Shut Down...</div>
+                    <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer" onclick="System.shutdown()">
+                        Shut Down...</div>
                 </div>
 
                 <!-- App Name -->

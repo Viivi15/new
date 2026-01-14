@@ -2260,6 +2260,10 @@ function launchDesktop() {
         desk.style.opacity = 1;
     });
 
+    // 5. Hide Dev Skip Button
+    const skipBtn = document.getElementById('dev-skip-btn');
+    if (skipBtn) skipBtn.style.display = 'none';
+
     initDesktop();
 }
 // Dev Tool
@@ -2903,6 +2907,80 @@ function updateClock() {
     const clock = document.getElementById('clock');
     if (clock) clock.innerText = now.toLocaleDateString('en-US', options);
 }
+
+/* ========================================= */
+/* ==== SYSTEM ACTIONS (The Thoughtful Part) ==== */
+/* ========================================= */
+const System = {
+    about: () => {
+        // Create a dedicated floating window
+        const id = 'sys-about-win';
+        if (document.getElementById(id)) return; // Already open
+
+        const win = document.createElement('div');
+        win.id = id;
+        win.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 bg-[#ECECEC] rounded-xl shadow-2xl z-[5000] overflow-hidden flex flex-col font-sans animate-zoom-in';
+        win.style.border = "1px solid #ccc";
+
+        win.innerHTML = `
+            <div class="h-6 bg-gradient-to-b from-gray-200 to-gray-300 border-b border-gray-400 flex items-center px-2 relative" onmousedown="startDrag(event, '${id}')">
+                <div class="flex gap-1.5 absolute left-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500 border border-red-600 hover:bg-red-600 cursor-pointer flex items-center justify-center group" onclick="document.getElementById('${id}').remove()">
+                         <span class="hidden group-hover:block text-[8px] text-black/50 font-bold">x</span>
+                    </div>
+                </div>
+                <div class="w-full text-center text-xs font-semibold text-gray-600 pointer-events-none">About This Mac</div>
+            </div>
+            <div class="p-6 flex flex-col items-center justify-center text-center">
+                <div class="text-6xl mb-4">🍎</div> 
+                <h2 class="text-2xl font-bold text-gray-800">Harshit OS</h2>
+                <p class="text-sm text-gray-500 font-medium mb-4">Version 19.0 (Best Edition)</p>
+                <div class="bg-white rounded border border-gray-300 p-3 w-full text-xs text-left shadow-inner space-y-1">
+                    <div class="flex justify-between"><span class="text-gray-500">Processor</span> <span class="font-medium">Heart M1 (Infinite Love)</span></div>
+                    <div class="flex justify-between"><span class="text-gray-500">Memory</span> <span class="font-medium">Unforgettable</span></div>
+                    <div class="flex justify-between"><span class="text-gray-500">Startup Disk</span> <span class="font-medium">Memories</span></div>
+                    <div class="flex justify-between"><span class="text-gray-500">Graphics</span> <span class="font-medium">Imagination Pro</span></div>
+                </div>
+                <div class="mt-4 text-[10px] text-gray-400">© 2024 Shravii Inc. All Rights Reserved.</div>
+            </div>
+        `;
+        document.body.appendChild(win);
+    },
+
+    settings: () => {
+        // Toggle Control Center as a simple settings panel
+        toggleControlCenter();
+    },
+
+    sleep: () => {
+        const sleepOverlay = document.createElement('div');
+        sleepOverlay.className = 'fixed inset-0 bg-black z-[99999] cursor-pointer fade-in-out';
+        sleepOverlay.title = "Click to Wake";
+        sleepOverlay.onclick = function () {
+            this.style.opacity = 0;
+            setTimeout(() => this.remove(), 1000);
+        };
+        document.body.appendChild(sleepOverlay);
+    },
+
+    restart: () => {
+        const overlay = document.createElement('div');
+        overlay.className = 'fixed inset-0 bg-black z-[99999] flex flex-col items-center justify-center fade-in-out';
+        overlay.innerHTML = `<div class="text-white text-4xl mb-4 animate-spin"><i class="fas fa-spinner"></i></div><div class="text-white/50 text-sm font-light">Restarting System...</div>`;
+        document.body.appendChild(overlay);
+
+        setTimeout(() => location.reload(), 2500);
+    },
+
+    shutdown: () => {
+        const overlay = document.createElement('div');
+        overlay.className = 'fixed inset-0 bg-black z-[99999] flex flex-col items-center justify-center fade-in-out';
+        overlay.innerHTML = `<div class="text-white/30 text-lg font-light tracking-widest fade-in-out-slow">It is now safe to turn off your computer.</div>`;
+        document.body.appendChild(overlay);
+    }
+};
+
+window.System = System; // Expose
 
 // Initialize Everything
 function initHappyMenuBar() {
