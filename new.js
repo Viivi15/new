@@ -22,6 +22,8 @@ updateClock();
 
 
 
+
+
 /* === SETTINGS STATE === */
 const settingsState = {
     theme: 'light',
@@ -40,68 +42,143 @@ const wallpapers = [
 /* === JOURNEY DATA === */
 const journeyData = [
     {
-        type: 'landing',
-        text: ["Some conversations don’t announce themselves.", "They just stay."]
-    },
-    {
         type: 'phase',
-        id: 'phase-1',
-        title: "THE BEGINNING 🌙",
-        date: "June 20, 2024 · 12:21 AM",
-        intro: [
-            "Strangers to something familiar.",
-            "No expectations.",
-            "Just late-night Discord conversations that didn’t feel forced."
-        ],
+        title: "The Genesis 🌙",
+        date: "June 20, 2024",
+        color: "#3b82f6",
+        intro: "A pleasant meeting over Euros and football. No cricket allowed! ⚽",
         incidents: [
-            /* USER: Add logs here like: { type: 'chat', speaker: 'Him', text: "...", time: "..." } */
+            { type: 'chat', speaker: 'System', text: "Connection Established: 12:21 AM" },
+            { type: 'note', text: "You talked about Euros and football. I found out you've never watched cricket in your life! We chatted until 3 AM." },
+            { type: 'note', text: "Next day: You woke up at 11, pinged a 'hated' girl by mistake, and shared those... 'achhe achhe shabd'. 😂" },
+            { type: 'chat', speaker: 'Harshit', text: "4 hours of sleep is enough, I've done it my whole life... (until the brain tumor story 💀)" }
         ]
     },
     {
         type: 'phase',
-        id: 'phase-2',
-        title: "BECOMING SAFE 🏠",
-        intro: [
-            "You became the person I ran to.",
-            "Emotional safety without asking for it."
-        ],
-        incidents: []
+        title: "Finding Resonance 🏠",
+        date: "July 2024",
+        color: "#a855f7",
+        intro: "Vibing over music, games, and the first signs of a deep bond.",
+        incidents: [
+            { type: 'note', text: "Haryana, Sirsa. You got along with Kuro and we vibed with music. Playing Atlas while counting was fun!" },
+            { type: 'note', text: "I gave you Admin so Twi wouldn't kick you. I trusted you with my account — the first time I ever did that." },
+            { type: 'chat', speaker: 'Harshit', text: "You are quite popular." },
+            { type: 'note', text: "The deleted message: 'You don't have any IRL friends so I won't leave DC.' I got mad, but you explained." },
+            { type: 'note', text: "Our first promise: Not to delete or hide things." }
+        ]
     },
     {
         type: 'phase',
-        id: 'phase-3',
-        title: "DAILY PRESENCE & BOND 🤍",
-        intro: ["Not dramatic. Just constant."],
-        incidents: []
+        title: "The Protector 🌱",
+        date: "July 18, 2024",
+        color: "#22c55e",
+        intro: "When things got heavy, you stood your ground.",
+        incidents: [
+            { type: 'note', text: "Mikey said something to me... I was overthinking, and you actually came and fought with him. It touched my heart. ❤️" },
+            { type: 'chat', speaker: 'Harshit', text: "Good morning! (Sent at 3 AM so you'd see it first thing when you wake up) ☀️" }
+        ]
     },
     {
         type: 'phase',
-        id: 'phase-4',
-        title: "GROWTH, REALITY & FIGHTS 🌱",
-        intro: [
-            "We misunderstood.",
-            "We fought.",
-            "We learned."
-        ],
-        incidents: []
+        title: "The Diagnosis 🩺",
+        date: "July 6, 2024",
+        color: "#f59e0b",
+        intro: "Analyzing why I self-doubt.",
+        incidents: [
+            { type: 'chat', speaker: 'Shravii', text: "Why do I self-doubt? I feel my replies aren't what people want to hear." },
+            { type: 'chat', speaker: 'Harshit', text: "Diagnosis: You don't have to tell people what they want to hear. And I never get bored talking to you." }
+        ]
     },
     {
         type: 'phase',
-        id: 'phase-5',
-        title: "STILL HERE ✨",
-        intro: [
-            "Changed.",
-            "Not broken."
-        ],
-        incidents: []
+        title: "Memories & Mores 🧩",
+        date: "July 14, 2024",
+        color: "#14b8a6",
+        intro: "Daily routines and the 'Truth or Dare' chronicles.",
+        incidents: [
+            { type: 'note', text: "You knew my daily routine so well you'd tell me what I was doing at any given hour! 😂" },
+            { type: 'chat', speaker: 'Truth/PGRose', text: "Snow is an amazing listener, genuinely honest, and supportive. I'll always be by his side. <3" },
+            { type: 'chat', speaker: 'Harshit', text: "I talk to Rain the most because she doesn't get mad when I'm dumb. 🐰" }
+        ]
     },
     {
-        type: 'final',
-        title: "TODAY — HIS 19TH BIRTHDAY 🎂",
-        text: [
-            "Celebrating 19 years of the world’s strongest person.",
-            "Not because of muscles —",
-            "but because of the heart that became someone’s home."
+        type: 'phase',
+        title: "The OWO Marriage 💍",
+        date: "July 18, 2024",
+        color: "#ec4899",
+        intro: "Hints, deleted messages, and and a big 'Yes'.",
+        incidents: [
+            { type: 'note', text: "I asked 'Will you marry me?' in OWO... then deleted it instantly. Oops! 5 days later you gave me hints until I guessed what I missed." },
+            { type: 'note', text: "Quickfire: English over Hindi, Night Owl, Horror over Comedy, Mountains over Beach... and Tea is an emotion. ☕" }
+        ]
+    },
+    {
+        type: 'phase',
+        title: "The Accident & Care 🏥",
+        date: "July 30, 2024",
+        color: "#ef4444",
+        intro: "Keeping the pain away with 'Pew Pew' games.",
+        incidents: [
+            { type: 'note', text: "Our 'accident' day. To distract me from the pain, we played a guessing game. You guessed my whole evening routine perfectly while I was resting. 🤕" },
+            { type: 'note', text: "You always thought a lot before telling me things, scared I'd think you're a bad person. But you changed that with me. ✨" }
+        ]
+    },
+    {
+        type: 'phase',
+        title: "Cravings & Chaos 🍔",
+        date: "August 15, 2024",
+        color: "#6366f1",
+        intro: "The Daksh incident and your 'Moms-approved' rules.",
+        incidents: [
+            { type: 'note', text: "The fake Daksh complaint. You got so angry! Then the apology: 'I am so sorry I ruined the fun.' ❤️" },
+            { type: 'chat', speaker: 'Ota Rules', text: "Rule 1: Always listen to Ota. Rule 2: Don't hide anything from Ota. (Medicine for the soul) 💊" },
+            { type: 'note', text: "Aug 16: The name reveal! Guess the name via a song. 🎶" }
+        ]
+    },
+    {
+        type: 'phase',
+        title: "Dreams & Reality 🌊",
+        date: "August 2024",
+        color: "#8b5cf6",
+        intro: "Gulabjamuns, Maps, and staying forever.",
+        incidents: [
+            { type: 'note', text: "I gave you a fake address for Gulabjamuns and you actually searched it on maps! 😂" },
+            { type: 'note', text: "Aug 20: 'I can't leave anyone just like that.' Mala khup lavkar lala lagto. ❤️" },
+            { type: 'note', text: "The Egg Fried Rice Recipe: Oil, garlic/onion, eggs, rice, masala, spring onion. Simple. 🍳" }
+        ]
+    },
+    {
+        type: 'phase',
+        title: "The Nepali Lesson 🇳🇵",
+        date: "September 6, 2024",
+        color: "#ef4444",
+        intro: "Learning the language of the heart.",
+        incidents: [
+            { type: 'chat', speaker: 'Harshit', text: "Kaha xas to? (Where are you?) Mo Snow ho. (I am Snow.) To riruru ho. Timro vs Mero. 🇳🇵" },
+            { type: 'note', text: "The Dare Poem: 'In the garden of our days...' (A bit of GPT touch, but I loved it). 🌸" }
+        ]
+    },
+    {
+        type: 'phase',
+        title: "A Night of Letters 🎂",
+        date: "January 30, 2025",
+        color: "#3b82f6",
+        intro: "The 12:21 AM 'Happy Birthday' countdown.",
+        incidents: [
+            { type: 'note', text: "You tried to send one letter per minute to end 'Y' at 12 AM... but the math failed and it ended at 11:59! Still the best wish. 🎈" },
+            { type: 'note', text: "The Birthday Poem: 'Happiest Birthday Vi, so bright...' I was the first one to wish you. ✨" }
+        ]
+    },
+    {
+        type: 'phase',
+        title: "Today: 18 Transitions 🎂",
+        date: "Present",
+        color: "#cbd5e1",
+        intro: "Entering adulthood, but the bond remains constant.",
+        incidents: [
+            { type: 'chat', speaker: 'Feb 9', text: "What's your favorite entertainment? Pareshan karna (to me)! 😂" },
+            { type: 'note', text: "Everything I provided... and more to come. This journey is infinite. 'Hate you' always meant its opposite. ❤️" }
         ]
     }
 ];
@@ -173,16 +250,26 @@ const apps = [
     /* === SYSTEM CORE APPS (Inside Folder) === */
     {
         id: 'first-conversation', title: '12:21 AM', icon: '💬', dock: false, folder: 'folder-system', width: 520, height: 520, content: `
-        <div class="chat-container" id="chatReplay"></div>
+        <div class="flex flex-col h-full">
+            <div class="px-4 py-2 border-b border-white/10 flex justify-between items-center bg-white/5">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold opacity-60">Status:</span>
+                    <div id="shravii-status-dot" class="status-dot"></div>
+                    <span class="text-[10px] uppercase tracking-tighter opacity-40">Encryption Active</span>
+                </div>
+                <button onclick="toggleChatTheme()" class="chat-theme-toggle">🌙 Switch Mode</button>
+            </div>
+            <div class="chat-container flex-1" id="chatReplay"></div>
+        </div>
         `,
         onOpen() {
             const el = document.getElementById('chatReplay');
-            playFirstConversation(el);
+            if (el) playFirstConversation(el);
         }
     },
 
     {
-        id: 'connection-log', title: 'Connection.log', icon: '📜', dock: true, folder: 'folder-system', width: 500, height: 700, onOpen: renderJourney, content: `
+        id: 'connection-log', title: 'Our Journey', icon: '📜', dock: true, folder: 'folder-system', width: 500, height: 700, onOpen: renderJourney, content: `
         <div id="journey-scroll" class="h-full bg-[#fcfcfc] overflow-y-auto scroll-smooth relative">
             <div id="journey-container" class="min-h-full pb-20"></div>
         </div>
@@ -1429,45 +1516,156 @@ const firstConversation = [
 ];
 
 let convoIndex = 0;
+function toggleChatTheme() {
+    const container = document.getElementById('chatReplay');
+    if (!container) return;
+    container.classList.toggle('chat-dark-mode');
+    const btn = document.querySelector('.chat-theme-toggle');
+    if (btn) {
+        btn.innerText = container.classList.contains('chat-dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+    }
+}
 
 function playFirstConversation(container) {
     convoIndex = 0;
     container.innerHTML = '';
 
+    // Create typing indicator element
+    const typingIndicator = document.createElement('div');
+    typingIndicator.className = 'typing-bubble hidden';
+    typingIndicator.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+
     function nextMessage() {
         if (convoIndex >= firstConversation.length) return;
 
         const msg = firstConversation[convoIndex];
-        const bubble = document.createElement('div');
         let delay = 1000; // Base delay
 
         if (msg.user === 'system') {
-            bubble.className = 'text-center my-6 text-xs uppercase tracking-widest opacity-60 font-medium text-gray-400';
-            bubble.textContent = msg.text;
-            delay = 1500; // Pause longer for system messages
+            const systemDiv = document.createElement('div');
+            systemDiv.className = 'text-center my-6 text-[10px] uppercase tracking-widest opacity-40 font-medium text-gray-400';
+            systemDiv.textContent = msg.text;
+            container.appendChild(systemDiv);
+            container.scrollTop = container.scrollHeight;
+            convoIndex++;
+            setTimeout(nextMessage, 1500);
+            return;
         } else if (msg.user === 'game') {
-            // Game / Bot Cards
-            bubble.className = 'chat-game-card mx-auto my-4 p-4 bg-gray-50 border border-gray-200 rounded-lg text-center max-w-[80%] shadow-sm';
-            bubble.innerHTML = `<div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Game Card</div>
-                                <div class="font-bold text-gray-800 text-sm whitespace-pre-wrap">${msg.text}</div>`;
-            delay = 2000; // Longer pause to read the question
-        } else {
-            // User Messages
-            bubble.className = `chat-bubble ${msg.user === 'harshit' ? 'chat-left' : 'chat-right'}`;
-            // Convert newlines to breaks or handle naturally with whitespace-pre-wrap in CSS
-            bubble.style.whiteSpace = 'pre-wrap';
-            bubble.textContent = msg.text;
+            const gameCard = document.createElement('div');
+            gameCard.className = 'chat-game-card mx-auto my-4 p-4 bg-gray-50/5 border border-white/10 rounded-lg text-center max-w-[80%] shadow-sm';
+            gameCard.innerHTML = `<div class="text-[10px] text-blue-400 uppercase tracking-widest mb-1 italic">Event Memory</div>
+                                <div class="font-bold text-gray-300 text-sm whitespace-pre-wrap">${msg.text}</div>`;
+            container.appendChild(gameCard);
+            container.scrollTop = container.scrollHeight;
 
-            // Calc dynamic reading time: ~50ms per char, min 800ms, max 3000ms
-            const readTime = Math.min(Math.max(msg.text.length * 40, 800), 3000);
-            delay = readTime;
+            convoIndex++;
+            setTimeout(nextMessage, 2500);
+            return;
+        } else {
+            // Typing simulation for Shravii
+            if (msg.user === 'shravii') {
+                container.appendChild(typingIndicator);
+                typingIndicator.classList.remove('hidden');
+                container.scrollTop = container.scrollHeight;
+
+                const typeDuration = Math.min(msg.text.length * 30, 2000);
+                setTimeout(() => {
+                    typingIndicator.classList.add('hidden');
+                    renderUserMessage(msg);
+                }, typeDuration);
+            } else {
+                renderUserMessage(msg);
+            }
+        }
+    }
+
+    function renderUserMessage(msg) {
+        const isHarshit = msg.user === 'harshit';
+        const wrapper = document.createElement('div');
+        wrapper.className = `flex flex-col mb-4 ${isHarshit ? 'items-end' : 'items-start'} group`;
+        // Name + Status
+        const nameRow = document.createElement('div');
+        nameRow.className = 'flex items-center gap-1 mb-1 px-1';
+
+        const nameLabel = document.createElement('div');
+        nameLabel.className = 'text-[11px] font-bold opacity-60';
+        nameLabel.textContent = isHarshit ? 'Harshit' : 'Shravii';
+        nameLabel.style.color = isHarshit ? '#60a5fa' : '#94a3b8';
+
+        nameRow.appendChild(nameLabel);
+
+        if (!isHarshit) {
+            const status = document.createElement('div');
+            status.className = 'status-dot scale-50';
+            nameRow.appendChild(status);
         }
 
-        container.appendChild(bubble);
+        // Bubble
+        const bubble = document.createElement('div');
+        bubble.className = `chat-bubble ${isHarshit ? 'chat-right' : 'chat-left'}`;
+        bubble.style.whiteSpace = 'pre-wrap';
+        bubble.textContent = msg.text;
+
+        // Media Detection
+        if (msg.text.includes('spotify.com')) {
+            const preview = document.createElement('div');
+            preview.className = 'chat-media-preview';
+            preview.style.width = '100%';
+            preview.innerHTML = `<iframe style="border-radius:12px" src="${msg.text.replace('open.spotify.com/', 'open.spotify.com/embed/')}" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+            bubble.appendChild(preview);
+        }
+
+        // Click to Heart Reaction
+        bubble.onclick = () => {
+            const existing = bubble.querySelector('.chat-reaction');
+            if (existing) {
+                existing.remove();
+            } else {
+                const heart = document.createElement('div');
+                heart.className = 'chat-reaction';
+                heart.innerHTML = '❤️';
+                bubble.appendChild(heart);
+            }
+        };
+
+        wrapper.appendChild(nameRow);
+        wrapper.appendChild(bubble);
+
+        // Read Receipt for Shravii's messages (viewed by Harshit)
+        if (!isHarshit) {
+            const seen = document.createElement('div');
+            seen.className = 'seen-receipt';
+
+            // Find Harshit's reply time
+            let replyTime = '';
+            for (let i = convoIndex + 1; i < firstConversation.length; i++) {
+                if (firstConversation[i].user === 'harshit') {
+                    const match = firstConversation[i].text.match(/(\d{1,2}:\d{2}\s?[AP]M)/i);
+                    if (match) {
+                        replyTime = match[1];
+                        break;
+                    }
+                }
+            }
+
+            // Fallback to current message's time if no reply found
+            if (!replyTime) {
+                const match = msg.text.match(/(\d{1,2}:\d{2}\s?[AP]M)/i);
+                if (match) replyTime = match[1];
+            }
+
+            seen.textContent = 'Read ' + (replyTime || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+            wrapper.appendChild(seen);
+            setTimeout(() => seen.style.opacity = '0.5', 1000);
+        }
+
+        container.appendChild(wrapper);
         container.scrollTop = container.scrollHeight;
 
+
+        const readDelay = Math.min(Math.max(msg.text.length * 40, 800), 3000);
         convoIndex++;
-        setTimeout(nextMessage, delay);
+        setTimeout(nextMessage, readDelay);
     }
 
     nextMessage();
@@ -2697,68 +2895,40 @@ window.initLetterReveal = initLetterReveal;
 function renderJourney() {
     const container = document.getElementById('journey-container');
     if (!container) return;
-    container.innerHTML = ''; // Clear
+
+    // Set up the timeline structure
+    container.innerHTML = `
+        <div class="journey-timeline-wrapper p-8 relative">
+            <div class="timeline-line absolute left-10 top-10 bottom-10 w-0.5 bg-blue-400 opacity-60"></div>
+            <div id="timeline-content" class="space-y-12"></div>
+        </div>
+    `;
+
+    const content = container.querySelector('#timeline-content');
 
     journeyData.forEach((section, index) => {
-        const secDiv = document.createElement('div');
-        secDiv.className = 'journey-section opacity-0 translate-y-4 transition-all duration-1000 ease-out';
-        secDiv.style.transitionDelay = `${index * 200}ms`; // Stagger load
+        const item = document.createElement('div');
+        item.className = 'timeline-item relative pl-12 opacity-0 translate-x-4 transition-all duration-700 ease-out';
+        item.style.transitionDelay = `${index * 150}ms`;
 
-        if (section.type === 'landing') {
-            secDiv.innerHTML = `
-                <div class="h-[600px] flex flex-col items-center justify-center text-center p-10 bg-gradient-to-b from-gray-50 to-white">
-                    <div class="text-3xl md:text-4xl font-serif text-gray-800 mb-4 leading-relaxed">${section.text[0]}</div>
-                    <div class="text-xl md:text-2xl font-serif text-gray-500 italic">${section.text[1]}</div>
-                    <div class="mt-12 animate-bounce text-gray-400 text-xs tracking-widest uppercase">Scroll</div>
-                </div>
-            `;
-        } else if (section.type === 'phase') {
-            let incidentsHtml = '';
-            if (section.incidents && section.incidents.length > 0) {
-                incidentsHtml = `<div class="journey-incidents space-y-6 mt-8 max-w-md mx-auto text-left">
-                    ${section.incidents.map(inc => {
-                    if (inc.type === 'chat') {
-                        return `<div class="bg-blue-50 p-4 rounded-xl border border-blue-100 shadow-sm relative"><div class="absolute -top-3 left-4 bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">${inc.time || ''}</div><div class="font-bold text-gray-800 text-xs mb-1">${inc.speaker}</div><div class="text-gray-700 text-sm">${inc.text}</div></div>`
-                    } else {
-                        return `<div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm text-center text-gray-600 italic font-serif">"${inc.text}"</div>`
-                    }
-                }).join('')}
-                 </div>`
-            } else {
-                incidentsHtml = `<div class="text-center text-gray-400 text-xs italic mt-8 p-4 border border-dashed border-gray-300 rounded-lg">Incidents loading... (Add to JSON)</div>`;
-            }
+        item.innerHTML = `
+            <div class="timeline-node absolute left-[-13px] top-1.5 w-6 h-6 rounded-full border-4 border-white shadow-md z-10" 
+                 style="background-color: ${section.color || '#3b82f6'}"></div>
+            <div class="timeline-body">
+                <h3 class="text-xl font-bold text-gray-900 mb-1">${section.title}</h3>
+                ${section.date ? `<div class="text-xs font-mono text-blue-500 mb-3 tracking-wide">${section.date}</div>` : ''}
+                <p class="text-sm text-gray-600 leading-relaxed font-medium opacity-90">${section.text}</p>
+            </div>
+        `;
 
-            secDiv.innerHTML = `
-                <div class="py-20 px-6 border-b border-gray-100">
-                    <div class="text-center mb-10">
-                        <div class="text-4xl mb-4 grayscale hover:grayscale-0 transition duration-500">${section.title.split(' ').pop()}</div> <!-- Icon hack -->
-                        <h2 class="text-2xl font-bold text-gray-900 tracking-wide uppercase mb-2">${section.title.replace(/ .$/, '')}</h2>
-                        ${section.date ? `<div class="text-xs text-blue-500 font-mono mb-4 tracking-widest">${section.date}</div>` : ''}
-                        <div class="space-y-2 text-gray-600 font-light text-lg leading-relaxed max-w-lg mx-auto">
-                            ${section.intro.map(line => `<p>${line}</p>`).join('')}
-                        </div>
-                    </div>
-                    ${incidentsHtml}
-                </div>
-            `;
-        } else if (section.type === 'final') {
-            secDiv.innerHTML = `
-                <div class="h-[500px] flex flex-col items-center justify-center text-center p-10 bg-[#fff5f5]">
-                    <div class="text-6xl mb-6 animate-pulse">🎂</div>
-                    <div class="text-gray-800 font-bold text-xl uppercase tracking-widest mb-4">${section.title}</div>
-                    <div class="space-y-2 text-gray-600 font-serif italic text-xl">
-                        ${section.text.map(t => `<p>${t}</p>`).join('')}
-                    </div>
-                </div>
-            `;
-        }
+        content.appendChild(item);
 
-        container.appendChild(secDiv);
-
-        // Trigger generic fade in
-        setTimeout(() => {
-            secDiv.classList.remove('opacity-0', 'translate-y-4');
-        }, 100 + (index * 100));
+        // Trigger animation
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                item.classList.remove('opacity-0', 'translate-x-4');
+            }, 100);
+        });
     });
 }
 
