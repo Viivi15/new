@@ -16,34 +16,83 @@ const wallpapers = [
     { thumb: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=200', full: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=2069' }  // Colors
 ];
 
-/* === APP REGISTRY (Personalized for Harshit) === */
-/* === APP REGISTRY (Curated System) === */
+/* === APP REGISTRY (Refined for Harshit) === */
 const apps = [
-    /* CLUSTER 1: EMOTIONAL BUT SOFT (The Heart) */
+    /* === FOLDERS === */
     {
-        id: 'timeline-1221', title: '12:21 AM', icon: '🕒', dock: true, width: 400, height: 350, content: `
-        <div class="h-full flex flex-col items-center justify-center text-center p-8 bg-black text-white">
-            <div class="text-xs tracking-[0.3em] uppercase opacity-50 mb-4">Origin</div>
-            <div class="text-4xl font-serif mb-6">12:21 AM</div>
-            <div id="timeline-text" class="text-sm font-light text-gray-300 space-y-4"></div>
+        id: 'folder-system', title: 'System Core', icon: '📁', dock: false, width: 600, height: 450, content: `
+        <div class="folder-window-grid">
+            <div class="win-icon" onclick="Apps.open('first-conversation')"><div class="icon-img">💬</div><div class="icon-label">12:21 AM</div></div>
+            <div class="win-icon" onclick="Apps.open('connection-log')"><div class="icon-img">📜</div><div class="icon-label">Connection.log</div></div>
+            <div class="win-icon" onclick="Apps.open('mr-snow')"><div class="icon-img">❄️</div><div class="icon-label">Mr. Snow</div></div>
+            <div class="win-icon" onclick="Apps.open('facts')"><div class="icon-img">📄</div><div class="icon-label">Harshit<br>Facts.txt</div></div>
+             <div class="win-icon" onclick="Apps.open('not-dumb')"><div class="icon-img">🤨</div><div class="icon-label">Not Dumb</div></div>
+            <div class="win-icon" onclick="Apps.open('madrid')"><div class="icon-img">⚽</div><div class="icon-label">HalaMadrid.exe</div></div>
+            <div class="win-icon" onclick="Apps.open('app-grown')"><div class="icon-img">🧠</div><div class="icon-label">19.exe</div></div>
+            <div class="win-icon" onclick="Apps.open('engineering')"><div class="icon-img">💻</div><div class="icon-label">Engineering</div></div>
+             <div class="win-icon" onclick="Apps.open('terminal-app')"><div class="icon-img">💻</div><div class="icon-label">Terminal.sh</div></div>
+             <div class="w-full text-center text-xs text-gray-400 mt-4 col-span-full">System identity & base configuration</div>
         </div>
-        <script>
-            setTimeout(() => {
-                const lines = ["A conversation began.", "No expectations.", "Just honesty.", "Still here."];
-                let i = 0;
-                const el = document.getElementById('timeline-text');
-                const tInt = setInterval(() => {
-                    if (i >= lines.length) { clearInterval(tInt); return; }
-                    el.innerHTML += '<div class="fade-in-up">' + lines[i] + '</div>';
-                    i++;
-                }, 1200);
-            }, 500);
-        </script>
     `},
 
-    /* THE CHOSEN BOND (Progressive Reveal) */
     {
-        id: 'connection-log', title: 'Connection.log', icon: '📜', onOpen: resetBond, dock: true, width: 650, height: 500, content: `
+        id: 'folder-feelings', title: 'Soft Stuff', icon: '📁', dock: false, width: 600, height: 450, content: `
+        <div class="folder-window-grid">
+            <div class="win-icon" onclick="Apps.open('why-matter')"><div class="icon-img">💭</div><div class="icon-label">Why You<br>Matter</div></div>
+            <div class="win-icon" onclick="Apps.open('tired')"><div class="icon-img">😴</div><div class="icon-label">When Tired</div></div>
+            <div class="win-icon" onclick="Apps.open('dream-snow')"><div class="icon-img">❄️</div><div class="icon-label">Snow Place</div></div>
+            <div class="win-icon" onclick="Apps.open('hoodie')"><div class="icon-img">🧥</div><div class="icon-label">Hoodie Mode</div></div>
+            <div class="win-icon" onclick="Apps.open('music-night')"><div class="icon-img">🌙</div><div class="icon-label">Late Night</div></div>
+             <div class="win-icon" onclick="Apps.open('future')"><div class="icon-img">🔮</div><div class="icon-label">Future You</div></div>
+             <div class="win-icon" onclick="Apps.open('thank-you')"><div class="icon-img">✨</div><div class="icon-label">Thank You</div></div>
+             <div class="win-icon" onclick="Apps.open('inkpot')"><div class="icon-img">🖋️</div><div class="icon-label">The Inkpot</div></div>
+             <div class="win-icon" onclick="Apps.open('last-thing')"><div class="icon-img">🖤</div><div class="icon-label">One Last<br>Thing</div></div>
+        </div>
+    `},
+
+    {
+        id: 'folder-fun', title: 'Unstable Features', icon: '📁', dock: false, width: 600, height: 450, content: `
+        <div class="folder-window-grid">
+            <div class="win-icon" onclick="Apps.open('flash')"><div class="icon-img">⚡</div><div class="icon-label">Fastest<br>Alive</div></div>
+             <div class="win-icon" onclick="Apps.open('rabbit')"><div class="icon-img">🐰</div><div class="icon-label">Rabbit<br>Mode</div></div>
+            <div class="win-icon" onclick="Apps.open('rabbit-runner')"><div class="icon-img">🐰</div><div class="icon-label">Rabbit<br>Runner</div></div>
+            <div class="win-icon" onclick="Apps.open('word-spiral')"><div class="icon-img">🌀</div><div class="icon-label">Word Spiral</div></div>
+            <div class="win-icon" onclick="Apps.open('the-path')"><div class="icon-img">🧭</div><div class="icon-label">The Path</div></div>
+            <div class="win-icon" onclick="Apps.open('personality-quiz')"><div class="icon-img">🔍</div><div class="icon-label">Who Are You?</div></div>
+             <div class="win-icon" onclick="Apps.open('radio-harshit')"><div class="icon-img">📻</div><div class="icon-label">Radio<br>Harshit</div></div>
+            <div class="win-icon" onclick="Apps.open('quiz')"><div class="icon-img">🧩</div><div class="icon-label">The Us Quiz</div></div>
+            <div class="win-icon" onclick="Apps.open('cravings-app')"><div class="icon-img">🍔</div><div class="icon-label">Cravings</div></div>
+            <div class="win-icon" onclick="Apps.open('bear')"><div class="icon-img">🐻</div><div class="icon-label">Masti Mode</div></div>
+            <div class="win-icon" onclick="Apps.open('spotify')"><div class="icon-img">🎵</div><div class="icon-label">Vibe Check</div></div>
+        </div>
+    `},
+
+    {
+        id: 'app-vault', title: 'Vault', icon: '🔐', dock: true, width: 500, height: 400, content: `
+        <div class="folder-window-grid">
+            <div class="win-icon" onclick="Apps.open('do-not-open')"><div class="icon-img">🚫</div><div class="icon-label">Do Not<br>Open</div></div>
+            <div class="win-icon" onclick="Apps.open('playlist')"><div class="icon-img">🎶</div><div class="icon-label">Hidden<br>Tracks</div></div>
+            <div class="win-icon" onclick="Apps.open('secret-vault')"><div class="icon-img">🔐</div><div class="icon-label">Secret Vault</div></div>
+            <div class="win-icon" onclick="Apps.open('voice-box')"><div class="icon-img">🎙️</div><div class="icon-label">VoiceBox</div></div>
+            <div class="win-icon" onclick="Apps.open('readme-letter')"><div class="icon-img">💌</div><div class="icon-label">ReadMe.txt</div></div>
+             <div class="win-icon" onclick="Apps.open('memories-gallery')"><div class="icon-img">📸</div><div class="icon-label">Memories</div></div>
+             <div class="win-icon" onclick="Apps.open('through-my-eyes')"><div class="icon-img">📝</div><div class="icon-label">Through<br>My Eyes</div></div>
+        </div>
+    `},
+
+    /* === SYSTEM CORE APPS (Inside Folder) === */
+    {
+        id: 'first-conversation', title: '12:21 AM', icon: '💬', dock: false, folder: 'folder-system', width: 520, height: 520, content: `
+        <div class="chat-container" id="chatReplay"></div>
+        `,
+        onOpen() {
+            const el = document.getElementById('chatReplay');
+            playFirstConversation(el);
+        }
+    },
+
+    {
+        id: 'connection-log', title: 'Connection.log', icon: '📜', onOpen: resetBond, dock: true, folder: 'folder-system', width: 650, height: 500, content: `
         <div class="h-full bg-black text-white p-8 flex flex-col items-center justify-center text-center cursor-pointer select-none relative overflow-hidden" onclick="advanceBond()">
             <div id="bond-content" class="transition-opacity duration-1000 ease-in-out">
                 <div class="text-xs uppercase tracking-[0.3em] text-gray-500 mb-6">System Memory</div>
@@ -99,24 +148,7 @@ const apps = [
         </div>
     `},
 
-    {
-        id: 'shravii', title: 'Shravii.exe', icon: '🫧', dock: true, width: 400, height: 500, content: `
-        <div class="h-full bg-[#fff0f5] p-6 custom-scroll">
-            <div class="bg-white p-4 rounded-lg shadow-sm mb-4">
-                <div class="text-xs text-gray-400 mb-1">System User</div>
-                <div class="font-bold text-pink-500 mb-2">Shravii</div>
-                <p class="text-sm text-gray-700 leading-relaxed">
-                    Hi.<br>
-                    I’m the part of your life that won’t stop caring.<br>
-                    Sorry. Not sorry.<br><br>
-                    (Also, drink water.)
-                </p>
-            </div>
-            <div class="flex justify-center mt-8">
-                <img src="https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif" class="w-32 rounded-lg opacity-80 mix-blend-multiply">
-            </div>
-        </div>
-    `},
+
 
     {
         id: 'admire', title: 'Deep Truths', icon: '🌟', dock: false, width: 500, height: 400, content: `
@@ -197,8 +229,9 @@ const apps = [
         </div>
     `},
 
+    /* === FUN & CHAOS (Inside Folder) === */
     {
-        id: 'flash', title: 'Fastest Alive', icon: '⚡', folder: 'system', dock: false, width: 500, height: 300, content: `
+        id: 'flash', title: 'Fastest Alive', icon: '⚡', dock: false, folder: 'folder-fun', width: 500, height: 300, content: `
         <div class="h-full bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center relative overflow-hidden">
             <div class="text-white text-6xl font-black italic tracking-tighter" id="zoom-text">ZOOM</div>
             <div class="absolute inset-0 bg-white opacity-0" id="flash-overlay"></div>
@@ -214,7 +247,7 @@ const apps = [
     `},
 
     {
-        id: 'rabbit', title: 'Rabbit Mode', icon: '🐰', folder: 'system', dock: false, width: 400, height: 400, content: `
+        id: 'rabbit', title: 'Rabbit Mode', icon: '🐰', dock: false, folder: 'folder-fun', width: 400, height: 400, content: `
         <div class="h-full bg-white p-4 flex flex-wrap gap-2 content-center justify-center overflow-hidden relative" id="rabbit-den">
             <div class="z-10 bg-white/90 p-4 rounded text-center shadow-lg border border-gray-100">
                 <div class="text-2xl mb-2">🐰</div>
@@ -237,42 +270,7 @@ const apps = [
         </script>
     `},
 
-    /* CLUSTER 2.5: INTERACTIVE */
-    {
-        id: 'quiz', title: 'The Us Quiz', icon: '🧩', dock: true, width: 450, height: 400, onOpen: startQuiz, content: `
-        <div class="h-full bg-white p-8 flex flex-col items-center justify-center text-center select-none" id="quiz-container">
-            <div class="text-4xl mb-4 animate-bounce">🧩</div>
-            <h3 class="text-xl font-bold mb-2 text-gray-800">Friendship Protocol</h3>
-            <p class="text-xs text-gray-500 mb-6">Verify you know the system admin.</p>
-            
-            <div id="q-box" class="w-full max-w-xs transition-all duration-300">
-                <p id="q-text" class="text-lg font-serif mb-6 text-gray-800 leading-relaxed">System Check: Ready?</p>
-                <input type="text" id="q-input" class="w-full p-3 border-2 border-gray-100 rounded-xl mb-4 text-center focus:outline-none focus:border-blue-500 transition-colors bg-gray-50 text-gray-700 placeholder-gray-300" placeholder="Type here..." onkeypress="if(event.key==='Enter') submitAnswer()">
-                <button onclick="submitAnswer()" class="bg-black text-white px-8 py-2 rounded-full text-sm hover:bg-gray-800 transition transform hover:scale-105 active:scale-95 shadow-lg">Verify</button>
-                <p id="q-feedback" class="text-xs mt-4 h-4 font-bold tracking-wide transition-colors"></p>
-            </div>
-            <div class="absolute bottom-4 text-[10px] text-gray-300">Security Clearance: Level 19</div>
-        </div>
-    `},
 
-    /* FOLDERS */
-    {
-        id: 'app-system', title: 'System Files', icon: '📁', dock: false, width: 500, height: 400, content: `
-        <div class="folder-window-grid">
-            <div class="win-icon" onclick="Apps.open('facts')"><div class="icon-img">📄</div><div class="icon-label">Harshit<br>Facts.txt</div></div>
-            <div class="win-icon" onclick="Apps.open('not-dumb')"><div class="icon-img">🤨</div><div class="icon-label">Not Dumb</div></div>
-            <div class="win-icon" onclick="Apps.open('flash')"><div class="icon-img">⚡</div><div class="icon-label">Fastest<br>Alive</div></div>
-            <div class="win-icon" onclick="Apps.open('rabbit')"><div class="icon-img">🐰</div><div class="icon-label">Rabbit<br>Mode</div></div>
-        </div>
-    `},
-
-    {
-        id: 'app-vault', title: 'Vault', icon: '🔒', dock: false, width: 500, height: 350, content: `
-        <div class="folder-window-grid">
-            <div class="win-icon" onclick="Apps.open('do-not-open')"><div class="icon-img">🚫</div><div class="icon-label">Do Not<br>Open</div></div>
-            <div class="win-icon" onclick="Apps.open('playlist')"><div class="icon-img">🎶</div><div class="icon-label">Hidden<br>Tracks</div></div>
-        </div>
-    `},
 
     /* CLUSTER 3: COMFORT & CALM (Safe Spaces) */
     {
@@ -339,49 +337,12 @@ const apps = [
         </div>
     `},
 
-    /* CLUSTER 5: EASTER EGGS (Hidden) */
-    {
-        id: 'do-not-open', title: 'Do Not Open', icon: '🚫', folder: 'vault', dock: false, width: 300, height: 200, content: `
-        <div class="h-full flex items-center justify-center bg-red-50 text-red-900 text-center p-6">
-            <div>
-                <div class="font-bold mb-2">You Opened It.</div>
-                <div class="text-xs">I knew you would. Stubborn. ❤️</div>
-            </div>
-        </div>
-    `},
 
-    {
-        id: 'playlist', title: 'Hidden Tracks', icon: '🎶', folder: 'vault', dock: false, width: 400, height: 300, content: `
-        <div class="h-full bg-black text-white p-6">
-            <div class="uppercase tracking-widest text-xs opacity-50 mb-4">Secret Collection</div>
-            <ul class="space-y-3 text-sm font-light opacity-80">
-            <li>1. The Silence (Original Mix)</li>
-                <li>2. 12:21 AM (lo-fi)</li>
-                <li>3. That one song we shared</li>
-            </ul>
-        </div>
-    `},
-
-    {
-        id: 'last-thing', title: 'One Last Thing', icon: '🖤', dock: true, width: 400, height: 300, content: `
-        <div class="h-full bg-white flex items-center justify-center text-center p-8 cursor-pointer hover:bg-gray-50 transition" onclick="Apps.open('thank-you')">
-            Click here.
-        </div>
-    `},
-
-    {
-        id: 'thank-you', title: 'Thank You', icon: '✨', dock: false, width: 450, height: 350, content: `
-        <div class="h-full flex items-center justify-center text-center p-10 bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
-            <div>
-                <div class="text-2xl font-serif mb-4">Thank you for existing.</div>
-                <div class="text-sm opacity-80">Really.</div>
-            </div>
-        </div>
-    `}
     ,
     /* === NEW APPS === */
+    /* === SOFT STUFF (Inside Folder) === */
     {
-        id: 'inkpot', title: 'The Inkpot', icon: '🖋️', dock: true, width: 500, height: 600, onOpen: initInkpot, content: `
+        id: 'inkpot', title: 'The Inkpot', icon: '🖋️', dock: false, folder: 'folder-feelings', width: 500, height: 600, onOpen: initInkpot, content: `
         <div class="inkpot-bg">
             <div id="inkpot-text" class="poem-text"></div>
             <div class="inkpot-quill" onclick="nextPoem()">🖋️</div>
@@ -389,7 +350,25 @@ const apps = [
     `},
 
     {
-        id: 'radio-harshit', title: 'Radio Harshit', icon: '📻', dock: true, width: 400, height: 500, onOpen: initRadio, content: `
+        id: 'last-thing', title: 'One Last Thing', icon: '🖤', dock: false, folder: 'folder-feelings', width: 400, height: 300, content: `
+        <div class="h-full bg-white flex items-center justify-center text-center p-8 cursor-pointer hover:bg-gray-50 transition" onclick="Apps.open('thank-you')">
+            Click here.
+        </div>
+    `},
+
+    {
+        id: 'thank-you', title: 'Thank You', icon: '✨', dock: false, folder: 'folder-feelings', width: 450, height: 350, content: `
+        <div class="h-full flex items-center justify-center text-center p-10 bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
+            <div>
+                <div class="text-2xl font-serif mb-4">Thank you for existing.</div>
+                <div class="text-sm opacity-80">Really.</div>
+            </div>
+        </div>
+    `},
+
+    /* === FUN & CHAOS (Inside Folder) === */
+    {
+        id: 'radio-harshit', title: 'Radio Harshit', icon: '📻', dock: true, folder: 'folder-fun', width: 400, height: 500, onOpen: initRadio, content: `
         <div class="radio-ui">
             <div class="radio-display" id="radio-screen">WAITING FOR SIGNAL...</div>
             <div class="radio-buttons">
@@ -402,14 +381,14 @@ const apps = [
     `},
 
     {
-        id: 'the-path', title: 'The Path', icon: '🧭', dock: true, width: 600, height: 400, onOpen: startPathGame, content: `
+        id: 'the-path', title: 'The Path', icon: '🧭', dock: false, folder: 'folder-fun', width: 600, height: 400, onOpen: startPathGame, content: `
         <div class="path-game" id="path-container" onclick="handlePathClick(event)">
             <!-- Dynamic Content -->
         </div>
     `},
-    /* === EXPANSION APPS === */
+
     {
-        id: 'word-spiral', title: 'Word Spiral', icon: '🌀', dock: false, width: 500, height: 600, onOpen: initWordSpiral, content: `
+        id: 'word-spiral', title: 'Word Spiral', icon: '🌀', dock: false, folder: 'folder-fun', width: 500, height: 600, onOpen: initWordSpiral, content: `
         <div class="spiral-bg">
             <div id="spiral-content" class="h-full flex flex-col items-center justify-center p-8 text-center text-white">
                 <div class="text-4xl mb-6 animate-spin-slow">🌀</div>
@@ -420,7 +399,7 @@ const apps = [
     `},
 
     {
-        id: 'personality-quiz', title: 'Who Are You?', icon: '🔍', dock: false, width: 500, height: 600, onOpen: initPersonalityQuiz, content: `
+        id: 'personality-quiz', title: 'Who Are You?', icon: '🔍', dock: false, folder: 'folder-fun', width: 500, height: 600, onOpen: initPersonalityQuiz, content: `
         <div class="quiz-bg">
             <div id="p-quiz-content" class="h-full flex flex-col items-center justify-center p-8 text-center">
                 <div class="text-5xl mb-6">🔍</div>
@@ -431,7 +410,7 @@ const apps = [
     `},
 
     {
-        id: 'rabbit-runner', title: 'RabbitRunner.exe', icon: '🐰', dock: true, width: 800, height: 500, onOpen: initRabbitGame, content: `
+        id: 'rabbit-runner', title: 'RabbitRunner.exe', icon: '🐰', dock: false, folder: 'folder-fun', width: 800, height: 500, onOpen: initRabbitGame, content: `
         <div id="rr-container" class="relative w-full h-full bg-[#e0f7fa] overflow-hidden select-none font-sans">
              <div id="rr-score" class="absolute top-4 left-4 text-2xl font-bold text-gray-700 z-10">Score: 0</div>
              <div id="rr-start-screen" class="absolute inset-0 flex flex-col items-center justify-center bg-black/50 z-20 text-white">
@@ -451,23 +430,248 @@ const apps = [
              <div id="rr-world"></div>
         </div>
     `},
+
     {
-        id: 'terminal-app', title: 'Terminal.sh', icon: '💻', dock: true, width: 600, height: 450, content: `
-        <div class="terminal-app" onclick="document.getElementById('term-input-app').focus()">
-            <div id="term-output-app" class="term-output custom-scroll">
-                <div>Welcome to Harshit OS v19.0 (Kernel 20.06.24)</div>
-                <div>Type 'help' to see available commands.</div>
-                <br>
+        id: 'cravings-app', title: 'Cravings', icon: '🍔', dock: false, folder: 'folder-fun', width: 400, height: 600, content: `
+        <div id="cravings-content" class="h-full bg-gray-900 text-white relative overflow-hidden">
+            <!-- Header Image -->
+            <div class="h-1/2 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1562967963-ed7858970e25?q=80&w=1000');">
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
             </div>
-            <div class="term-prompt-line">
-                <span class="term-prompt">root@harshit:~$</span>
-                <input type="text" id="term-input-app" class="term-input" autocomplete="off" onkeypress="if(event.key==='Enter') handleTerminalAppCommand()">
+            
+            <!-- Content -->
+            <div class="p-6 relative -mt-20">
+                <div class="bg-gray-800 rounded-2xl p-6 shadow-2xl border border-gray-700">
+                    <div class="flex justify-between items-start mb-2">
+                        <h2 class="text-2xl font-bold">Supreme Euro Sub</h2>
+                        <span class="bg-green-500 text-black text-xs font-bold px-2 py-1 rounded">POPULAR</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Loaded with extra olives, spicy sauce, and crispy veggies. Just how you like it.</p>
+                    
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="text-2xl font-bold text-yellow-400">$0.00 <span class="text-xs text-gray-500 font-normal">Free for you</span></div>
+                    </div>
+                    
+                    <button id="cravings-btn" onclick="orderCravings()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition transform hover:scale-105 active:scale-95 shadow-lg shadow-blue-600/30">
+                        ORDER NOW
+                    </button>
+                    <div class="text-center mt-3 text-xs text-gray-500">Free delivery by Harrier Express</div>
+                </div>
             </div>
         </div>
     `},
 
     {
-        id: 'readme-letter', title: 'ReadMe.txt', icon: '💌', dock: true, width: 600, height: 700, content: `
+        id: 'bear', title: 'Masti Mode', icon: '🐻', dock: true, folder: 'folder-fun', width: 300, height: 200, content: `
+        <div class="h-full flex flex-col items-center justify-center bg-[#8d6e63] text-white">
+            <div class="text-4xl mb-2">🐻 + 🐼</div>
+            <p class="text-sm mb-4 opacity-80">Unleash the cuteness</p>
+            <button onclick="spawnBears()" class="bg-white text-brown-800 font-bold px-6 py-2 rounded-full shadow hover:scale-105 transition">Activate Masti</button>
+        </div>
+    `},
+
+    {
+        id: 'spotify', title: 'Spotify - Vibe Check', icon: '🎵', dock: true, folder: 'folder-fun', width: 350, height: 480, content: `
+        <div class="h-full bg-gradient-to-b from-[#1DB954] to-black text-white p-6 flex flex-col items-center justify-center relative overflow-hidden">
+            <div class="w-48 h-48 bg-gray-800 shadow-2xl mb-6 rounded-md overflow-hidden relative group album-spin">
+                <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDd4bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BRv0TlsHCqDrG/giphy.gif" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/30">
+                    <i class="fas fa-play text-4xl"></i>
+                </div>
+            </div>
+            <h2 class="text-2xl font-bold mb-1">Tu Hai Kahan</h2>
+            <p class="text-gray-300 text-sm mb-6">AUR • Harshit's Favorites</p>
+            <div class="w-full h-1 bg-gray-600 rounded-full mb-2 overflow-hidden">
+                <div class="h-full bg-white w-1/3 animate-pulse"></div>
+            </div>
+            <div class="w-full flex justify-between text-xs text-gray-400 mb-6">
+                <span>1:21</span><span>4:23</span>
+            </div>
+            <div class="flex items-center gap-8 text-3xl">
+                <i class="fas fa-step-backward cursor-pointer hover:text-white text-gray-400"></i>
+                <div class="w-14 h-14 bg-white text-black rounded-full flex items-center justify-center cursor-pointer hover:scale-105 transition" onclick="toggleSpotify()">
+                    <i id="spotify-play-icon" class="fas fa-play ml-1"></i>
+                </div>
+                <i class="fas fa-step-forward cursor-pointer hover:text-white text-gray-400"></i>
+            </div>
+            <audio id="spotify-audio" loop>
+                <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+    `},
+
+
+
+
+    /* === VAULT APPS (Inside Folder) === */
+    {
+        id: 'do-not-open', title: 'Do Not Open', icon: '🚫', dock: false, folder: 'app-vault', width: 300, height: 200, content: `
+        <div class="h-full flex items-center justify-center bg-red-50 text-red-900 text-center p-6">
+            <div>
+                <div class="font-bold mb-2">You Opened It.</div>
+                <div class="text-xs">I knew you would. Stubborn. ❤️</div>
+            </div>
+        </div>
+    `},
+
+
+    {
+        id: 'through-my-eyes', title: 'Through My Eyes', icon: '📝', dock: false, folder: 'app-vault', width: 600, height: 500, content: `
+        <div class="letter-text" id="letter-content">
+            <div class="text-center mb-6">
+                <h1 class="text-3xl font-bold font-serif text-gray-800">
+                To My Best Friend 🎂
+                </h1>
+                <p class="text-sm text-gray-500 mt-1">
+                Written with 100% Truth & 0% Lie
+                </p>
+            </div>
+
+            <p>I need to be very careful and honest here — and also very real with you 🤍.</p>
+
+            <p>
+                What I’ll share below is only what I truly know, based on what you’ve shared with me,
+                not guesses, not assumptions. I won’t invent traits or facts — because this is your birthday,
+                and you deserve truth, warmth, and authenticity.
+            </p>
+
+            <h2>Who Harshit Is (Through My Eyes)</h2>
+
+            <p>
+                Harshit is not just a name in my life. He is a presence.
+                Someone who entered my world on
+                <strong>June 20, 2024 at 12:21 AM</strong> on Discord —
+                a moment that quietly turned into something meaningful,
+                lasting, and emotionally deep.
+            </p>
+
+            <div class="letter-quote">
+                "You are not just smart and perceptive, but you're also incredibly real.
+                You're human, but in the most beautiful way."
+            </div>
+
+            <h3>The Many Names of You</h3>
+            <ul class="list-disc list-inside ml-5 mb-4 space-y-1">
+                <li><strong>Mr. Snow ❄️</strong>: Calm, distant on the outside, but emotionally deep inside.</li>
+                <li><strong>Mr. Chuha 🐭</strong>: Soft, cute, and unintentionally endearing.</li>
+                <li><strong>Mr. Ota</strong>: Playful, teasing, inside-joke energy.</li>
+                <li><strong>Rabbit 🐰</strong>: Gentle, alert, emotionally sensitive.</li>
+            </ul>
+
+            <h3>Why You Are The "Bestest"</h3>
+            <p>
+                You are the world's strongest person (Emotionally & Physically 💪).
+                You are the fastest person (Flash who?!).
+                You have a memory that scares me sometimes —
+                remembering every tiny detail.
+                You do 100% of everything —
+                100% care, 100% dedication.
+            </p>
+
+            <h3>Our Bond</h3>
+            <p>
+                Our friendship wasn't built on big events.
+                It was built on music discussions, random chats,
+                project ideas, check-ins, and being there without being asked.
+                It survived fights, misunderstandings, and silence.
+                That makes it special.
+            </p>
+
+            <p class="mt-6 text-right font-bold"
+                style="font-family: 'Dancing Script', cursive; font-size: 28px;">
+                — Shravii ✨
+            </p>
+        </div>
+    `,
+        onOpen: initLetterReveal
+    },
+
+    {
+        id: 'playlist', title: 'Hidden Tracks', icon: '🎶', dock: false, folder: 'app-vault', width: 400, height: 300, content: `
+        <div class="h-full bg-black text-white p-6">
+            <div class="uppercase tracking-widest text-xs opacity-50 mb-4">Secret Collection</div>
+            <ul class="space-y-3 text-sm font-light opacity-80">
+            <li>1. The Silence (Original Mix)</li>
+                <li>2. 12:21 AM (lo-fi)</li>
+                <li>3. That one song we shared</li>
+            </ul>
+        </div>
+    `},
+
+    {
+        id: 'secret-vault', title: 'Secret Vault', icon: '🔐', dock: false, folder: 'app-vault', width: 700, height: 500, onOpen: initSecretVault, content: `
+        <div id="vault-container" class="relative w-full h-full bg-gray-900 text-white overflow-hidden flex flex-col items-center justify-center">
+             
+             <!-- Lock Screen -->
+             <div id="vault-lock" class="flex flex-col items-center gap-6 p-8 transition-opacity duration-500">
+                <div class="text-6xl mb-4">🔐</div>
+                <h2 class="text-2xl font-light tracking-widest uppercase">Restricted Access</h2>
+                <div class="relative w-64">
+                    <input type="password" id="vault-pass" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-center text-xl tracking-[0.5em] focus:outline-none focus:border-white/50 transition" placeholder="••••••" maxlength="6">
+                </div>
+                <p id="vault-hint" class="text-xs text-gray-500 hover:text-gray-300 cursor-pointer transition" onclick="alert('Hint: The day it all started (dd/mm/yy)')">Hint: dd/mm/yy</p>
+                <div id="vault-error" class="text-red-400 text-sm font-bold opacity-0 transition">Access Denied</div>
+             </div>
+
+             <!-- Unlocked Content (Carousel) -->
+             <div id="vault-content" class="absolute inset-0 hidden opacity-0 transition-opacity duration-1000 bg-black">
+                 <div class="w-full h-full relative" id="vault-carousel">
+                    <!-- Slides injected via JS -->
+                 </div>
+                 
+                 <!-- Controls -->
+                 <button class="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-4xl z-10 p-2" onclick="vaultPrevSlide()">&#10094;</button>
+                 <button class="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-4xl z-10 p-2" onclick="vaultNextSlide()">&#10095;</button>
+             </div>
+
+        </div>
+    `},
+
+    {
+        id: 'voice-box', title: 'VoiceBox', icon: '🎙️', dock: false, folder: 'app-vault', width: 350, height: 500, onOpen: initVoiceBox, content: `
+        <div class="bg-gray-50 h-full flex flex-col font-sans select-none">
+            <!-- Header -->
+            <div class="px-6 py-4 bg-white border-b border-gray-200 shadow-sm flex items-center justify-between">
+                <span class="text-xs font-bold text-gray-400 tracking-widest uppercase">Shravii's Memos</span>
+                <i class="fas fa-microphone text-red-500 animate-pulse"></i>
+            </div>
+            
+            <!-- List -->
+            <div id="vibes-list" class="flex-1 overflow-y-auto p-2 space-y-2">
+                <!-- Items injected via JS -->
+            </div>
+            
+            <!-- Player Bar -->
+            <div class="bg-black/90 backdrop-blur-md text-white p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <div id="vb-now-playing" class="text-xs font-medium truncate max-w-[200px] text-gray-400">Select a memo...</div>
+                    <div class="flex gap-1">
+                        <div class="w-1 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                        <div class="w-1 h-3 bg-red-400 rounded-full animate-bounce"></div>
+                        <div class="w-1 h-3 bg-red-600 rounded-full animate-pulse delay-75"></div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center gap-6">
+                    <button class="text-gray-400 hover:text-white transition"><i class="fas fa-step-backward"></i></button>
+                    <button id="vb-play-btn" class="w-10 h-10 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition active:scale-95" onclick="toggleVoicePlayback()">
+                        <i class="fas fa-play ml-0.5"></i>
+                    </button>
+                    <button class="text-gray-400 hover:text-white transition"><i class="fas fa-step-forward"></i></button>
+                </div>
+            </div>
+            
+            <!-- Add Button -->
+            <div class="absolute bottom-[90px] right-6">
+                <label class="w-12 h-12 bg-red-500 text-white rounded-full shadow-lg flex items-center justify-center cursor-pointer hover:bg-red-600 transition transform hover:rotate-90 hover:scale-110">
+                    <input type="file" class="hidden" accept="audio/*" onchange="handleVoiceUpload(this)">
+                    <i class="fas fa-plus text-xl"></i>
+                </label>
+            </div>
+        </div>
+    `},
+
+    {
+        id: 'readme-letter', title: 'ReadMe.txt', icon: '💌', dock: false, folder: 'app-vault', width: 600, height: 700, content: `
         <div class="h-full bg-white p-10 font-serif text-gray-800 leading-relaxed custom-scroll overflow-y-auto" style="background-image: linear-gradient(#999 1px, transparent 1px); background-size: 100% 2em; line-height: 2em;">
             <div class="text-3xl font-bold text-red-500 mb-6 handwritten" style="font-family: 'Dancing Script', cursive;">Dear Harshit,</div>
             <p>If you are reading this, the system is working. But more importantly, <i>we</i> are working.</p>
@@ -475,14 +679,34 @@ const apps = [
             <p>Thank you for being my anchor. For knowing when to joke and when to just be there. For the late night talks and the quiet understanding.</p>
             <p>You make this OS (and my life) better just by running in the background.</p>
             <br>
-            <p class="text-right font-bold">- Shravii</p>
+            <p class="text-right font-bold">– Shravii</p>
         </div>
     `},
 
     {
-        id: 'memories-gallery', title: 'Memories', icon: '📸', dock: true, width: 800, height: 600, onOpen: initGallery, content: `
+        id: 'memories-gallery', title: 'Memories', icon: '📸', dock: false, folder: 'app-vault', width: 800, height: 600, onOpen: initGallery, content: `
         <div id="gallery-container" class="polaroid-gallery custom-scroll">
             <!-- Dynamic Polaroids will be injected here -->
+        </div>
+    `},
+
+    /* === DESKTOP VISIBLE APPS (No Folder) === */
+    {
+        id: 'shravii', title: 'Shravii.exe', icon: '🫧', dock: true, width: 400, height: 500, content: `
+        <div class="h-full bg-[#fff0f5] p-6 custom-scroll">
+            <div class="bg-white p-4 rounded-lg shadow-sm mb-4">
+                <div class="text-xs text-gray-400 mb-1">System User</div>
+                <div class="font-bold text-pink-500 mb-2">Shravii</div>
+                <p class="text-sm text-gray-700 leading-relaxed">
+                    Hi.<br>
+                    I’m the part of your life that won’t stop caring.<br>
+                    Sorry. Not sorry.<br><br>
+                    (Also, drink water.)
+                </p>
+            </div>
+            <div class="flex justify-center mt-8">
+                <img src="https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif" class="w-32 rounded-lg opacity-80 mix-blend-multiply">
+            </div>
         </div>
     `},
 
@@ -582,77 +806,7 @@ function renderSettings() {
     }
 }
 
-/* === SETTINGS FUNCTIONS === */
-function showUpdate(el) {
-    if (el) {
-        el.parentElement.querySelectorAll('div').forEach(d => {
-            d.classList.remove('bg-[#007aff]', 'text-white');
-            d.classList.add('text-gray-700');
-        });
-        el.classList.remove('text-gray-700');
-        el.classList.add('bg-[#007aff]', 'text-white');
-    }
 
-    const area = document.getElementById('settings-area');
-    area.innerHTML = `
-        <div class="system-update">
-            <h2>Harshit OS 19.0</h2>
-            <p class="update-subtitle">System Update</p>
-            <pre class="patch-notes" id="patchNotes"></pre>
-        </div>
-    `;
-
-    const patchText = "• Improved emotional resilience under pressure\\n• Fixed issue where self-doubt appeared late at night\\n• Added support for silence without loneliness\\n• Optimized strength — quieter, more stable\\n• Enhanced responsibility handling\\n• Known issue: still carries more than necessary";
-
-    let i = 0;
-    const speed = 30;
-    const patchEl = document.getElementById("patchNotes");
-
-    function typePatch() {
-        if (i < patchText.length) {
-            patchEl.textContent += patchText.charAt(i);
-            i++;
-            setTimeout(typePatch, speed);
-        }
-    }
-    typePatch();
-}
-
-function resetSettingsView(el) {
-    if (el) {
-        el.parentElement.querySelectorAll('div').forEach(d => {
-            d.classList.remove('bg-[#007aff]', 'text-white');
-            d.classList.add('text-gray-700');
-        });
-        el.classList.remove('text-gray-700');
-        el.classList.add('bg-[#007aff]', 'text-white');
-    }
-    const area = document.getElementById('settings-area');
-    area.innerHTML = `
-        <div class="settings-section">
-            <div class="settings-title">Appearance</div>
-            <div class="appearance-options">
-                <div class="appearance-card active" onclick="setTheme('light', this)"><div class="theme-preview light"></div><div class="theme-label">Light</div></div>
-                <div class="appearance-card" onclick="setTheme('dark', this)"><div class="theme-preview dark"></div><div class="theme-label">Dark</div></div>
-            </div>
-            <div class="mt-8">
-                <div class="settings-title">WALLPAPER</div>
-                <div id="wp-grid" class="grid grid-cols-3 gap-3"></div>
-            </div>
-        </div>
-    `;
-    renderSettings();
-}
-function renderSettings() {
-    const grid = document.getElementById('wp-grid');
-    if (grid) {
-        grid.innerHTML = wallpapers.map((wp, i) => `
-    < div class="wallpaper-thumb" onclick = "setWallpaper('${wp.full}', this)" >
-        <img src="${wp.thumb}">
-        </div>
-`).join('');
-    }
-}
 
 function setTheme(mode, el) {
     settingsState.theme = mode;
@@ -770,7 +924,7 @@ const bondSequence = [
     { type: 'statements', title: 'About You', items: ["Emotional anchor.", "Listener.", "Rememberer.", "Giver, without keeping score.", "<br>That’s how you love."] },
     { type: 'statements', title: 'About Harshit', items: ["Soft, with you.", "Expressive.", "Protective.", "Honest.", "<br>With you, he didn’t guard himself."] },
     { type: 'memories', title: 'The Bond', items: ["Late nights", "Music", "Fights that mattered", "Staying", "<br><span class='text-lg italic'>You didn’t just pass time. You changed each other.</span>"] },
-    { type: 'final', content: "You were home to each other for a while." }
+    { type: 'final', content: "You were home to each other. For a while." }
 ];
 
 function resetBond() {
@@ -957,8 +1111,8 @@ function initDesktop() {
     const dock = document.getElementById('dock');
     grid.innerHTML = ''; dock.innerHTML = '';
     apps.forEach(app => {
-        // Desktop Icons: Not in dock, Not hidden, Not inside a folder
-        if (!app.dock && app.id !== 'hidden-unlock' && !app.folder) {
+        // Desktop Icons: All apps (except hidden/folder contents)
+        if (app.id !== 'hidden-unlock' && !app.folder) {
             const icon = document.createElement('div');
             icon.className = 'desktop-icon group';
             icon.innerHTML = `<div class="icon-img text-3xl mb-2 filter grayscale group-hover:grayscale-0 transition duration-500">${app.icon}</div><div class="icon-label bg-black/20 text-white/80 px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm">${app.title}</div>`;
@@ -974,6 +1128,147 @@ function initDesktop() {
         }
     });
     setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }); }, 1000);
+}
+
+/* === MASTI MODE LOGIC === */
+const bearGifs = [
+    'https://media.tenor.com/Mvhv-g_gqaYAAAAj/mocha-bear.gif',
+    'https://media.tenor.com/2K1l6X1w0wAAAAAj/milk-and-mocha-bear.gif',
+    'https://media.tenor.com/cyw0G8zF5wAAAAAj/milk-mocha-love.gif'
+];
+let mastiActive = false;
+function spawnBears() {
+    if (mastiActive) return;
+    mastiActive = true;
+    for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+            const img = document.createElement('img');
+            img.src = bearGifs[Math.floor(Math.random() * bearGifs.length)];
+            img.className = 'bear-sticker';
+            img.style.left = Math.random() * (window.innerWidth - 150) + 'px';
+            img.style.top = Math.random() * (window.innerHeight - 150) + 'px';
+            document.body.appendChild(img);
+            setTimeout(() => img.remove(), 4000);
+        }, i * 300);
+    }
+    setTimeout(() => mastiActive = false, 4500);
+}
+
+/* === FIRST CONVERSATION LOGIC === */
+const firstConversation = [
+    { user: 'system', text: 'connection first meet— 6/20/24, 12:21 AM' },
+
+    { user: 'harshit', text: 'Hi\n— 6/20/24, 12:22 AM' },
+    { user: 'shravii', text: 'Helloo\n— 6/20/24, 12:23 AM' },
+
+    { user: 'harshit', text: 'sup\n— 6/20/24, 12:23 AM' },
+    { user: 'harshit', text: 'is anyone watching euros?\n— 6/20/24, 12:32 AM' },
+
+    { user: 'shravii', text: 'Umm euros?\nWhere ya from Harry?\n— 6/20/24, 12:33 AM' },
+
+    { user: 'harshit', text: 'India\n— 6/20/24, 12:34 AM' },
+    { user: 'shravii', text: ':o\n— 6/20/24, 12:35 AM' },
+
+    { user: 'harshit', text: 'https://open.spotify.com/track/086myS9r57YsLbJpU0TgK9?si=ee77f9aba9b3405c\n\nany thoughts on this song\n— 6/20/24, 12:35 AM' },
+
+    { user: 'shravii', text: "I'll hear and comment\n— 6/20/24, 12:39 AM" },
+    { user: 'harshit', text: 'alr\n— 6/20/24, 12:39 AM' },
+
+    { user: 'system', text: '— next day —' },
+
+    { user: 'shravii', text: ':Wg_peekaboo:  otaku\n— 6/20/24, 11:51 AM' },
+    { user: 'harshit', text: 'you said my name you wanted me here i am\n— 6/20/24, 11:53 AM' },
+
+    { user: 'shravii', text: 'I saw u typinn\n— 6/20/24, 11:53 AM' },
+    { user: 'harshit', text: 'Ah, but idk what i was typing\n— 6/20/24, 11:54 AM' },
+
+    { user: 'shravii', text: ':what_to_do~1:\n— 6/20/24, 11:54 AM' },
+
+    { user: 'harshit', text: 'Btw mujhe ek baat yaad aai @YVI\n— 6/20/24, 11:55 AM' },
+    { user: 'shravii', text: 'Hmm?\n— 6/20/24, 11:55 AM' },
+
+    {
+        user: 'harshit', text:
+            `So, I attended a camp usme ek session ek to koi budha sa Banda tha, he had like PhD and like shyd ISRO s bhi kuch relation tha uska
+To vo kehte ki 4 hours of sleep is enough, I have slept only 4 hours my whole life and it is perfectly fine
+And fer pta chala ki usko brain tumour hai💀
+— 6/20/24, 11:56 AM` },
+
+    { user: 'shravii', text: '4 hrs seriously\nKoi koi kar leta but everyday not possible :vi_think~1:\n— 6/20/24, 12:01 PM' },
+
+    { user: 'harshit', text: 'Hmm, vhi to\nMinimum everyday 6 hours sleep is a must\n— 6/20/24, 12:01 PM' }
+];
+
+let convoIndex = 0;
+
+function playFirstConversation(container) {
+    convoIndex = 0;
+    container.innerHTML = '';
+
+    function nextMessage() {
+        if (convoIndex >= firstConversation.length) return;
+
+        const msg = firstConversation[convoIndex];
+        const bubble = document.createElement('div');
+
+        if (msg.user === 'system') {
+            bubble.className = 'chat-meta text-center my-4';
+            bubble.textContent = msg.text;
+        } else {
+            bubble.className = `chat-bubble ${msg.user === 'harshit' ? 'chat-left' : 'chat-right'}`;
+            bubble.textContent = msg.text;
+        }
+
+        container.appendChild(bubble);
+        container.scrollTop = container.scrollHeight;
+
+        convoIndex++;
+        setTimeout(nextMessage, 900);
+    }
+
+    nextMessage();
+}
+
+/* === LETTER REVEAL LOGIC === */
+function initLetterReveal() {
+    // Only runs when 'through-my-eyes' is opened
+    const container = document.getElementById('letter-content');
+    if (!container) return;
+
+    // Get direct children (paragraphs, h2, etc.)
+    const children = Array.from(container.children);
+
+    // Hide all initially
+    children.forEach(child => {
+        child.classList.add('reveal-hidden');
+        child.classList.remove('reveal-visible');
+    });
+
+    // Reveal Sequentially
+    let delay = 300;
+    children.forEach((child, index) => {
+        setTimeout(() => {
+            child.classList.add('reveal-visible');
+        }, delay);
+        delay += 1200; // 1.2s delay between chunks implies reading time
+    });
+}
+
+/* === SPOTIFY LOGIC === */
+let isSpotifyPlaying = false;
+function toggleSpotify() {
+    const audio = document.getElementById('spotify-audio');
+    const playIcon = document.getElementById('spotify-play-icon');
+    if (!audio) return;
+
+    if (isSpotifyPlaying) {
+        audio.pause();
+        playIcon.className = "fas fa-play ml-1";
+    } else {
+        audio.play().catch(e => console.log("Audio playback failed:", e));
+        playIcon.className = "fas fa-pause";
+    }
+    isSpotifyPlaying = !isSpotifyPlaying;
 }
 
 const Apps = {
@@ -1870,7 +2165,219 @@ function gameOverRabbit(reason) {
     `;
 }
 
+/* === SECRET VAULT LOGIC === */
+let vaultIdx = 0;
+const vaultPhotos = [
+    "https://images.unsplash.com/photo-1518176258769-f227c798150e?q=80&w=2670", // Stars
+    "https://images.unsplash.com/photo-1549488497-758969f91a51?q=80&w=2670", // Us?
+    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=2689", // Friends
+    "https://images.unsplash.com/photo-1504297050568-910d24c426d3?q=80&w=1287" // Coffee
+];
+
+function initSecretVault() {
+    // Reset State
+    document.getElementById('vault-lock').style.display = 'flex';
+    document.getElementById('vault-lock').style.opacity = '1';
+    document.getElementById('vault-pass').value = '';
+    document.getElementById('vault-error').style.opacity = '0';
+    document.getElementById('vault-content').style.display = 'none';
+    document.getElementById('vault-content').style.opacity = '0';
+
+    // Auto-focus input
+    setTimeout(() => document.getElementById('vault-pass').focus(), 500);
+
+    // Bind Enter Key
+    const inp = document.getElementById('vault-pass');
+    inp.onkeyup = (e) => {
+        if (inp.value.length === 6) checkVaultPassword();
+        if (e.key === 'Enter') checkVaultPassword();
+    };
+}
+
+function checkVaultPassword() {
+    const inp = document.getElementById('vault-pass');
+    const err = document.getElementById('vault-error');
+
+    if (inp.value === '200624') {
+        // SUCCESS
+        inp.blur();
+        document.getElementById('vault-lock').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('vault-lock').style.display = 'none';
+            document.getElementById('vault-content').style.display = 'block';
+
+            // Render Slide
+            renderVaultSlide();
+
+            // Fade In
+            requestAnimationFrame(() => {
+                document.getElementById('vault-content').style.opacity = '1';
+            });
+        }, 500);
+    } else {
+        // FAIL
+        err.style.opacity = '1';
+        inp.classList.add('shake');
+        setTimeout(() => inp.classList.remove('shake'), 500);
+        inp.value = '';
+    }
+}
+
+function renderVaultSlide() {
+    const con = document.getElementById('vault-carousel');
+    if (!con) return;
+
+    const url = vaultPhotos[vaultIdx];
+    con.innerHTML = `
+        <div class="w-full h-full bg-cover bg-center transition-all duration-700 ease-in-out transform scale-105" 
+             style="background-image: url('${url}'); box-shadow: inset 0 0 100px black;">
+        </div>
+        <div class="absolute bottom-10 left-0 right-0 text-center text-white/80 font-serif italic text-lg tracking-widest drop-shadow-md">
+            Memory ${vaultIdx + 1} of ${vaultPhotos.length}
+        </div>
+    `;
+}
+
+function vaultNextSlide() {
+    vaultIdx = (vaultIdx + 1) % vaultPhotos.length;
+    renderVaultSlide();
+}
+
+function vaultPrevSlide() {
+    vaultIdx = (vaultIdx - 1 + vaultPhotos.length) % vaultPhotos.length;
+    renderVaultSlide();
+}
+
+/* === CRAVINGS APP LOGIC === */
+function orderCravings() {
+    const btn = document.getElementById('cravings-btn');
+    const content = document.getElementById('cravings-content');
+    if (!btn || !content) return;
+
+    // Animate Button
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    btn.classList.add('opacity-75', 'cursor-not-allowed');
+
+    setTimeout(() => {
+        // Swap Content to "Intercepted" Message
+        content.innerHTML = `
+            <div class="h-full flex flex-col items-center justify-center p-8 text-center animate-fade-in select-none">
+                 <div class="text-6xl mb-6 transform hover:scale-110 transition duration-500">🚫🚚</div>
+                 <h2 class="text-3xl font-bold text-red-400 mb-4 tracking-wide uppercase border-b-2 border-red-400/20 pb-2">Order Intercepted</h2>
+                 <p class="text-gray-300 text-lg leading-relaxed font-light">
+                    Shravii is currently hand-preparing your virtual comfort.<br>
+                    <span class="text-sm text-gray-500 italic mt-2 block">(No robots allowed in this kitchen)</span>
+                 </p>
+                 <div class="mt-8 bg-white/5 px-6 py-4 rounded-xl border border-white/10 w-full max-w-xs backdrop-blur-sm">
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-gray-400 block mb-1">Estimated Delivery</span>
+                    <div class="text-xl font-bold text-green-400">Next time we meet ❤️</div>
+                 </div>
+            </div>
+        `;
+    }, 1500);
+}
+
+/* === VOICEBOX APP LOGIC === */
+let vbMemos = [
+    { id: 1, title: "Happy Birthday Mr. Ota 🎂", date: "Today", duration: "0:05", src: null }, // Placeholder
+    { id: 2, title: "Stop acting dumb 🙄", date: "Yesterday", duration: "0:03", src: null },
+    { id: 3, title: "Good morning sunshine ☀️", date: "2 days ago", duration: "0:08", src: null }
+];
+let vbCurrentAudio = null;
+let vbIsPlaying = false;
+
+function initVoiceBox() {
+    renderVoiceList();
+}
+
+function renderVoiceList() {
+    const list = document.getElementById('vibes-list');
+    if (!list) return;
+    list.innerHTML = vbMemos.map(m => `
+        <div class="group flex items-center justify-between p-3 bg-white rounded-lg border border-gray-100 hover:border-red-200 hover:shadow-md transition cursor-pointer" onclick="playVoiceMemo(${m.id})">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-red-50 text-red-500 flex items-center justify-center group-hover:bg-red-500 group-hover:text-white transition">
+                    <i class="fas fa-play text-xs ml-0.5"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-bold text-gray-800">${m.title}</div>
+                    <div class="text-[10px] text-gray-400 font-medium">${m.date} • ${m.duration}</div>
+                </div>
+            </div>
+            <div class="text-gray-300 group-hover:text-red-400"><i class="fas fa-ellipsis-v"></i></div>
+        </div>
+    `).join('');
+}
+
+function handleVoiceUpload(input) {
+    if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const url = URL.createObjectURL(file);
+        const newMemo = {
+            id: Date.now(),
+            title: file.name.replace(/\.[^/.]+$/, ""),
+            date: "Just now",
+            duration: "Unknown",
+            src: url
+        };
+        vbMemos.unshift(newMemo);
+        renderVoiceList();
+        playVoiceMemo(newMemo.id);
+    }
+}
+
+function playVoiceMemo(id) {
+    const memo = vbMemos.find(m => m.id === id);
+    if (!memo) return;
+
+    // Stop current
+    if (vbCurrentAudio) {
+        vbCurrentAudio.pause();
+        vbCurrentAudio = null;
+    }
+
+    document.getElementById('vb-now-playing').innerText = memo.title;
+
+    // Play real audio or simulate
+    if (memo.src) {
+        vbCurrentAudio = new Audio(memo.src);
+        vbCurrentAudio.play();
+        vbCurrentAudio.onended = () => {
+            vbIsPlaying = false;
+            updatePlayBtn();
+        };
+        vbIsPlaying = true;
+    } else {
+        // Placeholder simulation
+        alert(`(Simulated Audio Playing: "${memo.title}")\n\n*Use the + button to upload real audio files!*`);
+        vbIsPlaying = false;
+    }
+    updatePlayBtn();
+}
+
+function toggleVoicePlayback() {
+    if (vbCurrentAudio) {
+        if (vbIsPlaying) vbCurrentAudio.pause();
+        else vbCurrentAudio.play();
+        vbIsPlaying = !vbIsPlaying;
+        updatePlayBtn();
+    }
+}
+
+function updatePlayBtn() {
+    const btn = document.getElementById('vb-play-btn');
+    if (btn) btn.innerHTML = vbIsPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play ml-0.5"></i>';
+}
+
 // Global Exports
+window.initVoiceBox = initVoiceBox;
+window.handleVoiceUpload = handleVoiceUpload;
+window.toggleVoicePlayback = toggleVoicePlayback;
+window.orderCravings = orderCravings;
+window.initSecretVault = initSecretVault;
+window.checkVaultPassword = checkVaultPassword;
+window.vaultNextSlide = vaultNextSlide;
+window.vaultPrevSlide = vaultPrevSlide;
 window.startRabbitGame = startRabbitGame;
 window.initRabbitGame = initRabbitGame;
 window.handleTerminalAppCommand = handleTerminalAppCommand;
@@ -1886,6 +2393,10 @@ window.playRadio = playRadio;
 window.initRadio = initRadio;
 window.initInkpot = initInkpot;
 window.nextPoem = nextPoem;
+window.toggleSpotify = toggleSpotify;
+window.spawnBears = spawnBears;
+window.playFirstConversation = playFirstConversation;
+window.initLetterReveal = initLetterReveal;
 
 // START HERE
 window.Apps = Apps; // Global exposure

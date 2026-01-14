@@ -2043,3 +2043,101 @@ body {
 .fa-spin-slow {
     animation: fa-spin 4s infinite linear;
 }
+
+/* ===== First Conversation Chat ===== */
+
+.chat-container {
+    background: #0f172a;
+    color: #e5e7eb;
+    height: 100%;
+    padding: 16px;
+    overflow-y: auto;
+    font-family: 'Inter', sans-serif;
+}
+
+.chat-bubble {
+    max-width: 75%;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    border-radius: 14px;
+    line-height: 1.5;
+    font-size: 14px;
+    animation: fadeInUp 0.3s ease forwards;
+    white-space: pre-wrap;
+}
+
+.chat-left {
+    background: #1e293b;
+    align-self: flex-start;
+    border-top-left-radius: 4px;
+}
+
+.chat-right {
+    background: #2563eb;
+    align-self: flex-end;
+    border-top-right-radius: 4px;
+}
+
+.chat-meta {
+    font-size: 10px;
+    opacity: 0.6;
+    margin-bottom: 2px;
+}
+
+.chat-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Letter Reveal Animation ===== */
+.reveal-hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+
+/* ===== Spotify Vibe Check ===== */
+.spotify-container {
+    background: linear-gradient(to bottom, #1DB954, #000000);
+}
+
+.album-spin {
+    animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Custom Scrollbar for Spotify */
+.spotify-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.spotify-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+.spotify-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
