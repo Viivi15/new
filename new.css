@@ -2355,3 +2355,40 @@ body {
     animation: fadeInUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
+
+/* Animation Utilities */
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+.animate-zoom-in {
+    animation: zoomIn 0.2s ease-out forwards;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+.fade-in-out {
+    animation: fadeInOut 2s ease-in-out forwards;
+}
+.fade-in-out-slow {
+    animation: fadeInOut 4s ease-in-out forwards;
+}
+
+
+/* Fix Clock Blinking/Jitter */
+#clock {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+    letter-spacing: 0.5px;
+    animation: none !important;
+    transition: color 0.2s ease !important; /* Keep hover color, kill others */
+    min-width: 140px; /* Ensure space so it doesn't jump */
+    display: inline-block;
+    text-align: right;
+    white-space: nowrap;
+}
+

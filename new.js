@@ -1,4 +1,25 @@
 /* === CONFIGURATION === */
+function updateClock() {
+    try {
+        const now = new Date();
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        let hours = now.getHours();
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12;
+        const str = `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}, ${hours}:${minutes} ${ampm}`;
+        const clock = document.getElementById('clock');
+        if (clock) {
+            clock.textContent = str;
+        }
+    } catch (e) { }
+}
+updateClock();
+
+
+
+
 
 
 /* === SETTINGS STATE === */
@@ -900,16 +921,7 @@ function setWallpaper(url, el) {
     el.classList.add('active');
 }
 
-/* === CLOCK LOGIC (Updates) === */
-function updateClock() {
-    const now = new Date();
-    const time = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-    const date = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-    const clockEl = document.getElementById('clock');
-    if (clockEl) clockEl.innerText = `${date}  ${time} `;
-}
-setInterval(updateClock, 1000);
-updateClock(); // Initial call
+
 
 /* === MENU BAR LOGIC === */
 function toggleMenu(menuId) {
@@ -2900,13 +2912,7 @@ function initWeather() {
     }
 }
 
-// 7. Clock
-function updateClock() {
-    const now = new Date();
-    const options = { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' };
-    const clock = document.getElementById('clock');
-    if (clock) clock.innerText = now.toLocaleDateString('en-US', options);
-}
+
 
 /* ========================================= */
 /* ==== SYSTEM ACTIONS (The Thoughtful Part) ==== */
@@ -2982,14 +2988,128 @@ const System = {
 
 window.System = System; // Expose
 
+/* ========================================= */
+/* ==== TOP BAR ENHANCEMENTS ==== */
+/* ========================================= */
+
+// Calendar Logic
+let calendarDate = new Date(); // Global state for navigation
+
+function changeMonth(offset) {
+    calendarDate.setMonth(calendarDate.getMonth() + offset);
+    renderCalendar();
+}
+
+function toggleCalendar() {
+    const cal = document.getElementById('mini-calendar');
+    if (!cal) return;
+
+    if (cal.classList.contains('hidden')) {
+        cal.classList.remove('hidden');
+        calendarDate = new Date(); // Reset to today on open
+        renderCalendar();
+    } else {
+        cal.classList.add('hidden');
+    }
+}
+
+function renderCalendar() {
+    const viewDate = calendarDate;
+    const today = new Date(); // Actual Today
+
+    const monthEl = document.getElementById('cal-month');
+    const yearEl = document.getElementById('cal-year');
+    const daysEl = document.getElementById('cal-days');
+    const footerEl = document.querySelector('#mini-calendar .text-blue-300');
+
+    if (!daysEl) return;
+
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    // Set Header
+    if (monthEl) monthEl.innerText = monthNames[viewDate.getMonth()];
+    if (yearEl) yearEl.innerText = viewDate.getFullYear();
+
+    // Define Events
+    const specialDates = [
+        { d: 30, m: 0, title: "Harshit Birthday 🎂" }, // Jan 30
+        { d: 15, m: 8, title: "Shravii's Birthday 🎉" }, // Sep 15
+        { d: 20, m: -1, title: "The First Meet ❤️" }   // Monthly
+    ];
+
+    // Calculate Days for ViewDate
+    const year = viewDate.getFullYear();
+    const month = viewDate.getMonth();
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    daysEl.innerHTML = '';
+
+    // Empty slots
+    for (let i = 0; i < firstDay; i++) {
+        daysEl.innerHTML += `<div></div>`;
+    }
+
+    let activeEventText = "No events selected.";
+
+    // Days
+    for (let d = 1; d <= daysInMonth; d++) {
+        // Is this day TODAY (Absolute)?
+        const isToday = (d === today.getDate() && month === today.getMonth() && year === today.getFullYear());
+
+        // Does this day have an EVENT?
+        const evt = specialDates.find(e => e.d === d && (e.m === -1 || e.m === month));
+
+        // Update footer if today is visible
+        if (isToday) activeEventText = evt ? evt.title : "No events today.";
+
+        // Visuals
+        let dayClass = "aspect-square flex flex-col items-center justify-center rounded-full relative ";
+        if (isToday) dayClass += "bg-red-500 text-white shadow-lg font-bold";
+        else dayClass += "hover:bg-white/10 cursor-pointer text-gray-300 transition-colors";
+
+        // Event Dot
+        const dotHtml = evt ? `<div class="w-1 h-1 rounded-full ${isToday ? 'bg-white' : 'bg-blue-400'} absolute bottom-1"></div>` : '';
+
+        // Click Action
+        const clickAction = evt ? `document.querySelector('#mini-calendar .text-blue-300').innerText = '${evt.title.replace("'", "\\'")}'` : `document.querySelector('#mini-calendar .text-blue-300').innerText = 'No events on this day.'`;
+
+        daysEl.innerHTML += `
+            <div class="${dayClass}" title="${evt ? evt.title : ''}" onclick="${clickAction}">
+                ${d}
+                ${dotHtml}
+            </div>
+        `;
+    }
+
+    if (footerEl) footerEl.innerText = activeEventText;
+}
+
 // Initialize Everything
+let clockInterval;
 function initHappyMenuBar() {
     initBattery();
     initNetworkStatus();
     initWeather();
-    setInterval(updateClock, 1000);
+
+    // Clear existing interval if any
+    if (clockInterval) clearInterval(clockInterval);
+    clockInterval = setInterval(updateClock, 1000);
+
     updateClock();
+
+    // Close calendar on outside click
+    document.addEventListener('click', (e) => {
+        const cal = document.getElementById('mini-calendar');
+        const clock = document.getElementById('clock');
+        if (cal && !cal.classList.contains('hidden') && !cal.contains(e.target) && e.target !== clock) {
+            cal.classList.add('hidden');
+        }
+    });
 }
+
+
+
 
 
 

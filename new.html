@@ -345,7 +345,39 @@
                 </div>
 
                 <!-- Clock -->
-                <span id="clock" class="text-[13px] font-medium min-w-[130px] text-right">--:--</span>
+                <span id="clock"
+                    class="text-[13px] font-medium min-w-[130px] text-right cursor-pointer hover:text-blue-200 transition-colors"
+                    onclick="toggleCalendar()" title="Show Calendar">--:--</span>
+            </div>
+
+            <!-- Mini Calendar Widget -->
+            <div id="mini-calendar"
+                class="fixed top-10 right-2 w-64 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl hidden p-4 z-[6000] text-white animate-zoom-in">
+                <div class="flex justify-between items-center mb-4 select-none">
+                    <div class="cursor-pointer hover:text-blue-400 hover:scale-110 transition p-1"
+                        onclick="changeMonth(-1)">❮</div>
+                    <div class="flex gap-2 items-baseline">
+                        <span id="cal-month" class="font-bold text-lg">Month</span>
+                        <span id="cal-year" class="text-gray-400 text-sm">Year</span>
+                    </div>
+                    <div class="cursor-pointer hover:text-blue-400 hover:scale-110 transition p-1"
+                        onclick="changeMonth(1)">❯</div>
+                </div>
+                <div class="grid grid-cols-7 gap-1 text-center text-xs text-gray-400 mb-2">
+                    <div>Su</div>
+                    <div>Mo</div>
+                    <div>Tu</div>
+                    <div>We</div>
+                    <div>Th</div>
+                    <div>Fr</div>
+                    <div>Sa</div>
+                </div>
+                <div id="cal-days" class="grid grid-cols-7 gap-1 text-center text-sm font-medium">
+                    <!-- JS Generated -->
+                </div>
+                <div class="mt-4 pt-3 border-t border-white/10 text-center">
+                    <div class="text-xs text-blue-300">No events today.</div>
+                </div>
             </div>
         </div>
 
