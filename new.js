@@ -252,17 +252,47 @@ const apps = [
     /* === FOLDERS === */
     {
         id: 'folder-system', title: 'System Core', icon: '📁', dock: false, width: 600, height: 450, content: `
-        <div class="folder-window-grid">
-            <div class="win-icon" onclick="Apps.open('first-conversation')"><div class="icon-img">💬</div><div class="icon-label">12:21 AM</div></div>
-            <div class="win-icon" onclick="Apps.open('connection-log')"><div class="icon-img">📜</div><div class="icon-label">Connection.log</div></div>
-            <div class="win-icon" onclick="Apps.open('mr-snow')"><div class="icon-img">❄️</div><div class="icon-label">Mr. Snow</div></div>
-            <div class="win-icon" onclick="Apps.open('facts')"><div class="icon-img">📄</div><div class="icon-label">Harshit<br>Facts.txt</div></div>
-             <div class="win-icon" onclick="Apps.open('not-dumb')"><div class="icon-img">🤨</div><div class="icon-label">Not Dumb</div></div>
-            <div class="win-icon" onclick="Apps.open('madrid')"><div class="icon-img">⚽</div><div class="icon-label">HalaMadrid.exe</div></div>
-            <div class="win-icon" onclick="Apps.open('app-grown')"><div class="icon-img">🧠</div><div class="icon-label">19.exe</div></div>
-            <div class="win-icon" onclick="Apps.open('blueprint')"><div class="icon-img">📐</div><div class="icon-label">Blueprint</div></div>
-             <div class="win-icon" onclick="Apps.open('terminal-app')"><div class="icon-img">💻</div><div class="icon-label">Terminal.sh</div></div>
-             <div class="w-full text-center text-xs text-gray-400 mt-4 col-span-full">System identity & base configuration</div>
+        <div class="h-full bg-gradient-to-b from-gray-50 to-white p-6 overflow-y-auto custom-scroll">
+            <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6 border-b border-gray-100 pb-2">Root Directory</div>
+            <div class="folder-window-grid">
+                <div class="win-icon group" onclick="Apps.open('first-conversation')">
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">💬</div>
+                    <div class="icon-label group-hover:text-blue-600 transition-colors">12:21 AM</div>
+                </div>
+                <div class="win-icon group" onclick="Apps.open('connection-log')">
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">📜</div>
+                    <div class="icon-label group-hover:text-amber-600 transition-colors">Connection.log</div>
+                </div>
+                <div class="win-icon group" onclick="Apps.open('mr-snow')">
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">❄️</div>
+                    <div class="icon-label group-hover:text-cyan-600 transition-colors">Mr. Snow</div>
+                </div>
+                <div class="win-icon group" onclick="Apps.open('facts')">
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">📄</div>
+                    <div class="icon-label group-hover:text-indigo-600 transition-colors">Harshit<br>Facts.txt</div>
+                </div>
+                 <div class="win-icon group" onclick="Apps.open('not-dumb')">
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">🤨</div>
+                    <div class="icon-label group-hover:text-pink-600 transition-colors">Not Dumb</div>
+                </div>
+                <div class="win-icon group" onclick="Apps.open('madrid')">
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">⚽</div>
+                    <div class="icon-label group-hover:text-indigo-700 transition-colors">HalaMadrid.exe</div>
+                </div>
+                <div class="win-icon group" onclick="Apps.open('app-grown')">
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">🧠</div>
+                    <div class="icon-label group-hover:text-purple-600 transition-colors">19.exe</div>
+                </div>
+                <div class="win-icon group" onclick="Apps.open('blueprint')">
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">📐</div>
+                    <div class="icon-label group-hover:text-blue-500 transition-colors">Blueprint</div>
+                </div>
+                 <div class="win-icon group" onclick="Apps.open('terminal-app')">
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">💻</div>
+                    <div class="icon-label group-hover:text-emerald-500 transition-colors">Terminal.sh</div>
+                </div>
+            </div>
+            <div class="w-full text-center text-[10px] text-gray-300 mt-8 uppercase tracking-widest font-mono">System Core • v19.0</div>
         </div>
     `},
 
@@ -316,10 +346,11 @@ const apps = [
         id: 'terminal-app', title: 'Terminal.sh', icon: '💻', dock: false, folder: 'folder-system', width: 600, height: 450, content: `
         <div class="terminal-window h-full bg-[#1e1e1e] text-green-500 font-mono text-sm p-4 flex flex-col">
             <div id="term-output-app" class="flex-1 overflow-y-auto mb-2 custom-scroll space-y-1">
-                <div>HarshitOS Terminal [Version 1.0.0]</div>
-                <div>(c) 2024 System Core. All rights reserved.</div>
+                <div class="selection-none" style="text-shadow: 0 0 5px rgba(74, 222, 128, 0.5);">HarshitOS Terminal [Version 1.0.0]</div>
+                <div class="opacity-70">(c) 2024 System Core. All rights reserved.</div>
                 <br>
-                <div>Type 'help' for available commands.</div>
+                <div class="animate-pulse">Type 'help' for available commands.</div>
+                <div class="text-xs text-gray-500 mt-2">Server Status: <span class="text-green-400">ONLINE</span></div>
                 <br>
             </div>
             <div class="flex items-center gap-2 border-t border-gray-700 pt-2">
@@ -334,16 +365,22 @@ const apps = [
     },
     {
         id: 'first-conversation', title: '12:21 AM', icon: '💬', dock: false, folder: 'folder-system', width: 520, height: 520, content: `
-        <div class="flex flex-col h-full">
-            <div class="px-4 py-2 border-b border-white/10 flex justify-between items-center bg-white/5">
-                <div class="flex items-center gap-2">
-                    <span class="text-xs font-bold opacity-60">Status:</span>
-                    <div id="shravii-status-dot" class="status-dot"></div>
-                    <span class="text-[10px] uppercase tracking-tighter opacity-40">Encryption Active</span>
+        <div class="flex flex-col h-full bg-[#f8f9fa] relative">
+            <!-- Background Pattern -->
+            <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 20px 20px;"></div>
+            
+            <div class="px-4 py-3 border-b border-gray-200/50 flex justify-between items-center bg-white/50 backdrop-blur-sm z-10 sticky top-0">
+                <div class="flex items-center gap-3">
+                    <div id="shravii-status-dot" class="status-dot w-2 h-2 bg-green-500 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+                    <div class="flex flex-col">
+                        <span class="text-xs font-bold text-gray-700">June 20, 2024</span>
+                        <span class="text-[9px] uppercase tracking-wider text-gray-400 font-medium">Chat Log #001</span>
+                    </div>
                 </div>
-                <button onclick="toggleChatTheme()" class="chat-theme-toggle">🌙 Switch Mode</button>
+                <button onclick="toggleChatTheme()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1 rounded-full transition font-medium border border-slate-200">🌙 Theme</button>
             </div>
-            <div class="chat-container flex-1" id="chatReplay"></div>
+            
+            <div class="chat-container flex-1 relative z-0 custom-scroll pt-4" id="chatReplay"></div>
         </div>
         `,
         onOpen() {
@@ -361,44 +398,50 @@ const apps = [
 
     {
         id: 'mr-snow', title: 'Mr. Snow', icon: '❄️', dock: true, width: 350, height: 480, onOpen: initMrSnowApp, content: `
-        <div class="mr-snow-view">
-            <canvas id="snow-canvas"></canvas>
-            <h3 class="mr-snow-title">The Nature</h3>
-            <div class="mr-snow-text">
-In the hush of winter, he found himself.
-He kept the name, held close to Rain.
-Silent, steady, he learned to remain.
-
-Gentle enough to hold the fall,
-strong enough to stay through all.
-
-Mr. Snow
-— known by those
-who stay to see it fall.
-A name that shows
-some things are felt, not meant to know.
+        <div class="mr-snow-view relative h-full">
+            <canvas id="snow-canvas" class="absolute inset-0 z-0"></canvas>
+            
+            <div class="relative z-10 h-full flex flex-col items-center justify-center p-8 pointer-events-none">
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl max-w-sm pointer-events-auto transform transition hover:scale-105 duration-700">
+                    <h3 class="mr-snow-title text-3xl font-serif text-white mb-6 text-center drop-shadow-md">The Nature</h3>
+                    <div class="mr-snow-text text-white/90 font-serif leading-relaxed text-center text-sm space-y-4">
+                        <p>In the hush of winter, he found himself.<br>He kept the name, held close to Rain.<br>Silent, steady, he learned to remain.</p>
+                        <p>Gentle enough to hold the fall,<br>strong enough to stay through all.</p>
+                        <div class="w-12 h-[1px] bg-white/30 mx-auto my-4"></div>
+                        <p class="italic text-white/70 text-xs">Mr. Snow — known by those<br>who stay to see it fall.</p>
+                    </div>
+                    
+                    <div class="mr-snow-controls mt-8 flex justify-center gap-3">
+                        <button class="snow-btn px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-xs text-white uppercase tracking-wider backdrop-blur-sm border border-white/10 transition" onclick="mrSnowComfort()">Comfort</button>
+                        <button class="snow-btn px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-xs text-white uppercase tracking-wider backdrop-blur-sm border border-white/10 transition" onclick="mrSnowFlurry()">Flurry</button>
+                    </div>
+                </div>
+                <div id="comfort-msg" class="mt-8 text-white/90 text-lg font-serif italic drop-shadow-lg transition-opacity duration-1000 opacity-0 bg-black/20 px-6 py-2 rounded-full backdrop-blur-sm border border-white/10"></div>
             </div>
-            <div class="mr-snow-controls">
-                <button class="snow-btn" onclick="mrSnowComfort()">Get Comfort</button>
-                <button class="snow-btn" onclick="mrSnowFlurry()">Snow Flurry</button>
-            </div>
-            <div id="comfort-msg"></div>
         </div>
     `},
 
     {
         id: 'why-matter', title: 'Why You Matter', icon: '💭', dock: false, width: 600, height: 400, content: `
-        <div class="h-full bg-white p-12 flex flex-col items-center justify-center text-center cursor-pointer relative" onclick="nextWhy()">
-            <div class="absolute top-6 left-0 w-full text-center">
-                <div class="text-[10px] uppercase tracking-widest text-gray-300 font-bold mb-1">System Log</div>
-                <div class="text-[10px] text-gray-400 italic">Realizations compiled over time.<br>Just the ones that stayed.</div>
+        <div class="h-full bg-gradient-to-br from-rose-50 via-white to-teal-50 p-12 flex flex-col items-center justify-center text-center cursor-pointer relative overflow-hidden" onclick="nextWhy()">
+             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-rose-200 to-transparent opacity-50"></div>
+            
+            <div class="absolute top-6 left-0 w-full text-center z-10">
+                <div class="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-2">System Log</div>
+                <div class="text-[10px] text-gray-400/80 italic font-medium">Realizations compiled over time.</div>
             </div>
 
-            <div id="why-text" class="text-xl font-serif text-gray-800 leading-relaxed transition-opacity duration-500 mt-4">
-                You show up, even when tired.
+            <div class="relative z-10">
+                <span class="text-6xl text-rose-100 absolute -top-8 -left-4 font-serif -z-10 opacity-50">“</span>
+                <div id="why-text" class="text-2xl font-serif text-slate-700 leading-relaxed transition-opacity duration-500 drop-shadow-sm">
+                    You show up,<br>even when tired.
+                </div>
             </div>
             
-            <div class="absolute bottom-6 text-xs text-blue-300/50 uppercase tracking-widest animate-pulse">Click to continue</div>
+            <div class="absolute bottom-6 flex flex-col items-center gap-2">
+                <div class="w-[1px] h-8 bg-gradient-to-b from-gray-300 to-transparent"></div>
+                <div class="text-[10px] text-slate-400 uppercase tracking-widest animate-pulse font-medium">Click to continue</div>
+            </div>
         </div>
     `},
 
@@ -406,14 +449,42 @@ some things are felt, not meant to know.
 
     {
         id: 'admire', title: 'Deep Truths', icon: '🌟', dock: false, width: 500, height: 400, content: `
-        <div class="h-full bg-[#fafafa] p-10">
-            <h3 class="font-bold text-gray-800 mb-6 border-l-4 border-yellow-400 pl-3">Confirmed Data</h3>
-            <ul class="space-y-4 text-gray-600 text-sm list-disc pl-5">
-                <li>Your honesty (rare).</li>
-                <li>How you protect people quietly (noticed).</li>
-                <li>How you keep going (respected).</li>
-                <li>Your memory (scary but cool).</li>
-            </ul>
+        <div class="h-full bg-slate-50 p-8 flex flex-col relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-400/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+            
+            <h3 class="font-bold text-2xl text-slate-800 mb-8 border-l-4 border-yellow-400 pl-4 z-10">Confirmed Data</h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 z-10 overflow-y-auto custom-scroll pr-2">
+                <!-- Card 1 -->
+                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+                    <div class="text-2xl mb-2 group-hover:scale-110 transition-transform origin-left">💎</div>
+                    <div class="font-bold text-slate-700 text-sm mb-1">Honesty</div>
+                    <div class="text-xs text-slate-500">Status: Rare. Verified.</div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+                    <div class="text-2xl mb-2 group-hover:scale-110 transition-transform origin-left">🛡️</div>
+                    <div class="font-bold text-slate-700 text-sm mb-1">Quiet Protection</div>
+                    <div class="text-xs text-slate-500">Protects without announcing.</div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+                    <div class="text-2xl mb-2 group-hover:scale-110 transition-transform origin-left">🔥</div>
+                    <div class="font-bold text-slate-700 text-sm mb-1">Persistence</div>
+                    <div class="text-xs text-slate-500">Keeps moving despite everything.</div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
+                    <div class="text-2xl mb-2 group-hover:scale-110 transition-transform origin-left">🧠</div>
+                    <div class="font-bold text-slate-700 text-sm mb-1">Memory</div>
+                    <div class="text-xs text-slate-500">Scary accurate. Very cool.</div>
+                </div>
+            </div>
+            
+            <div class="mt-auto text-[10px] text-slate-400 text-center pt-4 tracking-widest uppercase opacity-50">Confidential File</div>
         </div>
     `},
 
@@ -712,9 +783,119 @@ some things are felt, not meant to know.
     /* CLUSTER 3: COMFORT & CALM (Safe Spaces) */
     {
         id: 'music-night', title: 'Late Night', icon: '🌙', dock: true, width: 350, height: 200, content: `
-        <div class="h-full bg-[#0F172A] text-slate-300 flex flex-col items-center justify-center gap-4">
-            <div class="text-xs tracking-widest uppercase opacity-50">Instrumental Only</div>
-            <i class="fas fa-play-circle text-4xl text-white opacity-80 hover:opacity-100 cursor-pointer transition" onclick="createModal({ title: 'Late Night Mode', desc: 'Playing soft piano...', icon: '🎹' })"></i>
+        <div class="h-full bg-slate-900 text-slate-300 flex flex-col items-center justify-center gap-6 relative overflow-hidden group">
+            <!-- Background Glow -->
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-indigo-900/20"></div>
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl"></div>
+            
+            <div class="text-[10px] tracking-[0.3em] uppercase opacity-40 font-light">Late Night Vibes</div>
+            
+            <div class="relative transition-transform duration-700 hover:scale-105">
+                <div class="absolute inset-0 bg-indigo-500/20 rounded-full blur-xl animate-pulse"></div>
+                <i class="fas fa-compact-disc text-6xl text-white/90 hover:text-white cursor-pointer transition-all duration-500 hover:rotate-180" style="filter: drop-shadow(0 0 10px rgba(255,255,255,0.3))" onclick="createModal({ title: 'Late Night Mode', desc: 'Playing soft piano...', icon: '🎹' })"></i>
+            </div>
+            
+            <div class="text-xs text-center opacity-60 font-light max-w-[200px]">
+                "Quiet music for loud minds."
+            </div>
+        </div>
+    `},
+
+    {
+        id: 'thank-you', title: 'Thank You', icon: '✨', dock: false, folder: 'folder-feelings', width: 450, height: 500, content: `
+        <div class="h-full bg-indigo-50 p-6 overflow-y-auto custom-scroll">
+            <div class="text-center mb-6">
+                <div class="text-xs uppercase tracking-widest text-indigo-300 font-bold mb-1">Gratitude Log</div>
+                <h2 class="text-2xl font-serif text-indigo-900">Things I'm Grateful For</h2>
+            </div>
+            <div class="space-y-3">
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-indigo-100 transform hover:scale-[1.02] transition-transform">
+                    <div class="text-sm font-medium text-gray-700">For listening</div>
+                    <div class="text-xs text-gray-400 mt-1">Even when I ramble about nonsense.</div>
+                </div>
+                 <div class="bg-white p-4 rounded-xl shadow-sm border border-indigo-100 transform hover:scale-[1.02] transition-transform">
+                    <div class="text-sm font-medium text-gray-700">For the laughs</div>
+                    <div class="text-xs text-gray-400 mt-1">The inside jokes that only we get.</div>
+                </div>
+                 <div class="bg-white p-4 rounded-xl shadow-sm border border-indigo-100 transform hover:scale-[1.02] transition-transform">
+                    <div class="text-sm font-medium text-gray-700">For staying</div>
+                    <div class="text-xs text-gray-400 mt-1">When things got quiet or tough.</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-indigo-100 transform hover:scale-[1.02] transition-transform">
+                    <div class="text-sm font-medium text-gray-700">For being you</div>
+                    <div class="text-xs text-gray-400 mt-1">Truly.</div>
+                </div>
+            </div>
+            <div class="mt-8 text-center">
+                 <button onclick="Apps.close('thank-you')" class="px-6 py-2 bg-indigo-100 hover:bg-indigo-200 text-indigo-600 rounded-full text-xs font-bold transition">Close</button>
+            </div>
+        </div>
+    `},
+
+    {
+        id: 'inkpot', title: 'The Inkpot', icon: '🖋️', dock: false, folder: 'folder-feelings', width: 500, height: 600, content: `
+        <div class="h-full bg-[#fdfbf7] p-8 overflow-y-auto custom-scroll relative">
+            <!-- Paper Texture Effect -->
+            <div class="absolute inset-0 opacity-5" style="background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png'); mix-blend-mode: multiply;"></div>
+            
+            <div class="relative z-10 font-serif text-gray-800">
+                <div class="text-center mb-10">
+                    <div class="text-4xl mb-2 text-gray-900 border-b-2 border-gray-900 inline-block pb-2">The Inkpot</div>
+                    <div class="text-xs italic text-gray-500">Spilled thoughts.</div>
+                </div>
+
+                <div class="space-y-12">
+                    <div class="text-center">
+                        <p class="text-lg leading-loose italic text-gray-700">
+                            "Some words<br>
+                            are better left<br>
+                            written in ink<br>
+                            than spoken aloud."
+                        </p>
+                    </div>
+
+                    <div class="w-full h-[1px] bg-gray-200"></div>
+
+                    <div class="text-left px-4">
+                        <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Note #1</div>
+                        <p class="text-sm leading-relaxed text-gray-600">
+                            Sometimes I wonder if you know how much impact you have. Providing a safe space isn't easy, but you make it look effortless.
+                        </p>
+                    </div>
+                     <div class="text-left px-4">
+                        <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Note #2</div>
+                        <p class="text-sm leading-relaxed text-gray-600">
+                            Friendship isn't about talking every day. It's about the comfort of knowing that when we do, it's just like before.
+                        </p>
+                    </div>
+                </div>
+                
+                 <div class="mt-16 text-center opacity-50 hover:opacity-100 transition-opacity">
+                    <i class="fas fa-pen-nib text-xl text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    `},
+
+    {
+        id: 'last-thing', title: 'One Last Thing', icon: '🖤', dock: false, folder: 'folder-feelings', width: 400, height: 300, content: `
+        <div class="h-full bg-black flex flex-col items-center justify-center text-center p-6 relative overflow-hidden">
+             <div class="absolute inset-0 bg-gradient-to-tr from-gray-900 to-black"></div>
+             
+             <div class="relative z-10 animate-fade-in-up">
+                <div class="text-5xl mb-4">🖤</div>
+                <h3 class="text-xl font-serif text-white mb-4">You are enough.</h3>
+                <p class="text-xs text-gray-400 leading-relaxed max-w-[200px] mx-auto">
+                    Just in case you forgot today.<br>
+                    You are doing great.
+                </p>
+                
+                <div class="mt-8">
+                     <button onclick="Apps.close('last-thing')" class="text-[10px] text-gray-600 hover:text-white uppercase tracking-widest transition">
+                        Okay, I believe you
+                    </button>
+                </div>
+             </div>
         </div>
     `},
 
@@ -782,15 +963,25 @@ some things are felt, not meant to know.
 
     {
         id: 'future', title: 'Future You', icon: '🔮', dock: false, width: 400, height: 300, content: `
-        <div class="h-full bg-indigo-50 p-8 flex items-center justify-center text-center">
-            <div class="text-indigo-800 font-serif italic">"I wonder what we'll laugh about next year."</div>
+        <div class="h-full bg-gradient-to-br from-[#1e1e2e] via-[#2a2a40] to-[#1e1e2e] p-8 flex flex-col items-center justify-center text-center relative overflow-hidden">
+             <!-- Stars -->
+            <div class="absolute top-10 left-10 text-white/10 text-xs text-4xl">✨</div>
+            <div class="absolute bottom-10 right-20 text-white/10 text-xs text-2xl">✨</div>
+            
+            <div class="relative z-10 p-6 border border-white/5 rounded-2xl bg-white/5 backdrop-blur-sm shadow-2xl transform transition hover:-translate-y-1 duration-500">
+                <div class="text-4xl mb-4 opacity-80">🔮</div>
+                <div class="text-indigo-100 font-serif italic text-lg leading-relaxed">"I wonder what we'll laugh<br>about next year."</div>
+                <div class="mt-4 h-[1px] w-12 bg-indigo-400/30 mx-auto"></div>
+            </div>
         </div>
     `},
 
     {
         id: 'blueprint', title: 'Blueprint.bp', icon: '📐', dock: true, width: 600, height: 400, content: `
-        <div class="h-full bg-[#1e1e1e] text-blue-300 font-mono text-sm p-6 custom-scroll select-text">
-            <pre class="whitespace-pre-wrap font-inherit">
+        <div class="h-full bg-[#004a80] text-blue-100 font-mono text-sm p-0 flex flex-col">
+            <!-- Grid Background -->
+            <div class="flex-1 p-6 custom-scroll select-text relative" style="background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 20px 20px;">
+                <pre class="whitespace-pre-wrap font-inherit relative z-10" style="text-shadow: 1px 1px 0 #003366;">
 [Project: BLUEPRINT]
 [Version: 1.0]
 
@@ -848,6 +1039,22 @@ OBJECTIVE:
                 <button class="radio-btn happy" onclick="playRadio('happy')">Happy 😄</button>
                 <button class="radio-btn annoyed" onclick="playRadio('annoyed')">Annoyed 😤</button>
                 <button class="radio-btn proud" onclick="playRadio('proud')">Proud 🦁</button>
+            </div>
+        </div>
+    `},
+
+    {
+        id: 'quiz', title: 'The Us Quiz', icon: '🧩', dock: false, folder: 'folder-fun', width: 500, height: 600, onOpen: startQuiz, content: `
+        <div class="h-full bg-indigo-50 flex flex-col items-center justify-center text-center p-8 relative overflow-hidden" id="quiz-container">
+            <div class="text-6xl mb-6 animate-bounce">🧩</div>
+            <h2 class="text-2xl font-bold text-indigo-900 mb-2">The Us Quiz</h2>
+            <p class="text-sm text-indigo-400 mb-8">How well do you know the lore?</p>
+            
+            <div class="w-full max-w-xs bg-white p-6 rounded-2xl shadow-xl border border-indigo-100">
+                <div id="q-text" class="text-lg font-medium text-gray-800 mb-6 min-h-[60px] flex items-center justify-center">Loading...</div>
+                <input type="text" id="q-input" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-center mb-4 focus:outline-none focus:border-indigo-400 transition" placeholder="Type answer..." autocomplete="off" onkeydown="if(event.key === 'Enter') submitAnswer()">
+                <button onclick="submitAnswer()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg shadow-lg active:scale-95 transition">Submit</button>
+                <div id="q-feedback" class="text-xs mt-4 h-4 font-bold tracking-wide transition-colors"></div>
             </div>
         </div>
     `},
@@ -1650,6 +1857,14 @@ function initDesktop() {
             dock.appendChild(icon);
         }
     });
+
+    // Blueprint Icon (Manual Add)
+    const bpIcon = document.createElement('div');
+    bpIcon.className = 'desktop-icon group';
+    bpIcon.innerHTML = `<div class="icon-img text-3xl mb-2 filter grayscale group-hover:grayscale-0 transition duration-500">📐</div><div class="icon-label bg-black/20 text-white/80 px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm">Blueprint.bp</div>`;
+    bpIcon.onclick = openBlueprint;
+    grid.appendChild(bpIcon);
+
     setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }); }, 1000);
 }
 
@@ -2009,7 +2224,16 @@ function toggleSpotify() {
 
 const Apps = {
     open: (id) => {
-        const app = apps.find(a => a.id === id); if (!app) return;
+        const app = apps.find(a => a && a.id === id);
+        if (!app) {
+            console.error(`App with id "${id}" not found.`);
+            if (typeof createModal === 'function') {
+                createModal({ title: 'System Error', desc: `Application "${id}" is missing or corrupted.`, icon: '⚠️' });
+            } else {
+                alert(`System Error: App "${id}" not found.`);
+            }
+            return;
+        }
 
         // Dynamic Menu Bar Name
         setAppName(app.title);
@@ -3908,3 +4132,20 @@ function toggleUCLMode() {
         tier.innerText = "15 KINGS";
     }
 }
+
+function createModal({ title, desc, icon }) {
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 z-[99999] flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fade-in';
+    modal.innerHTML = `
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl transform scale-100 transition-all">
+            <div class="text-center flex flex-col items-center">
+                <div class="text-4xl mb-4">${icon || 'ℹ️'}</div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">${title}</h3>
+                <p class="text-gray-500 text-center mb-6">${desc}</p>
+                <button class="bg-blue-500 text-white px-6 py-2 rounded-full font-bold hover:bg-blue-600 transition" onclick="this.closest('.fixed').remove()">Okay</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+window.createModal = createModal;
