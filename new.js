@@ -900,12 +900,10 @@ const apps = [
     `},
 
     {
-        id: 'tired', title: 'When Tired', icon: '😴', dock: true, width: 450, height: 350, content: `
-        <div class="h-full bg-[#202020] text-gray-300 flex items-center justify-center text-center p-10 font-serif text-lg leading-loose">
-            "Suno... Thak gaye ho na? Koi baat nahi.<br><br>
-            You don't always have to be strong.<br>
-            Aaj bas rest kar lo. You did enough.<br>
-            Main hoon na. ❤️"
+        id: 'tired', title: 'When Tired', icon: '😴', dock: true, width: 450, height: 400, onOpen: initTired, content: `
+        <div id="tired-container" class="tired-container">
+            <div id="tired-content" class="tired-content"></div>
+            <div class="heart-corner">❤️</div>
         </div>
     `},
 
@@ -962,16 +960,24 @@ const apps = [
     `},
 
     {
-        id: 'future', title: 'Future You', icon: '🔮', dock: false, width: 400, height: 300, content: `
-        <div class="h-full bg-gradient-to-br from-[#1e1e2e] via-[#2a2a40] to-[#1e1e2e] p-8 flex flex-col items-center justify-center text-center relative overflow-hidden">
-             <!-- Stars -->
-            <div class="absolute top-10 left-10 text-white/10 text-xs text-4xl">✨</div>
-            <div class="absolute bottom-10 right-20 text-white/10 text-xs text-2xl">✨</div>
+        id: 'future', title: 'Future You', icon: '🔮', dock: false, width: 600, height: 400, content: `
+        <div class="h-full w-full relative bg-black overflow-hidden group">
+            <!-- Background Image: Train/Night Window Aesthetic -->
+            <div class="absolute inset-0 bg-cover bg-center transition-all duration-[2000ms] group-hover:scale-105 group-hover:opacity-40 opacity-70" 
+                 style="background-image: url('https://images.unsplash.com/photo-1532978016421-2a0614459f36?q=80&w=1600');">
+                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20"></div>
+            </div>
             
-            <div class="relative z-10 p-6 border border-white/5 rounded-2xl bg-white/5 backdrop-blur-sm shadow-2xl transform transition hover:-translate-y-1 duration-500">
-                <div class="text-4xl mb-4 opacity-80">🔮</div>
-                <div class="text-indigo-100 font-serif italic text-lg leading-relaxed">"I wonder what we'll laugh<br>about next year."</div>
-                <div class="mt-4 h-[1px] w-12 bg-indigo-400/30 mx-auto"></div>
+            <!-- Hover Quote (Option C) -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                 <div class="text-white/90 font-serif text-2xl tracking-widest opacity-0 transform translate-y-8 transition-all duration-1000 group-hover:opacity-100 group-hover:translate-y-0 text-center drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)]">
+                    "You didn't stop walking."
+                 </div>
+            </div>
+
+            <!-- Static subtle hint (Option A) -->
+             <div class="absolute bottom-8 right-8 text-white/40 text-[10px] uppercase tracking-[0.4em] font-light mix-blend-overlay opacity-60 group-hover:opacity-0 transition-opacity duration-700">
+                Still becoming
             </div>
         </div>
     `},
@@ -4149,3 +4155,183 @@ function createModal({ title, desc, icon }) {
     document.body.appendChild(modal);
 }
 window.createModal = createModal;
+
+/* === WHEN TIRED LOGIC === */
+const tiredMessages = [
+    {
+        audio: 'assets/tired_1.mp3',
+        text: `Hey.
+
+I know you’re tired.
+Not the “sleepy” kind — the kind where even existing feels heavy.
+
+You don’t have to hold yourself together right now.
+You don’t have to explain anything.
+
+If today asked too much from you, it’s okay to put it down.
+You’re allowed to rest without earning it.
+
+I see how much you try.
+Even on days when no one notices.
+
+For now, just stay here.
+Breathe.
+I’m not going anywhere.`
+    },
+
+    {
+        audio: 'assets/tired_2.mp3',
+        text: `Hey.
+I know you’re tired.
+The kind where your mind won’t slow down and your body feels done.
+
+You don’t need to be okay right now.
+You don’t need to figure anything out.
+
+If today took too much from you,
+it’s okay to stop giving.
+
+Just sit here for a bit.
+Breathe.
+I’m right here.`
+    },
+
+    {
+        audio: 'assets/tired_3.mp3',
+        text: `I know it’s been a long day.
+And maybe a longer stretch of days before that.
+
+You don’t have to keep pushing tonight.
+Nothing needs to be solved.
+
+You’ve already done enough.
+Even if it doesn’t feel like it.
+
+Stay for a moment.
+Let yourself rest.
+I’m not leaving.`
+    },
+
+    {
+        audio: 'assets/tired_4.mp3',
+        text: `Hey…
+You’ve been holding a lot inside.
+
+You don’t need to hold it anymore.
+Not here.
+
+If you feel worn out, that makes sense.
+Anyone would.
+
+Just pause with me.
+Breathe slowly.
+You’re safe right now.`
+    },
+
+    {
+        audio: 'assets/tired_5.mp3',
+        text: `I know you’re tired in ways sleep doesn’t fix.
+
+You don’t have to pretend you’re fine.
+You don’t owe strength to anyone.
+
+If today was heavy,
+you’re allowed to put it down.
+
+Stay here for a moment.
+Let the quiet settle.
+I’m here with you.`
+    },
+
+    {
+        audio: 'assets/tired_6.mp3',
+        text: `It’s okay if you’re exhausted.
+It’s okay if you feel empty.
+
+You don’t need to carry everything tonight.
+You don’t need to be strong.
+
+You matter even when you rest.
+Especially then.
+
+Breathe.
+Stay.
+I’m not going anywhere.`
+    }
+];
+
+function initTired() {
+    const container = document.getElementById('tired-content');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    // Pick random message
+    const data = tiredMessages[Math.floor(Math.random() * tiredMessages.length)];
+    const lines = data.text.split('\n');
+
+    // 1. Create Audio Player (Hidden initially)
+    const audioWrapper = document.createElement('div');
+    audioWrapper.className = 'tired-audio-wrapper opacity-0 transition duration-1000';
+    audioWrapper.innerHTML = `
+        <audio id="tired-audio-player" src="${data.audio}"></audio>
+        <button class="tired-play-btn" onclick="toggleTiredAudio()">
+            <span id="tired-play-icon">🎙️</span>
+            <span class="text-xs ml-2">Voice Note</span>
+        </button>
+    `;
+    container.appendChild(audioWrapper);
+
+    // 2. Play Lines
+    let delay = 800;
+
+    lines.forEach(line => {
+        if (line.trim() === '') {
+            const spac = document.createElement('div');
+            spac.style.height = '16px';
+            container.appendChild(spac);
+        } else {
+            const div = document.createElement('div');
+            div.className = 'tired-line';
+            div.innerText = line;
+            container.appendChild(div);
+
+            setTimeout(() => {
+                div.classList.add('visible');
+            }, delay);
+
+            delay += 1200;
+        }
+    });
+
+    // Reveal Audio Button after text starts
+    setTimeout(() => {
+        audioWrapper.classList.remove('opacity-0');
+    }, 1500);
+}
+
+// Helper to toggle audio
+function toggleTiredAudio() {
+    const audio = document.getElementById('tired-audio-player');
+    const icon = document.getElementById('tired-play-icon');
+    if (!audio) return;
+
+    if (audio.paused) {
+        audio.play().catch(e => console.log("Audio missing or blocked"));
+        icon.innerText = "⏸️";
+        icon.classList.add('animate-pulse');
+    } else {
+        audio.pause();
+        icon.innerText = "🎙️";
+        icon.classList.remove('animate-pulse');
+    }
+
+    // Reset on end
+    audio.onended = () => {
+        icon.innerText = "🎙️";
+        icon.classList.remove('animate-pulse');
+    };
+}
+window.toggleTiredAudio = toggleTiredAudio;
+window.initTired = initTired;
+
