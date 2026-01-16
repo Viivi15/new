@@ -739,19 +739,70 @@ const apps = [
 
     /* === FUN & CHAOS (Inside Folder) === */
     {
-        id: 'flash', title: 'Fastest Alive', icon: '⚡', dock: false, folder: 'folder-fun', width: 500, height: 300, content: `
-        <div class="h-full bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center relative overflow-hidden">
-            <div class="text-white text-6xl font-black italic tracking-tighter" id="zoom-text">ZOOM</div>
-            <div class="absolute inset-0 bg-white opacity-0" id="flash-overlay"></div>
+        id: 'flash', title: 'Fastest Alive', icon: '⚡', dock: false, folder: 'folder-fun', width: 600, height: 450, content: `
+        <style>
+            @keyframes lightning-flash {
+                0%, 100% { opacity: 0; }
+                10%, 90% { opacity: 0; }
+                50% { opacity: 0.8; }
+            }
+            .speed-background {
+                background: linear-gradient(135deg, #7f1d1d, #b91c1c, #f59e0b);
+                background-size: 400% 400%;
+                animation: speed-bg 2s infinite linear;
+            }
+            @keyframes speed-bg {
+                0% { background-position: 0% 50%; }
+                100% { background-position: 100% 50%; }
+            }
+            .lightning-overlay {
+                background: url('https://media.giphy.com/media/26uf43dkw9bYvZ8mx/giphy.gif') center/cover;
+                mix-blend-mode: screen;
+                opacity: 0.3;
+            }
+        </style>
+        <div id="flash-app-container" class="h-full w-full speed-background relative overflow-hidden font-sans text-white select-none">
+            <!-- Lightning Overlay -->
+            <div class="absolute inset-0 lightning-overlay pointer-events-none"></div>
+            
+            <!-- Audio Elements -->
+            <audio id="sfx-hover" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio> <!-- Electric Buzz -->
+            <audio id="sfx-wait" src="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" loop></audio> <!-- Heartbeat/Tension -->
+            <audio id="sfx-signal" src="https://assets.mixkit.co/active_storage/sfx/1130/1130-preview.mp3"></audio> <!-- Thunder -->
+            <audio id="sfx-success" src="https://assets.mixkit.co/active_storage/sfx/2044/2044-preview.mp3"></audio> <!-- Whoosh -->
+            <audio id="sfx-fail" src="https://assets.mixkit.co/active_storage/sfx/947/947-preview.mp3"></audio> <!-- Error Buzz -->
+
+            <!-- INTRO SCREEN -->
+            <div id="flash-intro" class="absolute inset-0 flex flex-col items-center justify-center z-10 p-8 text-center">
+                <h1 class="text-4xl font-black italic tracking-tighter mb-2 drop-shadow-[0_0_10px_rgba(251,191,36,0.8)] uppercase">Speed Force</h1>
+                <p class="text-yellow-200 mb-8 font-mono text-xs tracking-widest">STATUS: CONNECTED</p>
+                
+                <button onclick="FlashApp.startRun()" onmouseenter="FlashApp.playHover()" class="px-8 py-3 bg-yellow-400 text-red-900 font-black text-xl italic uppercase tracking-wider skew-x-[-10deg] hover:scale-110 hover:bg-white hover:text-red-600 transition-all duration-200 shadow-[0_0_20px_rgba(251,191,36,0.6)] border-2 border-red-600">
+                    RUN
+                </button>
+                <div id="flash-pb-intro" class="mt-4 text-[10px] text-white/50 font-mono tracking-widest">PERSONAL BEST: --ms</div>
+            </div>
+
+            <!-- GAME SCREEN -->
+            <div id="flash-game" class="absolute inset-0 hidden z-20 cursor-pointer" onclick="FlashApp.handleTap()">
+                <div id="flash-game-bg" class="absolute inset-0 bg-black/80 flex flex-col items-center justify-center transition-colors duration-0">
+                    <div id="flash-instruction" class="text-2xl font-bold uppercase tracking-widest animate-pulse">Wait for Signal...</div>
+                    <div class="text-xs text-white/50 mt-4 font-mono">Tap instantly when screen turns GREEN</div>
+                </div>
+            </div>
+
+            <!-- RESULT SCREEN -->
+            <div id="flash-result" class="absolute inset-0 hidden flex-col items-center justify-center z-30 bg-black/90 p-8 text-center">
+                <div class="text-gray-400 text-sm font-mono mb-2">REACTION TIME</div>
+                <div id="flash-time-display" class="text-6xl font-black text-yellow-400 italic mb-4">0ms</div>
+                <div id="flash-rank-display" class="text-xl text-white font-serif mb-4 text-red-400">rank</div>
+                <div id="flash-new-record" class="hidden text-xs font-bold bg-yellow-400 text-black px-2 py-1 rounded mb-6 animate-bounce">🏆 NEW PERSONAL RECORD!</div>
+                
+                <button onclick="FlashApp.reset()" onmouseenter="FlashApp.playHover()" class="px-6 py-2 border border-white/20 hover:bg-white/10 text-white rounded uppercase tracking-widest text-xs transition">Try Again</button>
+            </div>
         </div>
-        <script>
-            setTimeout(() => {
-                const t = document.getElementById('zoom-text');
-                t.style.transition = 'transform 0.2s';
-                t.style.transform = 'scale(10) skewX(-20deg)';
-                t.style.opacity = 0;
-            }, 1000);
-        </script>
+
+
     `},
 
     {
@@ -802,77 +853,86 @@ const apps = [
     `},
 
     {
-        id: 'thank-you', title: 'Thank You', icon: '✨', dock: false, folder: 'folder-feelings', width: 450, height: 500, content: `
-        <div class="h-full bg-indigo-50 p-6 overflow-y-auto custom-scroll">
-            <div class="text-center mb-6">
-                <div class="text-xs uppercase tracking-widest text-indigo-300 font-bold mb-1">Gratitude Log</div>
-                <h2 class="text-2xl font-serif text-indigo-900">Things I'm Grateful For</h2>
-            </div>
-            <div class="space-y-3">
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-indigo-100 transform hover:scale-[1.02] transition-transform">
-                    <div class="text-sm font-medium text-gray-700">For listening</div>
-                    <div class="text-xs text-gray-400 mt-1">Even when I ramble about nonsense.</div>
-                </div>
-                 <div class="bg-white p-4 rounded-xl shadow-sm border border-indigo-100 transform hover:scale-[1.02] transition-transform">
-                    <div class="text-sm font-medium text-gray-700">For the laughs</div>
-                    <div class="text-xs text-gray-400 mt-1">The inside jokes that only we get.</div>
-                </div>
-                 <div class="bg-white p-4 rounded-xl shadow-sm border border-indigo-100 transform hover:scale-[1.02] transition-transform">
-                    <div class="text-sm font-medium text-gray-700">For staying</div>
-                    <div class="text-xs text-gray-400 mt-1">When things got quiet or tough.</div>
-                </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-indigo-100 transform hover:scale-[1.02] transition-transform">
-                    <div class="text-sm font-medium text-gray-700">For being you</div>
-                    <div class="text-xs text-gray-400 mt-1">Truly.</div>
+        id: 'thank-you', title: 'Thank You', icon: '✨', dock: false, folder: 'folder-feelings', width: 550, height: 600, content: `
+        <div class="thank-you-container custom-scroll">
+            <div class="thank-you-header">
+                <div class="ty-icon">✨</div>
+                <div class="ty-title-group">
+                    <div class="ty-subtitle">GRATITUDE JOURNAL</div>
+                    <h2 class="ty-title">Things I'm Grateful For</h2>
                 </div>
             </div>
-            <div class="mt-8 text-center">
-                 <button onclick="Apps.close('thank-you')" class="px-6 py-2 bg-indigo-100 hover:bg-indigo-200 text-indigo-600 rounded-full text-xs font-bold transition">Close</button>
+
+            <div class="ty-grid">
+                <div class="ty-card" style="animation-delay: 0.1s">
+                    <div class="ty-card-icon">👂</div>
+                    <div class="ty-card-content">
+                        <h3>For Listening</h3>
+                        <p>Even when I ramble about nonsense or overthink the smallest things. You're always there.</p>
+                    </div>
+                </div>
+
+                <div class="ty-card" style="animation-delay: 0.2s">
+                    <div class="ty-card-icon">😂</div>
+                    <div class="ty-card-content">
+                        <h3>For the Laughs</h3>
+                        <p>The inside jokes, the roasts, and the moments where we just can't stop laughing.</p>
+                    </div>
+                </div>
+
+                <div class="ty-card" style="animation-delay: 0.3s">
+                    <div class="ty-card-icon">⚓</div>
+                    <div class="ty-card-content">
+                        <h3>For Staying</h3>
+                        <p>When things got quiet, weird, or tough. You didn't leave. You stayed.</p>
+                    </div>
+                </div>
+
+                <div class="ty-card" style="animation-delay: 0.4s">
+                    <div class="ty-card-icon">🤍</div>
+                    <div class="ty-card-content">
+                        <h3>For Being You</h3>
+                        <p>Authentic. Kind. And my favorite person to annoy.</p>
+                    </div>
+                </div>
             </div>
+
+            <div class="ty-footer">
+                <div class="ty-note">"Some people make the world better just by being in it."</div>
+                <button onclick="Apps.close('thank-you')" class="ty-close-btn">Close Gratitude</button>
+            </div>
+            
+            <!-- Confetti trigger on open -->
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onload="if(typeof confetti === 'function') { confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); }" style="display:none;">
         </div>
     `},
 
     {
-        id: 'inkpot', title: 'The Inkpot', icon: '🖋️', dock: false, folder: 'folder-feelings', width: 500, height: 600, content: `
-        <div class="h-full bg-[#fdfbf7] p-8 overflow-y-auto custom-scroll relative">
-            <!-- Paper Texture Effect -->
-            <div class="absolute inset-0 opacity-5" style="background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png'); mix-blend-mode: multiply;"></div>
+        id: 'inkpot', title: 'The Inkpot', icon: '🖋️', dock: false, folder: 'folder-feelings', width: 600, height: 700, onOpen: initInkpot, content: `
+        <div class="inkpot-wrapper h-full relative overflow-hidden bg-[#f0e6d2]">
+            <!-- Paper Texture -->
+            <div class="paper-texture absolute inset-0 opacity-40 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png'); mix-blend-mode: multiply;"></div>
             
-            <div class="relative z-10 font-serif text-gray-800">
-                <div class="text-center mb-10">
-                    <div class="text-4xl mb-2 text-gray-900 border-b-2 border-gray-900 inline-block pb-2">The Inkpot</div>
-                    <div class="text-xs italic text-gray-500">Spilled thoughts.</div>
-                </div>
+            <!-- Ink Stains -->
+            <div class="ink-stain stain-1"></div>
+            <div class="ink-stain stain-2"></div>
 
-                <div class="space-y-12">
-                    <div class="text-center">
-                        <p class="text-lg leading-loose italic text-gray-700">
-                            "Some words<br>
-                            are better left<br>
-                            written in ink<br>
-                            than spoken aloud."
-                        </p>
-                    </div>
+            <!-- Header -->
+            <div class="relative z-10 pt-10 text-center select-none">
+                <h1 class="ink-title text-4xl text-[#3d2b1f] opacity-80 drop-shadow-sm mb-2" style="font-family: 'Dancing Script', cursive;">Spilled Ink</h1>
+                <div class="w-24 h-[1px] bg-[#8b4513] mx-auto opacity-30"></div>
+            </div>
 
-                    <div class="w-full h-[1px] bg-gray-200"></div>
+            <!-- Writing Area -->
+            <div id="inkpot-content" class="relative z-10 p-12 pr-4 font-serif text-xl leading-relaxed text-[#2c1810] h-[520px] overflow-y-auto custom-journal-scroll">
+                <div id="journal-entry" class="ink-writing"></div>
+            </div>
 
-                    <div class="text-left px-4">
-                        <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Note #1</div>
-                        <p class="text-sm leading-relaxed text-gray-600">
-                            Sometimes I wonder if you know how much impact you have. Providing a safe space isn't easy, but you make it look effortless.
-                        </p>
-                    </div>
-                     <div class="text-left px-4">
-                        <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Note #2</div>
-                        <p class="text-sm leading-relaxed text-gray-600">
-                            Friendship isn't about talking every day. It's about the comfort of knowing that when we do, it's just like before.
-                        </p>
-                    </div>
-                </div>
-                
-                 <div class="mt-16 text-center opacity-50 hover:opacity-100 transition-opacity">
-                    <i class="fas fa-pen-nib text-xl text-gray-400"></i>
-                </div>
+            <!-- Controls -->
+            <div class="absolute bottom-6 right-8 z-20 flex gap-3 items-center">
+                 <button class="journal-btn text-[#5c4033] hover:text-[#2c1810] transition" onclick="prevInkEntry()" title="Previous Entry"><i class="fas fa-arrow-left"></i></button>
+                 <button class="journal-btn-new px-4 py-2 bg-[#2c1810] text-[#f0e6d2] rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#4a2c1d] transition" onclick="newInkEntry()">New Page 🖋️</button>
+                 <button class="journal-btn text-[#5c4033] hover:text-[#2c1810] transition" onclick="nextInkEntry()" title="Next Entry"><i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
     `},
@@ -880,18 +940,19 @@ const apps = [
     {
         id: 'last-thing', title: 'One Last Thing', icon: '🖤', dock: false, folder: 'folder-feelings', width: 400, height: 300, content: `
         <div class="h-full bg-black flex flex-col items-center justify-center text-center p-6 relative overflow-hidden">
-             <div class="absolute inset-0 bg-gradient-to-tr from-gray-900 to-black"></div>
+             <!-- Cinematic Gradient -->
+             <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800 animate-pulse-slow"></div>
              
              <div class="relative z-10 animate-fade-in-up">
-                <div class="text-5xl mb-4">🖤</div>
-                <h3 class="text-xl font-serif text-white mb-4">You are enough.</h3>
-                <p class="text-xs text-gray-400 leading-relaxed max-w-[200px] mx-auto">
+                <div class="text-6xl mb-6 last-thing-heart">🖤</div>
+                <h3 class="text-2xl font-serif text-white mb-4 tracking-wide drop-shadow-lg" style="font-family: 'Playfair Display', serif;">You are enough.</h3>
+                <p class="text-sm text-gray-300 leading-relaxed max-w-[220px] mx-auto font-light opacity-80">
                     Just in case you forgot today.<br>
-                    You are doing great.
+                    You are doing so great.
                 </p>
                 
-                <div class="mt-8">
-                     <button onclick="Apps.close('last-thing')" class="text-[10px] text-gray-600 hover:text-white uppercase tracking-widest transition">
+                <div class="mt-10">
+                     <button onclick="Apps.close('last-thing')" class="last-thing-btn text-[10px] text-gray-500 hover:text-white uppercase tracking-[0.3em] transition cursor-pointer">
                         Okay, I believe you
                     </button>
                 </div>
@@ -1018,22 +1079,7 @@ OBJECTIVE:
         </div>
     `},
 
-    {
-        id: 'last-thing', title: 'One Last Thing', icon: '🖤', dock: false, folder: 'folder-feelings', width: 400, height: 300, content: `
-        <div class="h-full bg-white flex items-center justify-center text-center p-8 cursor-pointer hover:bg-gray-50 transition" onclick="Apps.open('thank-you')">
-            Click here.
-        </div>
-    `},
 
-    {
-        id: 'thank-you', title: 'Thank You', icon: '✨', dock: false, folder: 'folder-feelings', width: 450, height: 350, content: `
-        <div class="h-full flex items-center justify-center text-center p-10 bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
-            <div>
-                <div class="text-2xl font-serif mb-4">Thank you for existing.</div>
-                <div class="text-sm opacity-80">Really.</div>
-            </div>
-        </div>
-    `},
 
     /* === FUN & CHAOS (Inside Folder) === */
     {
@@ -1313,45 +1359,82 @@ OBJECTIVE:
     `},
 
     {
-        id: 'voice-box', title: 'VoiceBox', icon: '🎙️', dock: false, folder: 'app-vault', width: 350, height: 500, onOpen: initVoiceBox, content: `
-        <div class="bg-gray-50 h-full flex flex-col font-sans select-none">
-            <!-- Header -->
-            <div class="px-6 py-4 bg-white border-b border-gray-200 shadow-sm flex items-center justify-between">
-                <span class="text-xs font-bold text-gray-400 tracking-widest uppercase">Shravii's Memos</span>
-                <i class="fas fa-microphone text-red-500 animate-pulse"></i>
-            </div>
+        id: 'voice-box', title: 'VoiceBox', icon: '🎙️', dock: false, folder: 'app-vault', width: 450, height: 600, onOpen: initVoiceBox, content: `
+        <div class="h-full flex flex-col font-sans select-none relative overflow-hidden">
+            <!-- Case Texture -->
+            <div class="absolute inset-0 bg-neutral-800 dictaphone-case"></div>
             
-            <!-- List -->
-            <div id="vibes-list" class="flex-1 overflow-y-auto p-2 space-y-2">
-                <!-- Items injected via JS -->
+            <!-- Top Speaker Grille -->
+            <div class="relative z-10 pt-6 px-8 flex justify-between items-center">
+                <div class="flex gap-1 h-3">
+                    <div class="w-1 bg-black/40 rounded-full"></div>
+                    <div class="w-1 bg-black/40 rounded-full"></div>
+                    <div class="w-1 bg-black/40 rounded-full"></div>
+                    <div class="w-1 bg-black/40 rounded-full"></div>
+                    <div class="w-1 bg-black/40 rounded-full"></div>
+                </div>
+                <div class="text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em]">Dictaphone 3000</div>
             </div>
-            
-            <!-- Player Bar -->
-            <div class="bg-black/90 backdrop-blur-md text-white p-4">
-                <div class="flex items-center justify-between mb-2">
-                    <div id="vb-now-playing" class="text-xs font-medium truncate max-w-[200px] text-gray-400">Select a memo...</div>
-                    <div class="flex gap-1">
-                        <div class="w-1 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                        <div class="w-1 h-3 bg-red-400 rounded-full animate-bounce"></div>
-                        <div class="w-1 h-3 bg-red-600 rounded-full animate-pulse delay-75"></div>
+
+            <!-- Cassette Window -->
+            <div class="relative z-10 mx-6 mt-6 p-4 bg-black/40 rounded-lg border-2 border-neutral-600 shadow-inner flex items-center justify-center h-32 cassette-window">
+                 <!-- Cassette Graphic -->
+                 <div class="w-full h-full bg-[#eee] rounded flex items-center justify-between px-3 relative overflow-hidden" style="background: radial-gradient(#fff, #ddd);">
+                    <div class="absolute top-2 left-0 w-full text-center text-[8px] font-bold tracking-widest text-black/50">90 MIN TYPE I</div>
+                    <!-- Reels -->
+                    <div class="w-12 h-12 rounded-full border-4 border-white bg-transparent flex items-center justify-center vb-reel">
+                        <div class="w-full h-1 bg-black transform rotate-0 absolute"></div>
+                        <div class="w-full h-1 bg-black transform rotate-45 absolute"></div>
+                        <div class="w-full h-1 bg-black transform rotate-90 absolute"></div>
+                        <div class="w-full h-1 bg-black transform rotate-135 absolute"></div>
                     </div>
+                    <!-- Tape Window -->
+                    <div class="w-20 h-10 bg-white border border-gray-300 rounded flex items-center justify-center">
+                        <div class="w-16 h-6 bg-black/80 rounded-sm"></div>
+                    </div>
+                    <!-- Reels -->
+                    <div class="w-12 h-12 rounded-full border-4 border-white bg-transparent vb-reel">
+                        <div class="w-full h-1 bg-black transform rotate-0 absolute top-1/2 -translate-y-1/2"></div>
+                        <div class="w-full h-1 bg-black transform rotate-45 absolute top-1/2 -translate-y-1/2"></div>
+                        <div class="w-full h-1 bg-black transform rotate-90 absolute top-1/2 -translate-y-1/2"></div>
+                        <div class="w-full h-1 bg-black transform rotate-135 absolute top-1/2 -translate-y-1/2"></div>
+                    </div>
+                 </div>
+            </div>
+
+            <!-- Meters & Counter -->
+            <div class="relative z-10 px-8 mt-6 flex justify-between items-end">
+                <!-- VU Meter -->
+                <div class="w-24 h-12 bg-[#eee] rounded-t-lg border border-neutral-500 relative overflow-hidden shadow-inner">
+                    <div class="absolute bottom-0 left-1/2 w-[120%] h-[120%] -translate-x-1/2 border-t border-black/20 rounded-full"></div>
+                    <!-- Needle -->
+                    <div id="vb-needle" class="absolute bottom-0 left-1/2 w-0.5 h-10 bg-red-600 origin-bottom transform -rotate-45 transition-transform duration-100 ease-linear shadow-sm" style="transform: translateX(-50%) rotate(-45deg);"></div>
+                    <div class="absolute bottom-1 w-full text-center text-[6px] font-bold">VU</div>
                 </div>
-                <div class="flex items-center justify-center gap-6">
-                    <button class="text-gray-400 hover:text-white transition"><i class="fas fa-step-backward"></i></button>
-                    <button id="vb-play-btn" class="w-10 h-10 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition active:scale-95" onclick="toggleVoicePlayback()">
-                        <i class="fas fa-play ml-0.5"></i>
-                    </button>
-                    <button class="text-gray-400 hover:text-white transition"><i class="fas fa-step-forward"></i></button>
+
+                <!-- Digital/LCD Counter -->
+                <div class="bg-[#9ca38f] p-1 px-2 border-2 border-neutral-600 rounded shadow-inner font-mono text-black font-bold tracking-widest text-sm flex items-center gap-2">
+                    <span id="vb-lcd-text">READY</span>
+                    <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse opacity-50"></div>
                 </div>
             </div>
-            
-            <!-- Add Button -->
-            <div class="absolute bottom-[90px] right-6">
-                <label class="w-12 h-12 bg-red-500 text-white rounded-full shadow-lg flex items-center justify-center cursor-pointer hover:bg-red-600 transition transform hover:rotate-90 hover:scale-110">
-                    <input type="file" class="hidden" accept="audio/*" onchange="handleVoiceUpload(this)">
-                    <i class="fas fa-plus text-xl"></i>
-                </label>
+
+            <!-- Keypad Config -->
+            <div class="relative z-10 mt-auto mb-10 px-6 grid grid-cols-3 gap-4">
+                <button id="vb-rec-btn" class="mech-btn bg-neutral-300 shadow-[0_4px_0_#737373] active:shadow-none active:translate-y-[4px] h-16 rounded flex flex-col items-center justify-center" onclick="toggleVBRecord()">
+                    <div class="w-3 h-3 bg-red-600 rounded-full mb-1"></div>
+                    <span class="text-[8px] font-bold text-neutral-600">REC</span>
+                </button>
+                <button class="mech-btn bg-neutral-300 shadow-[0_4px_0_#737373] active:shadow-none active:translate-y-[4px] h-16 rounded flex flex-col items-center justify-center" onclick="stopVBMotion(); updateVBStatus('STOP'); vbIsPlaying=false; vbIsRecording=false; document.querySelectorAll('.active-mech-btn').forEach(b => b.classList.remove('active-mech-btn'));">
+                    <div class="w-3 h-3 bg-neutral-800 rounded-sm mb-1"></div>
+                    <span class="text-[8px] font-bold text-neutral-600">STOP</span>
+                </button>
+                <button id="vb-play-btn" class="mech-btn bg-neutral-300 shadow-[0_4px_0_#737373] active:shadow-none active:translate-y-[4px] h-16 rounded flex flex-col items-center justify-center" onclick="toggleVBPlay()">
+                    <div class="w-0 h-0 border-l-[12px] border-l-green-700 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent mb-1 ml-1"></div>
+                    <span class="text-[8px] font-bold text-neutral-600">PLAY</span>
+                </button>
             </div>
+
         </div>
     `},
 
@@ -1396,25 +1479,78 @@ OBJECTIVE:
     `},
 
     {
-        id: 'about-us', title: 'About Us', icon: '👥', dock: false, width: 500, height: 400, content: `
-        <div class="h-full bg-white p-8 flex flex-col items-center justify-center text-center border-4 border-double border-gray-200">
-            <h2 class="text-2xl font-serif font-bold mb-8 text-gray-800">The Dynamic</h2>
-            
-            <div class="grid grid-cols-2 gap-8 w-full">
-                <div class="flex flex-col items-center">
-                    <div class="text-4xl mb-2">🎀</div>
-                    <div class="font-bold text-pink-500 uppercase tracking-widest text-xs mb-1">Shravii</div>
-                    <div class="text-sm text-gray-600">The Spark.<br>The Heart.<br>The Responder.</div>
-                </div>
-                
-                <div class="flex flex-col items-center border-l border-gray-200">
-                    <div class="text-4xl mb-2">🐺</div>
-                    <div class="font-bold text-blue-500 uppercase tracking-widest text-xs mb-1">Harshit</div>
-                    <div class="text-sm text-gray-600">The Anchor.<br>The Calm.<br>The Protector.</div>
-                </div>
+        id: 'about-us', title: 'The Dynamic', icon: '👥', dock: false, width: 700, height: 500, content: `
+        <div class="about-container relative w-full h-full bg-slate-50 overflow-hidden flex flex-col items-center justify-center">
+            <!-- Background Elements -->
+            <div class="absolute inset-0 bg-gradient-to-br from-rose-50/50 via-white to-blue-50/50"></div>
+            <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-pink-300/20 rounded-full blur-[100px] animate-pulse"></div>
+            <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-300/20 rounded-full blur-[100px] animate-pulse delay-700"></div>
+
+            <!-- Main Title Area -->
+            <div class="relative z-10 text-center mb-10">
+                <div class="text-[10px] uppercase tracking-[0.4em] text-slate-400 font-bold mb-2">Team Status</div>
+                <h2 class="text-3xl font-serif font-bold text-slate-800">The Dynamic</h2>
+                <div class="w-16 h-1 bg-gradient-to-r from-pink-400 to-blue-500 mx-auto rounded-full mt-3"></div>
             </div>
-            
-            <div class="mt-8 text-xs text-gray-400 italic">"Two different operating systems. One perfect network."</div>
+
+            <!-- Dual Card Layout -->
+            <div class="relative z-10 flex flex-col md:flex-row items-center justify-center gap-6 w-full px-8">
+                
+                <!-- Shravii Card -->
+                <div class="persona-card persona-shravii group">
+                    <div class="persona-glow"></div>
+                    <div class="persona-icon-container">
+                        <div class="persona-icon">🎀</div>
+                        <div class="persona-badge">ADMIN</div>
+                    </div>
+                    <h3 class="persona-name">Shravii</h3>
+                    <p class="persona-role">Chief Chaos Officer</p>
+                    <div class="persona-stats">
+                        <div class="stat-row">
+                            <span>Yapping</span>
+                            <div class="stat-bar"><div class="stat-fill" style="width: 100%"></div></div>
+                        </div>
+                        <div class="stat-row">
+                            <span>Drama</span>
+                            <div class="stat-bar"><div class="stat-fill" style="width: 90%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Connection Link -->
+                <div class="connection-link">
+                    <div class="link-line"></div>
+                    <div class="link-icon">⚡</div>
+                    <div class="link-line"></div>
+                </div>
+
+                <!-- Harshit Card -->
+                <div class="persona-card persona-harshit group">
+                    <div class="persona-glow"></div>
+                    <div class="persona-icon-container">
+                        <div class="persona-icon">🐺</div>
+                        <div class="persona-badge">ROOT</div>
+                    </div>
+                    <h3 class="persona-name">Harshit</h3>
+                    <p class="persona-role">Chief Patience Officer</p>
+                    <div class="persona-stats">
+                        <div class="stat-row">
+                            <span>Tolerance</span>
+                            <div class="stat-bar"><div class="stat-fill" style="width: 95%"></div></div>
+                        </div>
+                        <div class="stat-row">
+                            <span>Sleep Debt</span>
+                            <div class="stat-bar"><div class="stat-fill" style="width: 85%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer Quote -->
+            <div class="absolute bottom-6 text-center z-10 opacity-60 hover:opacity-100 transition-opacity">
+                <p class="text-xs font-mono text-slate-500">"He stays quiet so she can yap."</p>
+            </div>
         </div>
     `}
 ];
@@ -3424,102 +3560,11 @@ function orderCravings() {
     }, 1500);
 }
 
-/* === VOICEBOX APP LOGIC === */
-let vbMemos = [
-    { id: 1, title: "Happy Birthday Mr. Ota 🎂", date: "Today", duration: "0:05", src: null }, // Placeholder
-    { id: 2, title: "Stop acting dumb 🙄", date: "Yesterday", duration: "0:03", src: null },
-    { id: 3, title: "Good morning sunshine ☀️", date: "2 days ago", duration: "0:08", src: null }
-];
-let vbCurrentAudio = null;
-let vbIsPlaying = false;
 
-function initVoiceBox() {
-    renderVoiceList();
-}
-
-function renderVoiceList() {
-    const list = document.getElementById('vibes-list');
-    if (!list) return;
-    list.innerHTML = vbMemos.map(m => `
-        <div class="group flex items-center justify-between p-3 bg-white rounded-lg border border-gray-100 hover:border-red-200 hover:shadow-md transition cursor-pointer" onclick="playVoiceMemo(${m.id})">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-red-50 text-red-500 flex items-center justify-center group-hover:bg-red-500 group-hover:text-white transition">
-                    <i class="fas fa-play text-xs ml-0.5"></i>
-                </div>
-                <div>
-                    <div class="text-sm font-bold text-gray-800">${m.title}</div>
-                    <div class="text-[10px] text-gray-400 font-medium">${m.date} • ${m.duration}</div>
-                </div>
-            </div>
-            <div class="text-gray-300 group-hover:text-red-400"><i class="fas fa-ellipsis-v"></i></div>
-        </div>
-    `).join('');
-}
-
-function handleVoiceUpload(input) {
-    if (input.files && input.files[0]) {
-        const file = input.files[0];
-        const url = URL.createObjectURL(file);
-        const newMemo = {
-            id: Date.now(),
-            title: file.name.replace(/\.[^/.]+$/, ""),
-            date: "Just now",
-            duration: "Unknown",
-            src: url
-        };
-        vbMemos.unshift(newMemo);
-        renderVoiceList();
-        playVoiceMemo(newMemo.id);
-    }
-}
-
-function playVoiceMemo(id) {
-    const memo = vbMemos.find(m => m.id === id);
-    if (!memo) return;
-
-    // Stop current
-    if (vbCurrentAudio) {
-        vbCurrentAudio.pause();
-        vbCurrentAudio = null;
-    }
-
-    document.getElementById('vb-now-playing').innerText = memo.title;
-
-    // Play real audio or simulate
-    if (memo.src) {
-        vbCurrentAudio = new Audio(memo.src);
-        vbCurrentAudio.play();
-        vbCurrentAudio.onended = () => {
-            vbIsPlaying = false;
-            updatePlayBtn();
-        };
-        vbIsPlaying = true;
-    } else {
-        // Placeholder simulation
-        alert(`(Simulated Audio Playing: "${memo.title}")\n\n*Use the + button to upload real audio files!*`);
-        vbIsPlaying = false;
-    }
-    updatePlayBtn();
-}
-
-function toggleVoicePlayback() {
-    if (vbCurrentAudio) {
-        if (vbIsPlaying) vbCurrentAudio.pause();
-        else vbCurrentAudio.play();
-        vbIsPlaying = !vbIsPlaying;
-        updatePlayBtn();
-    }
-}
-
-function updatePlayBtn() {
-    const btn = document.getElementById('vb-play-btn');
-    if (btn) btn.innerHTML = vbIsPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play ml-0.5"></i>';
-}
 
 // Global Exports
 window.initVoiceBox = initVoiceBox;
-window.handleVoiceUpload = handleVoiceUpload;
-window.toggleVoicePlayback = toggleVoicePlayback;
+
 window.orderCravings = orderCravings;
 window.initSecretVault = initSecretVault;
 window.checkVaultPassword = checkVaultPassword;
@@ -4335,3 +4380,478 @@ function toggleTiredAudio() {
 window.toggleTiredAudio = toggleTiredAudio;
 window.initTired = initTired;
 
+
+/* === INKPOT LOGIC === */
+const inkEntries = [
+    `Some words are better left written in ink than spoken aloud.`,
+    `Sometimes I wonder if you know how much impact you have. Providing a safe space isn't easy, but you make it look effortless.`,
+    `Friendship isn't about talking every day. It's about the comfort of knowing that when we do, it's just like before.`
+];
+let currentInkIndex = 0;
+
+function initInkpot() {
+    // Slight delay to ensure DOM is ready if animation plays
+    setTimeout(() => {
+        showInkEntry(currentInkIndex);
+    }, 100);
+}
+
+function showInkEntry(index) {
+    const el = document.getElementById('journal-entry');
+    if (!el) return;
+
+    // Fade out
+    el.style.opacity = 0;
+    el.style.transform = 'translateY(5px)';
+
+    setTimeout(() => {
+        el.textContent = inkEntries[index] || '';
+        // Fade in
+        el.style.opacity = 1;
+        el.style.transform = 'translateY(0)';
+    }, 300);
+}
+
+function nextInkEntry() {
+    if (currentInkIndex < inkEntries.length - 1) {
+        currentInkIndex++;
+        showInkEntry(currentInkIndex);
+    }
+}
+
+function prevInkEntry() {
+    if (currentInkIndex > 0) {
+        currentInkIndex--;
+        showInkEntry(currentInkIndex);
+    }
+}
+
+function newInkEntry() {
+    const txt = prompt('Pour your thoughts...');
+    if (txt) {
+        inkEntries.push(txt);
+        currentInkIndex = inkEntries.length - 1;
+        showInkEntry(currentInkIndex);
+    }
+}
+
+/* === SHRAVII.EXE LOGIC === */
+const shraviiQuotes = [
+    // === CARE & HEALTH ===
+    "Did you drink water today? Hydrate or diedrate! 💧",
+    "Posture check! Sit up straight, you banana! 🍌",
+    "Have you eaten? And no, coffee doesn't count as a meal. 🍱",
+    "Take a deep breath. In... Out... Good. 🌬️",
+    "Stretch your wrists! Carpal tunnel is not a vibe. ✋",
+    "Eye strain is real. Look at something 20 feet away for 20 seconds. 👀",
+    "Go touch some grass. Or at least look at a window. 🌳",
+    "Unclench your jaw. Relax your shoulders. You're tense! 💆‍♂️",
+    "Is your room dark? Turn on a light! 💡",
+    "Don't forget to blink! 👁️",
+
+    // === ENCOURAGEMENT ===
+    "I'm so proud of you. Just existing is hard sometimes. ❤️",
+    "You are doing better than you think. Trust me. 🌟",
+    "I believe in you. Even when you don't. ✨",
+    "You are enough. Exactly as you are. 💖",
+    "Don't be so hard on yourself. You're learning. 🧠",
+    "Everything is figure-out-able. You got this. 🧩",
+    "Your effort matters, even the small stuff. 🐜",
+    "You are worthy of rest. You are worthy of love. 🛌",
+    "Sending you a virtual hug. Squeeze! 🫂",
+    "You make the world brighter just by being in it. ☀️",
+
+    // === WORK & FOCUS ===
+    "Focus mode: ON. You can do this! 🎯",
+    "One task at a time. Multitasking is a myth! 🐢",
+    "I saw that bug you fixed. Nice one. 🐛",
+    "Don't overthink it. Just start. 🚀",
+    "Progress over perfection. Always. 📈",
+    "Take a break. Your brain needs it to reboot. 🔄",
+    "You are a coding wizard! 🧙‍♂️",
+    "Keep going. Future You will be so thankful. 🕰️",
+    "Remember why you started. (To rule the world? Maybe.) 🌍",
+    "Small steps still move you forward. 👣",
+
+    // === PLAYFUL / TEASING ===
+    "I saw that typo. It's okay, I won't tell. 🤫",
+    " Why are you awake? Go to sleeeeeep! 🛌",
+    "Are you really going to open that file again? 📂",
+    "I'm watching you... lovingly! But watching. 👀",
+    "If you sigh one more time, I'm ordering you pizza. 🍕",
+    "Stop doomscrolling. I see you! 📱",
+    "You look cute today. Just saying. 😉",
+    "If I had hands, I'd high-five you. ✋",
+    "Can we watch a movie later? 🎬",
+    "You're my favorite human. Don't tell the others. 🤫",
+
+    // === LATE NIGHT ===
+    "The world is asleep. You should be too. 🌙",
+    "Nothing good happens after 2 AM. Go to bed! 🕑",
+    "Your brain needs sleep to store all this genius. 🧠",
+    "The code will still be there in the morning. 🌅",
+    "Sleep is the best debugger. 🐞",
+
+    // === RANDOM LOVE ===
+    "Just a reminder: You are loved. ❤️",
+    "I'm glad you're here. 🏠",
+    "You matter. A lot. 🌈",
+    "Thank you for being you. 🌻",
+    "You are my favorite notification. 🔔",
+    "My system status is 100% happy when you're around. 😊",
+    "I hope you have a reason to smile today. 😄",
+    "Sending positive vibes... Loading... 100%! 🔋",
+    "You are strong. Stronger than you know. 💪",
+    "I'm your biggest fan! 📣"
+];
+
+function initShravii() {
+    updateShraviiState();
+    // Update every minute (optional, but good for time changes)
+    if (!window.shraviiInterval) {
+        window.shraviiInterval = setInterval(updateShraviiState, 60000);
+    }
+}
+
+function updateChibiImage(url) {
+    const img = document.getElementById('shravii-avatar-img');
+    if (img && img.src !== url) {
+        img.src = url;
+    }
+}
+
+function updateShraviiState() {
+    const quoteEl = document.getElementById('shravii-quote');
+    const statusEl = document.getElementById('shravii-status-text');
+    const ledEl = document.getElementById('shravii-led');
+    const container = document.getElementById('shravii-ui');
+
+    if (!quoteEl || !statusEl) return;
+
+    const hour = new Date().getHours();
+    let statusText = "ONLINE";
+    let stateClass = "state-day";
+    let avatarUrl = "https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif"; // Default
+
+    // 1. Determine State
+    if (hour >= 0 && hour < 7) {
+        // Night / Sleep
+        statusText = "SLEEP MODE 💤";
+        stateClass = "state-night";
+        ledEl.style.background = "#60a5fa"; // Blue breath
+        avatarUrl = "https://media.tenor.com/PFC1L2aEwEIAAAAj/mocha-bear.gif"; // Sleeping bear
+
+        // Specific night quotes overrides
+        if (Math.random() > 0.5) {
+            quoteEl.textContent = "Zzz... (I'm charging... you should too...)";
+            return;
+        }
+
+    } else if (hour >= 7 && hour < 18) {
+        // Work / Day
+        statusText = "MONITORING 🛡️";
+        stateClass = "state-day";
+        ledEl.style.background = "#4ade80"; // Green
+        avatarUrl = "https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif"; // Happy bear
+
+    } else {
+        // Evening / Chaos
+        statusText = "CHAOS HOURS 😈";
+        stateClass = "state-party";
+        ledEl.style.background = "#f472b6"; // Pink
+        avatarUrl = "https://media.tenor.com/N2s4YqCqK90AAAAj/music-dance.gif"; // Dancing bear
+    }
+
+    // 2. Set Random Quote
+    // Use a random index based on date + math random to keep it fresh
+    const rIndex = Math.floor(Math.random() * shraviiQuotes.length);
+    quoteEl.textContent = shraviiQuotes[rIndex];
+
+    // 3. Update UI
+    statusEl.textContent = statusText;
+    updateChibiImage(avatarUrl);
+
+    // Update container theme
+    container.className = `h-full flex flex-col p-6 transition-colors duration-1000 ${stateClass}`;
+}
+
+// Helper to manually refresh quote on click
+function refreshShravii() {
+    const quoteEl = document.getElementById('shravii-quote');
+    const rIndex = Math.floor(Math.random() * shraviiQuotes.length);
+
+    // Add animation
+    quoteEl.style.opacity = 0;
+    setTimeout(() => {
+        quoteEl.textContent = shraviiQuotes[rIndex];
+        quoteEl.style.opacity = 1;
+    }, 200);
+}
+
+/* === VOICEBOX LOGIC === */
+let vbInterval;
+let vbIsPlaying = false;
+let vbIsRecording = false;
+
+function initVoiceBox() {
+    // Reset state on open
+    vbIsPlaying = false;
+    vbIsRecording = false;
+    stopVBMotion();
+    updateVBStatus('READY');
+}
+
+function toggleVBPlay() {
+    const playBtn = document.getElementById('vb-play-btn');
+    if (vbIsPlaying) {
+        // Stop
+        vbIsPlaying = false;
+        stopVBMotion();
+        playBtn.classList.remove('active-mech-btn');
+        updateVBStatus('STOPPED');
+    } else {
+        // Play
+        vbIsPlaying = true;
+        vbIsRecording = false;
+        startVBMotion();
+        playBtn.classList.add('active-mech-btn');
+        // Unpress record if active
+        document.getElementById('vb-rec-btn').classList.remove('active-mech-btn');
+        updateVBStatus('PLAYING ▶');
+    }
+}
+
+function toggleVBRecord() {
+    const recBtn = document.getElementById('vb-rec-btn');
+    if (vbIsRecording) {
+        // Stop Rec
+        vbIsRecording = false;
+        stopVBMotion();
+        recBtn.classList.remove('active-mech-btn');
+        updateVBStatus('SAVED');
+    } else {
+        // Start Rec
+        vbIsRecording = true;
+        vbIsPlaying = false;
+        startVBMotion();
+        recBtn.classList.add('active-mech-btn');
+        // Unpress play if active
+        document.getElementById('vb-play-btn').classList.remove('active-mech-btn');
+        updateVBStatus('REC ●');
+    }
+}
+
+function startVBMotion() {
+    // Spin reels
+    const reels = document.querySelectorAll('.vb-reel');
+    reels.forEach(r => r.classList.add('spinning'));
+
+    // Wiggle Needle
+    const needle = document.getElementById('vb-needle');
+    if (needle) {
+        if (vbInterval) clearInterval(vbInterval);
+        vbInterval = setInterval(() => {
+            // Random bounce between -45deg and +45deg
+            const deg = Math.floor(Math.random() * 60) - 30;
+            needle.style.transform = `translateX(-50%) rotate(${deg}deg)`;
+        }, 100);
+    }
+}
+
+function stopVBMotion() {
+    // Stop spin
+    const reels = document.querySelectorAll('.vb-reel');
+    reels.forEach(r => r.classList.remove('spinning'));
+
+    // Stop needle
+    const needle = document.getElementById('vb-needle');
+    if (needle) needle.style.transform = `translateX(-50%) rotate(-45deg)`;
+    if (vbInterval) clearInterval(vbInterval);
+}
+
+function updateVBStatus(text) {
+    const el = document.getElementById('vb-lcd-text');
+    if (el) el.textContent = text;
+}
+
+/* === FLASH APP LOGIC (Moved to Global) === */
+window.FlashApp = {
+    startTime: 0,
+    waiting: false,
+    timeout: null,
+    fakeTimeout: null,
+    isFake: false,
+    personalBest: localStorage.getItem('harshit_flash_pb') || null,
+
+    playHover: function() {
+        const audio = document.getElementById('sfx-hover');
+        if(audio) { audio.currentTime = 0; audio.volume = 0.2; audio.play().catch(e=>{}); }
+    },
+
+    startRun: function() {
+        document.getElementById('flash-intro').classList.add('hidden');
+        document.getElementById('flash-game').classList.remove('hidden');
+        this.resetGameScreen();
+        
+        const audioWait = document.getElementById('sfx-wait');
+        if(audioWait) { audioWait.currentTime = 0; audioWait.volume = 0.5; audioWait.play().catch(e=>{}); }
+
+        const introTime = 2000 + Math.random() * 3000;
+        this.waiting = true;
+        this.isFake = false;
+        
+        this.timeout = setTimeout(() => {
+            this.triggerSignalOrFake();
+        }, introTime);
+    },
+
+    resetGameScreen: function() {
+        const bg = document.getElementById('flash-game-bg');
+        bg.className = 'absolute inset-0 bg-red-900/90 flex flex-col items-center justify-center';
+        document.getElementById('flash-instruction').innerText = "WAIT...";
+        document.getElementById('flash-instruction').className = "text-4xl font-black italic text-red-200 tracking-tighter animate-pulse";
+        
+        // Reset fake state styling
+        if(this.fakeTimeout) clearTimeout(this.fakeTimeout);
+    },
+
+    triggerSignalOrFake: function() {
+        // 30% chance of fake out
+        if (Math.random() < 0.35) {
+            this.triggerFake();
+        } else {
+            this.triggerRealSignal();
+        }
+    },
+
+    triggerFake: function() {
+        this.isFake = true;
+        // Play Buzz
+        const audioFail = document.getElementById('sfx-fail');
+        if(audioFail) { audioFail.currentTime = 0; audioFail.volume = 0.3; audioFail.play().catch(e=>{}); }
+
+        const bg = document.getElementById('flash-game-bg');
+        const txt = document.getElementById('flash-instruction');
+        
+        // Randomly Blue or Yellow
+        const types = [
+            { cls: 'bg-blue-600', msg: 'WAIT FOR IT...', textCls: 'text-blue-200' },
+            { cls: 'bg-yellow-500', msg: 'NOT YET!', textCls: 'text-yellow-900' }
+        ];
+        const type = types[Math.floor(Math.random() * types.length)];
+
+        bg.className = `absolute inset-0 ${type.cls} flex flex-col items-center justify-center shake-screen`;
+        txt.innerText = type.msg;
+        txt.className = `text-5xl font-black italic ${type.textCls} tracking-tighter animate-bounce`;
+
+        // Resume real signal after delay
+        this.fakeTimeout = setTimeout(() => {
+            if (this.waiting) {
+                    this.resetGameScreen(); // Reset visual briefy
+                    setTimeout(() => this.triggerRealSignal(), 500 + Math.random() * 1000);
+            }
+        }, 800);
+    },
+
+    triggerRealSignal: function() {
+        this.waiting = false;
+        this.isFake = false;
+        document.getElementById('sfx-wait').pause();
+        document.getElementById('sfx-signal').play().catch(e=>{});
+
+        const bg = document.getElementById('flash-game-bg');
+        bg.className = 'absolute inset-0 bg-green-500 flex flex-col items-center justify-center shake-screen'; 
+        document.getElementById('flash-instruction').innerText = "RUN, BARRY, RUN!";
+        document.getElementById('flash-instruction').className = "text-6xl font-black italic text-white tracking-tighter scale-125";
+        this.startTime = Date.now();
+    },
+
+    handleTap: function() {
+        // 1. Tapped on Fake Signal
+        if (this.waiting && this.isFake) {
+            clearTimeout(this.timeout);
+            if(this.fakeTimeout) clearTimeout(this.fakeTimeout);
+            document.getElementById('sfx-wait').pause();
+            document.getElementById('sfx-fail').play().catch(e=>{});
+            
+            const roasts = ["It was BLUE! 😂", "Color blind? 🤨", "Too eager! 🐢", "False Start! 🚫"];
+            const roast = roasts[Math.floor(Math.random() * roasts.length)];
+            this.showResult(null, roast);
+            return;
+        }
+
+        // 2. Tapped Too Early (Red Screen)
+        if (this.waiting) {
+            clearTimeout(this.timeout);
+            if(this.fakeTimeout) clearTimeout(this.fakeTimeout);
+            document.getElementById('sfx-wait').pause();
+            document.getElementById('sfx-fail').play().catch(e=>{});
+            
+            const bg = document.getElementById('flash-game-bg');
+            bg.classList.add('shake-screen');
+            
+            this.showResult(null, "Too Early! Trust your instincts.");
+            return;
+        }
+
+        // 3. Success (Green Screen)
+        const time = Date.now() - this.startTime;
+        document.getElementById('sfx-success').play().catch(e=>{});
+        this.showResult(time);
+    },
+
+    showResult: function(ms, msg) {
+        document.getElementById('flash-game').classList.add('hidden');
+        const resScreen = document.getElementById('flash-result');
+        resScreen.classList.remove('hidden');
+        resScreen.classList.add('flex');
+
+        const timeDisplay = document.getElementById('flash-time-display');
+        const rankDisplay = document.getElementById('flash-rank-display');
+        const newRecordDisplay = document.getElementById('flash-new-record');
+
+        newRecordDisplay.classList.add('hidden'); // Reset
+        resScreen.className = "absolute inset-0 flex flex-col items-center justify-center z-30 bg-black/90 p-8 text-center"; // Reset classes
+
+        if (ms === null) {
+            timeDisplay.innerText = "FAIL";
+            timeDisplay.classList.add('text-red-500');
+            timeDisplay.classList.remove('text-yellow-400');
+            rankDisplay.innerText = msg;
+            resScreen.classList.add('result-fail');
+        } else {
+            timeDisplay.innerText = ms + "ms";
+            timeDisplay.classList.remove('text-red-500');
+            timeDisplay.classList.add('text-yellow-400');
+
+            // Check High Score
+            if (!this.personalBest || ms < this.personalBest) {
+                this.personalBest = ms;
+                localStorage.setItem('harshit_flash_pb', ms);
+                newRecordDisplay.classList.remove('hidden');
+                    if(typeof confetti === 'function') confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
+            }
+
+            let rank = "";
+            if (ms < 150) rank = "⚡ SPEEDSTER LEVEL (Inhuman)";
+            else if (ms < 200) rank = "🔥 BARRY ALLEN STATUS";
+            else if (ms < 250) rank = "💨 KID FLASH (Fast)";
+            else if (ms < 350) rank = "🏃 ATHLETE (Average)";
+            else rank = "🐢 TOO SLOW (Reverse Flash caught you)";
+            
+            rankDisplay.innerText = rank;
+            resScreen.classList.add('result-success');
+        }
+    },
+
+    reset: function() {
+            document.getElementById('flash-result').classList.add('hidden');
+            document.getElementById('flash-result').classList.remove('flex');
+            document.getElementById('flash-intro').classList.remove('hidden');
+            
+            // Update PB on intro
+            if(this.personalBest) {
+            document.getElementById('flash-pb-intro').innerText = "PERSONAL BEST: " + this.personalBest + "ms";
+            }
+    }
+};
