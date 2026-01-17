@@ -584,13 +584,25 @@ body {
 
 /* Dock */
 #dock-container {
-    position: absolute;
-    bottom: 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
     width: 100%;
+    height: 15px;
+    /* Trigger zone */
     display: flex;
     justify-content: center;
+    align-items: flex-end;
     z-index: 2000;
-    pointer-events: none;
+    padding-bottom: 20px;
+    transition: height 0.3s ease;
+    pointer-events: auto;
+    /* Enable hover on the trigger zone */
+}
+
+#dock-container:hover {
+    height: 110px;
+    /* Expand to fit dock */
 }
 
 #dock {
@@ -606,6 +618,14 @@ body {
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
     pointer-events: auto;
     transform-origin: bottom;
+    transform: translateY(150%);
+    /* Hidden by default */
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+#dock-container:hover #dock {
+    transform: translateY(0);
+    /* Reveal on hover */
 }
 
 .dock-icon {

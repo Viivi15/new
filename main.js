@@ -459,7 +459,7 @@ function mrSnowFlurry() {
 const apps = [
     /* === FOLDERS === */
     {
-        id: 'folder-system', title: 'System Core', icon: '📁', dock: false, width: 600, height: 450, content: `
+        id: 'folder-system', title: 'System Core', icon: '📁', dock: false, width: 800, height: 600, content: `
         <div class="h-full bg-gradient-to-b from-gray-50 to-white p-6 overflow-y-auto custom-scroll">
             <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6 border-b border-gray-100 pb-2">Root Directory</div>
             <div class="folder-window-grid">
@@ -505,7 +505,7 @@ const apps = [
     `},
 
     {
-        id: 'folder-feelings', title: 'Soft Stuff', icon: '📁', dock: false, width: 600, height: 450, content: `
+        id: 'folder-feelings', title: 'Soft Stuff', icon: '📁', dock: false, width: 800, height: 600, content: `
         <div class="folder-window-grid">
             <div class="win-icon" onclick="Apps.open('why-matter')"><div class="icon-img">💭</div><div class="icon-label">Why You<br>Matter</div></div>
             <div class="win-icon" onclick="Apps.open('tired')"><div class="icon-img">😴</div><div class="icon-label">When Tired</div></div>
@@ -521,7 +521,7 @@ const apps = [
     `},
 
     {
-        id: 'folder-fun', title: 'Unstable Features', icon: '📁', dock: false, width: 600, height: 450, content: `
+        id: 'folder-fun', title: 'Unstable Features', icon: '📁', dock: false, width: 800, height: 600, content: `
         <div class="folder-window-grid">
             <div class="win-icon" onclick="Apps.open('flash')"><div class="icon-img">⚡</div><div class="icon-label">Fastest<br>Alive</div></div>
              <div class="win-icon" onclick="Apps.open('rabbit')"><div class="icon-img">🐰</div><div class="icon-label">Rabbit<br>Mode</div></div>
@@ -538,7 +538,7 @@ const apps = [
     `},
 
     {
-        id: 'app-vault', title: 'Vault', icon: '🔐', dock: true, width: 500, height: 400, content: `
+        id: 'app-vault', title: 'Vault', icon: '🔐', dock: true, width: 700, height: 500, content: `
         <div class="folder-window-grid">
             <div class="win-icon" onclick="Apps.open('do-not-open')"><div class="icon-img">🚫</div><div class="icon-label">Do Not<br>Open</div></div>
             <div class="win-icon" onclick="Apps.open('playlist')"><div class="icon-img">🎶</div><div class="icon-label">Hidden<br>Tracks</div></div>
@@ -552,7 +552,7 @@ const apps = [
 
     /* === SYSTEM CORE APPS (Inside Folder) === */
     {
-        id: 'terminal-app', title: 'Terminal.sh', icon: '💻', dock: false, folder: 'folder-system', width: 600, height: 450, content: `
+        id: 'terminal-app', title: 'Terminal.sh', icon: '💻', dock: false, folder: 'folder-system', width: 800, height: 600, content: `
         <div class="terminal-window h-full bg-[#1e1e1e] text-green-500 font-mono text-sm p-4 flex flex-col">
             <div id="term-output-app" class="flex-1 overflow-y-auto mb-2 custom-scroll space-y-1">
                 <div class="selection-none" style="text-shadow: 0 0 5px rgba(74, 222, 128, 0.5);">HarshitOS Terminal [Version 1.0.0]</div>
@@ -573,7 +573,7 @@ const apps = [
         }
     },
     {
-        id: 'first-conversation', title: '12:21 AM', icon: '💬', dock: false, folder: 'folder-system', width: 520, height: 520, content: `
+        id: 'first-conversation', title: '12:21 AM', icon: '💬', dock: false, folder: 'folder-system', width: 600, height: 600, content: `
         <div class="flex flex-col h-full bg-[#f8f9fa] relative">
             <!-- Background Pattern -->
             <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 20px 20px;"></div>
@@ -599,14 +599,14 @@ const apps = [
     },
 
     {
-        id: 'connection-log', title: 'Our Journey', icon: '📜', dock: true, folder: 'folder-system', width: 500, height: 700, onOpen: renderJourney, content: `
+        id: 'connection-log', title: 'Our Journey', icon: '📜', dock: true, folder: 'folder-system', width: 600, height: 800, onOpen: renderJourney, content: `
         <div id="journey-scroll" class="h-full bg-[#fcfcfc] overflow-y-auto scroll-smooth relative">
             <div id="journey-container" class="min-h-full pb-20"></div>
         </div>
     `},
 
     {
-        id: 'mr-snow', title: 'Mr. Snow', icon: '❄️', dock: true, width: 350, height: 480, onOpen: initMrSnowApp, content: `
+        id: 'mr-snow', title: 'Mr. Snow', icon: '❄️', dock: true, width: 450, height: 600, onOpen: initMrSnowApp, content: `
         <div class="mr-snow-view relative h-full">
             <canvas id="snow-canvas" class="absolute inset-0 z-0"></canvas>
             
@@ -631,7 +631,7 @@ const apps = [
     `},
 
     {
-        id: 'why-matter', title: 'Why You Matter', icon: '💭', dock: false, width: 600, height: 400, content: `
+        id: 'why-matter', title: 'Why You Matter', icon: '💭', dock: false, width: 700, height: 500, content: `
         <div class="h-full bg-gradient-to-br from-rose-50 via-white to-teal-50 p-12 flex flex-col items-center justify-center text-center cursor-pointer relative overflow-hidden" onclick="nextWhy()">
              <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-rose-200 to-transparent opacity-50"></div>
             
@@ -657,7 +657,7 @@ const apps = [
 
 
     {
-        id: 'admire', title: 'Deep Truths', icon: '🌟', dock: false, width: 700, height: 550, content: `
+        id: 'admire', title: 'Deep Truths', icon: '🌟', dock: false, width: 900, height: 650, content: `
         <div class="truth-container h-full p-8 flex flex-col relative overflow-hidden">
             <!-- Background Elements -->
              <div class="absolute top-[-50%] left-[-20%] w-[150%] h-[150%] bg-gradient-to-br from-slate-900 via-slate-800 to-black -z-20"></div>
@@ -764,7 +764,7 @@ const apps = [
 
     /* CLUSTER 2: FUN / MASTI (Lightweight) */
     {
-        id: 'facts', title: 'Harshit Facts.txt', icon: '📄', folder: 'system', dock: false, width: 600, height: 650, content: `
+        id: 'facts', title: 'Harshit Facts.txt', icon: '📄', folder: 'system', dock: false, width: 800, height: 700, content: `
         <div class="facts-app custom-scroll" id="facts-app-root">
             <!-- Section 0: Terminal Entry -->
             <div class="facts-terminal" id="facts-terminal">
@@ -907,7 +907,7 @@ const apps = [
 
     // Internal filename: emotionally_dumb_but_lovable.js
     {
-        id: 'not-dumb', title: 'Not Dumb', icon: '🤨', folder: 'system', dock: false, width: 450, height: 600, onOpen: initNotDumb, content: `
+        id: 'not-dumb', title: 'Not Dumb', icon: '🤨', folder: 'system', dock: false, width: 600, height: 700, onOpen: initNotDumb, content: `
         <div id="not-dumb-container" class="h-full bg-gray-50 text-gray-800 font-mono text-sm relative overflow-hidden flex flex-col">
             <!-- Dynamic Content Area -->
             <div id="not-dumb-content" class="flex-1 p-8 flex flex-col justify-center relative z-10">
@@ -927,7 +927,7 @@ const apps = [
     `},
 
     {
-        id: 'madrid', title: 'HalaMadrid.exe', icon: '⚽', dock: false, width: 450, height: 600, content: `
+        id: 'madrid', title: 'HalaMadrid.exe', icon: '⚽', dock: false, width: 600, height: 700, content: `
         <div class="madrid-dashboard custom-scroll" id="madrid-dash">
             <div class="madrid-header">
                 <div class="madrid-title">
@@ -1013,7 +1013,7 @@ const apps = [
 
     /* === FUN & CHAOS (Inside Folder) === */
     {
-        id: 'flash', title: 'Fastest Alive', icon: '⚡', dock: false, folder: 'folder-fun', width: 600, height: 450, content: `
+        id: 'flash', title: 'Fastest Alive', icon: '⚡', dock: false, folder: 'folder-fun', width: 800, height: 600, content: `
         <style>
             @keyframes lightning-flash {
                 0%, 100% { opacity: 0; }
@@ -1080,7 +1080,7 @@ const apps = [
     `},
 
     {
-        id: 'rabbit', title: 'The Rabbit Squad', icon: '🐰', dock: false, folder: 'folder-fun', width: 600, height: 500, onOpen: () => RabbitSquad.init(), content: `
+        id: 'rabbit', title: 'The Rabbit Squad', icon: '🐰', dock: false, folder: 'folder-fun', width: 700, height: 600, onOpen: () => RabbitSquad.init(), content: `
         <div class="h-full bg-[#f0fdf4] relative overflow-hidden select-none font-sans" id="rabbit-den">
             <!-- Background: Soft Field -->
             <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#f0fdf4] to-[#dcfce7]"></div>
@@ -1116,7 +1116,7 @@ const apps = [
 
     /* CLUSTER 3: COMFORT & CALM (Safe Spaces) */
     {
-        id: 'music-night', title: 'Late Night', icon: '🌙', dock: true, width: 350, height: 200, content: `
+        id: 'music-night', title: 'Late Night', icon: '🌙', dock: true, width: 500, height: 400, content: `
         <div class="h-full bg-slate-900 text-slate-300 flex flex-col items-center justify-center gap-6 relative overflow-hidden group">
             <!-- Background Glow -->
             <div class="absolute inset-0 bg-gradient-to-b from-transparent to-indigo-900/20"></div>
@@ -1136,7 +1136,7 @@ const apps = [
     `},
 
     {
-        id: 'thank-you', title: 'Thank You', icon: '✨', dock: false, folder: 'folder-feelings', width: 550, height: 600, content: `
+        id: 'thank-you', title: 'Thank You', icon: '✨', dock: false, folder: 'folder-feelings', width: 700, height: 700, content: `
         <div class="thank-you-container custom-scroll">
             <div class="thank-you-header">
                 <div class="ty-icon">✨</div>
@@ -1191,7 +1191,7 @@ const apps = [
     `},
 
     {
-        id: 'inkpot', title: 'The Inkpot', icon: '🖋️', dock: false, folder: 'folder-feelings', width: 600, height: 700, onOpen: initInkpot, content: `
+        id: 'inkpot', title: 'The Inkpot', icon: '🖋️', dock: false, folder: 'folder-feelings', width: 800, height: 750, onOpen: initInkpot, content: `
         <div class="inkpot-wrapper h-full relative overflow-hidden bg-[#f0e6d2]">
             <!-- Paper Texture -->
             <div class="paper-texture absolute inset-0 opacity-40 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png'); mix-blend-mode: multiply;"></div>
@@ -1221,7 +1221,7 @@ const apps = [
     `},
 
     {
-        id: 'last-thing', title: 'One Last Thing', icon: '🖤', dock: false, folder: 'folder-feelings', width: 400, height: 300, content: `
+        id: 'last-thing', title: 'One Last Thing', icon: '🖤', dock: false, folder: 'folder-feelings', width: 500, height: 400, content: `
         <div class="h-full bg-black flex flex-col items-center justify-center text-center p-6 relative overflow-hidden">
              <!-- Cinematic Gradient -->
              <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800 animate-pulse-slow"></div>
@@ -1244,7 +1244,7 @@ const apps = [
     `},
 
     {
-        id: 'tired', title: 'When Tired', icon: '😴', dock: true, width: 450, height: 400, onOpen: initTired, content: `
+        id: 'tired', title: 'When Tired', icon: '😴', dock: true, width: 600, height: 500, onOpen: initTired, content: `
         <div id="tired-container" class="tired-container">
             <div id="tired-content" class="tired-content"></div>
             <div class="heart-corner">❤️</div>
@@ -1257,7 +1257,7 @@ const apps = [
 
     /* CLUSTER 4: GROWTH & 19 (Mature) */
     {
-        id: 'app-grown', title: '19.exe', icon: '🧠', dock: true, width: 600, height: 600, content: `
+        id: 'app-grown', title: '19.exe', icon: '🧠', dock: true, width: 800, height: 700, content: `
         <div class="h-full bg-gradient-to-br from-slate-50 to-indigo-50/50 p-8 flex flex-col items-center relative overflow-hidden">
             <!-- Background Watermark -->
             <div class="absolute top-[-20px] right-[-20px] text-[180px] font-serif font-bold text-slate-100 select-none z-0 rotate-12">19</div>
@@ -1304,7 +1304,7 @@ const apps = [
     `},
 
     {
-        id: 'future', title: 'Future You', icon: '🔮', dock: false, width: 600, height: 400, content: `
+        id: 'future', title: 'Future You', icon: '🔮', dock: false, width: 800, height: 600, content: `
         <div class="h-full w-full relative bg-black overflow-hidden group">
             <!-- Background Image: Train/Night Window Aesthetic -->
             <div class="absolute inset-0 bg-cover bg-center transition-all duration-[2000ms] group-hover:scale-105 group-hover:opacity-40 opacity-70" 
@@ -1327,7 +1327,7 @@ const apps = [
     `},
 
     {
-        id: 'blueprint', title: 'Blueprint.bp', icon: '📐', dock: true, width: 600, height: 400, content: `
+        id: 'blueprint', title: 'Blueprint.bp', icon: '📐', dock: true, width: 800, height: 600, content: `
         <div class="h-full bg-[#004a80] text-blue-100 font-mono text-sm p-0 flex flex-col">
             <!-- Grid Background -->
             <div class="flex-1 p-6 custom-scroll select-text relative" style="background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 20px 20px;">
@@ -1366,7 +1366,7 @@ OBJECTIVE:
 
     /* === FUN & CHAOS (Inside Folder) === */
     {
-        id: 'radio-harshit', title: 'Radio Harshit', icon: '📻', dock: true, folder: 'folder-fun', width: 400, height: 500, onOpen: initRadio, content: `
+        id: 'radio-harshit', title: 'Radio Harshit', icon: '📻', dock: true, folder: 'folder-fun', width: 500, height: 600, onOpen: initRadio, content: `
         <div class="radio-ui">
             <div class="radio-display" id="radio-screen">WAITING FOR SIGNAL...</div>
             <div class="radio-buttons">
@@ -1379,7 +1379,7 @@ OBJECTIVE:
     `},
 
     {
-        id: 'quiz', title: 'The Us Quiz', icon: '🧩', dock: false, folder: 'folder-fun', width: 500, height: 600, onOpen: startQuiz, content: `
+        id: 'quiz', title: 'The Us Quiz', icon: '🧩', dock: false, folder: 'folder-fun', width: 600, height: 700, onOpen: startQuiz, content: `
         <div class="h-full bg-indigo-50 flex flex-col items-center justify-center text-center p-8 relative overflow-hidden" id="quiz-container">
             <div class="text-6xl mb-6 animate-bounce">🧩</div>
             <h2 class="text-2xl font-bold text-indigo-900 mb-2">The Us Quiz</h2>
@@ -1395,14 +1395,14 @@ OBJECTIVE:
     `},
 
     {
-        id: 'the-path', title: 'The Path', icon: '🧭', dock: false, folder: 'folder-fun', width: 600, height: 400, onOpen: startPathGame, content: `
+        id: 'the-path', title: 'The Path', icon: '🧭', dock: false, folder: 'folder-fun', width: 800, height: 600, onOpen: startPathGame, content: `
         <div class="path-game" id="path-container" onclick="handlePathClick(event)">
             <!-- Dynamic Content -->
         </div>
     `},
 
     {
-        id: 'word-spiral', title: 'Word Spiral', icon: '🌀', dock: false, folder: 'folder-fun', width: 500, height: 600, onOpen: initWordSpiral, content: `
+        id: 'word-spiral', title: 'Word Spiral', icon: '🌀', dock: false, folder: 'folder-fun', width: 600, height: 700, onOpen: initWordSpiral, content: `
         <div class="spiral-bg">
             <div id="spiral-content" class="h-full flex flex-col items-center justify-center p-8 text-center text-white">
                 <div class="text-4xl mb-6 animate-spin-slow">🌀</div>
@@ -1413,7 +1413,7 @@ OBJECTIVE:
     `},
 
     {
-        id: 'personality-quiz', title: 'Who Are You?', icon: '🔍', dock: false, folder: 'folder-fun', width: 500, height: 600, onOpen: initPersonalityQuiz, content: `
+        id: 'personality-quiz', title: 'Who Are You?', icon: '🔍', dock: false, folder: 'folder-fun', width: 600, height: 700, onOpen: initPersonalityQuiz, content: `
         <div class="quiz-bg">
             <div id="p-quiz-content" class="h-full flex flex-col items-center justify-center p-8 text-center">
                 <div class="text-5xl mb-6">🔍</div>
@@ -1424,7 +1424,7 @@ OBJECTIVE:
     `},
 
     {
-        id: 'rabbit-runner', title: 'RabbitRunner.exe', icon: '🐰', dock: false, folder: 'folder-fun', width: 800, height: 500, onOpen: initRabbitGame, content: `
+        id: 'rabbit-runner', title: 'RabbitRunner.exe', icon: '🐰', dock: false, folder: 'folder-fun', width: 900, height: 600, onOpen: initRabbitGame, content: `
         <div id="rr-container" class="relative w-full h-full bg-[#e0f7fa] overflow-hidden select-none font-sans">
              <div id="rr-score" class="absolute top-4 left-4 text-2xl font-bold text-gray-700 z-10">Score: 0</div>
              <div id="rr-start-screen" class="absolute inset-0 flex flex-col items-center justify-center bg-black/50 z-20 text-white">
@@ -1448,7 +1448,7 @@ OBJECTIVE:
 
 
     {
-        id: 'bear', title: 'Masti Mode', icon: '🐻', dock: true, folder: 'folder-fun', width: 400, height: 350, onOpen: () => MastiMode.init(), content: `
+        id: 'bear', title: 'Masti Mode', icon: '🐻', dock: true, folder: 'folder-fun', width: 500, height: 450, onOpen: () => MastiMode.init(), content: `
         <div class="h-full bg-[#fff0f5] relative overflow-hidden select-none font-sans" id="masti-den">
             <!-- Background -->
             <div class="absolute inset-0 bg-gradient-to-b from-pink-50 to-rose-100 opacity-50 pointer-events-none"></div>
@@ -1463,7 +1463,7 @@ OBJECTIVE:
     `},
 
     {
-        id: 'spotify', title: 'Spotify - Vibe Check', icon: '🎵', dock: true, folder: 'folder-fun', width: 350, height: 480, content: `
+        id: 'spotify', title: 'Spotify - Vibe Check', icon: '🎵', dock: true, folder: 'folder-fun', width: 450, height: 600, content: `
         <div class="h-full bg-gradient-to-b from-[#1DB954] to-black text-white p-6 flex flex-col items-center justify-center relative overflow-hidden">
             <div class="w-48 h-48 bg-gray-800 shadow-2xl mb-6 rounded-md overflow-hidden relative group album-spin">
                 <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDd4bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BRv0TlsHCqDrG/giphy.gif" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
@@ -1497,7 +1497,7 @@ OBJECTIVE:
 
     /* === VAULT APPS (Inside Folder) === */
     {
-        id: 'do-not-open', title: 'Do Not Open', icon: '🚫', dock: false, folder: 'app-vault', width: 300, height: 200, content: `
+        id: 'do-not-open', title: 'Do Not Open', icon: '🚫', dock: false, folder: 'app-vault', width: 400, height: 300, content: `
         <div class="h-full flex items-center justify-center bg-red-50 text-red-900 text-center p-6">
             <div>
                 <div class="font-bold mb-2">You Opened It.</div>
@@ -1508,7 +1508,7 @@ OBJECTIVE:
 
 
     {
-        id: 'through-my-eyes', title: 'Through My Eyes', icon: '📝', dock: false, folder: 'app-vault', width: 600, height: 500, content: `
+        id: 'through-my-eyes', title: 'Through My Eyes', icon: '📝', dock: false, folder: 'app-vault', width: 700, height: 600, content: `
         <div class="letter-text" id="letter-content">
             <div class="text-center mb-6">
                 <h1 class="text-3xl font-bold font-serif text-gray-800">
@@ -1579,7 +1579,7 @@ OBJECTIVE:
     },
 
     {
-        id: 'playlist', title: 'Hidden Tracks', icon: '🎶', dock: false, folder: 'app-vault', width: 400, height: 300, content: `
+        id: 'playlist', title: 'Hidden Tracks', icon: '🎶', dock: false, folder: 'app-vault', width: 500, height: 400, content: `
         <div class="h-full bg-black text-white p-6">
             <div class="uppercase tracking-widest text-xs opacity-50 mb-4">Secret Collection</div>
             <ul class="space-y-3 text-sm font-light opacity-80">
@@ -1591,7 +1591,7 @@ OBJECTIVE:
     `},
 
     {
-        id: 'secret-vault', title: 'Secret Vault', icon: '🔐', dock: false, folder: 'app-vault', width: 700, height: 500, onOpen: initSecretVault, content: `
+        id: 'secret-vault', title: 'Secret Vault', icon: '🔐', dock: false, folder: 'app-vault', width: 800, height: 600, onOpen: initSecretVault, content: `
         <div id="vault-container" class="relative w-full h-full bg-gray-900 text-white overflow-hidden flex flex-col items-center justify-center">
              
              <!-- Lock Screen -->
@@ -1620,7 +1620,7 @@ OBJECTIVE:
     `},
 
     {
-        id: 'voice-box', title: 'VoiceBox', icon: '🎙️', dock: false, folder: 'app-vault', width: 450, height: 600, onOpen: initVoiceBox, content: `
+        id: 'voice-box', title: 'VoiceBox', icon: '🎙️', dock: false, folder: 'app-vault', width: 550, height: 700, onOpen: initVoiceBox, content: `
         <div class="h-full flex flex-col font-sans select-none relative overflow-hidden">
             <!-- Case Texture -->
             <div class="absolute inset-0 bg-neutral-800 dictaphone-case"></div>
@@ -1700,7 +1700,7 @@ OBJECTIVE:
     `},
 
     {
-        id: 'readme-letter', title: 'ReadMe.txt', icon: '💌', dock: false, folder: 'app-vault', width: 600, height: 700, content: `
+        id: 'readme-letter', title: 'ReadMe.txt', icon: '💌', dock: false, folder: 'app-vault', width: 800, height: 800, content: `
         <div class="h-full bg-white p-10 font-serif text-gray-800 leading-relaxed custom-scroll overflow-y-auto" style="background-image: linear-gradient(#999 1px, transparent 1px); background-size: 100% 2em; line-height: 2em;">
             <div class="text-3xl font-bold text-red-500 mb-6 handwritten" style="font-family: 'Dancing Script', cursive;">Dear Harshit,</div>
             <p>If you are reading this, the system is working. But more importantly, <i>we</i> are working.</p>
@@ -1713,7 +1713,7 @@ OBJECTIVE:
     `},
 
     {
-        id: 'memories-gallery', title: 'Memories', icon: '📸', dock: false, folder: 'app-vault', width: 800, height: 600, onOpen: initGallery, content: `
+        id: 'memories-gallery', title: 'Memories', icon: '📸', dock: false, folder: 'app-vault', width: 950, height: 700, onOpen: initGallery, content: `
         <div id="gallery-container" class="polaroid-gallery custom-scroll">
             <!-- Dynamic Polaroids will be injected here -->
         </div>
@@ -1721,7 +1721,7 @@ OBJECTIVE:
 
     /* === DESKTOP VISIBLE APPS (No Folder) === */
     {
-        id: 'shravii', title: 'Shravii.exe', icon: '🫧', dock: true, width: 400, height: 500, content: `
+        id: 'shravii', title: 'Shravii.exe', icon: '🫧', dock: true, width: 500, height: 600, content: `
         <div class="h-full bg-[#fff0f5] p-6 custom-scroll">
             <div class="bg-white p-4 rounded-lg shadow-sm mb-4">
                 <div class="text-xs text-gray-400 mb-1">System User</div>
@@ -1740,7 +1740,7 @@ OBJECTIVE:
     `},
 
     {
-        id: 'about-us', title: 'The Dynamic', icon: '👥', dock: false, width: 700, height: 500, content: `
+        id: 'about-us', title: 'The Dynamic', icon: '👥', dock: false, width: 800, height: 600, content: `
         <div class="about-container relative w-full h-full bg-slate-50 overflow-hidden flex flex-col items-center justify-center">
             <!-- Background Elements -->
             <div class="absolute inset-0 bg-gradient-to-br from-rose-50/50 via-white to-blue-50/50"></div>
@@ -2662,10 +2662,11 @@ const Apps = {
         const win = document.createElement('div');
         win.className = `window ${app.dark ? 'dark' : ''}`;
         win.id = `win-${id}`;
-        win.style.width = (app.width || 600) + 'px';
-        win.style.height = (app.height || 450) + 'px';
-        win.style.left = `calc(50% - ${(app.width || 600) / 2}px + ${Math.random() * 20}px)`;
-        win.style.top = `calc(50% - ${(app.height || 450) / 2}px + ${Math.random() * 20}px)`;
+        win.style.width = (app.width || 800) + 'px';
+        win.style.height = (app.height || 600) + 'px';
+        const safeTop = Math.max(40, (window.innerHeight - (app.height || 600)) / 2 + Math.random() * 20);
+        win.style.left = `calc(50% - ${(app.width || 800) / 2}px + ${Math.random() * 20}px)`;
+        win.style.top = safeTop + 'px';
         win.style.zIndex = ++zIndex;
 
         let contentHTML = app.content || '';
@@ -4180,8 +4181,13 @@ const System = {
 
         const win = document.createElement('div');
         win.id = id;
-        win.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 bg-[#ECECEC] rounded-xl shadow-2xl z-[5000] overflow-hidden flex flex-col font-sans animate-zoom-in';
-        win.style.border = "1px solid #ccc";
+        const safeTop = Math.max(40, (window.innerHeight - 300) / 2); // approx height
+        win.className = 'window bg-[#ECECEC] rounded-xl shadow-2xl z-[5000] overflow-hidden flex flex-col font-sans animate-zoom-in';
+        win.style.position = 'absolute';
+        win.style.width = '320px';
+        win.style.height = 'auto';
+        win.style.left = `calc(50% - 160px)`;
+        win.style.top = safeTop + 'px';
 
         win.innerHTML = `
             <div class="h-6 bg-gradient-to-b from-gray-200 to-gray-300 border-b border-gray-400 flex items-center px-2 relative" onmousedown="startDrag(event, '${id}')">

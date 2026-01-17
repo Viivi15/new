@@ -420,12 +420,13 @@
         <!-- Blueprint Window -->
         <div id="blueprint-window" class="window" style="display: none;">
             <div class="title-bar">
-                <div class="title">Blueprint.bp</div>
-                <div class="buttons">
-                    <button class="win-btn">-</button>
-                    <button class="win-btn">[]</button>
-                    <button class="win-btn" onclick="closeBlueprint()">X</button>
+                <div class="traffic-lights">
+                    <div class="traffic-light close" onclick="closeBlueprint()"></div>
+                    <div class="traffic-light minimize"></div>
+                    <div class="traffic-light maximize"></div>
                 </div>
+                <div class="text-xs text-center w-full absolute pt-1 pointer-events-none opacity-50 font-medium">
+                    Blueprint.bp</div>
             </div>
             <div class="content">
                 <pre>
