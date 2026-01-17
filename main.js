@@ -521,6 +521,79 @@ const apps = [
     `},
 
     {
+        id: 'memory-gallery', title: 'Our Moments', icon: '📸', dock: false, width: 900, height: 600, content: `
+    <div class="h-full bg-[#e2e8f0] p-8 overflow-x-auto overflow-y-hidden flex items-center gap-12 select-none custom-scroll">
+        
+        <!-- 1. First Meet -->
+        <div class="relative group min-w-[280px] h-[350px] bg-white p-4 pb-12 shadow-[0_10px_20px_rgba(0,0,0,0.1)] transform rotate-[-2deg] hover:rotate-0 transition duration-500 hover:z-50 hover:scale-110">
+            <div class="w-full h-full bg-gray-200 overflow-hidden mb-4">
+                <img src="assets/picswme/Screenshot_20240715_181142.webp" class="w-full h-full object-cover">
+            </div>
+            <div class="absolute bottom-4 left-0 w-full text-center font-[Handlee] text-gray-600 rotate-0">
+                "4 hours sleep is enough" 💀<br>
+                <span class="text-xs text-gray-400">June 20, 2024</span>
+            </div>
+        </div>
+
+        <!-- 2. The Accident -->
+        <div class="relative group min-w-[280px] h-[350px] bg-white p-4 pb-12 shadow-lg transform rotate-[3deg] hover:rotate-0 transition duration-500 hover:z-50 hover:scale-110">
+            <div class="w-full h-full bg-black flex items-center justify-center text-white text-4xl">
+                🩹
+            </div>
+            <div class="absolute bottom-4 left-0 w-full text-center font-[Handlee] text-gray-600">
+                The Accident & The Distraction<br>
+                <span class="text-xs text-gray-400">July 30, 2024</span>
+            </div>
+        </div>
+
+        <!-- 3. Math Failure -->
+        <div class="relative group min-w-[280px] h-[350px] bg-white p-4 pb-12 shadow-lg transform rotate-[-1deg] hover:rotate-0 transition duration-500 hover:z-50 hover:scale-110">
+            <div class="w-full h-full bg-gray-200 overflow-hidden">
+                <img src="assets/picswme/Screenshot_20250130_235831.webp" class="w-full h-full object-cover">
+            </div>
+            <div class="absolute bottom-4 left-0 w-full text-center font-[Handlee] text-gray-600">
+                11:59 PM Math Failure 😂<br>
+                <span class="text-xs text-gray-400">Jan 30, 2025</span>
+            </div>
+        </div>
+
+         <!-- 4. September Memory -->
+        <div class="relative group min-w-[280px] h-[350px] bg-white p-4 pb-12 shadow-lg transform rotate-[2deg] hover:rotate-0 transition duration-500 hover:z-50 hover:scale-110">
+            <div class="w-full h-full bg-gray-200 overflow-hidden">
+                <img src="assets/picswme/IMG-20240925-WA0038.jpg" class="w-full h-full object-cover">
+            </div>
+            <div class="absolute bottom-4 left-0 w-full text-center font-[Handlee] text-gray-600">
+                September Moments ✨<br>
+                <span class="text-xs text-gray-400">Sept 25, 2024</span>
+            </div>
+        </div>
+
+        <!-- 5. November Vibes -->
+        <div class="relative group min-w-[280px] h-[350px] bg-white p-4 pb-12 shadow-lg transform rotate-[-3deg] hover:rotate-0 transition duration-500 hover:z-50 hover:scale-110">
+            <div class="w-full h-full bg-gray-200 overflow-hidden">
+                <img src="assets/picswme/Screenshot_20241122_115947.webp" class="w-full h-full object-cover">
+            </div>
+            <div class="absolute bottom-4 left-0 w-full text-center font-[Handlee] text-gray-600">
+                Connection lost...<br>
+                <span class="text-xs text-gray-400">Nov 22, 2024</span>
+            </div>
+        </div>
+
+        <!-- 6. December Chill -->
+        <div class="relative group min-w-[280px] h-[350px] bg-white p-4 pb-12 shadow-lg transform rotate-[1deg] hover:rotate-0 transition duration-500 hover:z-50 hover:scale-110">
+            <div class="w-full h-full bg-gray-200 overflow-hidden">
+                <img src="assets/picswme/Screenshot_20241223_231858.webp" class="w-full h-full object-cover">
+            </div>
+            <div class="absolute bottom-4 left-0 w-full text-center font-[Handlee] text-gray-600">
+                End of Year Vibes ❄️<br>
+                <span class="text-xs text-gray-400">Dec 23, 2024</span>
+            </div>
+        </div>
+
+        </div>
+`},
+
+    {
         id: 'folder-fun', title: 'Unstable Features', icon: '📁', dock: false, width: 800, height: 600, content: `
         <div class="folder-window-grid">
             <div class="win-icon" onclick="Apps.open('flash')"><div class="icon-img">⚡</div><div class="icon-label">Fastest<br>Alive</div></div>
@@ -538,13 +611,40 @@ const apps = [
     `},
 
     {
-        id: 'app-vault', title: 'Vault', icon: '🔐', dock: true, width: 700, height: 500, content: `
-        <div id="vault-lock-screen" class="h-full flex flex-col items-center justify-center bg-gray-100 select-none">
-            <div class="text-6xl mb-6">🔒</div>
-            <h3 class="text-xl font-bold mb-6 text-gray-700 font-serif">Secure Vault Access</h3>
-            <input type="password" id="vault-passcode" class="border-2 border-gray-300 rounded-lg px-4 py-2 text-center mb-4 w-48 text-xl tracking-widest outline-none focus:border-blue-500 transition" placeholder="PASSCODE" onkeydown="if(event.key === 'Enter') unlockVault()">
-            <button onclick="unlockVault()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-2 rounded-full transition shadow-lg transform hover:scale-105">Unlock</button>
-            <div id="vault-error" class="text-red-500 text-sm mt-4 opacity-0 font-bold transition-opacity">Access Denied</div>
+        id: 'app-vault', title: 'Vault', icon: '🔐', dock: true, width: 800, height: 600, content: `
+        <div class="h-full bg-gray-900 flex flex-col relative overflow-hidden">
+            <!-- Lock Screen -->
+            <div id="vault-lock-screen" class="absolute inset-0 z-20 bg-gray-100 flex flex-col items-center justify-center select-none">
+                <div class="text-6xl mb-6">🔐</div>
+                <h3 class="text-xl font-bold mb-6 text-gray-700 font-serif">Restricted Access</h3>
+                <input type="password" id="vault-passcode" class="border-2 border-gray-300 rounded-lg px-4 py-2 text-center mb-4 w-48 text-xl tracking-widest outline-none focus:border-blue-500 transition" placeholder="PASSCODE" onkeydown="if(event.key === 'Enter') unlockVault()">
+                <button onclick="unlockVault()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-2 rounded-full transition shadow-lg transform hover:scale-105">Unlock</button>
+                <div id="vault-error" class="text-red-500 text-sm mt-4 opacity-0 font-bold transition-opacity">Incorrect Passcode</div>
+                <div class="mt-8 text-xs text-gray-400">Hint: When did it all start? (DDMMYY)</div>
+            </div>
+
+            <!-- Content (Hidden by default) -->
+            <div id="vault-grid" class="hidden h-full p-8 overflow-y-auto custom-scroll">
+                <div class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6 border-b border-gray-700 pb-2">Vault Contents</div>
+                <div class="folder-window-grid">
+                     <div class="win-icon group" onclick="Apps.open('truth-archives')">
+                        <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">🗂️</div>
+                        <div class="icon-label text-gray-300 group-hover:text-green-400">Truth Archives</div>
+                    </div>
+                    <div class="win-icon group" onclick="Apps.open('map-of-us')">
+                        <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">🗺️</div>
+                        <div class="icon-label text-gray-300 group-hover:text-blue-400">Detail Map</div>
+                    </div>
+                     <div class="win-icon group" onclick="Apps.open('memories-gallery')">
+                        <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">📸</div>
+                        <div class="icon-label text-gray-300 group-hover:text-pink-400">Memories</div>
+                    </div>
+                     <div class="win-icon group" onclick="Apps.open('playlist')">
+                        <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">🎧</div>
+                        <div class="icon-label text-gray-300 group-hover:text-purple-400">Hidden Tracks</div>
+                    </div>
+                </div>
+            </div>
         </div>
     `},
 
@@ -762,7 +862,7 @@ const apps = [
                 </div>
                  <div class="text-xs text-slate-400 tracking-widest uppercase opacity-70 animate-pulse">Access Granted</div>
             </div>
-        </div >
+        </div>
     <script>
         function toggleTruth(card) {
             // Close others
@@ -1658,6 +1758,48 @@ OBJECTIVE:
         </div>
     `},
 
+    {
+        id: 'truth-archives', title: 'Truth Archives', icon: '🗂️', dock: false, folder: 'app-vault', width: 800, height: 600, onOpen: initTruths, content: `
+        <div class="h-full bg-[#1a1a1a] text-green-400 p-6 font-mono flex flex-col">
+             <div class="border-b border-green-800 pb-4 mb-4 flex justify-between items-center">
+                <h2 class="text-xl tracking-widest uppercase">Truth_Database_v1.0</h2>
+                <div class="text-xs opacity-50">STATUS: UNCLASSIFIED</div>
+             </div>
+             
+             <!-- Search -->
+             <div class="mb-6 relative">
+                <input type="text" id="truth-search" onkeyup="filterTruths()" placeholder="Search archives (e.g., 'worst', 'crush')..." 
+                       class="w-full bg-black/50 border border-green-900 p-3 rounded text-sm focus:outline-none focus:border-green-500 transition-colors placeholder-green-800/50">
+                <div class="absolute right-3 top-3 text-xs opacity-50">🔍</div>
+             </div>
+
+             <!-- Grid -->
+             <div id="truth-grid" class="flex-1 overflow-y-auto custom-scroll grid grid-cols-1 gap-4">
+                <!-- Injected via JS -->
+             </div>
+        </div>
+    `},
+
+    {
+        id: 'map-of-us', title: 'Map of Us', icon: '🗺️', dock: false, folder: 'app-vault', width: 900, height: 600, onOpen: initMap, content: `
+        <div class="h-full bg-[#e0e7ff] relative overflow-hidden select-none">
+            <!-- Map Background (Stylized) -->
+            <div class="absolute inset-0 bg-[url('https://thumbs.dreamstime.com/b/world-map-tech-background-blue-technology-163456072.jpg')] bg-cover bg-center opacity-10 mix-blend-multiply"></div>
+            <div class="absolute inset-0 bg-white/40 backdrop-blur-[2px]"></div>
+
+            <div class="absolute top-4 left-4 z-10 bg-white/80 backdrop-blur p-4 rounded-xl shadow-sm border border-white/50 max-w-xs">
+                <h2 class="text-lg font-bold text-slate-700 mb-1">Bus Route Research 🚌</h2>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    "Likely Areas: Outskirts of Pune like Mulshi...<br>
+                    Distance: Irrelevant."
+                </p>
+            </div>
+
+            <!-- Content Container -->
+            <div id="map-markers" class="w-full h-full relative"></div>
+        </div>
+    `},
+
     /* === DESKTOP VISIBLE APPS (No Folder) === */
     {
         id: 'shravii', title: 'Shravii.exe', icon: '🫧', dock: true, width: 500, height: 600, content: `
@@ -1752,7 +1894,59 @@ OBJECTIVE:
                 <p class="text-xs font-mono text-slate-500">"He stays quiet so she can yap."</p>
             </div>
         </div>
-    `}
+    `},
+    {
+        id: 'bear-pet',
+        title: 'Mr. Bear',
+        icon: '🐻',
+        dock: true, // Keep it on dock
+        width: 320,
+        height: 350,
+        content: `
+        <div class="h-full bg-blue-50 flex flex-col items-center justify-center p-4">
+            <div class="relative w-48 h-48 mb-4">
+                <img id="pet-bear-img" src="assets/photos/bear1.png" class="w-full h-full object-contain drop-shadow-xl">
+            </div>
+            
+            <div class="grid grid-cols-2 gap-2 w-full">
+                <button onclick="changeBearMood('dance')" class="p-2 bg-pink-400 text-white rounded-lg hover:bg-pink-500 font-bold text-sm">💃 Dance</button>
+                <button onclick="changeBearMood('party')" class="p-2 bg-purple-400 text-white rounded-lg hover:bg-purple-500 font-bold text-sm">🎉 Party</button>
+                <button onclick="changeBearMood('kick')" class="p-2 bg-red-400 text-white rounded-lg hover:bg-red-500 font-bold text-sm">⚽ Hala Madrid</button>
+                <button onclick="changeBearMood('milk')" class="p-2 bg-blue-400 text-white rounded-lg hover:bg-blue-500 font-bold text-sm">🥛 Feed Milk</button>
+            </div>
+            
+            <div class="mt-4 text-xs text-gray-500 italic" id="bear-status">"I am listening..."</div>
+        </div>
+        
+        <script>
+            function changeBearMood(action) {
+                const img = document.getElementById('pet-bear-img');
+                const status = document.getElementById('bear-status');
+                
+                if(action === 'dance') {
+                    img.src = 'https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif';
+                    status.innerText = "Vibing to 'Too Sweet'...";
+                } else if(action === 'party') {
+                    img.src = 'https://media.tenor.com/N2s4YqCqK90AAAAj/music-dance.gif';
+                    status.innerText = "Celebrating life!";
+                } else if(action === 'kick') {
+                    img.src = 'https://media.tenor.com/2t1p3ydC65AAAAAj/mocha-bear-kick.gif';
+                    status.innerText = "Training for Real Madrid...";
+                    new Audio('assets/audio/siu.mp3').play().catch(() => {}); // Optional
+                } else if(action === 'milk') {
+                    img.src = 'https://media.tenor.com/PFC1L2aEwEIAAAAj/mocha-bear.gif'; 
+                    status.innerText = "Calcium levels restoring...";
+                }
+                
+                // Reset to still image after 5 seconds
+                setTimeout(() => {
+                    img.src = 'assets/photos/bear1.png';
+                    status.innerText = "Waiting for command...";
+                }, 5000);
+            }
+        </script>
+        `
+    }
 ];
 
 /* === SETTINGS FUNCTIONS === */
@@ -1820,7 +2014,7 @@ function renderSettings() {
     const grid = document.getElementById('wp-grid');
     if (grid) {
         grid.innerHTML = wallpapers.map((wp, i) => `
-    < div class="wallpaper-thumb" onclick = "setWallpaper('${wp.full}', this)" >
+    <div class="wallpaper-thumb" onclick = "setWallpaper('${wp.full}', this)" >
         <img src="${wp.thumb}">
         </div>
 `).join('');
@@ -2811,7 +3005,7 @@ function handleTerminalCommand() {
     if (!cmd) return;
 
     // Echo command
-    output.innerHTML += `< div > <span class="term-prompt">root@harshit:~$</span> ${cmd}</div > `;
+    output.innerHTML += `<div > <span class="term-prompt">root@harshit:~$</span> ${cmd}</div> `;
 
     // Process Command
     let response = '';
@@ -2830,7 +3024,7 @@ function handleTerminalCommand() {
             return;
         case 'help':
             response = `
-    < div class="term-info" > Available Commands:</div >
+    <div class="term-info" > Available Commands:</div>
                 <div>  help       - Show this list</div>
                 <div>  update     - Check for system updates</div>
                 <div>  whois      - Identify the user</div>
@@ -2843,11 +3037,11 @@ function handleTerminalCommand() {
 `;
             break;
         case 'update':
-            output.innerHTML += `< div > <span class="term-info">Checking for updates...</span></div > `;
+            output.innerHTML += `<div > <span class="term-info">Checking for updates...</span></div> `;
             setTimeout(() => {
-                output.innerHTML += `< div > Harshit OS 19.0 is already up to date.</div > `;
+                output.innerHTML += `<div > Harshit OS 19.0 is already up to date.</div> `;
                 setTimeout(() => {
-                    output.innerHTML += `< div > <span class="term-info">Some improvements take time.</span></div > `;
+                    output.innerHTML += `<div > <span class="term-info">Some improvements take time.</span></div> `;
                 }, 1000);
             }, 1000);
             input.value = '';
@@ -3108,36 +3302,7 @@ function closeBlueprint() {
     document.getElementById('blueprint-window').style.display = 'none';
 }
 
-/* === INKPOT LOGIC === */
-let poemIdx = 0;
-const poems = [
-    "Some days are heavy,\nBut you carry them well.\nKeep going.",
-    "The world is loud,\nBut your peace is real.\nProtect it.",
-    "Not perfect.\nNot finished.\nJust right.",
-    "You are the best kind of chaos.\nNever change."
-];
-function initInkpot() {
-    poemIdx = 0;
-    const el = document.getElementById('inkpot-text');
-    if (el) el.innerText = "Click the quill...";
-}
-function nextPoem() {
-    const el = document.getElementById('inkpot-text');
-    if (!el) return;
-    el.innerText = "";
-    const txt = poems[poemIdx % poems.length];
-    poemIdx++;
 
-    let i = 0;
-    function type() {
-        if (i < txt.length) {
-            el.innerText += txt.charAt(i);
-            i++;
-            setTimeout(type, 50);
-        }
-    }
-    type();
-}
 
 /* === RADIO LOGIC === */
 function initRadio() {
@@ -3808,6 +3973,35 @@ function orderCravings() {
 
 
 
+/* === APP VAULT FOLDER LOGIC === */
+function unlockVault() {
+    const inp = document.getElementById('vault-passcode');
+    const err = document.getElementById('vault-error');
+    if (!inp) return;
+
+    // Check pass: 200624 (Connection Date)
+    if (inp.value === '200624') {
+        inp.blur();
+        document.getElementById('vault-lock-screen').style.transition = 'opacity 0.5s';
+        document.getElementById('vault-lock-screen').style.opacity = '0';
+
+        setTimeout(() => {
+            document.getElementById('vault-lock-screen').style.display = 'none';
+            document.getElementById('vault-grid').classList.remove('hidden');
+            document.getElementById('vault-grid').style.display = 'block';
+        }, 500);
+    } else {
+        err.style.opacity = '1';
+        inp.classList.add('animate-pulse', 'border-red-500');
+        setTimeout(() => {
+            inp.classList.remove('animate-pulse', 'border-red-500');
+            err.style.opacity = '0';
+        }, 1500);
+        inp.value = '';
+    }
+}
+window.unlockVault = unlockVault;
+
 // Global Exports
 window.initVoiceBox = initVoiceBox;
 
@@ -4361,6 +4555,9 @@ function startFactsApp() {
 
     term.classList.add('hidden');
     main.classList.add('active');
+
+    // Fix: Ensure we start at the top
+    main.scrollTop = 0;
 
     // Auto-reveal sections with a slight delay
     const sections = main.querySelectorAll('.facts-section');
@@ -5217,13 +5414,15 @@ function vaultPrevSlide() {
 /* === VAULT SECURITY === */
 const VAULT_CONTENT = `
 <div class="folder-window-grid">
-    <div class="win-icon" onclick="Apps.open('do-not-open')"><div class="icon-img">🚫</div><div class="icon-label">Do Not<br>Open</div></div>
-    <div class="win-icon" onclick="Apps.open('playlist')"><div class="icon-img">🎶</div><div class="icon-label">Hidden<br>Tracks</div></div>
+    <div class="win-icon" onclick="Apps.open('do-not-open')"><div class="icon-img">🚫</div><div class="icon-label">Do Not<br />Open</div></div>
+    <div class="win-icon" onclick="Apps.open('playlist')"><div class="icon-img">🎶</div><div class="icon-label">Hidden<br />Tracks</div></div>
     <div class="win-icon" onclick="Apps.open('secret-vault')"><div class="icon-img">🔐</div><div class="icon-label">Secret Vault</div></div>
     <div class="win-icon" onclick="Apps.open('voice-box')"><div class="icon-img">🎙️</div><div class="icon-label">VoiceBox</div></div>
     <div class="win-icon" onclick="Apps.open('readme-letter')"><div class="icon-img">💌</div><div class="icon-label">ReadMe.txt</div></div>
-     <div class="win-icon" onclick="Apps.open('memories-gallery')"><div class="icon-img">📸</div><div class="icon-label">Memories</div></div>
-     <div class="win-icon" onclick="Apps.open('through-my-eyes')"><div class="icon-img">📝</div><div class="icon-label">Through<br>My Eyes</div></div>
+    <div class="win-icon" onclick="Apps.open('memories-gallery')"><div class="icon-img">📸</div><div class="icon-label">Memories</div></div>
+    <div class="win-icon" onclick="Apps.open('through-my-eyes')"><div class="icon-img">📝</div><div class="icon-label">Through<br />My Eyes</div></div>
+    <div class="win-icon" onclick="Apps.open('truth-archives')"><div class="icon-img">🗂️</div><div class="icon-label">Truth<br />Archives</div></div>
+    <div class="win-icon" onclick="Apps.open('map-of-us')"><div class="icon-img">🗺️</div><div class="icon-label">Map of Us</div></div>
 </div>
 `;
 
@@ -5308,6 +5507,42 @@ function submitAnswer() {
 }
 window.submitAnswer = submitAnswer;
 
+/* === GHOST NOTIFICATIONS SYSTEM === */
+const memories = [
+    { text: "System Alert: Bhindi detected in vicinity. Evacuate.", time: 5000 }, // 5 seconds
+    { text: "Reminder: You promised to sleep > 4 hours.", time: 15000 },
+    { text: "New Message: 'Where ya from Harry?' (June 20, 2024)", time: 30000 },
+    { text: "Critical: Ota's Medicine No. 1 is due.", time: 60000 }
+];
+
+memories.forEach(memory => {
+    setTimeout(() => {
+        showNotification('HarshitOS Memory', memory.text);
+    }, memory.time);
+});
+
+function showNotification(title, body) {
+    // Create notification element
+    const notif = document.createElement('div');
+    notif.className = 'fixed top-4 right-4 bg-white/90 backdrop-blur text-gray-800 p-4 rounded-xl shadow-2xl border-l-4 border-blue-500 transform translate-x-full transition-transform duration-500 z-[9999]';
+    notif.innerHTML = `
+    <div class="font-bold text-sm">${title}</div>
+        <div class="text-xs mt-1">${body}</div>
+`;
+
+    document.body.appendChild(notif);
+
+    // Slide in
+    requestAnimationFrame(() => {
+        notif.style.transform = 'translateX(0)';
+    });
+
+    // Slide out and remove
+    setTimeout(() => {
+        notif.style.transform = 'translateX(120%)';
+        setTimeout(() => notif.remove(), 500);
+    }, 4000);
+}
 
 
 
@@ -5318,4 +5553,218 @@ window.submitAnswer = submitAnswer;
 
 
 
+
+
+
+/* === TRUTH ARCHIVES LOGIC === */
+const truthData = [
+    { title: "First Meet", tags: ["start"], content: "June 20, 2024. 12:21 AM.<br>You asked 'is anyone watching euros?'.<br>I asked 'Where ya from Harry?'.<br>And so it began." },
+    { title: "Mr. Chuha", tags: ["funny", "names"], content: "You told me your front teeth used to slightly protrude.<br>I called you 'Mr. Chuha'.<br>You didn't get mad. You owned it. 🐭" },
+    { title: "The Promise", tags: ["emotional"], content: "I tried to push you away.<br>You said: 'You don't have any IRL friends so I'm not leaving DC.'<br>Stubborn. But I needed that." },
+    { title: "The Poem", tags: ["birthday"], content: "For my birthday, you wrote a poem.<br>You tried to time it perfectly letter-by-letter for 12:00 AM.<br>Your math failed (ended at 11:59).<br>But it was perfect. ✨" },
+    { title: "Mumbai Detective", tags: ["smart"], content: "I said 'Cream building, blue benches'.<br>You found L.R. Tiwari College of Engineering.<br>Stalker? Maybe. <br>Impressed? Yes." },
+    { title: "The 'Dumb' Role", tags: ["funny"], content: "We both claim to be the 'dumb' one.<br>But you solved my code issues while I panicked.<br>So... I win the dumb trophy. 🏆" }
+];
+
+function initTruths() {
+    const grid = document.getElementById('truth-grid');
+    if (!grid) return;
+
+    grid.innerHTML = '';
+
+    truthData.forEach(t => {
+        const div = document.createElement('div');
+        div.className = 'bg-black/40 border border-green-900/30 p-4 rounded hover:bg-green-900/10 transition group cursor-pointer';
+        div.innerHTML = `
+    <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-green-400 group-hover:text-green-300">${t.title}</h3>
+                <span class="text-[10px] uppercase tracking-wider opacity-50 border border-green-800 px-1 rounded">${t.tags[0]}</span>
+            </div >
+    <div class="text-sm text-green-400/80 leading-relaxed font-light line-clamp-2 transition-all duration-300">${t.content}</div>
+`;
+
+        // Expand on click logic
+        div.onclick = function () {
+            const contentDiv = this.querySelector('div:last-child');
+            if (contentDiv.classList.contains('line-clamp-2')) {
+                contentDiv.classList.remove('line-clamp-2');
+                this.classList.add('bg-green-900/20');
+            } else {
+                contentDiv.classList.add('line-clamp-2');
+                this.classList.remove('bg-green-900/20');
+            }
+        };
+
+        grid.appendChild(div);
+    });
+}
+
+function filterTruths() {
+    const input = document.getElementById('truth-search');
+    const filter = input.value.toLowerCase();
+    const grid = document.getElementById('truth-grid');
+
+    // Simple filter recreation
+    grid.innerHTML = '';
+
+    truthData.forEach(t => {
+        if (t.title.toLowerCase().includes(filter) || t.content.toLowerCase().includes(filter) || t.tags.some(tag => tag.includes(filter))) {
+            const div = document.createElement('div');
+            div.className = 'bg-black/40 border border-green-900/30 p-4 rounded hover:bg-green-900/10 transition group';
+            div.innerHTML = `
+    <div class="flex justify-between items-start mb-2">
+                    <h3 class="font-bold text-green-400 group-hover:text-green-300">${t.title}</h3>
+                    <span class="text-[10px] uppercase tracking-wider opacity-50 border border-green-800 px-1 rounded">${t.tags[0]}</span>
+                </div >
+    <p class="text-sm text-green-400/80 leading-relaxed font-light">${t.content}</p>
+`;
+            grid.appendChild(div);
+        }
+    });
+}
+window.initTruths = initTruths;
+window.filterTruths = filterTruths;
+
+
+/* === MAP OF US LOGIC === */
+function initMap() {
+    const mapContainer = document.getElementById('map-markers');
+    if (!mapContainer) return;
+
+    mapContainer.innerHTML = '';
+
+    const locations = [
+        { name: "Pune", x: 30, y: 60, desc: "The Likely Zone? (Mulshi/Pirangut)" },
+        { name: "Nashik", x: 40, y: 40, desc: "Trimbakeshwar Routes" },
+        { name: "Mumbai", x: 20, y: 50, desc: "L.R. Tiwari College (The Detective Work)" },
+        { name: "Haryana", x: 35, y: 20, desc: "Origin Point (Sirsa)" }
+    ];
+
+    locations.forEach(loc => {
+        const marker = document.createElement('div');
+        marker.className = 'absolute w-4 h-4 bg-red-500 rounded-full border-2 border-white shadow-lg cursor-pointer hover:scale-125 transition z-10';
+        marker.style.left = loc.x + '%';
+        marker.style.top = loc.y + '%';
+        marker.title = loc.name;
+
+        // Tooltip
+        const tip = document.createElement('div');
+        tip.className = 'absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-white/90 backdrop-blur px-2 py-1 text-xs font-bold text-slate-700 rounded shadow-sm whitespace-nowrap opacity-0 pointer-events-none transition-opacity duration-300';
+        tip.innerText = loc.desc;
+
+        marker.onmouseenter = () => tip.style.opacity = 1;
+        marker.onmouseleave = () => tip.style.opacity = 0;
+
+        marker.appendChild(tip); // Append tip to marker so it moves with it
+        mapContainer.appendChild(marker);
+    });
+}
+window.initMap = initMap;
+
+/* === GALLERY LOGIC === */
+function initGallery() {
+    const container = document.getElementById('gallery-container');
+    if (!container) return;
+
+
+    // Using placeholder/generated images since actual files aren't confirmed in directory
+    const memories = [
+        { src: "https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif", caption: "The Beginning", date: "20 June" },
+        { src: "https://media.tenor.com/PFC1L2aEwEIAAAAj/mocha-bear.gif", caption: "Sleep Mode", date: "Daily" },
+        { src: "https://media.tenor.com/N2s4YqCqK90AAAAj/music-dance.gif", caption: "Chaos Hours", date: "Always" },
+        { src: "https://thumbs.dreamstime.com/b/blurred-abstract-background-interior-corridor-hall-looking-toward-empty-hospital-hallway-blur-doctors-nurses-waiting-112520337.jpg", caption: "The Accident + The Distortion", date: "July 30, 2024" }
+    ];
+
+    container.innerHTML = '';
+
+    memories.forEach((mem, i) => {
+        const card = document.createElement('div');
+        card.className = 'polaroid';
+        card.innerHTML = `
+    <img src="${mem.src}">
+            <div class="caption">${mem.caption}</div>
+            <div class="date">${mem.date}</div>
+`;
+        // Add random tilt
+        const rot = Math.random() * 6 - 3;
+        card.style.transform = `rotate(${rot}deg)`;
+
+        container.appendChild(card);
+    });
+}
+
+/* === INKPOT APP LOGIC === */
+const poems = [
+    {
+        title: "Friendship Blooms",
+        text: `In the garden of our days, <br>
+    Where laughter gently grows,<br>
+        Friendship blooms like sunshine,<br>
+            In every path we chose.<br><br>
+                Through the seasons, side by side,<br>
+                    We’ve shared both joy and strife,<br>
+                        A bond that holds so true and bright,<br>
+                            In the journey of our life.`
+    },
+    {
+        title: "Happiest Birthday Vi",
+        text: `Happiest Birthday Vi, so bright,<br>
+                                May success and dreams take endless flight.<br>
+                                    With each sunrise, may you find anew,<br>
+                                        The joy and wonders waiting for you.<br><br>
+                                            A sweet and positive light you share,<br>
+                                                With an aura beyond compare.<br>
+                                                    Your presence draws us close, it’s true,<br>
+                                                        A magnet for the hearts you pursue.`
+    },
+    {
+        title: "The Anchor",
+        text: `You are the calm to my storm.<br>
+                                                            The person who notices the small things.<br>
+                                                                You make this OS (and my life)<br>
+                                                                    Better just by running in the background.`
+    }
+];
+
+let currentPoemIndex = 0;
+
+function initInkpot() {
+    currentPoemIndex = 0;
+    renderPoem();
+}
+
+function nextPoem() {
+    currentPoemIndex = (currentPoemIndex + 1) % poems.length;
+
+    // Animate out
+    const textEl = document.getElementById('inkpot-text');
+    if (textEl) {
+        textEl.style.opacity = 0;
+        textEl.style.transform = 'translateY(-10px)';
+
+        setTimeout(() => {
+            renderPoem();
+        }, 300);
+    }
+}
+
+function renderPoem() {
+    const textEl = document.getElementById('inkpot-text');
+    if (!textEl) return;
+
+    const poem = poems[currentPoemIndex];
+    textEl.innerHTML = `
+                                                                    <h3 class="text-xl font-serif font-bold mb-4 text-center text-slate-800">${poem.title}</h3>
+                                                                    <p class="font-serif italic text-slate-600 leading-relaxed text-center">${poem.text}</p>
+                                                                    <div class="mt-6 text-center text-xs text-slate-400 font-sans tracking-widest uppercase">
+                                                                        ${currentPoemIndex + 1} / ${poems.length}
+                                                                    </div>
+                                                                    `;
+
+    // Animate in
+    textEl.style.opacity = 1;
+    textEl.style.transform = 'translateY(0)';
+}
+window.initInkpot = initInkpot;
+window.nextPoem = nextPoem;
 
