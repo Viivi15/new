@@ -539,14 +539,12 @@ const apps = [
 
     {
         id: 'app-vault', title: 'Vault', icon: '🔐', dock: true, width: 700, height: 500, content: `
-        <div class="folder-window-grid">
-            <div class="win-icon" onclick="Apps.open('do-not-open')"><div class="icon-img">🚫</div><div class="icon-label">Do Not<br>Open</div></div>
-            <div class="win-icon" onclick="Apps.open('playlist')"><div class="icon-img">🎶</div><div class="icon-label">Hidden<br>Tracks</div></div>
-            <div class="win-icon" onclick="Apps.open('secret-vault')"><div class="icon-img">🔐</div><div class="icon-label">Secret Vault</div></div>
-            <div class="win-icon" onclick="Apps.open('voice-box')"><div class="icon-img">🎙️</div><div class="icon-label">VoiceBox</div></div>
-            <div class="win-icon" onclick="Apps.open('readme-letter')"><div class="icon-img">💌</div><div class="icon-label">ReadMe.txt</div></div>
-             <div class="win-icon" onclick="Apps.open('memories-gallery')"><div class="icon-img">📸</div><div class="icon-label">Memories</div></div>
-             <div class="win-icon" onclick="Apps.open('through-my-eyes')"><div class="icon-img">📝</div><div class="icon-label">Through<br>My Eyes</div></div>
+        <div id="vault-lock-screen" class="h-full flex flex-col items-center justify-center bg-gray-100 select-none">
+            <div class="text-6xl mb-6">🔒</div>
+            <h3 class="text-xl font-bold mb-6 text-gray-700 font-serif">Secure Vault Access</h3>
+            <input type="password" id="vault-passcode" class="border-2 border-gray-300 rounded-lg px-4 py-2 text-center mb-4 w-48 text-xl tracking-widest outline-none focus:border-blue-500 transition" placeholder="PASSCODE" onkeydown="if(event.key === 'Enter') unlockVault()">
+            <button onclick="unlockVault()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-2 rounded-full transition shadow-lg transform hover:scale-105">Unlock</button>
+            <div id="vault-error" class="text-red-500 text-sm mt-4 opacity-0 font-bold transition-opacity">Access Denied</div>
         </div>
     `},
 
@@ -5229,4 +5227,38 @@ function vaultNextSlide() {
 function vaultPrevSlide() {
     currentVaultSlide = (currentVaultSlide - 1 + vaultSlides.length) % vaultSlides.length;
     renderVaultSlide(currentVaultSlide);
+}
+/* === VAULT SECURITY === */
+const VAULT_CONTENT = `
+<div class="folder-window-grid">
+    <div class="win-icon" onclick="Apps.open('do-not-open')"><div class="icon-img">🚫</div><div class="icon-label">Do Not<br>Open</div></div>
+    <div class="win-icon" onclick="Apps.open('playlist')"><div class="icon-img">🎶</div><div class="icon-label">Hidden<br>Tracks</div></div>
+    <div class="win-icon" onclick="Apps.open('secret-vault')"><div class="icon-img">🔐</div><div class="icon-label">Secret Vault</div></div>
+    <div class="win-icon" onclick="Apps.open('voice-box')"><div class="icon-img">🎙️</div><div class="icon-label">VoiceBox</div></div>
+    <div class="win-icon" onclick="Apps.open('readme-letter')"><div class="icon-img">💌</div><div class="icon-label">ReadMe.txt</div></div>
+     <div class="win-icon" onclick="Apps.open('memories-gallery')"><div class="icon-img">📸</div><div class="icon-label">Memories</div></div>
+     <div class="win-icon" onclick="Apps.open('through-my-eyes')"><div class="icon-img">📝</div><div class="icon-label">Through<br>My Eyes</div></div>
+</div>
+`;
+
+function unlockVault() {
+    const input = document.getElementById('vault-passcode');
+    const errorMsg = document.getElementById('vault-error');
+
+    // Passcode: 200624
+    if (input.value === '200624') {
+        const win = document.getElementById('win-app-vault');
+        if (win) {
+            const contentArea = win.querySelector('.win-content');
+            contentArea.innerHTML = VAULT_CONTENT;
+        }
+    } else {
+        errorMsg.style.opacity = '1';
+        input.classList.add('shake');
+        setTimeout(() => {
+            input.classList.remove('shake');
+            errorMsg.style.opacity = '0';
+        }, 1000);
+        input.value = '';
+    }
 }
