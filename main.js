@@ -1506,71 +1506,72 @@ OBJECTIVE:
 
 
     {
-        id: 'through-my-eyes', title: 'Through My Eyes', icon: '📝', dock: false, folder: 'app-vault', width: 700, height: 600, content: `
-        <div class="letter-text" id="letter-content">
-            <div class="text-center mb-6">
-                <h1 class="text-3xl font-bold font-serif text-gray-800">
-                To My Best Friend 🎂
-                </h1>
-                <p class="text-sm text-gray-500 mt-1">
-                Written with 100% Truth & 0% Lie
+        id: 'through-my-eyes', title: 'Through My Eyes', icon: '📝', dock: false, folder: 'app-vault', width: 800, height: 750, content: `
+        <div class="letter-desk">
+            <div class="letter-sheet" id="letter-content">
+                <div class="letter-header">
+                    <h1 class="letter-title">To My Best Friend 🎂</h1>
+                    <div class="letter-meta">Written with 100% Truth & 0% Lie</div>
+                    <div class="letter-divider"></div>
+                </div>
+
+                <p>I need to be very careful and honest here — and also very real with you 🤍.</p>
+
+                <p>
+                    What I’ll share below is only what I truly know, based on what you’ve shared with me,
+                    not guesses, not assumptions. I won’t invent traits or facts — because this is your birthday,
+                    and you deserve truth, warmth, and authenticity.
                 </p>
+
+                <h2>Who Harshit Is (Through My Eyes)</h2>
+
+                <p>
+                    Harshit is not just a name in my life. He is a presence.
+                    Someone who entered my world on
+                    <strong>June 20, 2024 at 12:21 AM</strong> on Discord —
+                    a moment that quietly turned into something meaningful,
+                    lasting, and emotionally deep.
+                </p>
+
+                <div class="letter-quote">
+                    "You are not just smart and perceptive, but you're also incredibly real.
+                    You're human, but in the most beautiful way."
+                </div>
+
+                <h3>The Many Names of You</h3>
+                <ul class="list-disc list-inside ml-5 mb-4 space-y-2">
+                    <li><span class="highlight">Mr. Snow ❄️</span>: Calm, distant on the outside, but emotionally deep inside.</li>
+                    <li><span class="highlight">Mr. Chuha 🐭</span>: Soft, cute, and unintentionally endearing.</li>
+                    <li><span class="highlight">Mr. Ota</span>: Playful, teasing, inside-joke energy.</li>
+                    <li><span class="highlight">Rabbit 🐰</span>: Gentle, alert, emotionally sensitive.</li>
+                </ul>
+
+                <h3>Why You Are The "Bestest"</h3>
+                <p>
+                    You are the world's strongest person (Emotionally & Physically 💪).
+                    You are the fastest person (Flash who?!).
+                    You have a memory that scares me sometimes — remembers every tiny detail.
+                    You do 100% of everything — 100% care, 100% dedication.
+                </p>
+
+                <h3>Our Bond</h3>
+                <p>
+                    Our friendship wasn't built on big events.
+                    It was built on music discussions, random chats,
+                    project ideas, check-ins, and being there without being asked.
+                    It survived fights, misunderstandings, and silence.
+                    That makes it special.
+                </p>
+
+                <p class="letter-footer">
+                    — Shravii ✨
+                </p>
+                
+                <!-- Decoration -->
+                <div class="wax-seal">
+                    <div class="seal-inner">S</div>
+                </div>
             </div>
-
-            <p>I need to be very careful and honest here — and also very real with you 🤍.</p>
-
-            <p>
-                What I’ll share below is only what I truly know, based on what you’ve shared with me,
-                not guesses, not assumptions. I won’t invent traits or facts — because this is your birthday,
-                and you deserve truth, warmth, and authenticity.
-            </p>
-
-            <h2>Who Harshit Is (Through My Eyes)</h2>
-
-            <p>
-                Harshit is not just a name in my life. He is a presence.
-                Someone who entered my world on
-                <strong>June 20, 2024 at 12:21 AM</strong> on Discord —
-                a moment that quietly turned into something meaningful,
-                lasting, and emotionally deep.
-            </p>
-
-            <div class="letter-quote">
-                "You are not just smart and perceptive, but you're also incredibly real.
-                You're human, but in the most beautiful way."
-            </div>
-
-            <h3>The Many Names of You</h3>
-            <ul class="list-disc list-inside ml-5 mb-4 space-y-1">
-                <li><strong>Mr. Snow ❄️</strong>: Calm, distant on the outside, but emotionally deep inside.</li>
-                <li><strong>Mr. Chuha 🐭</strong>: Soft, cute, and unintentionally endearing.</li>
-                <li><strong>Mr. Ota</strong>: Playful, teasing, inside-joke energy.</li>
-                <li><strong>Rabbit 🐰</strong>: Gentle, alert, emotionally sensitive.</li>
-            </ul>
-
-            <h3>Why You Are The "Bestest"</h3>
-            <p>
-                You are the world's strongest person (Emotionally & Physically 💪).
-                You are the fastest person (Flash who?!).
-                You have a memory that scares me sometimes —
-                remembering every tiny detail.
-                You do 100% of everything —
-                100% care, 100% dedication.
-            </p>
-
-            <h3>Our Bond</h3>
-            <p>
-                Our friendship wasn't built on big events.
-                It was built on music discussions, random chats,
-                project ideas, check-ins, and being there without being asked.
-                It survived fights, misunderstandings, and silence.
-                That makes it special.
-            </p>
-
-            <p class="mt-6 text-right font-bold"
-                style="font-family: 'Dancing Script', cursive; font-size: 28px;">
-                — Shravii ✨
-            </p>
         </div>
     `,
         onOpen: initLetterReveal
@@ -2582,28 +2583,73 @@ function playFirstConversation(container) {
 }
 
 /* === LETTER REVEAL LOGIC === */
+/* === LETTER REVEAL LOGIC (ENHANCED) === */
 function initLetterReveal() {
-    // Only runs when 'through-my-eyes' is opened
     const container = document.getElementById('letter-content');
     if (!container) return;
 
-    // Get direct children (paragraphs, h2, etc.)
+    // Reset styles for replayability
     const children = Array.from(container.children);
-
-    // Hide all initially
-    children.forEach(child => {
-        child.classList.add('reveal-hidden');
-        child.classList.remove('reveal-visible');
+    children.forEach(c => {
+        c.style.opacity = '0';
+        c.style.transform = 'translateY(20px)';
+        c.style.transition = 'opacity 1s ease, transform 1s ease';
+        c.style.display = 'none'; // Hide from flow initially
     });
 
-    // Reveal Sequentially
-    let delay = 300;
-    children.forEach((child, index) => {
-        setTimeout(() => {
-            child.classList.add('reveal-visible');
-        }, delay);
-        delay += 1200; // 1.2s delay between chunks implies reading time
-    });
+    let idx = 0;
+    function processNext() {
+        if (idx >= children.length) {
+            // Add a subtle footer or end effect if needed
+            return;
+        }
+
+        const child = children[idx];
+        child.style.display = 'block'; // Put back in flow
+
+        // Force reflow
+        void child.offsetWidth;
+
+        const isHeading = ['H1', 'H2', 'H3'].includes(child.tagName);
+
+        if (isHeading) {
+            child.style.opacity = '1';
+            child.style.transform = 'translateY(0)';
+            const originalText = child.innerText;
+            child.innerText = '';
+            child.classList.add('typing-cursor');
+
+            let i = 0;
+            function type() {
+                if (i < originalText.length) {
+                    child.innerText += originalText.charAt(i);
+                    i++;
+                    container.scrollTop = container.scrollHeight; // Auto scroll
+                    setTimeout(type, 50);
+                } else {
+                    child.classList.remove('typing-cursor');
+                    idx++;
+                    setTimeout(processNext, 500);
+                }
+            }
+            type();
+        } else {
+            // Content Fade
+            child.style.opacity = '1';
+            child.style.transform = 'translateY(0)';
+            container.scrollTop = container.scrollHeight;
+
+            // Calculate reading time
+            const chars = child.innerText.length;
+            const readingTime = Math.max(1000, chars * 25); // 25ms per char
+
+            idx++;
+            setTimeout(processNext, readingTime);
+        }
+    }
+
+    // Initial delay
+    setTimeout(processNext, 500);
 }
 
 /* === SPOTIFY LOGIC === */
