@@ -107,6 +107,214 @@ const journeyData = [
 /* === STATE === */
 const state = { appsOpened: new Set(), countdownFinished: false };
 
+/* === RABBIT SQUAD APP LOGIC === */
+const RabbitSquad = {
+    rabbits: [],
+    bounds: { w: 600, h: 500 },
+
+    init() {
+        const den = document.getElementById('rabbit-den');
+        if (!den) return;
+        this.bounds.w = den.offsetWidth;
+        this.bounds.h = den.offsetHeight;
+        this.assemble();
+    },
+
+    createRabbit(type) {
+        const field = document.getElementById('rabbit-field');
+        if (!field) return;
+
+        const el = document.createElement('div');
+        el.className = 'bun-item ' + type.cls;
+        el.innerHTML = '<div class="text-4xl dropdown-shadow-md">' + type.emoji + '</div><div class="bun-msg">' + type.msg + '</div>';
+
+        // Random Pos (keep away from edges)
+        const x = Math.random() * (this.bounds.w - 100) + 20;
+        const y = Math.random() * (this.bounds.h - 150) + 80;
+
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
+
+        // Click Interaction
+        el.onclick = () => {
+            el.classList.add('talking');
+            if (type.action) type.action(el);
+            setTimeout(() => el.classList.remove('talking'), 2000);
+        };
+
+        // Animate Loop
+        const speed = Math.random() * 2000 + 2000;
+        const moveInt = setInterval(() => {
+            const nx = Math.random() * (this.bounds.w - 100) + 20;
+            const ny = Math.random() * (this.bounds.h - 150) + 80;
+            el.style.left = nx + 'px';
+            el.style.top = ny + 'px';
+        }, speed);
+
+        field.appendChild(el);
+        this.rabbits.push({ el, type, moveInt });
+    },
+
+    assemble() {
+        this.clear();
+        const types = [
+            {
+                id: 'madrid', emoji: '🐰⚽', cls: 'bun-madrid', msg: 'Hala Madrid!', action: (e) => {
+                    if (typeof confetti === 'function') confetti({ particleCount: 20, spread: 30, origin: { x: e.getBoundingClientRect().left / window.innerWidth, y: e.getBoundingClientRect().top / window.innerHeight } });
+                }
+            },
+            { id: 'cozy', emoji: '🐰🧥', cls: 'bun-cozy', msg: 'So comfy...', action: () => { } },
+            { id: 'snow', emoji: '🐰❄️', cls: 'bun-snow', msg: 'Stay cool.', action: () => { } },
+            {
+                id: 'love', emoji: '🐰🎀', cls: 'bun-love', msg: 'You are loved!', action: (e) => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.style.position = 'absolute';
+                    heart.style.left = '50%';
+                    heart.style.top = '-20px';
+                    heart.style.fontSize = '20px';
+                    heart.style.animation = 'floatUp 1s forwards';
+                    e.appendChild(heart);
+                    setTimeout(() => heart.remove(), 1000);
+                }
+            }
+        ];
+
+        types.forEach(t => this.createRabbit(t));
+    },
+
+    celebrate() {
+        this.rabbits.forEach(r => {
+            if (r.type.id === 'madrid') {
+                r.el.innerHTML = '<div class="text-5xl dropdown-shadow-md">⚽🥅</div><div class="bun-msg">SIUUU!</div>';
+                r.el.classList.add('talking');
+
+                // Audio check
+                const sfx = document.getElementById('madrid-siuuu');
+                if (sfx) sfx.play().catch(e => console.log(e));
+
+                setTimeout(() => {
+                    r.el.innerHTML = '<div class="text-4xl dropdown-shadow-md">🐰⚽</div><div class="bun-msg">Hala Madrid!</div>';
+                    r.el.classList.remove('talking');
+                }, 3000);
+            }
+        });
+    },
+
+    napTime() {
+        this.rabbits.forEach(r => {
+            clearInterval(r.moveInt);
+            r.el.innerHTML = '<div class="text-4xl dropdown-shadow-md">🐰💤</div>';
+        });
+    },
+
+    clear() {
+        const field = document.getElementById('rabbit-field');
+        if (field) field.innerHTML = '';
+        this.rabbits.forEach(r => clearInterval(r.moveInt));
+        this.rabbits = [];
+    }
+};
+
+/* === MASTI MODE (Mocha & Bear) === */
+const MastiMode = {
+    chars: [],
+    bounds: { w: 300, h: 200 },
+
+    init() {
+        const den = document.getElementById('masti-den');
+        if (!den) return;
+        this.bounds.w = den.offsetWidth;
+        this.bounds.h = den.offsetHeight;
+        this.spawn();
+    },
+
+    spawn() {
+        const den = document.getElementById('masti-den');
+        if (!den) return;
+        den.innerHTML = '<div id="masti-msg" class="absolute top-10 w-full text-center text-xs font-bold text-pink-600 opacity-0 transition-opacity"></div>'; // clear & add msg layer
+
+        // Bear (Brown)
+        const bear = this.createChar('🐻', 'bun-bear', 60, 100);
+        // Mocha (White)
+        const mocha = this.createChar('🐻‍❄️', 'bun-mocha', 180, 100);
+
+        den.appendChild(bear.el);
+        den.appendChild(mocha.el);
+        this.chars = [bear, mocha];
+    },
+
+    createChar(emoji, cls, x, y) {
+        const el = document.createElement('div');
+        el.className = 'absolute text-5xl cursor-pointer transition-transform duration-300 select-none ' + cls;
+        el.innerText = emoji;
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
+
+        // Simple bounce
+        let dy = 0;
+        let yPos = y;
+        const int = setInterval(() => {
+            yPos += Math.sin(Date.now() / 300) * 0.5;
+            el.style.top = yPos + 'px';
+        }, 50);
+
+        return { el, x, y, int };
+    },
+
+    dance() {
+        this.showMsg("🎶 Vibing 🎶");
+        this.chars.forEach(c => {
+            c.el.classList.add('animate-bounce');
+            setTimeout(() => c.el.classList.remove('animate-bounce'), 2000);
+        });
+    },
+
+    pinch() {
+        this.showMsg("🤏 Cheeks Pinched!");
+        // Move Mocha to Bear
+        const bear = this.chars[0];
+        const mocha = this.chars[1];
+
+        mocha.el.style.transform = 'translateX(-60px)'; // Move Left
+        setTimeout(() => {
+            mocha.el.style.transform = 'translateX(0)';
+            this.showMsg("♥️");
+        }, 1000);
+    },
+
+    feed() {
+        const den = document.getElementById('masti-den');
+        this.showMsg("☕ Coffee & Cookies 🍪");
+
+        // Spawn treats
+        for (let i = 0; i < 6; i++) {
+            const t = document.createElement('div');
+            t.innerText = i % 2 === 0 ? '☕' : '🍪';
+            t.className = 'absolute text-xl animate-bounce';
+            t.style.left = Math.random() * 250 + 'px';
+            t.style.top = '-20px';
+            t.style.transition = 'top 1s';
+            den.appendChild(t);
+
+            setTimeout(() => {
+                t.style.top = Math.random() * 150 + 50 + 'px';
+            }, 50);
+
+            setTimeout(() => t.remove(), 2000);
+        }
+    },
+
+    showMsg(txt) {
+        const m = document.getElementById('masti-msg');
+        if (m) {
+            m.innerText = txt;
+            m.style.opacity = 1;
+            setTimeout(() => m.style.opacity = 0, 1500);
+        }
+    }
+};
+
 /* === MR. SNOW APP LOGIC === */
 function initMrSnowApp() {
     const canvas = document.getElementById('snow-canvas');
@@ -308,6 +516,7 @@ const apps = [
              <div class="win-icon" onclick="Apps.open('thank-you')"><div class="icon-img">✨</div><div class="icon-label">Thank You</div></div>
              <div class="win-icon" onclick="Apps.open('inkpot')"><div class="icon-img">🖋️</div><div class="icon-label">The Inkpot</div></div>
              <div class="win-icon" onclick="Apps.open('last-thing')"><div class="icon-img">🖤</div><div class="icon-label">One Last<br>Thing</div></div>
+             <div class="win-icon" onclick="Apps.open('admire')"><div class="icon-img">🌟</div><div class="icon-label">Deep<br>Truths</div></div>
         </div>
     `},
 
@@ -322,7 +531,7 @@ const apps = [
             <div class="win-icon" onclick="Apps.open('personality-quiz')"><div class="icon-img">🔍</div><div class="icon-label">Who Are You?</div></div>
              <div class="win-icon" onclick="Apps.open('radio-harshit')"><div class="icon-img">📻</div><div class="icon-label">Radio<br>Harshit</div></div>
             <div class="win-icon" onclick="Apps.open('quiz')"><div class="icon-img">🧩</div><div class="icon-label">The Us Quiz</div></div>
-            <div class="win-icon" onclick="Apps.open('cravings-app')"><div class="icon-img">🍔</div><div class="icon-label">Cravings</div></div>
+
             <div class="win-icon" onclick="Apps.open('bear')"><div class="icon-img">🐻</div><div class="icon-label">Masti Mode</div></div>
             <div class="win-icon" onclick="Apps.open('spotify')"><div class="icon-img">🎵</div><div class="icon-label">Vibe Check</div></div>
         </div>
@@ -448,44 +657,109 @@ const apps = [
 
 
     {
-        id: 'admire', title: 'Deep Truths', icon: '🌟', dock: false, width: 500, height: 400, content: `
-        <div class="h-full bg-slate-50 p-8 flex flex-col relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-400/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-            
-            <h3 class="font-bold text-2xl text-slate-800 mb-8 border-l-4 border-yellow-400 pl-4 z-10">Confirmed Data</h3>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 z-10 overflow-y-auto custom-scroll pr-2">
-                <!-- Card 1 -->
-                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
-                    <div class="text-2xl mb-2 group-hover:scale-110 transition-transform origin-left">💎</div>
-                    <div class="font-bold text-slate-700 text-sm mb-1">Honesty</div>
-                    <div class="text-xs text-slate-500">Status: Rare. Verified.</div>
-                </div>
-                
-                <!-- Card 2 -->
-                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
-                    <div class="text-2xl mb-2 group-hover:scale-110 transition-transform origin-left">🛡️</div>
-                    <div class="font-bold text-slate-700 text-sm mb-1">Quiet Protection</div>
-                    <div class="text-xs text-slate-500">Protects without announcing.</div>
-                </div>
+        id: 'admire', title: 'Deep Truths', icon: '🌟', dock: false, width: 700, height: 550, content: `
+        <div class="truth-container h-full p-8 flex flex-col relative overflow-hidden">
+            <!-- Background Elements -->
+             <div class="absolute top-[-50%] left-[-20%] w-[150%] h-[150%] bg-gradient-to-br from-slate-900 via-slate-800 to-black -z-20"></div>
+             <div class="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none animate-pulse"></div>
+             <div class="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-[80px] pointer-events-none"></div>
 
-                <!-- Card 3 -->
-                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
-                    <div class="text-2xl mb-2 group-hover:scale-110 transition-transform origin-left">🔥</div>
-                    <div class="font-bold text-slate-700 text-sm mb-1">Persistence</div>
-                    <div class="text-xs text-slate-500">Keeps moving despite everything.</div>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
-                    <div class="text-2xl mb-2 group-hover:scale-110 transition-transform origin-left">🧠</div>
-                    <div class="font-bold text-slate-700 text-sm mb-1">Memory</div>
-                    <div class="text-xs text-slate-500">Scary accurate. Very cool.</div>
+            <div class="relative z-10 mb-8 border-b border-white/10 pb-4">
+                <h3 class="font-serif text-3xl text-white/90 tracking-wider">Verified Core Data</h3>
+                 <div class="text-[10px] text-emerald-400 uppercase tracking-[0.3em] mt-1 flex items-center gap-2">
+                    <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> System Integrity: 100%
                 </div>
             </div>
             
-            <div class="mt-auto text-[10px] text-slate-400 text-center pt-4 tracking-widest uppercase opacity-50">Confidential File</div>
-        </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 z-10 overflow-y-auto custom-scroll pr-2 pb-4">
+                <!-- Card 1: Honesty -->
+                <div class="truth-card group" onclick="toggleTruth(this)">
+                    <div class="flex items-center gap-4 mb-2">
+                        <div class="truth-icon text-3xl filter drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]">💎</div>
+                        <div class="truth-header">
+                            <div class="font-bold text-white text-lg">Honesty</div>
+                            <div class="text-[10px] text-blue-300 uppercase tracking-widest">Status: Rare</div>
+                        </div>
+                    </div>
+                    <div class="truth-details">
+                        <p>In a world of filters, you remain unfiltered. Your words carry a weight because they are real. It is a rare and terrifyingly beautiful trait.</p>
+                    </div>
+                </div>
+                
+                <!-- Card 2: Quiet Protection -->
+                <div class="truth-card group" onclick="toggleTruth(this)">
+                     <div class="flex items-center gap-4 mb-2">
+                        <div class="truth-icon text-3xl filter drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]">🛡️</div>
+                        <div class="truth-header">
+                            <div class="font-bold text-white text-lg">Quiet Protection</div>
+                            <div class="text-[10px] text-emerald-300 uppercase tracking-widest">Type: Passive-Active</div>
+                        </div>
+                    </div>
+                     <div class="truth-details">
+                        <p>You protect people without ever asking for credit. You stand guard in the shadows, ensuring safety while everyone else sleeps. A silent guardian.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3: Persistence -->
+                <div class="truth-card group" onclick="toggleTruth(this)">
+                     <div class="flex items-center gap-4 mb-2">
+                        <div class="truth-icon text-3xl filter drop-shadow-[0_0_10px_rgba(249,115,22,0.5)]">🔥</div>
+                        <div class="truth-header">
+                            <div class="font-bold text-white text-lg">Persistence</div>
+                            <div class="text-[10px] text-orange-300 uppercase tracking-widest">Energy: Infinite</div>
+                        </div>
+                    </div>
+                     <div class="truth-details">
+                        <p>You have every reason to stop, to rest, to give up. But you don't. You keep moving, fueled by an inner fire that refuses to be extinguished.</p>
+                    </div>
+                </div>
+
+                <!-- Card 4: Memory -->
+                <div class="truth-card group" onclick="toggleTruth(this)">
+                     <div class="flex items-center gap-4 mb-2">
+                        <div class="truth-icon text-3xl filter drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]">🧠</div>
+                        <div class="truth-header">
+                            <div class="font-bold text-white text-lg">Memory</div>
+                            <div class="text-[10px] text-purple-300 uppercase tracking-widest">Accuracy: High</div>
+                        </div>
+                    </div>
+                     <div class="truth-details">
+                        <p>You remember the small things. The passing comments, the hidden meanings, the dates. It shows how deeply you pay attention to the world.</p>
+                    </div>
+                </div>
+                
+                 <!-- Card 5: Empathy (New) -->
+                <div class="truth-card group" onclick="toggleTruth(this)">
+                     <div class="flex items-center gap-4 mb-2">
+                        <div class="truth-icon text-3xl filter drop-shadow-[0_0_10px_rgba(244,63,94,0.5)]">💓</div>
+                        <div class="truth-header">
+                            <div class="font-bold text-white text-lg">Flowing Heart</div>
+                            <div class="text-[10px] text-rose-300 uppercase tracking-widest">State: Hidden/Active</div>
+                        </div>
+                    </div>
+                     <div class="truth-details">
+                        <p>Behind the logic and the rules, there is a heart that feels everything intensely. You care so much, it sometimes overflows.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-auto border-t border-white/5 pt-4 flex justify-between items-end">
+                <div class="text-[9px] text-slate-500 font-mono">
+                    ID: 847-HK-TRUE<br>
+                    CLR: TOP SECRET
+                </div>
+                 <div class="text-xs text-slate-400 tracking-widest uppercase opacity-70 animate-pulse">Access Granted</div>
+            </div>
+        </div >
+    <script>
+        function toggleTruth(card) {
+            // Close others
+            document.querySelectorAll('.truth-card.active').forEach(c => {
+                if (c !== card) c.classList.remove('active');
+            });
+        card.classList.toggle('active');
+            }
+    </script>
     `},
 
     /* CLUSTER 2: FUN / MASTI (Lightweight) */
@@ -806,27 +1080,36 @@ const apps = [
     `},
 
     {
-        id: 'rabbit', title: 'Rabbit Mode', icon: '🐰', dock: false, folder: 'folder-fun', width: 400, height: 400, content: `
-        <div class="h-full bg-white p-4 flex flex-wrap gap-2 content-center justify-center overflow-hidden relative" id="rabbit-den">
-            <div class="z-10 bg-white/90 p-4 rounded text-center shadow-lg border border-gray-100">
-                <div class="text-2xl mb-2">🐰</div>
-                <p class="text-xs text-gray-500">Releasing chaos...</p>
+        id: 'rabbit', title: 'The Rabbit Squad', icon: '🐰', dock: false, folder: 'folder-fun', width: 600, height: 500, onOpen: () => RabbitSquad.init(), content: `
+        <div class="h-full bg-[#f0fdf4] relative overflow-hidden select-none font-sans" id="rabbit-den">
+            <!-- Background: Soft Field -->
+            <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#f0fdf4] to-[#dcfce7]"></div>
+            
+            <!-- Controls -->
+            <div class="absolute top-4 left-0 w-full z-20 flex justify-center gap-2">
+                <button onclick="RabbitSquad.assemble()" class="px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full text-xs font-bold text-green-700 shadow-sm hover:scale-105 transition border border-green-200">Assemble</button>
+                <button onclick="RabbitSquad.celebrate()" class="px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full text-xs font-bold text-blue-700 shadow-sm hover:scale-105 transition border border-blue-200">Goal! ⚽</button>
+                <button onclick="RabbitSquad.napTime()" class="px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full text-xs font-bold text-indigo-700 shadow-sm hover:scale-105 transition border border-indigo-200">Nap Time 💤</button>
             </div>
+
+            <!-- Rabbits Container -->
+            <div id="rabbit-field" class="absolute inset-0 z-10 pointer-events-none">
+                <!-- Rabbits injected here -->
+            </div>
+            
+            <style>
+                .bun-item { position: absolute; cursor: pointer; transition: all 1.5s ease-in-out; pointer-events: auto; display: flex; flex-direction: column; items-center: center; }
+                .bun-item:hover { transform: scale(1.1); transition: transform 0.2s; }
+                .bun-msg { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); background: white; padding: 4px 8px; border-radius: 8px; font-size: 11px; font-weight: bold; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1); color: #374151; }
+                .bun-item:hover .bun-msg, .bun-item.talking .bun-msg { opacity: 1; top: -35px; }
+                
+                .bun-madrid { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)); }
+                .bun-snow { filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.5)); }
+                .bun-love { filter: drop-shadow(0 0 5px rgba(255, 192, 203, 0.8)); }
+                
+                @keyframes floatUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-20px); } }
+            </style>
         </div>
-        <script>
-            let rCount = 0;
-            const rInt = setInterval(() => {
-                if(rCount > 8) { clearInterval(rInt); return; }
-                const r = document.createElement('div');
-                r.innerText = '🐰';
-                r.style.position = 'absolute';
-                r.style.left = Math.random()*80 + 10 + '%';
-                r.style.top = Math.random()*80 + 10 + '%';
-                r.style.fontSize = '2rem';
-                document.getElementById('rabbit-den').appendChild(r);
-                rCount++;
-            }, 600);
-        </script>
     `},
 
 
@@ -1162,42 +1445,20 @@ OBJECTIVE:
         </div>
     `},
 
-    {
-        id: 'cravings-app', title: 'Cravings', icon: '🍔', dock: false, folder: 'folder-fun', width: 400, height: 600, content: `
-        <div id="cravings-content" class="h-full bg-gray-900 text-white relative overflow-hidden">
-            <!-- Header Image -->
-            <div class="h-1/2 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1562967963-ed7858970e25?q=80&w=1000');">
-                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
-            </div>
-            
-            <!-- Content -->
-            <div class="p-6 relative -mt-20">
-                <div class="bg-gray-800 rounded-2xl p-6 shadow-2xl border border-gray-700">
-                    <div class="flex justify-between items-start mb-2">
-                        <h2 class="text-2xl font-bold">Supreme Euro Sub</h2>
-                        <span class="bg-green-500 text-black text-xs font-bold px-2 py-1 rounded">POPULAR</span>
-                    </div>
-                    <p class="text-gray-400 text-sm mb-4">Loaded with extra olives, spicy sauce, and crispy veggies. Just how you like it.</p>
-                    
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="text-2xl font-bold text-yellow-400">$0.00 <span class="text-xs text-gray-500 font-normal">Free for you</span></div>
-                    </div>
-                    
-                    <button id="cravings-btn" onclick="orderCravings()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition transform hover:scale-105 active:scale-95 shadow-lg shadow-blue-600/30">
-                        ORDER NOW
-                    </button>
-                    <div class="text-center mt-3 text-xs text-gray-500">Free delivery by Harrier Express</div>
-                </div>
-            </div>
-        </div>
-    `},
+
 
     {
-        id: 'bear', title: 'Masti Mode', icon: '🐻', dock: true, folder: 'folder-fun', width: 300, height: 200, content: `
-        <div class="h-full flex flex-col items-center justify-center bg-[#8d6e63] text-white">
-            <div class="text-4xl mb-2">🐻 + 🐼</div>
-            <p class="text-sm mb-4 opacity-80">Unleash the cuteness</p>
-            <button onclick="spawnBears()" class="bg-white text-brown-800 font-bold px-6 py-2 rounded-full shadow hover:scale-105 transition">Activate Masti</button>
+        id: 'bear', title: 'Masti Mode', icon: '🐻', dock: true, folder: 'folder-fun', width: 400, height: 350, onOpen: () => MastiMode.init(), content: `
+        <div class="h-full bg-[#fff0f5] relative overflow-hidden select-none font-sans" id="masti-den">
+            <!-- Background -->
+            <div class="absolute inset-0 bg-gradient-to-b from-pink-50 to-rose-100 opacity-50 pointer-events-none"></div>
+            
+            <!-- Controls -->
+            <div class="absolute bottom-4 left-0 w-full z-20 flex justify-center gap-3">
+                <button onclick="MastiMode.pinch()" class="px-4 py-2 bg-white/80 rounded-full text-sm shadow hover:scale-105 transition border border-pink-200">🤏 Pinch</button>
+                <button onclick="MastiMode.dance()" class="px-4 py-2 bg-white/80 rounded-full text-sm shadow hover:scale-105 transition border border-pink-200">💃 Dance</button>
+                <button onclick="MastiMode.feed()" class="px-4 py-2 bg-white/80 rounded-full text-sm shadow hover:scale-105 transition border border-pink-200">🍪 Feed</button>
+            </div>
         </div>
     `},
 
@@ -1334,18 +1595,18 @@ OBJECTIVE:
         <div id="vault-container" class="relative w-full h-full bg-gray-900 text-white overflow-hidden flex flex-col items-center justify-center">
              
              <!-- Lock Screen -->
-             <div id="vault-lock" class="flex flex-col items-center gap-6 p-8 transition-opacity duration-500">
+             <div id="vault-lock" class="flex flex-col items-center gap-6 p-8 transition-opacity duration-500" style="display: flex;">
                 <div class="text-6xl mb-4">🔐</div>
                 <h2 class="text-2xl font-light tracking-widest uppercase">Restricted Access</h2>
                 <div class="relative w-64">
-                    <input type="password" id="vault-pass" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-center text-xl tracking-[0.5em] focus:outline-none focus:border-white/50 transition" placeholder="••••••" maxlength="6">
+                    <input type="password" id="vault-pass" class="w-full bg-white/20 border border-white/30 rounded-lg px-4 py-3 text-center text-xl tracking-[0.5em] focus:outline-none focus:border-white/50 transition placeholder-gray-500" placeholder="••••••" maxlength="6">
                 </div>
                 <p id="vault-hint" class="text-xs text-gray-500 hover:text-gray-300 cursor-pointer transition" onclick="createModal({ title: 'Hint', desc: 'The day it all started (dd/mm/yy)', icon: '💡' })">Hint: dd/mm/yy</p>
                 <div id="vault-error" class="text-red-400 text-sm font-bold opacity-0 transition">Access Denied</div>
              </div>
 
              <!-- Unlocked Content (Carousel) -->
-             <div id="vault-content" class="absolute inset-0 hidden opacity-0 transition-opacity duration-1000 bg-black">
+             <div id="vault-content" class="absolute inset-0 transition-opacity duration-1000 bg-black" style="display: none; opacity: 0;">
                  <div class="w-full h-full relative" id="vault-carousel">
                     <!-- Slides injected via JS -->
                  </div>
@@ -4683,39 +4944,39 @@ window.FlashApp = {
     isFake: false,
     personalBest: localStorage.getItem('harshit_flash_pb') || null,
 
-    playHover: function() {
+    playHover: function () {
         const audio = document.getElementById('sfx-hover');
-        if(audio) { audio.currentTime = 0; audio.volume = 0.2; audio.play().catch(e=>{}); }
+        if (audio) { audio.currentTime = 0; audio.volume = 0.2; audio.play().catch(e => { }); }
     },
 
-    startRun: function() {
+    startRun: function () {
         document.getElementById('flash-intro').classList.add('hidden');
         document.getElementById('flash-game').classList.remove('hidden');
         this.resetGameScreen();
-        
+
         const audioWait = document.getElementById('sfx-wait');
-        if(audioWait) { audioWait.currentTime = 0; audioWait.volume = 0.5; audioWait.play().catch(e=>{}); }
+        if (audioWait) { audioWait.currentTime = 0; audioWait.volume = 0.5; audioWait.play().catch(e => { }); }
 
         const introTime = 2000 + Math.random() * 3000;
         this.waiting = true;
         this.isFake = false;
-        
+
         this.timeout = setTimeout(() => {
             this.triggerSignalOrFake();
         }, introTime);
     },
 
-    resetGameScreen: function() {
+    resetGameScreen: function () {
         const bg = document.getElementById('flash-game-bg');
         bg.className = 'absolute inset-0 bg-red-900/90 flex flex-col items-center justify-center';
         document.getElementById('flash-instruction').innerText = "WAIT...";
         document.getElementById('flash-instruction').className = "text-4xl font-black italic text-red-200 tracking-tighter animate-pulse";
-        
+
         // Reset fake state styling
-        if(this.fakeTimeout) clearTimeout(this.fakeTimeout);
+        if (this.fakeTimeout) clearTimeout(this.fakeTimeout);
     },
 
-    triggerSignalOrFake: function() {
+    triggerSignalOrFake: function () {
         // 30% chance of fake out
         if (Math.random() < 0.35) {
             this.triggerFake();
@@ -4724,15 +4985,15 @@ window.FlashApp = {
         }
     },
 
-    triggerFake: function() {
+    triggerFake: function () {
         this.isFake = true;
         // Play Buzz
         const audioFail = document.getElementById('sfx-fail');
-        if(audioFail) { audioFail.currentTime = 0; audioFail.volume = 0.3; audioFail.play().catch(e=>{}); }
+        if (audioFail) { audioFail.currentTime = 0; audioFail.volume = 0.3; audioFail.play().catch(e => { }); }
 
         const bg = document.getElementById('flash-game-bg');
         const txt = document.getElementById('flash-instruction');
-        
+
         // Randomly Blue or Yellow
         const types = [
             { cls: 'bg-blue-600', msg: 'WAIT FOR IT...', textCls: 'text-blue-200' },
@@ -4747,33 +5008,33 @@ window.FlashApp = {
         // Resume real signal after delay
         this.fakeTimeout = setTimeout(() => {
             if (this.waiting) {
-                    this.resetGameScreen(); // Reset visual briefy
-                    setTimeout(() => this.triggerRealSignal(), 500 + Math.random() * 1000);
+                this.resetGameScreen(); // Reset visual briefy
+                setTimeout(() => this.triggerRealSignal(), 500 + Math.random() * 1000);
             }
         }, 800);
     },
 
-    triggerRealSignal: function() {
+    triggerRealSignal: function () {
         this.waiting = false;
         this.isFake = false;
         document.getElementById('sfx-wait').pause();
-        document.getElementById('sfx-signal').play().catch(e=>{});
+        document.getElementById('sfx-signal').play().catch(e => { });
 
         const bg = document.getElementById('flash-game-bg');
-        bg.className = 'absolute inset-0 bg-green-500 flex flex-col items-center justify-center shake-screen'; 
+        bg.className = 'absolute inset-0 bg-green-500 flex flex-col items-center justify-center shake-screen';
         document.getElementById('flash-instruction').innerText = "RUN, BARRY, RUN!";
         document.getElementById('flash-instruction').className = "text-6xl font-black italic text-white tracking-tighter scale-125";
         this.startTime = Date.now();
     },
 
-    handleTap: function() {
+    handleTap: function () {
         // 1. Tapped on Fake Signal
         if (this.waiting && this.isFake) {
             clearTimeout(this.timeout);
-            if(this.fakeTimeout) clearTimeout(this.fakeTimeout);
+            if (this.fakeTimeout) clearTimeout(this.fakeTimeout);
             document.getElementById('sfx-wait').pause();
-            document.getElementById('sfx-fail').play().catch(e=>{});
-            
+            document.getElementById('sfx-fail').play().catch(e => { });
+
             const roasts = ["It was BLUE! 😂", "Color blind? 🤨", "Too eager! 🐢", "False Start! 🚫"];
             const roast = roasts[Math.floor(Math.random() * roasts.length)];
             this.showResult(null, roast);
@@ -4783,24 +5044,24 @@ window.FlashApp = {
         // 2. Tapped Too Early (Red Screen)
         if (this.waiting) {
             clearTimeout(this.timeout);
-            if(this.fakeTimeout) clearTimeout(this.fakeTimeout);
+            if (this.fakeTimeout) clearTimeout(this.fakeTimeout);
             document.getElementById('sfx-wait').pause();
-            document.getElementById('sfx-fail').play().catch(e=>{});
-            
+            document.getElementById('sfx-fail').play().catch(e => { });
+
             const bg = document.getElementById('flash-game-bg');
             bg.classList.add('shake-screen');
-            
+
             this.showResult(null, "Too Early! Trust your instincts.");
             return;
         }
 
         // 3. Success (Green Screen)
         const time = Date.now() - this.startTime;
-        document.getElementById('sfx-success').play().catch(e=>{});
+        document.getElementById('sfx-success').play().catch(e => { });
         this.showResult(time);
     },
 
-    showResult: function(ms, msg) {
+    showResult: function (ms, msg) {
         document.getElementById('flash-game').classList.add('hidden');
         const resScreen = document.getElementById('flash-result');
         resScreen.classList.remove('hidden');
@@ -4829,7 +5090,7 @@ window.FlashApp = {
                 this.personalBest = ms;
                 localStorage.setItem('harshit_flash_pb', ms);
                 newRecordDisplay.classList.remove('hidden');
-                    if(typeof confetti === 'function') confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
+                if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
             }
 
             let rank = "";
@@ -4838,20 +5099,128 @@ window.FlashApp = {
             else if (ms < 250) rank = "💨 KID FLASH (Fast)";
             else if (ms < 350) rank = "🏃 ATHLETE (Average)";
             else rank = "🐢 TOO SLOW (Reverse Flash caught you)";
-            
+
             rankDisplay.innerText = rank;
             resScreen.classList.add('result-success');
         }
     },
 
-    reset: function() {
-            document.getElementById('flash-result').classList.add('hidden');
-            document.getElementById('flash-result').classList.remove('flex');
-            document.getElementById('flash-intro').classList.remove('hidden');
-            
-            // Update PB on intro
-            if(this.personalBest) {
+    reset: function () {
+        document.getElementById('flash-result').classList.add('hidden');
+        document.getElementById('flash-result').classList.remove('flex');
+        document.getElementById('flash-intro').classList.remove('hidden');
+
+        // Update PB on intro
+        if (this.personalBest) {
             document.getElementById('flash-pb-intro').innerText = "PERSONAL BEST: " + this.personalBest + "ms";
-            }
+        }
     }
 };
+
+/* === SECRET VAULT LOGIC === */
+const vaultSlides = [
+    {
+        type: 'text', title: 'The Beginning', content: 'June 20, 2024. 12:21 AM.<br>The timestamp that started it all.'
+    },
+    {
+        type: 'text', title: 'Why You?', content: 'Because you listened when no one else did.<br>Because you stayed.'
+    },
+    {
+        type: 'image', title: 'Us (Concept)', content: 'https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif'
+    }
+];
+let currentVaultSlide = 0;
+
+function initSecretVault() {
+    const input = document.getElementById('vault-pass');
+    if (!input) return;
+
+    // Clear previous state
+    input.value = '';
+
+    // Explicit visibility reset
+    document.getElementById('vault-lock').style.display = 'flex';
+    document.getElementById('vault-lock').style.opacity = '1';
+
+    document.getElementById('vault-content').style.display = 'none';
+    document.getElementById('vault-content').style.opacity = '0';
+
+    document.getElementById('vault-error').style.opacity = '0';
+
+    // Auto-check listener
+    input.onkeyup = (e) => {
+        if (input.value.length === 6) {
+            checkVaultPass(input.value);
+        }
+    };
+}
+
+function checkVaultPass(code) {
+    if (code === '200624') {
+        // Unlock
+        document.getElementById('vault-lock').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('vault-lock').style.display = 'none'; // Hide lock
+
+            const content = document.getElementById('vault-content');
+            content.style.display = 'block'; // Show content
+            content.classList.remove('hidden');
+
+            // Trigger Fade In
+            requestAnimationFrame(() => {
+                content.classList.remove('opacity-0');
+                content.classList.add('opacity-100');
+            });
+
+            loadVaultContent();
+        }, 500);
+    } else {
+        // Error
+        const err = document.getElementById('vault-error');
+        err.style.opacity = '1';
+        document.getElementById('vault-pass').classList.add('animate-shake');
+        setTimeout(() => {
+            document.getElementById('vault-pass').classList.remove('animate-shake');
+            document.getElementById('vault-pass').value = '';
+            err.style.opacity = '0';
+        }, 1000);
+    }
+}
+
+function loadVaultContent() {
+    renderVaultSlide(currentVaultSlide);
+}
+
+function renderVaultSlide(index) {
+    const container = document.getElementById('vault-carousel');
+    const slide = vaultSlides[index];
+
+    let html = '';
+    if (slide.type === 'text') {
+        html = `
+            <div class="h-full flex flex-col items-center justify-center text-center p-12">
+                <h2 class="text-3xl font-serif text-yellow-500 mb-6">${slide.title}</h2>
+                <p class="text-xl text-gray-300 leading-relaxed">${slide.content}</p>
+            </div>
+        `;
+    } else if (slide.type === 'image') {
+        html = `
+            <div class="h-full flex flex-col items-center justify-center p-8">
+                 <h2 class="text-xl font-serif text-yellow-500 mb-4 absolute top-8">${slide.title}</h2>
+                 <img src="${slide.content}" class="max-h-[300px] rounded-lg shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+            </div>
+        `;
+    }
+
+    container.innerHTML = html;
+}
+
+function vaultNextSlide() {
+    currentVaultSlide = (currentVaultSlide + 1) % vaultSlides.length;
+    renderVaultSlide(currentVaultSlide);
+}
+
+function vaultPrevSlide() {
+    currentVaultSlide = (currentVaultSlide - 1 + vaultSlides.length) % vaultSlides.length;
+    renderVaultSlide(currentVaultSlide);
+}

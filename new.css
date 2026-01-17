@@ -4229,3 +4229,60 @@ body {
     /* Red-500 */
     box-shadow: 0 0 50px rgba(239, 68, 68, 0.5);
 }
+
+/* === DEEP TRUTHS APP === */
+.truth-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.truth-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.truth-card.active {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.6);
+}
+
+.truth-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, opacity 0.4s ease;
+    opacity: 0;
+    margin-top: 0;
+}
+
+.truth-card.active .truth-details {
+    max-height: 200px;
+    opacity: 1;
+    margin-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 12px;
+}
+
+.truth-details p {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    font-family: 'Inter', sans-serif;
+}
+
+.truth-icon {
+    transition: transform 0.4s ease;
+}
+
+.truth-card:hover .truth-icon {
+    transform: scale(1.1) rotate(5deg);
+}
