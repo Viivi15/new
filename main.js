@@ -5308,3 +5308,74 @@ function unlockVault() {
         input.value = '';
     }
 }
+
+
+/* === THE US QUIZ LOGIC === */
+const usQuizQuestions = [
+    { q: "Where did we first meet?", a: ["discord", "dc"] },
+    { q: "What sport does Harshit NOT watch?", a: ["cricket"] },
+    { q: "What is Harshit's favorite club?", a: ["real madrid", "madrid"] },
+    { q: "Who is the 'Dumb' one?", a: ["vi", "shravii", "me"] }
+];
+let currentQuizQ = 0;
+
+function startQuiz() {
+    currentQuizQ = 0;
+    showQuizQuestion();
+}
+window.startQuiz = startQuiz;
+
+function showQuizQuestion() {
+    const qEl = document.getElementById('q-text');
+    const fEl = document.getElementById('q-feedback');
+    const iEl = document.getElementById('q-input');
+
+    if (!qEl) return;
+
+    if (currentQuizQ >= usQuizQuestions.length) {
+        qEl.innerText = "Quiz Complete! You know everything! 🌟";
+        iEl.style.display = 'none';
+        fEl.innerText = "";
+        return;
+    }
+
+    qEl.innerText = usQuizQuestions[currentQuizQ].q;
+    iEl.value = '';
+    iEl.focus();
+    fEl.innerText = "";
+}
+
+function submitAnswer() {
+    const input = document.getElementById('q-input');
+    const feedback = document.getElementById('q-feedback');
+
+    if (!input) return;
+
+    const val = input.value.trim().toLowerCase();
+    const correct = usQuizQuestions[currentQuizQ].a.includes(val);
+
+    if (correct) {
+        feedback.innerText = "Correct! 🎉";
+        feedback.className = "text-xs mt-4 h-4 font-bold tracking-wide text-green-500";
+        currentQuizQ++;
+        setTimeout(showQuizQuestion, 1000);
+    } else {
+        feedback.innerText = "Nope! Try again. 😅";
+        feedback.className = "text-xs mt-4 h-4 font-bold tracking-wide text-red-500";
+        input.classList.add('shake');
+        setTimeout(() => input.classList.remove('shake'), 500);
+    }
+}
+window.submitAnswer = submitAnswer;
+
+
+
+
+
+
+
+
+
+
+
+
