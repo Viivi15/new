@@ -4724,7 +4724,9 @@ body {
     font-size: 14px;
     font-style: italic;
     margin: 0;
-}/* === SYSTEM SETTINGS === */
+}
+
+/* === SYSTEM SETTINGS === */
 .settings-container {
     padding: 24px;
     height: 100%;
@@ -4875,7 +4877,105 @@ body {
 }
 
 /* === MR. BEAR STATES === */
-.state-day { background: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%); border: 4px solid #4ade80; box-shadow: 0 0 20px rgba(74, 222, 128, 0.4); }
-.state-night { background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); border: 4px solid #60a5fa; color: white; box-shadow: 0 0 20px rgba(96, 165, 250, 0.5); }
-.state-party { background: linear-gradient(135deg, #fbcfe8 0%, #f472b6 100%); border: 4px solid #db2777; animation: partyPulse 1s infinite alternate; }
-@keyframes partyPulse { from { box-shadow: 0 0 10px #db2777; } to { box-shadow: 0 0 30px #f472b6; } }
+.state-day {
+    background: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%);
+    border: 4px solid #4ade80;
+    box-shadow: 0 0 20px rgba(74, 222, 128, 0.4);
+}
+
+.state-night {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    border: 4px solid #60a5fa;
+    color: white;
+    box-shadow: 0 0 20px rgba(96, 165, 250, 0.5);
+}
+
+.state-party {
+    background: linear-gradient(135deg, #fbcfe8 0%, #f472b6 100%);
+    border: 4px solid #db2777;
+    animation: partyPulse 1s infinite alternate;
+}
+
+@keyframes partyPulse {
+    from {
+        box-shadow: 0 0 10px #db2777;
+    }
+
+    to {
+        box-shadow: 0 0 30px #f472b6;
+    }
+}
+
+/* === REVISED ICON FIXES === */
+.icon-img {
+    width: 48px !important;
+    height: 48px !important;
+    margin-bottom: 5px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.icon-img img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    filter: saturate(1.4) drop-shadow(0 4px 5px rgba(0, 0, 0, 0.3)) !important;
+}
+
+.desktop-icon:hover .icon-img {
+    transform: scale(1.15);
+}
+
+/* === DOCK ICON FIXES === */
+.dock-icon,
+#dock .icon-img {
+    width: 48px !important;
+    height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 32px !important;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3)) !important;
+}
+
+.dock-icon img,
+#dock .icon-img img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    filter: none !important;
+}
+
+.dock-item:hover .dock-icon,
+#dock .win-icon:hover .icon-img {
+    transform: scale(1.2) translateY(-10px);
+}
+/* === VIVID COLORIZATION (Subtle Tinting) === */
+/* Preserve whites, just tint the midtones */
+
+/* System (Blue) */
+.desktop-icon[onclick*='folder-system'] .icon-img img, .dock-icon[onclick*='folder-system'] img {
+    filter: sepia(0.3) saturate(3) hue-rotate(180deg) drop-shadow(0 4px 6px rgba(59, 130, 246, 0.5)) !important;
+}
+
+/* Feelings (Pink/Purple) */
+.desktop-icon[onclick*='folder-feelings'] .icon-img img, .dock-icon[onclick*='folder-feelings'] img {
+    filter: sepia(0.3) saturate(3) hue-rotate(280deg) drop-shadow(0 4px 6px rgba(236, 72, 153, 0.5)) !important;
+}
+
+/* Memories (Gold/Warm) */
+.desktop-icon[onclick*='memory-gallery'] .icon-img img, .dock-icon[onclick*='memory-gallery'] img {
+    filter: sepia(0.4) saturate(3) hue-rotate(320deg) drop-shadow(0 4px 6px rgba(245, 158, 11, 0.5)) !important;
+}
+
+/* Fun (Green/Cyan) */
+.desktop-icon[onclick*='folder-fun'] .icon-img img, .dock-icon[onclick*='folder-fun'] img {
+    filter: sepia(0.3) saturate(3) hue-rotate(100deg) drop-shadow(0 4px 6px rgba(16, 185, 129, 0.5)) !important;
+}
+
+/* Vault (Red/Dark) */
+.desktop-icon[onclick*='app-vault'] .icon-img img, .dock-icon[onclick*='app-vault'] img {
+    filter: sepia(0.2) saturate(3) hue-rotate(300deg) drop-shadow(0 4px 6px rgba(239, 68, 68, 0.5)) !important;
+}
+

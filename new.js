@@ -467,44 +467,44 @@ function mrSnowFlurry() {
 const apps = [
     /* === FOLDERS === */
     {
-        id: 'folder-system', title: 'System Core', icon: '📁', dock: false, width: 800, height: 600, content: `
+        id: 'folder-system', title: 'System Core', icon: '<img src="assets/icons/folder_system.png" alt="folder">', dock: false, width: 800, height: 600, content: `
         <div class="h-full bg-gradient-to-b from-gray-50 to-white p-6 overflow-y-auto custom-scroll">
             <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6 border-b border-gray-100 pb-2">Root Directory</div>
             <div class="folder-window-grid">
                 <div class="win-icon group" onclick="Apps.open('first-conversation')">
-                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">💬</div>
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_inkpot.png" alt="chat"></div>
                     <div class="icon-label group-hover:text-blue-600 transition-colors">12:21 AM</div>
                 </div>
                 <div class="win-icon group" onclick="Apps.open('connection-log')">
-                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">📜</div>
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_facts.png" alt="log"></div>
                     <div class="icon-label group-hover:text-amber-600 transition-colors">Connection.log</div>
                 </div>
                 <div class="win-icon group" onclick="Apps.open('mr-snow')">
-                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">❄️</div>
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_snow.png" alt="snow"></div>
                     <div class="icon-label group-hover:text-cyan-600 transition-colors">Mr. Snow</div>
                 </div>
                 <div class="win-icon group" onclick="Apps.open('facts')">
-                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">📄</div>
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_facts.png" alt="facts"></div>
                     <div class="icon-label group-hover:text-indigo-600 transition-colors">Harshit<br>Facts.txt</div>
                 </div>
                  <div class="win-icon group" onclick="Apps.open('not-dumb')">
-                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">🤨</div>
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_facts.png" alt="not dumb"></div>
                     <div class="icon-label group-hover:text-pink-600 transition-colors">Not Dumb</div>
                 </div>
                 <div class="win-icon group" onclick="Apps.open('madrid')">
-                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">⚽</div>
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_flash.png" alt="madrid"></div>
                     <div class="icon-label group-hover:text-indigo-700 transition-colors">HalaMadrid.exe</div>
                 </div>
                 <div class="win-icon group" onclick="Apps.open('app-grown')">
-                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">🧠</div>
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_19.png" alt="19"></div>
                     <div class="icon-label group-hover:text-purple-600 transition-colors">19.exe</div>
                 </div>
                 <div class="win-icon group" onclick="Apps.open('blueprint')">
-                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">📐</div>
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_blueprint.png" alt="blueprint"></div>
                     <div class="icon-label group-hover:text-blue-500 transition-colors">Blueprint</div>
                 </div>
                  <div class="win-icon group" onclick="Apps.open('terminal-app')">
-                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md">💻</div>
+                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_terminal.png" alt="terminal"></div>
                     <div class="icon-label group-hover:text-emerald-500 transition-colors">Terminal.sh</div>
                 </div>
             </div>
@@ -513,23 +513,23 @@ const apps = [
     `},
 
     {
-        id: 'folder-feelings', title: 'Soft Stuff', icon: '📁', dock: false, width: 800, height: 600, content: `
+        id: 'folder-feelings', title: 'Soft Stuff', icon: '<img src="assets/icons/folder_feelings.png" alt="folder">', dock: false, width: 800, height: 600, content: `
         <div class="folder-window-grid">
-            <div class="win-icon" onclick="Apps.open('why-matter')"><div class="icon-img">💭</div><div class="icon-label">Why You<br>Matter</div></div>
-            <div class="win-icon" onclick="Apps.open('tired')"><div class="icon-img">😴</div><div class="icon-label">When Tired</div></div>
+            <div class="win-icon" onclick="Apps.open('why-matter')"><div class="icon-img"><img src="assets/icons/app_inkpot.png" alt="why matter"></div><div class="icon-label">Why You<br>Matter</div></div>
+            <div class="win-icon" onclick="Apps.open('tired')"><div class="icon-img"><img src="assets/icons/app_tired.png" alt="tired"></div><div class="icon-label">When Tired</div></div>
 
 
-            <div class="win-icon" onclick="Apps.open('music-night')"><div class="icon-img">🌙</div><div class="icon-label">Late Night</div></div>
-             <div class="win-icon" onclick="Apps.open('future')"><div class="icon-img">🔮</div><div class="icon-label">Future You</div></div>
-             <div class="win-icon" onclick="Apps.open('thank-you')"><div class="icon-img">✨</div><div class="icon-label">Thank You</div></div>
-             <div class="win-icon" onclick="Apps.open('inkpot')"><div class="icon-img">🖋️</div><div class="icon-label">The Inkpot</div></div>
-             <div class="win-icon" onclick="Apps.open('last-thing')"><div class="icon-img">🖤</div><div class="icon-label">One Last<br>Thing</div></div>
-             <div class="win-icon" onclick="Apps.open('admire')"><div class="icon-img">🌟</div><div class="icon-label">Deep<br>Truths</div></div>
+            <div class="win-icon" onclick="Apps.open('music-night')"><div class="icon-img"><img src="assets/icons/app_music.png" alt="music"></div><div class="icon-label">Late Night</div></div>
+             <div class="win-icon" onclick="Apps.open('future')"><div class="icon-img"><img src="assets/icons/app_future.png" alt="future"></div><div class="icon-label">Future You</div></div>
+             <div class="win-icon" onclick="Apps.open('thank-you')"><div class="icon-img"><img src="assets/icons/app_inkpot.png" alt="thank you"></div><div class="icon-label">Thank You</div></div>
+             <div class="win-icon" onclick="Apps.open('inkpot')"><div class="icon-img"><img src="assets/icons/app_inkpot.png" alt="inkpot"></div><div class="icon-label">The Inkpot</div></div>
+             <div class="win-icon" onclick="Apps.open('last-thing')"><div class="icon-img"><img src="assets/icons/app_music.png" alt="last thing"></div><div class="icon-label">One Last<br>Thing</div></div>
+             <div class="win-icon" onclick="Apps.open('admire')"><div class="icon-img"><img src="assets/icons/app_truth.png" alt="truth"></div><div class="icon-label">Deep<br>Truths</div></div>
         </div>
     `},
 
     {
-        id: 'memory-gallery', title: 'Our Moments', icon: '📸', dock: false, width: 900, height: 600, content: `
+        id: 'memory-gallery', title: 'Our Moments', icon: '<img src="assets/icons/app_gallery.png" alt="gallery">', dock: false, width: 900, height: 600, content: `
     <div class="h-full bg-[#e2e8f0] p-8 overflow-x-auto overflow-y-hidden flex items-center gap-12 select-none custom-scroll">
         
         <!-- 1. First Meet -->
@@ -602,24 +602,23 @@ const apps = [
 `},
 
     {
-        id: 'folder-fun', title: 'Unstable Features', icon: '📁', dock: false, width: 800, height: 600, content: `
+        id: 'folder-fun', title: 'Unstable Features', icon: '<img src="assets/icons/folder_fun.png" alt="folder">', dock: false, width: 800, height: 600, content: `
         <div class="folder-window-grid">
-            <div class="win-icon" onclick="Apps.open('flash')"><div class="icon-img">⚡</div><div class="icon-label">Fastest<br>Alive</div></div>
-             <div class="win-icon" onclick="Apps.open('rabbit')"><div class="icon-img">🐰</div><div class="icon-label">Rabbit<br>Mode</div></div>
-            <div class="win-icon" onclick="Apps.open('rabbit-runner')"><div class="icon-img">🐰</div><div class="icon-label">Rabbit<br>Runner</div></div>
-            <div class="win-icon" onclick="Apps.open('word-spiral')"><div class="icon-img">🌀</div><div class="icon-label">Word Spiral</div></div>
-            <div class="win-icon" onclick="Apps.open('the-path')"><div class="icon-img">🧭</div><div class="icon-label">The Path</div></div>
-            <div class="win-icon" onclick="Apps.open('personality-quiz')"><div class="icon-img">🔍</div><div class="icon-label">Who Are You?</div></div>
-             <div class="win-icon" onclick="Apps.open('radio-harshit')"><div class="icon-img">📻</div><div class="icon-label">Radio<br>Harshit</div></div>
-            <div class="win-icon" onclick="Apps.open('quiz')"><div class="icon-img">🧩</div><div class="icon-label">The Us Quiz</div></div>
-
-            <div class="win-icon" onclick="Apps.open('bear')"><div class="icon-img">🐻</div><div class="icon-label">Masti Mode</div></div>
-            <div class="win-icon" onclick="Apps.open('spotify')"><div class="icon-img">🎵</div><div class="icon-label">Vibe Check</div></div>
+            <div class="win-icon" onclick="Apps.open('flash')"><div class="icon-img"><img src="assets/icons/app_flash.png" alt="flash"></div><div class="icon-label">Fastest<br>Alive</div></div>
+             <div class="win-icon" onclick="Apps.open('rabbit')"><div class="icon-img"><img src="assets/icons/app_rabbit.png" alt="rabbit"></div><div class="icon-label">Rabbit<br>Mode</div></div>
+            <div class="win-icon" onclick="Apps.open('rabbit-runner')"><div class="icon-img"><img src="assets/icons/app_rabbit.png" alt="rabbit"></div><div class="icon-label">Rabbit<br>Runner</div></div>
+            <div class="win-icon" onclick="Apps.open('word-spiral')"><div class="icon-img"><img src="assets/icons/app_quiz.png" alt="spiral"></div><div class="icon-label">Word Spiral</div></div>
+            <div class="win-icon" onclick="Apps.open('the-path')"><div class="icon-img"><img src="assets/icons/app_future.png" alt="path"></div><div class="icon-label">The Path</div></div>
+            <div class="win-icon" onclick="Apps.open('personality-quiz')"><div class="icon-img"><img src="assets/icons/app_quiz.png" alt="quiz"></div><div class="icon-label">Who Are You?</div></div>
+             <div class="win-icon" onclick="Apps.open('radio-harshit')"><div class="icon-img"><img src="assets/icons/app_radio.png" alt="radio"></div><div class="icon-label">Radio<br>Harshit</div></div>
+            <div class="win-icon" onclick="Apps.open('quiz')"><div class="icon-img"><img src="assets/icons/app_quiz.png" alt="quiz"></div><div class="icon-label">The Us Quiz</div></div>
+            <div class="win-icon" onclick="Apps.open('bear')"><div class="icon-img"><img src="assets/icons/app_bear.png" alt="bear"></div><div class="icon-label">Masti Mode</div></div>
+            <div class="win-icon" onclick="Apps.open('spotify')"><div class="icon-img"><img src="assets/icons/app_spotify.png" alt="spotify"></div><div class="icon-label">Vibe Check</div></div>
         </div>
     `},
 
     {
-        id: 'app-vault', title: 'Vault', icon: '🔐', dock: true, width: 800, height: 600, content: `
+        id: 'app-vault', title: 'Vault', icon: '<img src="assets/icons/app_vault.png" alt="vault">', dock: true, width: 800, height: 600, content: `
         <div class="h-full bg-gray-900 flex flex-col relative overflow-hidden">
             <!-- Lock Screen -->
             <div id="vault-lock-screen" class="absolute inset-0 z-20 bg-gray-100 flex flex-col items-center justify-center select-none">
@@ -658,7 +657,7 @@ const apps = [
 
     /* === SYSTEM CORE APPS (Inside Folder) === */
     {
-        id: 'terminal-app', title: 'Terminal.sh', icon: '💻', dock: false, folder: 'folder-system', width: 800, height: 600, content: `
+        id: 'terminal-app', title: 'Terminal.sh', icon: '<img src="assets/icons/app_terminal.png" alt="terminal">', dock: false, folder: 'folder-system', width: 800, height: 600, content: `
         <div class="terminal-window h-full bg-[#1e1e1e] text-green-500 font-mono text-sm p-4 flex flex-col">
             <div id="term-output-app" class="flex-1 overflow-y-auto mb-2 custom-scroll space-y-1">
                 <div class="selection-none" style="text-shadow: 0 0 5px rgba(74, 222, 128, 0.5);">HarshitOS Terminal [Version 1.0.0]</div>
@@ -679,7 +678,7 @@ const apps = [
         }
     },
     {
-        id: 'first-conversation', title: '12:21 AM', icon: '💬', dock: false, folder: 'folder-system', width: 600, height: 600, content: `
+        id: 'first-conversation', title: '12:21 AM', icon: '<img src="assets/icons/app_inkpot.png" alt="chat">', dock: false, folder: 'folder-system', width: 600, height: 600, content: `
         <div class="flex flex-col h-full bg-[#f8f9fa] relative">
             <!-- Background Pattern -->
             <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 20px 20px;"></div>
@@ -705,14 +704,14 @@ const apps = [
     },
 
     {
-        id: 'connection-log', title: 'Our Journey', icon: '📜', dock: true, folder: 'folder-system', width: 600, height: 800, onOpen: renderJourney, content: `
+        id: 'connection-log', title: 'Our Journey', icon: '<img src="assets/icons/app_facts.png" alt="journey">', dock: true, folder: 'folder-system', width: 600, height: 800, onOpen: renderJourney, content: `
         <div id="journey-scroll" class="h-full bg-[#fcfcfc] overflow-y-auto scroll-smooth relative">
             <div id="journey-container" class="min-h-full pb-20"></div>
         </div>
     `},
 
     {
-        id: 'mr-snow', title: 'Mr. Snow', icon: '❄️', dock: true, width: 450, height: 600, onOpen: initMrSnowApp, content: `
+        id: 'mr-snow', title: 'Mr. Snow', icon: '<img src="assets/icons/app_snow.png" alt="snow">', dock: true, width: 450, height: 600, onOpen: initMrSnowApp, content: `
         <div class="mr-snow-view relative h-full">
             <canvas id="snow-canvas" class="absolute inset-0 z-0"></canvas>
             
@@ -884,7 +883,7 @@ const apps = [
 
     /* CLUSTER 2: FUN / MASTI (Lightweight) */
     {
-        id: 'facts', title: 'Harshit Facts.txt', icon: '📄', folder: 'system', dock: false, width: 800, height: 700, content: `
+        id: 'facts', title: 'Harshit Facts.txt', icon: '<img src="assets/icons/app_facts.png" alt="facts">', folder: 'system', dock: false, width: 800, height: 700, content: `
     <div class="facts-app custom-scroll" id="facts-app-root">
         <div class="facts-content active" id="facts-main-content">
             
@@ -953,7 +952,7 @@ const apps = [
 
     // Internal filename: emotionally_dumb_but_lovable.js
     {
-        id: 'not-dumb', title: 'Not Dumb', icon: '🤨', folder: 'system', dock: false, width: 600, height: 700, onOpen: initNotDumb, content: `
+        id: 'not-dumb', title: 'Not Dumb', icon: '<img src="assets/icons/app_facts.png" alt="not dumb">', folder: 'system', dock: false, width: 600, height: 700, onOpen: initNotDumb, content: `
         <div id="not-dumb-container" class="h-full bg-gray-50 text-gray-800 font-mono text-sm relative overflow-hidden flex flex-col">
             <!-- Dynamic Content Area -->
             <div id="not-dumb-content" class="flex-1 p-8 flex flex-col justify-center relative z-10">
@@ -973,7 +972,7 @@ const apps = [
     `},
 
     {
-        id: 'madrid', title: 'HalaMadrid.exe', icon: '⚽', dock: false, width: 600, height: 700, content: `
+        id: 'madrid', title: 'HalaMadrid.exe', icon: '<img src="assets/icons/app_flash.png" alt="madrid">', dock: false, width: 600, height: 700, content: `
         <div class="madrid-dashboard custom-scroll" id="madrid-dash">
             <div class="madrid-header">
                 <div class="madrid-title">
@@ -1126,7 +1125,7 @@ const apps = [
     `},
 
     {
-        id: 'rabbit', title: 'The Rabbit Squad', icon: '🐰', dock: false, folder: 'folder-fun', width: 700, height: 600, onOpen: () => RabbitSquad.init(), content: `
+        id: 'rabbit', title: 'The Rabbit Squad', icon: '<img src="assets/icons/app_rabbit.png" alt="rabbit">', dock: false, folder: 'folder-fun', width: 700, height: 600, onOpen: () => RabbitSquad.init(), content: `
         <div class="h-full bg-[#f0fdf4] relative overflow-hidden select-none font-sans" id="rabbit-den">
             <!-- Background: Soft Field -->
             <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#f0fdf4] to-[#dcfce7]"></div>
@@ -1303,7 +1302,7 @@ const apps = [
 
     /* CLUSTER 4: GROWTH & 19 (Mature) */
     {
-        id: 'app-grown', title: '19.exe', icon: '🧠', dock: true, width: 800, height: 700, content: `
+        id: 'app-grown', title: '19.exe', icon: '<img src="assets/icons/app_19.png" alt="19">', dock: true, width: 800, height: 700, content: `
         <div class="h-full bg-gradient-to-br from-slate-50 to-indigo-50/50 p-8 flex flex-col items-center relative overflow-hidden">
             <!-- Background Watermark -->
             <div class="absolute top-[-20px] right-[-20px] text-[180px] font-serif font-bold text-slate-100 select-none z-0 rotate-12">19</div>
@@ -1350,7 +1349,7 @@ const apps = [
     `},
 
     {
-        id: 'future', title: 'Future You', icon: '🔮', dock: false, width: 800, height: 600, content: `
+        id: 'future', title: 'Future You', icon: '<img src="assets/icons/app_future.png" alt="future">', dock: false, width: 800, height: 600, content: `
         <div class="h-full w-full relative bg-black overflow-hidden group">
             <!-- Background Image: Train/Night Window Aesthetic -->
             <div class="absolute inset-0 bg-cover bg-center transition-all duration-[2000ms] group-hover:scale-105 group-hover:opacity-40 opacity-70" 
@@ -1373,7 +1372,7 @@ const apps = [
     `},
 
     {
-        id: 'blueprint', title: 'Blueprint.bp', icon: '📐', dock: true, width: 800, height: 600, content: `
+        id: 'blueprint', title: 'Blueprint.bp', icon: '<img src="assets/icons/app_blueprint.png" alt="blueprint">', dock: true, width: 800, height: 600, content: `
         <div class="h-full bg-[#004a80] text-blue-100 font-mono text-sm p-0 flex flex-col">
             <!-- Grid Background -->
             <div class="flex-1 p-6 custom-scroll select-text relative" style="background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 20px 20px;">
@@ -1412,7 +1411,7 @@ OBJECTIVE:
 
     /* === FUN & CHAOS (Inside Folder) === */
     {
-        id: 'radio-harshit', title: 'Radio Harshit', icon: '📻', dock: true, folder: 'folder-fun', width: 500, height: 600, onOpen: initRadio, content: `
+        id: 'radio-harshit', title: 'Radio Harshit', icon: '<img src="assets/icons/app_radio.png" alt="radio">', dock: true, folder: 'folder-fun', width: 500, height: 600, onOpen: initRadio, content: `
         <div class="radio-ui">
             <div class="radio-display" id="radio-screen">WAITING FOR SIGNAL...</div>
             <div class="radio-buttons">
@@ -1425,7 +1424,7 @@ OBJECTIVE:
     `},
 
     {
-        id: 'quiz', title: 'The Us Quiz', icon: '🧩', dock: false, folder: 'folder-fun', width: 600, height: 700, onOpen: startQuiz, content: `
+        id: 'quiz', title: 'The Us Quiz', icon: '<img src="assets/icons/app_quiz.png" alt="quiz">', dock: false, folder: 'folder-fun', width: 600, height: 700, onOpen: startQuiz, content: `
         <div class="h-full bg-indigo-50 flex flex-col items-center justify-center text-center p-8 relative overflow-hidden" id="quiz-container">
             <div class="text-6xl mb-6 animate-bounce">🧩</div>
             <h2 class="text-2xl font-bold text-indigo-900 mb-2">The Us Quiz</h2>
@@ -1441,14 +1440,14 @@ OBJECTIVE:
     `},
 
     {
-        id: 'the-path', title: 'The Path', icon: '🧭', dock: false, folder: 'folder-fun', width: 800, height: 600, onOpen: startPathGame, content: `
+        id: 'the-path', title: 'The Path', icon: '<img src="assets/icons/app_future.png" alt="path">', dock: false, folder: 'folder-fun', width: 800, height: 600, onOpen: startPathGame, content: `
         <div class="path-game" id="path-container" onclick="handlePathClick(event)">
             <!-- Dynamic Content -->
         </div>
     `},
 
     {
-        id: 'word-spiral', title: 'Word Spiral', icon: '🌀', dock: false, folder: 'folder-fun', width: 600, height: 700, onOpen: initWordSpiral, content: `
+        id: 'word-spiral', title: 'Word Spiral', icon: '<img src="assets/icons/app_quiz.png" alt="spiral">', dock: false, folder: 'folder-fun', width: 600, height: 700, onOpen: initWordSpiral, content: `
         <div class="spiral-bg">
             <div id="spiral-content" class="h-full flex flex-col items-center justify-center p-8 text-center text-white">
                 <div class="text-4xl mb-6 animate-spin-slow">🌀</div>
@@ -1459,7 +1458,7 @@ OBJECTIVE:
     `},
 
     {
-        id: 'personality-quiz', title: 'Who Are You?', icon: '🔍', dock: false, folder: 'folder-fun', width: 600, height: 700, onOpen: initPersonalityQuiz, content: `
+        id: 'personality-quiz', title: 'Who Are You?', icon: '<img src="assets/icons/app_quiz.png" alt="personality">', dock: false, folder: 'folder-fun', width: 600, height: 700, onOpen: initPersonalityQuiz, content: `
         <div class="quiz-bg">
             <div id="p-quiz-content" class="h-full flex flex-col items-center justify-center p-8 text-center">
                 <div class="text-5xl mb-6">🔍</div>
@@ -1470,7 +1469,7 @@ OBJECTIVE:
     `},
 
     {
-        id: 'rabbit-runner', title: 'RabbitRunner.exe', icon: '🐰', dock: false, folder: 'folder-fun', width: 900, height: 600, onOpen: initRabbitGame, content: `
+        id: 'rabbit-runner', title: 'RabbitRunner.exe', icon: '<img src="assets/icons/app_rabbit.png" alt="rabbit runner">', dock: false, folder: 'folder-fun', width: 900, height: 600, onOpen: initRabbitGame, content: `
         <div id="rr-container" class="relative w-full h-full bg-[#e0f7fa] overflow-hidden select-none font-sans">
              <div id="rr-score" class="absolute top-4 left-4 text-2xl font-bold text-gray-700 z-10">Score: 0</div>
              <div id="rr-start-screen" class="absolute inset-0 flex flex-col items-center justify-center bg-black/50 z-20 text-white">
@@ -1494,7 +1493,7 @@ OBJECTIVE:
 
 
     {
-        id: 'bear', title: 'Masti Mode', icon: '🐻', dock: true, folder: 'folder-fun', width: 500, height: 450, onOpen: () => MastiMode.init(), content: `
+        id: 'bear', title: 'Masti Mode', icon: '<img src="assets/icons/app_bear.png" alt="bear">', dock: true, folder: 'folder-fun', width: 500, height: 450, onOpen: () => MastiMode.init(), content: `
         <div class="h-full bg-[#fff0f5] relative overflow-hidden select-none font-sans" id="masti-den">
             <!-- Background -->
             <div class="absolute inset-0 bg-gradient-to-b from-pink-50 to-rose-100 opacity-50 pointer-events-none"></div>
@@ -1509,7 +1508,7 @@ OBJECTIVE:
     `},
 
     {
-        id: 'spotify', title: 'Spotify - Vibe Check', icon: '🎵', dock: true, folder: 'folder-fun', width: 450, height: 600, content: `
+        id: 'spotify', title: 'Spotify - Vibe Check', icon: '<img src="assets/icons/app_spotify.png" alt="spotify">', dock: true, folder: 'folder-fun', width: 450, height: 600, content: `
         <div class="h-full bg-gradient-to-b from-[#1DB954] to-black text-white p-6 flex flex-col items-center justify-center relative overflow-hidden">
             <div class="w-48 h-48 bg-gray-800 shadow-2xl mb-6 rounded-md overflow-hidden relative group album-spin">
                 <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDd4bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BRv0TlsHCqDrG/giphy.gif" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
@@ -1543,7 +1542,7 @@ OBJECTIVE:
 
     /* === VAULT APPS (Inside Folder) === */
     {
-        id: 'do-not-open', title: 'Do Not Open', icon: '🚫', dock: false, folder: 'app-vault', width: 400, height: 300, content: `
+        id: 'do-not-open', title: 'Do Not Open', icon: '<img src="assets/icons/app_vault.png" alt="do not open">', dock: false, folder: 'app-vault', width: 400, height: 300, content: `
         <div class="h-full flex items-center justify-center bg-red-50 text-red-900 text-center p-6">
             <div>
                 <div class="font-bold mb-2">You Opened It.</div>
@@ -1554,7 +1553,7 @@ OBJECTIVE:
 
 
     {
-        id: 'through-my-eyes', title: 'Through My Eyes', icon: '📝', dock: false, folder: 'app-vault', width: 800, height: 750, content: `
+        id: 'through-my-eyes', title: 'Through My Eyes', icon: '<img src="assets/icons/app_inkpot.png" alt="letter">', dock: false, folder: 'app-vault', width: 800, height: 750, content: `
         <div class="letter-desk">
             <div class="letter-sheet" id="letter-content">
                 <div class="letter-header">
