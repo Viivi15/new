@@ -486,39 +486,26 @@ body {
     font-weight: 900;
 }
 
+/* Traffic lights hover symbols removed */
 .title-bar:hover .traffic-light::before {
-    opacity: 1;
+    opacity: 0;
 }
 
 .traffic-light::before {
-    opacity: 0;
-    transition: opacity 0.1s;
+    content: '';
+    display: none;
 }
 
 .traffic-light.close {
     background: #ff5f56;
 }
 
-.traffic-light.close::before {
-    content: '×';
-    font-size: 10px;
-}
-
 .traffic-light.minimize {
     background: #ffbd2e;
 }
 
-.traffic-light.minimize::before {
-    content: '−';
-}
-
 .traffic-light.maximize {
     background: #27c93f;
-}
-
-.traffic-light.maximize::before {
-    content: '+';
-    font-size: 9px;
 }
 
 .win-title {
