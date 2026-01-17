@@ -680,7 +680,7 @@ const apps = [
                         </div>
                     </div>
                     <div class="truth-details">
-                        <p>In a world of filters, you remain unfiltered. Your words carry a weight because they are real. It is a rare and terrifyingly beautiful trait.</p>
+                        <p>You don't entertain lies. You try to understand. You stand for clarity and truth, even when it's uncomfortable. That is rare.</p>
                     </div>
                 </div>
                 
@@ -694,7 +694,7 @@ const apps = [
                         </div>
                     </div>
                      <div class="truth-details">
-                        <p>You protect people without ever asking for credit. You stand guard in the shadows, ensuring safety while everyone else sleeps. A silent guardian.</p>
+                        <p>You handle me well, like a kid. You make me feel special, like a queen. You are always there to rescue me from thoughts that overcome me.</p>
                     </div>
                 </div>
 
@@ -739,6 +739,20 @@ const apps = [
                         <p>Behind the logic and the rules, there is a heart that feels everything intensely. You care so much, it sometimes overflows.</p>
                     </div>
                 </div>
+
+                <!-- Card 6: The Listener -->
+                <div class="truth-card group" onclick="toggleTruth(this)">
+                     <div class="flex items-center gap-4 mb-2">
+                        <div class="truth-icon text-3xl">🎧</div>
+                        <div class="truth-header">
+                            <div class="font-bold text-white text-lg">The Listener</div>
+                            <div class="text-[10px] text-purple-300 uppercase">Input: Music</div>
+                        </div>
+                    </div>
+                     <div class="truth-details">
+                        <p>Music isn't just entertainment for you—it's emotional regulation. You use it to process feelings you don't verbalize.</p>
+                    </div>
+                </div>
             </div>
             
             <div class="mt-auto border-t border-white/5 pt-4 flex justify-between items-end">
@@ -763,145 +777,71 @@ const apps = [
     /* CLUSTER 2: FUN / MASTI (Lightweight) */
     {
         id: 'facts', title: 'Harshit Facts.txt', icon: '📄', folder: 'system', dock: false, width: 800, height: 700, content: `
-        <div class="facts-app custom-scroll" id="facts-app-root">
-            <!-- Section 0: Terminal Entry -->
-            <div class="facts-terminal" id="facts-terminal">
-                <div class="facts-log-line" style="animation-delay: 0.2s">> Accessing system logs...</div>
-                <div class="facts-log-line" style="animation-delay: 0.8s">> User: Harshit</div>
-                <div class="facts-log-line" style="animation-delay: 1.4s">> Clearance: Granted</div>
-                <div class="facts-log-line" style="animation-delay: 2.0s; color: #fbbf24;">> Warning: Some files marked "Do Not Reveal"</div>
-                <button class="facts-enter-btn" onclick="startFactsApp()" style="opacity: 0; animation: factsFadeIn 0.5s forwards; animation-delay: 2.8s;">ENTER FACTS</button>
+    <div class="facts-app custom-scroll" id="facts-app-root">
+        <div class="facts-content active" id="facts-main-content">
+            
+            <div class="facts-section revealed">
+                <div class="facts-section-title">IDENTITY LAYERS 🎭</div>
+                <div class="facts-alias-slider">
+                    <div class="facts-alias-card">
+                        <div class="facts-alias-icon">❄️</div>
+                        <h3>Mr. Snow</h3>
+                        <p>Calm surface, deep emotional layers. Known by those who stay to see it fall.</p>
+                    </div>
+                    <div class="facts-alias-card">
+                        <div class="facts-alias-icon">🐰</div>
+                        <h3>Rabbit</h3>
+                        <p>Gentle, alert, emotionally sensitive. Needs safety to show softness.</p>
+                    </div>
+                    <div class="facts-alias-card">
+                        <div class="facts-alias-icon">🐭</div>
+                        <h3>Mr. Chuha</h3>
+                        <p>Soft, cute, unintentionally endearing. (Don't tell him I said this).</p>
+                    </div>
+                    <div class="facts-alias-card">
+                        <div class="facts-alias-icon">🎮</div>
+                        <h3>Mr. Ota</h3>
+                        <p>Teasing, playful. Built entirely from inside jokes.</p>
+                    </div>
+                </div>
             </div>
 
-            <!-- Main Content -->
-            <div class="facts-content" id="facts-main-content">
-                
-                <!-- SECTION 1: CORE SYSTEM STATS -->
-                <div class="facts-section" id="section-1">
-                    <div class="facts-section-title">SECTION 1: CORE SYSTEM STATS 🧬</div>
-                    <div class="facts-grid">
-                        <div class="facts-card">
-                            <h4>Comfort Preference</h4>
-                            <div class="fact-val">Needs hoodie > people</div>
-                            <div class="sys-note">System confirms higher comfort in familiar warmth than social noise.</div>
-                        </div>
-                        <div class="facts-card">
-                            <h4>Stealth Mode</h4>
-                            <div class="fact-val">Eats silently</div>
-                            <div class="sys-note">No sound detected. No witnesses.</div>
-                        </div>
-                        <div class="facts-card">
-                            <h4>Emotional Mask</h4>
-                            <div class="fact-val">Pretends not to care — FAILED</div>
-                            <div class="sys-note" style="color: #ef4444;">System error: He cares. A lot.</div>
-                        </div>
-                        <div class="facts-card">
-                            <h4>Molecular Breakdown</h4>
-                            <div class="fact-val">90% Water · 10% Attitude</div>
-                            <div class="sys-note">Stable composition. Occasional emotional overflow.</div>
-                        </div>
-                        <div class="facts-card" style="border-style: dashed; opacity: 0.8;">
-                            <h4>Classified File</h4>
-                            <div class="fact-val">Actually soft</div>
-                            <div class="sys-note">Access denied. (But visible to trusted user.)</div>
-                        </div>
+            <div class="facts-section revealed">
+                <div class="facts-section-title">OPERATING PARAMETERS 🧬</div>
+                <div class="facts-grid">
+                    <div class="facts-card">
+                        <h4>Fuel Source</h4>
+                        <div class="fact-val">Sub Sandwiches 🥪</div>
+                        <div class="sys-note">Efficiency: High. Texture: Specific.</div>
+                    </div>
+                    <div class="facts-card">
+                        <h4>System Threat</h4>
+                        <div class="fact-val">Bhindi (Okra) 🤢</div>
+                        <div class="sys-note" style="color: #ef4444;">CRITICAL ERROR. DO NOT SERVE.</div>
+                    </div>
+                    <div class="facts-card">
+                        <h4>Sleep Logic</h4>
+                        <div class="fact-val">"4 Hours is Enough"</div>
+                        <div class="sys-note">System Diagnosis: Lie. Needs 10 hours.</div>
+                    </div>
+                    <div class="facts-card">
+                        <h4>Dislikes</h4>
+                        <div class="fact-val">Rice & Dry Fruits</div>
+                        <div class="sys-note">Preference: Simple, no-nonsense comfort.</div>
                     </div>
                 </div>
+            </div>
 
-                <!-- SECTION 2: DEEP TRUTHS -->
-                <div class="facts-section" id="section-2">
-                    <div class="facts-section-title">SECTION 2: DEEP TRUTHS 🌟</div>
-                    <div class="facts-truth-list">
-                        <div class="facts-truth-item">
-                            <span>Status: Rare</span>
-                            <h3>Honesty</h3>
-                            <p>System flags this as a non-replaceable trait. Genuine and unfiltered.</p>
-                        </div>
-                        <div class="facts-truth-item">
-                            <span>Observed Behavior</span>
-                            <h3>Quiet Protection</h3>
-                            <p>Protects without announcing. No credit taken. No noise made. Just there.</p>
-                        </div>
-                        <div class="facts-truth-item">
-                            <span>Status: Ongoing</span>
-                            <h3>Persistence</h3>
-                            <p>Keeps moving even when tired, hurt, or doubting. Built for endurance.</p>
-                        </div>
-                        <div class="facts-truth-item">
-                            <span>Warning: Scary Accuracy</span>
-                            <h3>Memory Module</h3>
-                            <p>Remembers tiny details others forget. Every word, every moment is logged.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SECTION 3: IDENTITY ALIASES -->
-                <div class="facts-section" id="section-3">
-                    <div class="facts-section-title">SECTION 3: IDENTITY ALIASES 🎭</div>
-                    <div class="facts-alias-slider">
-                        <div class="facts-alias-card">
-                            <div class="facts-alias-icon">❄️</div>
-                            <h3>Mr. Snow</h3>
-                            <p>Calm surface. Deep emotional layers underneath. Known by those who stay to see it fall.</p>
-                        </div>
-                        <div class="facts-alias-card">
-                            <div class="facts-alias-icon">🐭</div>
-                            <h3>Mr. Chuha</h3>
-                            <p>Soft. Cute. Unintentionally endearing. A personality prone to hiding but needing warmth.</p>
-                        </div>
-                        <div class="facts-alias-card">
-                            <div class="facts-alias-icon">🎮</div>
-                            <h3>Mr. Ota</h3>
-                            <p>Teasing. Playful. Built entirely from inside jokes and shared laughter.</p>
-                        </div>
-                        <div class="facts-alias-card">
-                            <div class="facts-alias-icon">🐰</div>
-                            <h3>Rabbit</h3>
-                            <p>Gentle. Alert. Emotionally sensitive but incredibly strong when protected.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SECTION 4: JOURNEY LOGS -->
-                <div class="facts-section" id="section-4">
-                    <div class="facts-section-title">SECTION 4: JOURNEY & LOG FACTS 📜</div>
-                    <div class="facts-timeline">
-                        <div class="facts-log-item">
-                            <div class="facts-log-date">June 20, 2024 · 12:21 AM</div>
-                            <div class="facts-log-title">Connection Established</div>
-                            <div class="facts-log-desc">Discord. First hello. System marks this as a critical event in history.</div>
-                        </div>
-                        <div class="facts-log-item">
-                            <div class="facts-log-date">DAILY STATUS</div>
-                            <div class="facts-log-title">The 4-Hour Rule</div>
-                            <div class="facts-log-desc">Claim: "4 hours is enough."<br>Reality: System unsure how he’s still functioning. Sleep debt high.</div>
-                        </div>
-                        <div class="facts-log-item">
-                            <div class="facts-log-date">LOG ANOMALY</div>
-                            <div class="facts-log-title">Real Madrid Ultra</div>
-                            <div class="facts-log-desc">Passion Level: 110%.<br>Observed anomaly: Missed matches detected.</div>
-                            <div class="log-anomaly">REASON: Talking to Her.</div>
-                        </div>
-                        <div class="facts-log-item">
-                            <div class="facts-log-date">SYSTEM QUIRK</div>
-                            <div class="facts-log-title">Sports Paradox</div>
-                            <div class="facts-log-desc">Can analyze football strategies for hours. Has never watched a single cricket match. Confusing logic.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SECTION 5: SYSTEM NOTE -->
-                <div class="facts-footer-note">
-                    <span class="sys-obs">System Observation</span>
-                    <blockquote>
-                        "Harshit is not loud. Not dramatic. Not careless.<br><br>
-                        But once he chooses someone,<br>the system never forgets them."
-                    </blockquote>
-                </div>
-
+            <div class="facts-footer-note">
+                <span class="sys-obs">Observation</span>
+                <blockquote>
+                    "He is not loud. Not dramatic. <br>
+                    But once he chooses someone, the system never forgets them."
+                </blockquote>
             </div>
         </div>
-    `},
+    </div>
+`},
 
     // Internal filename: emotionally_dumb_but_lovable.js
     {

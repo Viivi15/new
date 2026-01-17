@@ -4520,3 +4520,208 @@ body {
     border-radius: 5px;
     border: 2px solid #2c1810;
 }
+
+/* === MOBILE WARNING === */
+#mobile-warning {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0f172a;
+    color: white;
+    z-index: 9999999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+#mobile-warning .warning-content {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    max-width: 90%;
+}
+
+#mobile-warning h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-family: 'Inter', sans-serif;
+}
+
+#mobile-warning p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #cbd5e1;
+    font-family: 'Inter', sans-serif;
+}
+
+@media screen and (max-width: 900px) {
+    #mobile-warning {
+        display: flex !important;
+    }
+
+    #desktop,
+    #journey-intro,
+    #boot-sequence,
+    #dock-container {
+        display: none !important;
+    }
+}
+
+
+/* === FACTS APP (Harshit Facts) === */
+.facts-app {
+    background: #0d0d0d;
+    color: #e0e0e0;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    padding: 0;
+    height: 100%;
+    /* CHANGED: Main container handles scrolling */
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: block;
+}
+
+.facts-content {
+    /* CHANGED: Removed flex and overflow to allow natural flow in parent */
+    padding: 20px;
+    padding-top: 10px;
+    /* Reduced top padding */
+    opacity: 0;
+    animation: fadeIn 1s forwards 0.2s;
+    /* CHANGED: Reduced delay since terminal is gone */
+}
+
+.facts-content.active {
+    opacity: 1;
+}
+
+.facts-section {
+    margin-bottom: 40px;
+}
+
+.facts-section:first-child {
+    margin-top: 0;
+    /* Ensure first section starts at top */
+}
+
+.facts-section-title {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #6b7280;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 5px;
+}
+
+/* Identity Layers (Aliases) - Horizontal Scroll */
+.facts-alias-slider {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #333 #000;
+}
+
+.facts-alias-card {
+    min-width: 200px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.facts-alias-card:hover {
+    transform: translateY(-5px);
+    background: #262626;
+    border-color: #4ade80;
+}
+
+.facts-alias-icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.facts-alias-card h3 {
+    color: white;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.facts-alias-card p {
+    color: #9ca3af;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+/* Operating Parameters - Grid */
+.facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.facts-card {
+    background: #171717;
+    border: 1px solid #262626;
+    padding: 15px;
+    border-radius: 6px;
+}
+
+.facts-card h4 {
+    color: #6b7280;
+    font-size: 10px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.fact-val {
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.sys-note {
+    font-size: 10px;
+    color: #4ade80;
+    /* Terminal Green */
+    font-style: italic;
+}
+
+/* Footer */
+.facts-footer-note {
+    margin-top: 40px;
+    text-align: center;
+    padding: 20px;
+    background: #111;
+    border-radius: 8px;
+    border: 1px dashed #333;
+}
+
+.sys-obs {
+    display: block;
+    font-size: 9px;
+    text-transform: uppercase;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.facts-footer-note blockquote {
+    color: #d1d5db;
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-style: italic;
+    margin: 0;
+}

@@ -5,10 +5,10 @@ i am planning to make it special for him very much special
 its his 19th birthday
 and i want to be thougthful with everything 
 a website (ill create a website wishing him birthday and will be full of memories in it in form of pics and (suggest me something) and what else should i do in the website suggest me that as well
-i have created a bit but ummm i want to be it as the bestestttttt i have applied retro vibe in the current its like a desktop and has many apps in it and when openin it he will have different things to do .... i want more apps with more interactive things like 20-30 desktops apps in it with the mac icons on the top and resizing availabale and moving of apps
+i have created a bit but ummm i want to be it as the bestestttttt i want more apps with more interactive things like 20-30 desktops apps in it with the mac icons on the top and resizing availabale and moving of apps
 
 so so so  sooo
-I need to be very careful and honest here — and also very real with you 🤍
+I need to be very careful and honest here — and also very real with you 
 
 What I’ll share below is only what I truly know, based on what you’ve shared with me, not guesses, not assumptions.
 I won’t invent traits or facts — because this is his birthday, and he deserves truth, warmth, and authenticity.
