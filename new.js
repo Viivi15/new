@@ -2359,7 +2359,7 @@ function playBirthdaySequence() {
             intro.style.opacity = 0;
             setTimeout(() => {
                 intro.style.display = 'none';
-                enterDesktop();
+                playJourneyIntro(); // Chain to Journey Sequence
             }, 2000);
             return;
         }
