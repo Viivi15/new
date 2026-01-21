@@ -2300,6 +2300,11 @@ function startCountdownGatekeeper() {
 /* === PHASE 2: JOURNEY SEQUENCE === */
 function playJourneyIntro() {
     if (document.getElementById('desktop').style.display === 'block') return; // If skipped
+
+    // Hide Countdown explicitly
+    const cd = document.getElementById('countdown-phase');
+    if (cd) { cd.style.display = 'none'; }
+
     const intro = document.getElementById('journey-intro');
     intro.style.display = 'flex';
     const screens = document.querySelectorAll('.journey-screen');
@@ -2324,9 +2329,59 @@ function playJourneyIntro() {
     showNext();
 }
 
+/* === PHASE 2.5: BIRTHDAY SEQUENCE === */
+function playBirthdaySequence() {
+    if (document.getElementById('desktop').style.display === 'block') return;
+
+    // Hide Countdown
+    const cd = document.getElementById('countdown-phase');
+    if (cd) {
+        cd.style.opacity = 0;
+        setTimeout(() => cd.style.display = 'none', 1000);
+    }
+
+    const intro = document.getElementById('birthday-intro');
+    intro.style.display = 'flex';
+    intro.classList.remove('hidden'); // Tailwind override if needed
+
+    const screens = document.querySelectorAll('.birthday-screen');
+    const timings = [{ t: 4000 }, { t: 5000 }, { t: 4000 }];
+    let current = 0;
+
+    function showNext() {
+        if (document.getElementById('desktop').style.display === 'block') return;
+
+        if (current > 0) screens[current - 1].classList.remove('active');
+        if (current > 0) screens[current - 1].style.opacity = 0; // Ensure fade out
+
+        if (current >= screens.length) {
+            intro.style.transition = 'opacity 2s';
+            intro.style.opacity = 0;
+            setTimeout(() => {
+                intro.style.display = 'none';
+                enterDesktop();
+            }, 2000);
+            return;
+        }
+
+        const screen = screens[current];
+        screen.classList.add('active');
+        screen.style.opacity = 1; // Ensure fade in
+
+        setTimeout(showNext, timings[current].t);
+        current++;
+    }
+
+    // Small delay to let fade out happen
+    setTimeout(showNext, 500);
+}
+
 /* === PHASE 3: DESKTOP === */
 function enterDesktop() {
     // 1. Hide any remaining intro elements
+    const cd = document.getElementById('countdown-phase');
+    if (cd) cd.style.display = 'none';
+
     const term = document.getElementById('terminal-boot');
     if (term) term.style.display = 'none';
 
@@ -2385,6 +2440,9 @@ function initDesktop() {
 
     setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }); }, 1000);
 }
+
+// Global function for Dev Button
+window.skipToDesktop = enterDesktop;
 
 /* === MASTI MODE LOGIC === */
 const bearGifs = [

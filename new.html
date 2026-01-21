@@ -30,11 +30,6 @@
         </div>
     </div>
 
-    <!-- DEV SKIP BUTTON (Remove in Production) -->
-    <button id="dev-skip-btn" onclick="skipToDesktop()"
-        style="position: fixed; top: 10px; left: 10px; z-index: 99999; background: red; color: white; border: none; padding: 5px 10px; cursor: pointer; font-size: 10px; font-family: sans-serif; opacity: 0.5;">
-        🚧 DEV: SKIP TO DESKTOP
-    </button>
 
 
     <!-- PHASE 1: SYSTEM BOOT (Green / Mechanical) -->
@@ -117,6 +112,32 @@
         </div>
     </div>
 
+    <!-- PHASE 1.5: BIRTHDAY INTRO (Cinematic) -->
+    <div id="birthday-intro"
+        class="fixed inset-0 z-[20000] flex items-center justify-center text-center pointer-events-none hidden">
+
+        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
+            data-screen="1">
+            <p
+                class="text-4xl md:text-6xl font-serif text-pink-200 drop-shadow-[0_0_15px_rgba(236,72,153,0.6)] animate-pulse">
+                Happy Birthday, Harshit.
+            </p>
+        </div>
+
+        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
+            data-screen="2">
+            <p class="text-lg text-pink-100/80 mb-6 font-light tracking-wide">Another year around the sun.</p>
+            <p class="text-3xl font-serif text-white drop-shadow-xl">And you're still creating your own universe.</p>
+        </div>
+
+        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
+            data-screen="3">
+            <p class="text-2xl font-serif text-white mb-8">Make a wish.</p>
+            <div class="w-2 h-2 bg-white rounded-full shadow-[0_0_20px_white] animate-ping"></div>
+        </div>
+
+    </div>
+
     <!-- PHASE 2: TERMINAL BOOT (Green Text) -->
     <div id="terminal-boot"
         class="fixed inset-0 bg-black z-[15000] hidden p-8 font-mono text-green-500 text-xs md:text-sm leading-tight overflow-hidden cursor-none">
@@ -132,6 +153,23 @@
         <div id="countdown-sub"
             class="mt-8 text-xs text-blue-200/50 tracking-[0.3em] uppercase opacity-50 transition-opacity duration-1000">
             Approaching</div>
+
+        <!-- Navigation Buttons -->
+        <div class="mt-12 flex gap-4 z-50 pointer-events-auto">
+            <button onclick="playBirthdaySequence()"
+                class="px-6 py-2 bg-pink-500/20 hover:bg-pink-500/40 border border-pink-400/30 text-pink-200 text-xs uppercase tracking-widest rounded-full transition-all duration-300 hover:scale-105 backdrop-blur-sm cursor-pointer">
+                🎂 Birthday
+            </button>
+            <button onclick="playJourneyIntro()"
+                class="px-6 py-2 bg-blue-500/20 hover:bg-blue-500/40 border border-blue-400/30 text-blue-200 text-xs uppercase tracking-widest rounded-full transition-all duration-300 hover:scale-105 backdrop-blur-sm cursor-pointer">
+                🚀 Journey
+            </button>
+            <button onclick="enterDesktop()"
+                class="px-6 py-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white/50 hover:text-white text-xs uppercase tracking-widest rounded-full transition-all duration-300 hover:scale-105 backdrop-blur-sm cursor-pointer">
+                🖥️ Desktop
+            </button>
+        </div>
+
     </div>
 
     <!-- AUDIO -->

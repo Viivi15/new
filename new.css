@@ -792,6 +792,11 @@ body {
 }
 
 /* Bear Stickers */
+.birthday-screen.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 .bear-sticker {
     position: fixed;
     width: 150px;
@@ -4951,31 +4956,36 @@ body {
 #dock .win-icon:hover .icon-img {
     transform: scale(1.2) translateY(-10px);
 }
+
 /* === VIVID COLORIZATION (Subtle Tinting) === */
 /* Preserve whites, just tint the midtones */
 
 /* System (Blue) */
-.desktop-icon[onclick*='folder-system'] .icon-img img, .dock-icon[onclick*='folder-system'] img {
+.desktop-icon[onclick*='folder-system'] .icon-img img,
+.dock-icon[onclick*='folder-system'] img {
     filter: sepia(0.3) saturate(3) hue-rotate(180deg) drop-shadow(0 4px 6px rgba(59, 130, 246, 0.5)) !important;
 }
 
 /* Feelings (Pink/Purple) */
-.desktop-icon[onclick*='folder-feelings'] .icon-img img, .dock-icon[onclick*='folder-feelings'] img {
+.desktop-icon[onclick*='folder-feelings'] .icon-img img,
+.dock-icon[onclick*='folder-feelings'] img {
     filter: sepia(0.3) saturate(3) hue-rotate(280deg) drop-shadow(0 4px 6px rgba(236, 72, 153, 0.5)) !important;
 }
 
 /* Memories (Gold/Warm) */
-.desktop-icon[onclick*='memory-gallery'] .icon-img img, .dock-icon[onclick*='memory-gallery'] img {
+.desktop-icon[onclick*='memory-gallery'] .icon-img img,
+.dock-icon[onclick*='memory-gallery'] img {
     filter: sepia(0.4) saturate(3) hue-rotate(320deg) drop-shadow(0 4px 6px rgba(245, 158, 11, 0.5)) !important;
 }
 
 /* Fun (Green/Cyan) */
-.desktop-icon[onclick*='folder-fun'] .icon-img img, .dock-icon[onclick*='folder-fun'] img {
+.desktop-icon[onclick*='folder-fun'] .icon-img img,
+.dock-icon[onclick*='folder-fun'] img {
     filter: sepia(0.3) saturate(3) hue-rotate(100deg) drop-shadow(0 4px 6px rgba(16, 185, 129, 0.5)) !important;
 }
 
 /* Vault (Red/Dark) */
-.desktop-icon[onclick*='app-vault'] .icon-img img, .dock-icon[onclick*='app-vault'] img {
+.desktop-icon[onclick*='app-vault'] .icon-img img,
+.dock-icon[onclick*='app-vault'] img {
     filter: sepia(0.2) saturate(3) hue-rotate(300deg) drop-shadow(0 4px 6px rgba(239, 68, 68, 0.5)) !important;
 }
-
