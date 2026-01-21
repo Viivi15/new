@@ -52,7 +52,7 @@ const journeyData = [
     {
         chapter: 1,
         title: "The First Spark",
-        subtitle: "Discord, Euros, and 12:21 AM",
+        subtitle: "Online Platform, Euros, and 12:21 AM",
         color: "#3b82f6",
         items: [
             { type: 'title', text: "Chapter 1: The First Spark" },
@@ -106,7 +106,7 @@ const journeyData = [
             { type: 'title', text: "Chapter 5: 11:59 AM" },
             { type: 'scene', text: "You tried to send 'Happy Birthday' letter-by-letter to end at 12:00... but your math failed and it ended at 11:59! 🎈" },
             { type: 'poem', text: "Happiest Birthday Vi, so bright,\nMay success and dreams take endless flight.\nWith each sunrise, may you find anew,\nThe joy and wonders waiting for you." },
-            { type: 'chat', speaker: 'Harshit', text: "Thankyou sm aapki vajah s hi me dc chalata hu and khush hota hu. ❤️" }
+            { type: 'chat', speaker: 'Harshit', text: "Thankyou sm aapki vajah s hi me online platform chalata hu and khush hota hu. ❤️" }
         ]
     }
 ];
@@ -1550,7 +1550,7 @@ const apps = [
                 <p>
                     Harshit is not just a name in my life. He is a presence.
                     Someone who entered my world on
-                    <strong>June 20, 2024 at 12:21 AM</strong> on Discord —
+                    <strong>June 20, 2024 at 12:21 AM</strong> on an Online Platform —
                     a moment that quietly turned into something meaningful,
                     lasting, and emotionally deep.
                 </p>
@@ -5433,7 +5433,7 @@ function unlockVault() {
 
 /* === THE US QUIZ LOGIC === */
 const usQuizQuestions = [
-    { q: "Where did we first meet?", a: ["discord", "dc"] },
+    { q: "Where did we first meet?", a: ["online", "dc"] },
     { q: "What sport does Harshit NOT watch?", a: ["cricket"] },
     { q: "What is Harshit's favorite club?", a: ["real madrid", "madrid"] },
     { q: "Who is the 'Dumb' one?", a: ["vi", "shravii", "me"] }
