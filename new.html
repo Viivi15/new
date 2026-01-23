@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space for you/title>
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22></text></svg>">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@600&family=Permanent+Marker&family=Handlee&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="new.css">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+        <link rel="icon"
+            href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22></text></svg>">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@600&family=Permanent+Marker&family=Handlee&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="new.css">
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 </head>
 
 <body>
@@ -21,21 +21,121 @@
         <div class="warning-content">
             <h1>Oops! Screen's a bit small...</h1>
             <p>This special corner of memories shines brightest on a bigger canvas.
-                 A Laptop or PC will let these moments breathe the way they deserve.</p>
+                A Laptop or PC will let these moments breathe the way they deserve.</p>
             <p>Catch you on the big screen!</p>
         </div>
     </div>
 
+    <!-- PHASE 0: COUNTDOWN (Gatekeeper) -->
+    <div id="countdown-phase"
+        class="fixed inset-0 bg-[#1e3c72] z-[60000] flex flex-col items-center justify-center text-white transition-opacity duration-1000">
+        <div id="countdown-display"
+            class="text-6xl md:text-8xl font-thin font-mono tracking-widest text-blue-50 drop-shadow-[0_0_15px_rgba(100,200,255,0.5)]">
+            19</div>
+        <div id="countdown-sub"
+            class="mt-8 text-xs text-blue-200/50 tracking-[0.3em] uppercase opacity-50 transition-opacity duration-1000">
+            Approaching</div>
 
+        <!-- Skip Button -->
+        <button onclick="skipCountdown()"
+            class="mt-12 px-6 py-2 bg-blue-500/20 hover:bg-blue-500/40 border border-blue-400/30 rounded-full text-xs tracking-widest uppercase transition-all duration-300">
+            Skip Countdown
+        </button>
+    </div>
 
-    <!-- PHASE 1: SYSTEM BOOT (Green / Mechanical) -->
-    <div id="boot-sequence" style="display:none; opacity:0;">
-        <p class="boot-line">initializing system…</p>
-        <p class="boot-line delay1">loading memories…</p>
-        <p class="boot-line delay2">checking time reference…</p>
-        <p class="boot-line delay3">June 20, 2024 • 12:21 AM</p>
-        <p class="boot-line delay4">connection stable.</p>
-        <p class="boot-line delay5">space preparing<span class="boot-cursor"></span></p>
+    <!-- PHASE 1.5: BIRTHDAY INTRO (Cinematic) -->
+    <div id="birthday-intro"
+        class="fixed inset-0 z-[20000] flex items-center justify-center text-center pointer-events-none hidden">
+
+        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
+            data-screen="1">
+            <p
+                class="text-4xl md:text-6xl font-serif text-pink-200 drop-shadow-[0_0_15px_rgba(236,72,153,0.6)] animate-pulse">
+                Happy Birthday, Harshit.
+            </p>
+        </div>
+
+        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
+            data-screen="2">
+            <p class="text-lg text-pink-100/80 mb-6 font-light tracking-wide italic">Another year around the sun...</p>
+            <p class="text-3xl font-serif text-white drop-shadow-xl font-bold">And you're still the bright spot in mine.
+                ✨</p>
+        </div>
+
+        <!-- NEW: Interactive Cake & Candle -->
+        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-1000"
+            data-screen="3" id="slide-cake">
+            <p class="text-2xl font-serif text-white mb-12 animate-bounce">Make a wish & blow the candle! 🕯️</p>
+
+            <div class="cake-container relative cursor-pointer" onclick="blowCandle()" title="Click to blow!">
+                <div class="candle">
+                    <div class="flame" id="candle-flame"></div>
+                </div>
+                <!-- CSS Cake Layers -->
+                <div class="cake-frosting"></div>
+                <div class="cake-layer top-layer"></div>
+                <div class="cake-layer middle-layer"></div>
+                <div class="cake-layer bottom-layer"></div>
+                <div class="plate"></div>
+            </div>
+
+            <p id="wish-msg"
+                class="mt-8 text-pink-300 opacity-0 transition-opacity duration-1000 font-serif italic text-lg"></p>
+        </div>
+
+        <!-- NEW: Cake Cutting -->
+        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-1000"
+            data-screen="4" id="slide-cut">
+            <p id="cut-instruction" class="text-2xl font-serif text-white mb-12">Now... cut the cake! 🍰</p>
+
+            <div class="cake-container relative cursor-pointer group" onclick="cutCake()" title="Click to cut!">
+                <!-- Reused Visuals for Continuity, replaced with cut version on click -->
+                <div id="cake-whole" class="relative transition-transform duration-300 group-hover:scale-105">
+                    <div class="cake-frosting"></div>
+                    <div class="cake-layer top-layer"></div>
+                    <div class="cake-layer middle-layer"></div>
+                    <div class="cake-layer bottom-layer"></div>
+                    <div class="plate"></div>
+                </div>
+
+                <!-- Knife Icon following cursor or static overlay -->
+                <div
+                    class="knife absolute -right-10 top-0 text-6xl transform -rotate-45 transition-all duration-300 group-hover:-translate-x-10 group-hover:translate-y-10 pointer-events-none">
+                    🔪</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- NEW: LETTER OVERLAY (Paper Style) -->
+    <div id="letter-overlay"
+        class="fixed inset-0 z-[50000] flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-1000">
+        <div class="relative bg-[#fdfbf7] w-[90%] max-w-lg p-8 md:p-12 rounded-sm shadow-2xl transform scale-95 transition-transform duration-700"
+            id="letter-content">
+            <!-- Paper Texture Effect -->
+            <div class="absolute inset-0 opacity-10 pointer-events-none"
+                style="background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');"></div>
+
+            <button onclick="closeLetter()"
+                class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors text-xl font-bold">&times;</button>
+
+            <div class="relative z-10 font-serif text-gray-800">
+                <h1 class="text-3xl md:text-4xl text-pink-600 mb-6 font-bold"
+                    style="font-family: 'Dancing Script', cursive;">Happy Birthday!</h1>
+                <div class="space-y-4 text-lg leading-relaxed opacity-90">
+                    <p>To Harshit,</p>
+                    <p>If you are reading this, you successfully blew out the candle and cut the cake (CSS is hard,
+                        okay?). 😂</p>
+                    <p>I just wanted to say... <strong>Happy Birthday</strong>.</p>
+                    <p>This entire OS is a collection of our moments, inside jokes, and the things that make "us".
+                        Explore the folders, find the hidden eggs (there are rabbits everywhere), and just know that you
+                        are appreciated.</p>
+                    <p>You matter. Your chaos matters. Your silence matters.</p>
+                    <p class="mt-8 text-right text-pink-500 font-bold"
+                        style="font-family: 'Dancing Script', cursive; font-size: 1.5em;">- Vi (Shravii)</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- PHASE 0: SPACE BACKGROUND (Persistent) -->
@@ -108,69 +208,22 @@
         </div>
     </div>
 
-    <!-- PHASE 1.5: BIRTHDAY INTRO (Cinematic) -->
-    <div id="birthday-intro"
-        class="fixed inset-0 z-[20000] flex items-center justify-center text-center pointer-events-none hidden">
 
-        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
-            data-screen="1">
-            <p
-                class="text-4xl md:text-6xl font-serif text-pink-200 drop-shadow-[0_0_15px_rgba(236,72,153,0.6)] animate-pulse">
-                Happy Birthday, Harshit.
-            </p>
-        </div>
 
-        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
-            data-screen="2">
-            <p class="text-lg text-pink-100/80 mb-6 font-light tracking-wide italic">Another year around the sun...</p>
-            <p class="text-3xl font-serif text-white drop-shadow-xl font-bold">And you're still the bright spot in mine.
-                ✨</p>
-        </div>
 
-        <!-- NEW: Interactive Cake & Candle -->
-        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-1000"
-            data-screen="3" id="slide-cake">
-            <p class="text-2xl font-serif text-white mb-12 animate-bounce">Make a wish & blow the candle! 🕯️</p>
 
-            <div class="cake-container relative cursor-pointer" onclick="blowCandle()" title="Click to blow!">
-                <div class="candle">
-                    <div class="flame" id="candle-flame"></div>
-                </div>
-                <!-- CSS Cake Layers -->
-                <div class="cake-frosting"></div>
-                <div class="cake-layer top-layer"></div>
-                <div class="cake-layer middle-layer"></div>
-                <div class="cake-layer bottom-layer"></div>
-                <div class="plate"></div>
-            </div>
 
-            <p id="wish-msg"
-                class="mt-8 text-pink-300 opacity-0 transition-opacity duration-1000 font-serif italic text-lg"></p>
-        </div>
-
-        <!-- NEW: Cake Cutting -->
-        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-1000"
-            data-screen="4" id="slide-cut">
-            <p id="cut-instruction" class="text-2xl font-serif text-white mb-12">Now... cut the cake! 🍰</p>
-
-            <div class="cake-container relative cursor-pointer group" onclick="cutCake()" title="Click to cut!">
-                <!-- Reused Visuals for Continuity, replaced with cut version on click -->
-                <div id="cake-whole" class="relative transition-transform duration-300 group-hover:scale-105">
-                    <div class="cake-frosting"></div>
-                    <div class="cake-layer top-layer"></div>
-                    <div class="cake-layer middle-layer"></div>
-                    <div class="cake-layer bottom-layer"></div>
-                    <div class="plate"></div>
-                </div>
-
-                <!-- Knife Icon following cursor or static overlay -->
-                <div
-                    class="knife absolute -right-10 top-0 text-6xl transform -rotate-45 transition-all duration-300 group-hover:-translate-x-10 group-hover:translate-y-10 pointer-events-none">
-                    🔪</div>
-            </div>
-        </div>
-
+    <!-- PHASE 1: SYSTEM BOOT (Green / Mechanical) -->
+    <div id="boot-sequence" style="display:none; opacity:0;">
+        <p class="boot-line">initializing system…</p>
+        <p class="boot-line delay1">loading memories…</p>
+        <p class="boot-line delay2">checking time reference…</p>
+        <p class="boot-line delay3">June 20, 2024 • 12:21 AM</p>
+        <p class="boot-line delay4">connection stable.</p>
+        <p class="boot-line delay5">space preparing<span class="boot-cursor"></span></p>
     </div>
+
+
 
     <!-- PHASE 2: TERMINAL BOOT (Green Text) -->
     <div id="terminal-boot"
@@ -178,60 +231,12 @@
         <div id="terminal-content"></div>
     </div>
 
-    <!-- PHASE 0: COUNTDOWN (Gatekeeper) -->
-    <div id="countdown-phase"
-        class="fixed inset-0 bg-[#1e3c72] z-[60000] flex flex-col items-center justify-center text-white transition-opacity duration-1000">
-        <div id="countdown-display"
-            class="text-6xl md:text-8xl font-thin font-mono tracking-widest text-blue-50 drop-shadow-[0_0_15px_rgba(100,200,255,0.5)]">
-            19</div>
-        <div id="countdown-sub"
-            class="mt-8 text-xs text-blue-200/50 tracking-[0.3em] uppercase opacity-50 transition-opacity duration-1000">
-            Approaching</div>
-
-
-
-        <!-- Skip Button -->
-        <button onclick="skipCountdown()"
-            class="mt-12 px-6 py-2 bg-blue-500/20 hover:bg-blue-500/40 border border-blue-400/30 rounded-full text-xs tracking-widest uppercase transition-all duration-300">
-            Skip Countdown
-        </button>
-    </div>
 
     <!-- AUDIO -->
     <audio id="bg-music" loop>
         <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3">
     </audio>
 
-    <!-- NEW: LETTER OVERLAY (Paper Style) -->
-    <div id="letter-overlay"
-        class="fixed inset-0 z-[50000] flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-1000">
-        <div class="relative bg-[#fdfbf7] w-[90%] max-w-lg p-8 md:p-12 rounded-sm shadow-2xl transform scale-95 transition-transform duration-700"
-            id="letter-content">
-            <!-- Paper Texture Effect -->
-            <div class="absolute inset-0 opacity-10 pointer-events-none"
-                style="background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');"></div>
-
-            <button onclick="closeLetter()"
-                class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors text-xl font-bold">&times;</button>
-
-            <div class="relative z-10 font-serif text-gray-800">
-                <h1 class="text-3xl md:text-4xl text-pink-600 mb-6 font-bold"
-                    style="font-family: 'Dancing Script', cursive;">Happy Birthday!</h1>
-                <div class="space-y-4 text-lg leading-relaxed opacity-90">
-                    <p>To Harshit,</p>
-                    <p>If you are reading this, you successfully blew out the candle and cut the cake (CSS is hard,
-                        okay?). 😂</p>
-                    <p>I just wanted to say... <strong>Happy Birthday</strong>.</p>
-                    <p>This entire OS is a collection of our moments, inside jokes, and the things that make "us".
-                        Explore the folders, find the hidden eggs (there are rabbits everywhere), and just know that you
-                        are appreciated.</p>
-                    <p>You matter. Your chaos matters. Your silence matters.</p>
-                    <p class="mt-8 text-right text-pink-500 font-bold"
-                        style="font-family: 'Dancing Script', cursive; font-size: 1.5em;">- Vi (Shravii)</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- MAIN DESKTOP -->
     <main id="desktop">
