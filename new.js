@@ -2286,9 +2286,9 @@ function startCountdownGatekeeper() {
 
         if (distance < 0) {
             clearInterval(int);
-            cdDisplay.innerText = "Now.";
-            cdDisplay.style.fontSize = "3rem";
-            cdSub.innerText = ""; // Clear subtext
+            // Removed "Now." logic
+            cdDisplay.style.opacity = 0;
+            cdSub.innerText = "";
             setTimeout(() => {
                 cdScreen.style.opacity = 0;
                 setTimeout(() => {
@@ -2307,7 +2307,7 @@ function startCountdownGatekeeper() {
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
         cdDisplay.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        cdSub.innerText = "Processing Arrival";
+        cdSub.innerText = "The moment is here.";
     }, 1000);
 }
 
@@ -2337,22 +2337,38 @@ function playJourneyIntro() {
 
     function showNext() {
         if (document.getElementById('desktop').style.display === 'block') return;
-        if (current > 0) screens[current - 1].classList.remove('active');
-        if (current >= screens.length) {
-            intro.style.transition = 'opacity 2s'; intro.style.opacity = 0;
+
+        // FADE OUT PREVIOUS COMPLETELY BEFORE NEXT
+        if (current > 0) {
+            screens[current - 1].classList.remove('active');
+            // Wait 1.5s for fade out to finish (based on CSS transition)
             setTimeout(() => {
-                intro.style.display = 'none';
-                /* CHAIN: Journey -> Boot (Green Text) */
-                runSystemBoot();
-            }, 2000);
-            return;
+                if (document.getElementById('desktop').style.display === 'block') return;
+                startNextScreen();
+            }, 1500);
+        } else {
+            startNextScreen();
         }
-        const screen = screens[current];
-        screen.classList.add('active');
-        const subs = screen.querySelectorAll('.journey-sub');
-        subs.forEach((sub, i) => setTimeout(() => sub.classList.add('active'), 500 + (i * 1500)));
-        setTimeout(showNext, timings[current].t);
-        current++;
+
+        function startNextScreen() {
+            if (current >= screens.length) {
+                intro.style.transition = 'opacity 2s';
+                intro.style.opacity = 0;
+                setTimeout(() => {
+                    intro.style.display = 'none';
+                    runSystemBoot();
+                }, 2000);
+                return;
+            }
+            const screen = screens[current];
+            screen.classList.add('active');
+            const subs = screen.querySelectorAll('.journey-sub');
+            subs.forEach((sub, i) => setTimeout(() => sub.classList.add('active'), 500 + (i * 1500)));
+
+            // Set timer for the next transition
+            setTimeout(showNext, timings[current].t);
+            current++;
+        }
     }
     showNext();
 }
@@ -2442,6 +2458,7 @@ function showBirthdaySlide(index) {
 window.showBirthdaySlide = showBirthdaySlide;
 
 /* INTERACTIONS */
+/* INTERACTIONS */
 window.blowCandle = function () {
     const flame = document.getElementById('candle-flame');
     const msg = document.getElementById('wish-msg');
@@ -2449,7 +2466,11 @@ window.blowCandle = function () {
     if (flame && !flame.classList.contains('blown')) {
         flame.classList.add('blown');
 
-        // Add smoke logic if desired (CSS)
+        // Add smoke logic
+        const smoke = document.createElement('div');
+        smoke.className = 'smoke';
+        // Position smoke exactly where the flame was
+        flame.parentElement.appendChild(smoke);
 
         if (msg) {
             msg.innerText = "Yay! May all your wishes come true! ✨";
@@ -2473,14 +2494,35 @@ window.cutCake = function () {
     }
 
     if (cakeWhole) {
-        // Simple visual change or just proceed
-        // The user existing code had CSS hacks for cutting, assuming present in CSS
-        // Simply proceed
+        // Step 1: Replace content with the two halves but NO transform yet
+        cakeWhole.innerHTML = `
+            <div id="cake-left" class="absolute inset-0 cake-cut-left">
+                 <div class="cake-frosting"></div>
+                 <div class="cake-layer top-layer"></div>
+                 <div class="cake-layer middle-layer"></div>
+                 <div class="cake-layer bottom-layer"></div>
+            </div>
+            <div id="cake-right" class="absolute inset-0 cake-cut-right">
+                 <div class="cake-frosting"></div>
+                 <div class="cake-layer top-layer"></div>
+                 <div class="cake-layer middle-layer"></div>
+                 <div class="cake-layer bottom-layer"></div>
+            </div>
+            <div class="plate"></div>
+        `;
+
+        // Step 2: Trigger the separation animation in next frame
+        requestAnimationFrame(() => {
+            const left = document.getElementById('cake-left');
+            const right = document.getElementById('cake-right');
+            if (left) left.style.transform = 'translateX(-20px) rotate(-2deg)';
+            if (right) right.style.transform = 'translateX(20px) rotate(2deg)';
+        });
 
         if (instruction) instruction.innerText = "Enjoy! 🍰";
 
         setTimeout(() => {
-            finishBirthdaySequence();
+            showLetterOverlay();
         }, 3000);
     }
 };
@@ -2564,16 +2606,7 @@ function enterDesktop() {
 
     initDesktop();
 
-    // 5. SHOW LETTER OVERLAY (The Finale)
-    setTimeout(() => {
-        const letter = document.getElementById('letter-overlay');
-        if (letter) {
-            letter.classList.remove('hidden');
-            void letter.offsetWidth; // Force Reflow
-            letter.classList.add('visible');
-            letter.style.opacity = '1';
-        }
-    }, 2000);
+    // 5. Letter removed from here (it comes earlier now)
 }
 
 /* === DESKTOP UTILS === */
@@ -6210,71 +6243,6 @@ window.nextNotDumbSlide = nextNotDumbSlide;
 /* === BIRTHDAY SEQUENCER === */
 
 
-window.blowCandle = function () {
-    const flame = document.getElementById('candle-flame');
-    const smoke = document.createElement('div');
-    const msg = document.getElementById('wish-msg');
-
-    if (flame && !flame.classList.contains('blown')) {
-        flame.classList.add('blown');
-
-        // Add smoke
-        smoke.className = 'smoke';
-        flame.parentElement.appendChild(smoke);
-
-        // Show message
-        if (msg) {
-            msg.innerText = "Yay! May all your wishes come true! ✨";
-            msg.style.opacity = '1';
-        }
-
-        // Transition to Cut Cake after delay
-        setTimeout(() => {
-            showBirthdaySlide(4);
-        }, 3000);
-    }
-};
-
-window.cutCake = function () {
-    const cakeWhole = document.getElementById('cake-whole');
-    const instruction = document.getElementById('cut-instruction');
-
-    if (cakeWhole) {
-        // Visual Cut Effect
-        // Split cake into two halves moving apart
-        cakeWhole.innerHTML = `
-            <div class="absolute inset-0 cake-cut-left transform -translate-x-4 transition-transform duration-1000">
-                 <div class="cake-frosting"></div>
-                 <div class="cake-layer top-layer"></div>
-                 <div class="cake-layer middle-layer"></div>
-                 <div class="cake-layer bottom-layer"></div>
-            </div>
-            <div class="absolute inset-0 cake-cut-right transform translate-x-4 transition-transform duration-1000">
-                 <div class="cake-frosting"></div>
-                 <div class="cake-layer top-layer"></div>
-                 <div class="cake-layer middle-layer"></div>
-                 <div class="cake-layer bottom-layer"></div>
-            </div>
-            <div class="plate"></div>
-        `;
-
-        // Confetti!
-        if (typeof confetti === 'function') {
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
-        }
-
-        if (instruction) instruction.innerText = "Enjoy! 🍰";
-
-        // Finish
-        setTimeout(() => {
-            finishBirthdaySequence();
-        }, 3000);
-    }
-};
 
 function finishBirthdaySequence() {
     const intro = document.getElementById('birthday-intro');
@@ -6299,6 +6267,30 @@ function finishBirthdaySequence() {
 // Initial Letter Overlay (Custom)
 
 
+// Initial Letter Overlay (Custom) -> Now Part of Birthday Sequence
+window.showLetterOverlay = function () {
+    // Hide Birthday Intro if visible
+    const intro = document.getElementById('birthday-intro');
+    if (intro) {
+        intro.style.transition = 'opacity 1s';
+        intro.style.opacity = 0;
+        setTimeout(() => intro.style.display = 'none', 1000);
+    }
+
+    // Show Letter
+    const letter = document.getElementById('letter-overlay');
+    if (letter) {
+        letter.classList.remove('hidden');
+        void letter.offsetWidth;
+        letter.style.display = 'flex'; // Ensure flex
+        setTimeout(() => {
+            letter.classList.add('visible');
+            letter.style.opacity = '1';
+        }, 100);
+    }
+}
+
+
 window.closeLetter = function () {
     const letter = document.getElementById('letter-overlay');
     if (letter) {
@@ -6306,6 +6298,10 @@ window.closeLetter = function () {
         letter.classList.remove('visible');
         setTimeout(() => {
             letter.classList.add('hidden');
+            letter.style.display = 'none';
+
+            // CHAIN: Letter Closed -> Journey Sequence
+            finishBirthdaySequence();
         }, 1000);
     }
 };

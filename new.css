@@ -28,6 +28,14 @@ body {
     z-index: 10;
 }
 
+/* === BIRTHDAY INTRO BACKGROUND === */
+#birthday-intro {
+    background: radial-gradient(circle at center, #1a202c 0%, #000 100%);
+    /* Fallback */
+    background: linear-gradient(135deg, #2e1065 0%, #000000 100%);
+    /* Deep Purple to Black */
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -737,19 +745,23 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Letter Styling */
+/* Letter Styling Enhanced */
 .letter-text {
     font-family: 'Inter', sans-serif;
-    line-height: 1.7;
+    line-height: 1.8;
     white-space: pre-wrap;
-    font-size: 15px;
+    font-size: 16px;
+    color: #374151;
 }
 
 .letter-text h2 {
     font-family: 'Dancing Script', cursive;
-    font-size: 28px;
-    color: #d946ef;
-    margin-top: 20px;
+    font-size: 34px;
+    color: #db2777;
+    /* Pink-600 */
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.05);
 }
 
 .letter-text h3 {
@@ -5069,6 +5081,7 @@ body {
     background: #fff;
     border-radius: 10px;
     box-shadow: 20px 0 0 #fff, 40px 5px 0 #fff, 60px 0 0 #fff, 80px 8px 0 #fff, 100px 0 0 #fff, 120px 5px 0 #fff, 140px 0 0 #fff;
+    pointer-events: none;
 }
 
 /* Candle */
@@ -5092,7 +5105,8 @@ body {
     transform: translateX(-50%);
     width: 2px;
     height: 10px;
-    background: #333;
+    background: #555;
+    border-radius: 1px;
 }
 
 /* Flame */
@@ -5108,6 +5122,7 @@ body {
     box-shadow: 0 0 10px #f97316, 0 0 20px #fde047;
     animation: flicker 1s infinite alternate;
     transform-origin: center bottom;
+    pointer-events: none;
 }
 
 .flame.blown {
@@ -5118,26 +5133,31 @@ body {
     0% {
         transform: translateX(-50%) scale(1);
         opacity: 0.9;
+        filter: blur(1px);
     }
 
     20% {
         transform: translateX(-52%) scale(1.1);
         opacity: 1;
+        filter: blur(0px);
     }
 
     50% {
         transform: translateX(-48%) scale(0.9);
         opacity: 0.8;
+        filter: blur(2px);
     }
 
     80% {
         transform: translateX(-50%) scale(1.05);
         opacity: 1;
+        filter: blur(1px);
     }
 
     100% {
         transform: translateX(-50%) scale(1);
         opacity: 0.9;
+        filter: blur(1px);
     }
 }
 
@@ -5147,12 +5167,6 @@ body {
         opacity: 1;
     }
 
-    50% {
-        transform: translateX(-50%) scale(0.5);
-        opacity: 0.5;
-        bottom: 10px;
-    }
-
     100% {
         transform: translateX(-50%) scale(0);
         opacity: 0;
@@ -5160,39 +5174,79 @@ body {
 }
 
 /* Smoke Effect (Added via JS usually, but pre-styled here) */
+/* Enhanced Smoke */
 .smoke {
     position: absolute;
     top: -30px;
     left: 50%;
     transform: translateX(-50%);
-    width: 4px;
-    height: 10px;
-    background: rgba(255, 255, 255, 0.5);
+    width: 6px;
+    height: 12px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
     border-radius: 50%;
-    animation: smokeRise 1.5s forwards;
+    filter: blur(2px);
+    animation: smokeRise 2s forwards ease-out;
 }
 
 @keyframes smokeRise {
     0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(0) scale(0.5);
+    }
+
+    20% {
         opacity: 0.8;
-        transform: translateX(-50%) translateY(0) scale(1);
+        transform: translateX(-50%) translateY(-10px) scale(1);
     }
 
     100% {
         opacity: 0;
-        transform: translateX(-60%) translateY(-30px) scale(3);
+        transform: translateX(-80%) translateY(-60px) scale(4);
+    }
+}
+
+/* Typewriter for Birthday Intro */
+.birthday-screen.active p {
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation:
+        typing 3.5s steps(40, end),
+        blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 100%
+    }
+}
+
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: rgba(255, 255, 255, 0.5);
     }
 }
 
 /* Cut Animation */
 .cake-cut-left {
-    clip-path: polygon(0 0, 45% 0, 45% 100%, 0 100%);
-    transition: transform 1s ease;
+    clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .cake-cut-right {
-    clip-path: polygon(55% 0, 100% 0, 100% 100%, 55% 100%);
-    transition: transform 1s ease;
+    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Knife Hover */
