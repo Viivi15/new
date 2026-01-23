@@ -26,7 +26,6 @@
         </div>
     </div>
 
-    <!-- PHASE 0: COUNTDOWN (Gatekeeper) -->
     <div id="countdown-phase"
         class="fixed inset-0 bg-[#1e3c72] z-[60000] flex flex-col items-center justify-center text-white transition-opacity duration-1000">
         <div id="countdown-display"
@@ -36,14 +35,12 @@
             class="mt-8 text-xs text-blue-200/50 tracking-[0.3em] uppercase opacity-50 transition-opacity duration-1000">
             Approaching</div>
 
-        <!-- Skip Button -->
         <button onclick="skipCountdown()"
             class="mt-12 px-6 py-2 bg-blue-500/20 hover:bg-blue-500/40 border border-blue-400/30 rounded-full text-xs tracking-widest uppercase transition-all duration-300">
             Skip Countdown
         </button>
     </div>
 
-    <!-- PHASE 1.5: BIRTHDAY INTRO (Cinematic) -->
     <div id="birthday-intro"
         class="fixed inset-0 z-[20000] flex items-center justify-center text-center pointer-events-none hidden">
 
@@ -59,10 +56,9 @@
             data-screen="2">
             <p class="text-lg text-pink-100/80 mb-6 font-light tracking-wide italic">Another year around the sun...</p>
             <p class="text-3xl font-serif text-white drop-shadow-xl font-bold">And you're still the bright spot in mine.
-                ✨</p>
+                </p>
         </div>
 
-        <!-- NEW: Interactive Cake & Candle -->
         <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-1000"
             data-screen="3" id="slide-cake">
             <p class="text-2xl font-serif text-white mb-12 animate-bounce">Make a wish & blow the candle! 🕯️</p>
@@ -71,7 +67,7 @@
                 <div class="candle">
                     <div class="flame" id="candle-flame"></div>
                 </div>
-                <!-- CSS Cake Layers -->
+
                 <div class="cake-frosting"></div>
                 <div class="cake-layer top-layer"></div>
                 <div class="cake-layer middle-layer"></div>
@@ -83,13 +79,11 @@
                 class="mt-8 text-pink-300 opacity-0 transition-opacity duration-1000 font-serif italic text-lg"></p>
         </div>
 
-        <!-- NEW: Cake Cutting -->
         <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-1000"
             data-screen="4" id="slide-cut">
             <p id="cut-instruction" class="text-2xl font-serif text-white mb-12">Now... cut the cake! 🍰</p>
 
             <div class="cake-container relative cursor-pointer group" onclick="cutCake()" title="Click to cut!">
-                <!-- Reused Visuals for Continuity, replaced with cut version on click -->
                 <div id="cake-whole" class="relative transition-transform duration-300 group-hover:scale-105">
                     <div class="cake-frosting"></div>
                     <div class="cake-layer top-layer"></div>
@@ -98,7 +92,6 @@
                     <div class="plate"></div>
                 </div>
 
-                <!-- Knife Icon following cursor or static overlay -->
                 <div
                     class="knife absolute -right-10 top-0 text-6xl transform -rotate-45 transition-all duration-300 group-hover:-translate-x-10 group-hover:translate-y-10 pointer-events-none">
                     🔪</div>
@@ -107,12 +100,10 @@
 
     </div>
 
-    <!-- NEW: LETTER OVERLAY (Paper Style) -->
     <div id="letter-overlay"
         class="fixed inset-0 z-[50000] flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-1000">
         <div class="relative bg-[#fdfbf7] w-[90%] max-w-lg p-8 md:p-12 rounded-sm shadow-2xl transform scale-95 transition-transform duration-700"
             id="letter-content">
-            <!-- Paper Texture Effect -->
             <div class="absolute inset-0 opacity-10 pointer-events-none"
                 style="background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');"></div>
 
@@ -138,14 +129,12 @@
         </div>
     </div>
 
-    <!-- PHASE 0: SPACE BACKGROUND (Persistent) -->
     <div id="space-bg" class="fixed inset-0 z-[0]">
         <div class="stars-small"></div>
         <div class="stars-medium"></div>
         <div class="stars-large"></div>
     </div>
 
-    <!-- PHASE 1: JOURNEY INTRO (Text over Space) -->
     <div id="journey-intro"
         class="fixed inset-0 z-[20000] flex items-center justify-center text-center pointer-events-none">
 
@@ -205,12 +194,6 @@
         </div>
     </div>
 
-
-
-
-
-
-    <!-- PHASE 1: SYSTEM BOOT (Green / Mechanical) -->
     <div id="boot-sequence" style="display:none; opacity:0;">
         <p class="boot-line">initializing system…</p>
         <p class="boot-line delay1">loading memories…</p>
@@ -221,35 +204,25 @@
     </div>
 
 
-
-    <!-- PHASE 2: TERMINAL BOOT (Green Text) -->
     <div id="terminal-boot"
         class="fixed inset-0 bg-black z-[15000] hidden p-8 font-mono text-green-500 text-xs md:text-sm leading-tight overflow-hidden cursor-none">
         <div id="terminal-content"></div>
     </div>
 
-    <!-- DESKTOP BACKGROUND (Light Blue - Initially Hidden) -->
     <div id="desktop-bg"></div>
 
-    <!-- AUDIO -->
     <audio id="bg-music" loop>
         <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3">
     </audio>
 
-
-    <!-- MAIN DESKTOP -->
     <main id="desktop">
 
-        <!-- Menu Bar -->
         <div class="macos-menu-bar">
 
-            <!-- Left: App Menus -->
             <div class="macos-menu-left">
-                <!-- Apple Menu -->
                 <div class="menu-item-apple cursor-pointer px-2" onclick="toggleMenu('apple-menu')">
                     <i class="fab fa-apple text-[16px]"></i>
                 </div>
-                <!-- Dropdown: Apple -->
                 <div id="apple-menu"
                     class="absolute top-8 left-0 w-56 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
                     <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer" onclick="System.about()">About
@@ -266,10 +239,8 @@
                         Shut Down...</div>
                 </div>
 
-                <!-- App Name -->
                 <span id="menubar-app-name" class="font-bold px-1 cursor-default">Finder</span>
 
-                <!-- File Menu -->
                 <span class="opacity-90 hover:opacity-100 cursor-pointer px-2"
                     onclick="toggleMenu('file-menu')">File</span>
                 <div id="file-menu"
@@ -280,7 +251,6 @@
                         onclick="triggerAction('new-folder')">New Folder</div>
                 </div>
 
-                <!-- Edit Menu -->
                 <span class="opacity-90 hover:opacity-100 cursor-pointer px-2"
                     onclick="toggleMenu('edit-menu')">Edit</span>
                 <div id="edit-menu"
@@ -300,7 +270,6 @@
                         onclick="triggerAction('select-all')">Select All</div>
                 </div>
 
-                <!-- View Menu -->
                 <span class="opacity-90 hover:opacity-100 cursor-pointer px-2"
                     onclick="toggleMenu('view-menu')">View</span>
                 <div id="view-menu"
@@ -316,7 +285,6 @@
                         onclick="triggerAction('reset-zoom')">Actual Size</div>
                 </div>
 
-                <!-- Go Menu -->
                 <span class="opacity-90 hover:opacity-100 cursor-pointer px-2" onclick="toggleMenu('go-menu')">Go</span>
                 <div id="go-menu"
                     class="absolute top-8 left-56 w-48 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
@@ -336,7 +304,6 @@
                         onclick="triggerAction('min-all')">Desktop</div>
                 </div>
 
-                <!-- Window Menu -->
                 <span class="opacity-90 hover:opacity-100 cursor-pointer px-2"
                     onclick="toggleMenu('window-menu')">Window</span>
                 <div id="window-menu"
@@ -347,7 +314,6 @@
                         onclick="triggerAction('close-all')">Close All</div>
                 </div>
 
-                <!-- Help Menu -->
                 <span class="opacity-90 hover:opacity-100 cursor-pointer px-2"
                     onclick="toggleMenu('help-menu')">Help</span>
                 <div id="help-menu"
@@ -358,39 +324,33 @@
                 </div>
             </div>
 
-            <!-- Right: Status Icons -->
             <div class="macos-menu-right">
-                <!-- System Status -->
+
                 <span id="system-status"
                     class="text-xs text-white/50 tracking-wide font-medium mr-4 cursor-default select-none">
                     Status: Online</span>
 
-                <!-- Battery -->
                 <div class="flex items-center gap-2 cursor-default" title="Battery Utility">
                     <span id="battery-level" class="text-xs font-medium opacity-80">--%</span>
                     <i id="battery-icon" class="fas fa-battery-half text-[14px] opacity-80"></i>
                 </div>
 
-                <!-- Wi-Fi -->
                 <div class="cursor-pointer" title="Network Status">
                     <i id="wifi-icon" class="fas fa-wifi text-[14px]"></i>
                 </div>
 
-                <!-- Search/Spotlight -->
                 <div class="cursor-pointer" onclick="toggleSpotlight()">
                     <i class="fas fa-search text-[14px]"></i>
                 </div>
 
-                <!-- Control Center Toggle -->
                 <div class="cursor-pointer" onclick="toggleControlCenter()">
                     <i class="fas fa-sliders-h text-[14px]"></i>
                 </div>
 
-                <!-- Control Center Panel -->
                 <div id="control-center"
                     class="absolute top-10 right-0 w-80 bg-[rgba(30,30,30,0.8)] backdrop-blur-2xl rounded-2xl border border-white/10 shadow-2xl hidden p-4 z-[9999] transition-all duration-200">
                     <div class="grid grid-cols-2 gap-3 mb-4">
-                        <!-- Connectivity Block -->
+
                         <div class="bg-white/10 rounded-xl p-3 flex flex-col gap-3">
                             <div class="flex items-center gap-3">
                                 <div
@@ -409,7 +369,7 @@
                                         class="text-[10px] opacity-60">On</span></div>
                             </div>
                         </div>
-                        <!-- DND Block -->
+
                         <div
                             class="bg-white/10 rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-white/20 transition">
                             <div
@@ -420,7 +380,6 @@
                         </div>
                     </div>
 
-                    <!-- Sliders -->
                     <div class="bg-white/10 rounded-xl p-3 mb-3">
                         <div class="text-[10px] font-semibold mb-2 uppercase opacity-50 tracking-wide">Display</div>
                         <input type="range" id="brightness-slider"
@@ -433,7 +392,6 @@
                             min="1" max="100" value="60">
                     </div>
 
-                    <!-- System Uptime -->
                     <div class="system-uptime">
                         <p class="uptime-label">Uptime</p>
                         <p class="uptime-main">Since June 20, 2024</p>
@@ -441,21 +399,18 @@
                     </div>
                 </div>
 
-                <!-- Weather Widget -->
                 <div class="weather-widget" title="Current Mood">
                     <i id="weather-icon" class="fas fa-cloud text-blue-300"></i>
                     <span id="weather-text" class="ml-2 font-medium">Loading...</span>
-                    <!-- Custom Tooltip -->
+
                     <div class="weather-tooltip">Weather Mood System ⛅</div>
                 </div>
 
-                <!-- Clock -->
                 <span id="clock"
                     class="text-[13px] font-medium min-w-[130px] text-right cursor-pointer hover:text-blue-200 transition-colors"
                     onclick="toggleCalendar()" title="Show Calendar">--:--</span>
             </div>
 
-            <!-- Mini Calendar Widget -->
             <div id="mini-calendar"
                 class="fixed top-10 right-2 w-64 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl hidden p-4 z-[6000] text-white animate-zoom-in">
                 <div class="flex justify-between items-center mb-4 select-none">
@@ -478,7 +433,7 @@
                     <div>Sa</div>
                 </div>
                 <div id="cal-days" class="grid grid-cols-7 gap-1 text-center text-sm font-medium">
-                    <!-- JS Generated -->
+
                 </div>
                 <div class="mt-4 pt-3 border-t border-white/10 text-center">
                     <div class="text-xs text-blue-300">No events today.</div>
@@ -486,7 +441,6 @@
             </div>
         </div>
 
-        <!-- Spotlight Search Overlay -->
         <div id="spotlight-overlay" class="hidden fixed inset-0 z-[10000] flex items-start justify-center pt-[20vh]"
             onclick="if(event.target === this) toggleSpotlight()">
             <div
@@ -498,28 +452,22 @@
                         placeholder="Spotlight Search" autocomplete="off">
                 </div>
                 <div id="spotlight-results" class="max-h-[300px] overflow-y-auto hidden">
-                    <!-- Results injected here -->
                 </div>
             </div>
         </div>
 
-        <!-- Brightness Overlay -->
         <div id="brightness-dimmer"
             class="fixed inset-0 bg-black pointer-events-none z-[999999] opacity-0 transition-opacity duration-100">
         </div>
 
-        <!-- Desktop Icons -->
         <div id="desktop-grid"></div>
 
-        <!-- Dock -->
         <div id="dock-container">
             <div id="dock"></div>
         </div>
 
-        <!-- Broken Screen Overlay -->
         <div id="crack" class="crack"></div>
 
-        <!-- Blueprint Window -->
         <div id="blueprint-window" class="window" style="display: none;">
             <div class="title-bar">
                 <div class="traffic-lights">
@@ -554,7 +502,6 @@ OBJECTIVE:
 
     </main>
 
-    <!-- CONTEXT MENU -->
     <div id="ctx-menu">
         <div class="ctx-item" onclick="Apps.open('about-us')"><i class="fas fa-user-circle"></i> View Identity</div>
         <div class="ctx-item" onclick="Apps.open('quiz')"><i class="fas fa-puzzle-piece text-green-500"></i> Take
@@ -566,7 +513,6 @@ OBJECTIVE:
         <div class="ctx-item" onclick="location.reload()"><i class="fas fa-redo"></i> Restart System</div>
     </div>
 
-    <!-- Custom Modal Overlay -->
     <div id="custom-modal-overlay">
         <div class="modal-box">
             <div id="modal-icon" class="modal-icon">✨</div>
@@ -582,7 +528,6 @@ OBJECTIVE:
         </div>
     </div>
 
-    <!-- Main Logic -->
     <script src="new.js"></script>
 </body>
 
