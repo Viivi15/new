@@ -673,7 +673,7 @@ const apps = [
         id: 'terminal-app', title: 'Terminal.sh', icon: '<img src="assets/icons/app_terminal.png" alt="terminal">', dock: false, folder: 'folder-system', width: 800, height: 600, content: `
         <div class="terminal-window h-full bg-[#1e1e1e] text-green-500 font-mono text-sm p-4 flex flex-col">
             <div id="term-output-app" class="flex-1 overflow-y-auto mb-2 custom-scroll space-y-1">
-                <div class="selection-none" style="text-shadow: 0 0 5px rgba(74, 222, 128, 0.5);">HarshitOS Terminal [Version 1.0.0]</div>
+                <div class="selection-none" style="text-shadow: 0 0 5px rgba(74, 222, 128, 0.5);">V-Space Terminal [Version 1.0.0]</div>
                 <div class="opacity-70">(c) 2024 System Core. All rights reserved.</div>
                 <br>
                 <div class="animate-pulse">Type 'help' for available commands.</div>
@@ -1961,7 +1961,7 @@ function showUpdate(el) {
     const area = document.getElementById('settings-area');
     area.innerHTML = `
         <div class="system-update">
-            <h2>Harshit OS 19.0</h2>
+            <h2>V-Space 19.0</h2>
             <p class="update-subtitle">System Update</p>
             <pre class="patch-notes" id="patchNotes"></pre>
         </div>
@@ -3281,7 +3281,7 @@ function handleTerminalCommand() {
         case 'update':
             output.innerHTML += `<div > <span class="term-info">Checking for updates...</span></div> `;
             setTimeout(() => {
-                output.innerHTML += `<div > Harshit OS 19.0 is already up to date.</div> `;
+                output.innerHTML += `<div > V-Space 19.0 is already up to date.</div> `;
                 setTimeout(() => {
                     output.innerHTML += `<div > <span class="term-info">Some improvements take time.</span></div> `;
                 }, 1000);
@@ -4620,7 +4620,7 @@ const System = {
             </div>
             <div class="p-6 flex flex-col items-center justify-center text-center">
                 <div class="text-6xl mb-4">🍎</div> 
-                <h2 class="text-2xl font-bold text-gray-800">Harshit OS</h2>
+                <h2 class="text-2xl font-bold text-gray-800">V-Space</h2>
                 <p class="text-sm text-gray-500 font-medium mb-4">Version 19.0 (Best Edition)</p>
                 <div class="bg-white rounded border border-gray-300 p-3 w-full text-xs text-left shadow-inner space-y-1">
                     <div class="flex justify-between"><span class="text-gray-500">Processor</span> <span class="font-medium">Heart M1 (Infinite Love)</span></div>
@@ -5759,7 +5759,7 @@ const memories = [
 
 memories.forEach(memory => {
     setTimeout(() => {
-        showNotification('HarshitOS Memory', memory.text);
+        showNotification('V-Space Memory', memory.text);
     }, memory.time);
 });
 
