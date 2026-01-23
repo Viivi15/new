@@ -2265,6 +2265,7 @@ function advanceBond() {
 
 /* === DEV UTILS === */
 
+
 /* === PHASE 0: COUNTDOWN GATEKEEPER (FIRST) === */
 /* Starts immediately on load */
 function startCountdownGatekeeper() {
@@ -2276,7 +2277,7 @@ function startCountdownGatekeeper() {
     if (cdScreen) cdScreen.style.display = 'flex';
 
     // Target: Jan 30, 2026 00:00:00
-    const targetDate = new Date().getTime() + 5000; // 5 seconds from now
+    const targetDate = new Date('January 30, 2026 00:00:00').getTime();
 
     const int = setInterval(() => {
         if (document.getElementById('desktop').style.display === 'block') { clearInterval(int); return; } // Stop if skipped
@@ -2294,8 +2295,8 @@ function startCountdownGatekeeper() {
                 setTimeout(() => {
                     cdScreen.style.display = 'none';
                     state.countdownFinished = true;
-                    // Trigger Phase 1: Birthday Sequence
-                    playBirthdaySequence();
+                    // Trigger Phase 1: Boot
+                    runSystemBoot();
                 }, 1000);
             }, 1000);
             return;
@@ -2310,16 +2311,6 @@ function startCountdownGatekeeper() {
         cdSub.innerText = "Processing Arrival";
     }, 1000);
 }
-
-
-// Skip Countdown Logic
-window.skipCountdown = function () {
-    state.countdownFinished = true;
-    startCountdownGatekeeper = null; // Kill loop logic if needed, but interval checks display
-    const cd = document.getElementById('countdown-phase');
-    if (cd) cd.style.display = 'none';
-    playBirthdaySequence();
-};
 
 /* === PHASE 2: JOURNEY SEQUENCE === */
 function playJourneyIntro() {
@@ -2340,11 +2331,7 @@ function playJourneyIntro() {
         if (current > 0) screens[current - 1].classList.remove('active');
         if (current >= screens.length) {
             intro.style.transition = 'opacity 2s'; intro.style.opacity = 0;
-            setTimeout(() => {
-                intro.style.display = 'none';
-                /* CHAIN: Journey -> Boot (Green Text) */
-                runSystemBoot();
-            }, 2000);
+            setTimeout(() => { intro.style.display = 'none'; enterDesktop(); }, 2000);
             return;
         }
         const screen = screens[current];
@@ -2357,12 +2344,9 @@ function playJourneyIntro() {
     showNext();
 }
 
-
-
 /* === PHASE 2.5: BIRTHDAY SEQUENCE === */
-let birthdaySlideIndex = 0;
-let birthdaySlides = [];
-
+/* === PHASE 2.5: BIRTHDAY SEQUENCE === */
+let birthdayStep = 0;
 function playBirthdaySequence() {
     if (document.getElementById('desktop').style.display === 'block') return;
 
@@ -2374,162 +2358,94 @@ function playBirthdaySequence() {
     }
 
     const intro = document.getElementById('birthday-intro');
-    if (intro) {
-        intro.classList.remove('hidden');
-        intro.style.display = 'flex';
-        intro.style.zIndex = '99999'; // Ensure top
-        intro.style.opacity = '1';
+    intro.style.display = 'flex';
+    intro.classList.remove('hidden');
 
-        // Initialize Slides
-        birthdaySlides = document.querySelectorAll('.birthday-screen');
-        birthdaySlideIndex = 0;
-
-        // Reset all
-        birthdaySlides.forEach(s => {
-            s.style.opacity = '0';
-            s.classList.remove('active');
-            s.style.display = 'none'; // Ensure hidden layout-wise
-        });
-
-        // Start
-        showBirthdaySlide(0);
-    } else {
-        console.error("Birthday Intro Element Not Found!");
-        // Failover
-        playJourneyIntro();
-    }
+    birthdayStep = 0;
+    showBirthdaySlide(0);
 }
 
 function showBirthdaySlide(index) {
-    if (document.getElementById('desktop').style.display === 'block') return;
-
-    // Hide previous
-    if (index > 0 && birthdaySlides[index - 1]) {
-        birthdaySlides[index - 1].classList.remove('active');
-        birthdaySlides[index - 1].style.opacity = 0;
-        setTimeout(() => {
-            if (birthdaySlides[index - 1]) birthdaySlides[index - 1].style.display = 'none';
-        }, 1000);
-    }
-
-    if (index >= birthdaySlides.length) {
-        finishBirthdaySequence();
-        return;
-    }
-
-    const currentSlide = birthdaySlides[index];
-    currentSlide.style.display = 'flex';
-    // Small delay to allow display flex to apply before opacity transition
-    setTimeout(() => {
-        currentSlide.classList.add('active');
-        currentSlide.style.opacity = 1;
-    }, 100);
-
-    birthdaySlideIndex = index;
-
-    // Logic for auto-advance vs interactive wait
-    // Slide 0: "Happy Birthday" -> Auto
-    // Slide 1: "Another year..." -> Auto
-    // Slide 2: "Make a wish" (Candle) -> INTERACTIVE (Wait for click)
-    // Slide 3: "Cut Cake" -> INTERACTIVE (Wait for click)
-
-    if (index === 0) setTimeout(() => showBirthdaySlide(1), 4000);
-    else if (index === 1) setTimeout(() => showBirthdaySlide(2), 5000);
-    // Index 2 & 3 wait for user interaction manually triggering next step
-}
-
-// Global exposure for interactions
-window.showBirthdaySlide = showBirthdaySlide;
-
-/* INTERACTIONS */
-window.blowCandle = function () {
-    const flame = document.getElementById('candle-flame');
-    const msg = document.getElementById('wish-msg');
-
-    if (flame && !flame.classList.contains('blown')) {
-        flame.classList.add('blown');
-
-        // Add smoke logic if desired (CSS)
-
-        if (msg) {
-            msg.innerText = "Yay! May all your wishes come true! ✨";
-            msg.style.opacity = '1';
-        }
-
-        // Wait then move to Cut Cake (Index 3)
-        setTimeout(() => {
-            showBirthdaySlide(3);
-        }, 3000);
-    }
-};
-
-window.cutCake = function () {
-    const cakeWhole = document.getElementById('cake-whole');
-    const instruction = document.getElementById('cut-instruction');
-
-    // Confetti
-    if (typeof confetti === 'function') {
-        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-    }
-
-    if (cakeWhole) {
-        // Simple visual change or just proceed
-        // The user existing code had CSS hacks for cutting, assuming present in CSS
-        // Simply proceed
-
-        if (instruction) instruction.innerText = "Enjoy! 🍰";
-
-        setTimeout(() => {
-            finishBirthdaySequence();
-        }, 3000);
-    }
-};
-
-function finishBirthdaySequence() {
-    const intro = document.getElementById('birthday-intro');
-    if (intro) {
+    const screens = document.querySelectorAll('.birthday-screen');
+    if (index >= screens.length) {
+        // End of sequence -> Go to Journey
+        const intro = document.getElementById('birthday-intro');
         intro.style.transition = 'opacity 2s';
         intro.style.opacity = 0;
         setTimeout(() => {
             intro.style.display = 'none';
-            /* CHAIN: Birthday -> Journey */
             playJourneyIntro();
         }, 2000);
-    } else {
-        playJourneyIntro();
+        return;
     }
+
+    // Hide all
+    screens.forEach(s => {
+        s.classList.remove('active');
+        s.style.opacity = 0;
+        s.style.pointerEvents = 'none'; // Prevent clicking hidden elements
+    });
+
+    // Show current
+    const screen = screens[index];
+    screen.classList.add('active');
+    screen.style.opacity = 1;
+    screen.style.pointerEvents = 'auto';
+
+    // Auto-advance logic
+    // Screen 0: "Happy Birthday" (Text) -> Auto 4s
+    // Screen 1: "Another year" (Text) -> Auto 5s
+    // Screen 2: "Make a wish" (Interactive) -> WAIT for blowCandle()
+    // Screen 3: "Cut Cake" (Interactive) -> WAIT for cutCake()
+
+    if (index === 0) setTimeout(() => showBirthdaySlide(1), 4000);
+    else if (index === 1) setTimeout(() => showBirthdaySlide(2), 5000);
 }
 
+/* Interactive Functions */
+function blowCandle() {
+    const flame = document.getElementById('candle-flame');
+    const wishMsg = document.getElementById('wish-msg');
 
-/* === PHASE 3: DESKTOP === */
-/* === PHASE 2.8: SYSTEM BOOT === */
-/* === PHASE 2.8: SYSTEM BOOT === */
-window.runSystemBoot = function () {
-    const boot = document.getElementById('boot-sequence');
-    const intro = document.getElementById('journey-intro');
+    if (flame) {
+        flame.style.transition = 'opacity 0.5s';
+        flame.style.opacity = 0;
 
-    // Ensure previous phase is gone
-    if (intro) intro.style.display = 'none';
-
-    if (boot) {
-        boot.style.display = 'flex'; // Changed to flex for centering
-        boot.style.flexDirection = 'column'; // Corrected 'col' to 'column'
-        boot.style.opacity = 1;
-
-        // Boot duration approx 6s
-        setTimeout(() => {
-            boot.style.transition = 'opacity 1s';
-            boot.style.opacity = 0;
-            setTimeout(() => {
-                boot.style.display = 'none';
-                enterDesktop();
-            }, 1000);
-        }, 6000);
-    } else {
-        enterDesktop();
+        // CSS smoke effect could be added here if defined in CSS
     }
-};
 
+    if (wishMsg) {
+        wishMsg.innerText = "Your wish has been heard. ✨";
+        wishMsg.style.opacity = 1;
+    }
+
+    // Play sound if available
+    // new Audio('assets/blow.mp3').play().catch(()=>{});
+
+    // Advance after delay
+    setTimeout(() => {
+        showBirthdaySlide(3); // Go to cut cake step
+    }, 3000);
+}
+
+function cutCake() {
+    const cakeContainer = document.querySelector('#slide-cut .cake-container');
+    if (cakeContainer) {
+        cakeContainer.style.transition = 'transform 0.5s';
+        cakeContainer.style.transform = "scale(1.1) rotate(5deg)";
+        setTimeout(() => cakeContainer.style.transform = "scale(1) rotate(0deg)", 200);
+    }
+
+    // Trigger confetti
+    if (typeof confetti === 'function') {
+        confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+    }
+
+    // Advance to end
+    setTimeout(() => {
+        showBirthdaySlide(4); // Triggers end sequence
+    }, 2500);
+}
 
 /* === PHASE 3: DESKTOP === */
 function enterDesktop() {
@@ -2540,16 +2456,13 @@ function enterDesktop() {
     const term = document.getElementById('terminal-boot');
     if (term) term.style.display = 'none';
 
-    const boot = document.getElementById('boot-sequence');
-    if (boot) boot.style.display = 'none';
-
     // 2. Fade OUT Space Background
     const space = document.getElementById('space-bg');
     if (space) space.style.opacity = 0;
 
     // 3. Fade IN Light Desktop Background
     const desktopBg = document.getElementById('desktop-bg');
-    if (desktopBg) { desktopBg.style.display = 'block'; desktopBg.style.opacity = 1; }
+    if (desktopBg) { desktopBg.style.opacity = 1; }
 
     // 4. Show and Fade IN Desktop Content
     const desk = document.getElementById('desktop');
@@ -2563,18 +2476,146 @@ function enterDesktop() {
     });
 
     initDesktop();
-
-    // 5. SHOW LETTER OVERLAY (The Finale)
-    setTimeout(() => {
-        const letter = document.getElementById('letter-overlay');
-        if (letter) {
-            letter.classList.remove('hidden');
-            void letter.offsetWidth; // Force Reflow
-            letter.classList.add('visible');
-            letter.style.opacity = '1';
-        }
-    }, 2000);
 }
+
+/* === APPS CONTROLLER === */
+const Apps = {
+    open(id) {
+        // 1. Check if already open
+        if (state.appsOpened.has(id)) {
+            this.focus(id);
+            return;
+        }
+
+        // 2. Find App Data
+        const app = apps.find(a => a.id === id);
+        if (!app) return;
+
+        // 3. Create Window
+        const desktop = document.getElementById('desktop');
+        const win = document.createElement('div');
+        win.id = `win-${id}`;
+        win.className = 'window glass-window animate-zoom-in';
+        win.style.width = (app.width || 600) + 'px';
+        win.style.height = (app.height || 400) + 'px';
+
+        // Center it roughly
+        const left = 100 + (state.appsOpened.size * 30);
+        const top = 50 + (state.appsOpened.size * 30);
+        win.style.left = `${left}px`;
+        win.style.top = `${top}px`;
+        win.style.zIndex = ++zIndex;
+
+        // Window HTML Structure
+        win.innerHTML = `
+            <div class="window-header" onmousedown="startDrag(e, '${win.id}')">
+                <div class="traffic-lights">
+                    <div class="red" onclick="Apps.close('${id}')"></div>
+                    <div class="yellow" onclick="Apps.minimize('${id}')"></div>
+                    <div class="green" onclick="Apps.maximize('${id}')"></div>
+                </div>
+                <div class="window-title">${app.title}</div>
+            </div>
+            <div class="window-content custom-scroll">
+                ${app.content}
+            </div>
+        `;
+
+        // Add to DOM
+        desktop.appendChild(win);
+        state.appsOpened.add(id);
+
+        // 4. Run onOpen callback if exists
+        if (app.onOpen) {
+            setTimeout(() => app.onOpen(), 100);
+        }
+
+        // 5. Update Menu Bar Name
+        setAppName(app.title);
+
+        // 6. Add to Dock (Active Indicator)
+        const dockDot = document.getElementById(`dot-${id}`);
+        if (dockDot) dockDot.style.opacity = 1;
+
+        // 7. Make Draggable
+        win.querySelector('.window-header').onmousedown = (e) => startDrag(e, win.id);
+        win.onclick = () => this.focus(id);
+    },
+
+    close(id) {
+        const win = document.getElementById(`win-${id}`);
+        if (win) {
+            win.style.transition = 'opacity 0.2s, transform 0.2s';
+            win.style.opacity = 0;
+            win.style.transform = 'scale(0.9)';
+            setTimeout(() => win.remove(), 200);
+        }
+        state.appsOpened.delete(id);
+        const dockDot = document.getElementById(`dot-${id}`);
+        if (dockDot) dockDot.style.opacity = 0;
+        setAppName('Finder');
+    },
+
+    minimize(id) {
+        const win = document.getElementById(`win-${id}`);
+        if (win) {
+            win.style.transition = 'all 0.5s cubic-bezier(0.19, 1, 0.22, 1)';
+            win.style.transform = 'translate(0, 500px) scale(0.1)';
+            win.style.opacity = 0;
+            setTimeout(() => {
+                win.style.display = 'none';
+            }, 500);
+        }
+    },
+
+    maximize(id) {
+        // Simple toggle for now
+        const win = document.getElementById(`win-${id}`);
+        if (win) {
+            if (win.style.width === '100%') {
+                // Restore
+                const app = apps.find(a => a.id === id);
+                win.style.width = (app.width || 600) + 'px';
+                win.style.height = (app.height || 400) + 'px';
+                win.style.left = '100px';
+                win.style.top = '50px';
+            } else {
+                win.style.width = '100%';
+                win.style.height = 'calc(100% - 30px)'; // Minus menu bar
+                win.style.left = '0';
+                win.style.top = '30px';
+            }
+        }
+    },
+
+    focus(id) {
+        const win = document.getElementById(`win-${id}`);
+        if (win) {
+            win.style.display = 'flex'; // Restore if minimized
+            win.style.opacity = 1;
+            win.style.transform = 'none';
+            win.style.zIndex = ++zIndex;
+
+            const app = apps.find(a => a.id === id);
+            if (app) setAppName(app.title);
+        }
+    },
+
+    toggle(id) {
+        if (state.appsOpened.has(id)) {
+            // Check if minimized
+            const win = document.getElementById(`win-${id}`);
+            if (win && win.style.display === 'none') {
+                this.focus(id);
+            } else {
+                // Determine if we should close or minimize. Mac style: click on dock toggles min/max
+                this.minimize(id);
+            }
+        } else {
+            this.open(id);
+        }
+    }
+};
 
 /* === DESKTOP UTILS === */
 let zIndex = 100;
@@ -4238,6 +4279,9 @@ window.toggleSpotify = toggleSpotify;
 window.spawnBears = spawnBears;
 window.playFirstConversation = playFirstConversation;
 window.initLetterReveal = initLetterReveal;
+window.playBirthdaySequence = playBirthdaySequence;
+window.blowCandle = blowCandle;
+window.cutCake = cutCake;
 
 /* === JOURNEY LOGIC === */
 /* === AUTOMATED MOVIE SEQUENCER === */
@@ -6208,7 +6252,64 @@ window.initNotDumb = initNotDumb;
 window.nextNotDumbSlide = nextNotDumbSlide;
 
 /* === BIRTHDAY SEQUENCER === */
+window.playBirthdaySequence = function () {
+    const countdown = document.getElementById('countdown-phase');
+    const intro = document.getElementById('birthday-intro');
+    const bgMusic = document.getElementById('bg-music');
 
+    if (countdown) countdown.style.opacity = '0';
+    setTimeout(() => {
+        if (countdown) countdown.style.display = 'none';
+        if (intro) {
+            intro.classList.remove('hidden');
+            // Play Sequence
+            runBirthdaySlides();
+        }
+        if (bgMusic) {
+            bgMusic.play().catch(e => console.log("Audio play failed", e));
+            bgMusic.volume = 0.5;
+        }
+    }, 1000);
+};
+
+let currentBirthdaySlide = 0;
+const totalBirthdaySlides = 4; // 1: Hello, 2: Text, 3: Cake, 4: Cut
+
+function runBirthdaySlides() {
+    // Hide all
+    document.querySelectorAll('.birthday-screen').forEach(el => {
+        el.style.opacity = '0';
+        el.style.pointerEvents = 'none';
+    });
+
+    // Show Slide 1
+    showBirthdaySlide(1);
+
+    // Auto Advance 1 -> 2
+    setTimeout(() => {
+        showBirthdaySlide(2);
+    }, 4000);
+
+    // Auto Advance 2 -> 3 (Cake)
+    setTimeout(() => {
+        showBirthdaySlide(3);
+    }, 9000);
+}
+
+function showBirthdaySlide(n) {
+    // Fade out current
+    const current = document.querySelector(`.birthday-screen[data-screen="${n - 1}"]`);
+    if (current) current.style.opacity = '0';
+
+    // Fade in new
+    const next = document.querySelector(`.birthday-screen[data-screen="${n}"]`);
+    if (next) {
+        next.style.opacity = '1';
+        if (n === 3 || n === 4) {
+            next.style.pointerEvents = 'auto'; // Enable interaction
+        }
+    }
+}
 
 window.blowCandle = function () {
     const flame = document.getElementById('candle-flame');
@@ -6287,28 +6388,36 @@ function finishBirthdaySequence() {
         intro.style.opacity = '0';
         setTimeout(() => {
             intro.style.display = 'none';
-            if (window.playJourneyIntro) {
-                window.playJourneyIntro();
-            } else {
-                console.error("Journey Intro not found!");
-            }
         }, 1000);
     }
+
+    // Show Desktop
+    if (desktop) {
+        desktop.style.display = 'block';
+        desktop.style.opacity = '0';
+        requestAnimationFrame(() => desktop.style.opacity = '1');
+    }
+
+    // Show Desktop BG
+    if (desktopBg) {
+        desktopBg.style.display = 'block';
+        desktopBg.classList.add('fade-in');
+    }
+
+    // Initial Apps
+    setTimeout(() => {
+        console.log("Attempting to open readme-letter...");
+        if (window.Apps && typeof window.Apps.open === 'function') {
+            window.Apps.open('readme-letter');
+        } else {
+            console.error("Apps system not ready!");
+            // Fallback: Try again in a bit
+            setTimeout(() => {
+                if (window.Apps) window.Apps.open('readme-letter');
+            }, 1000);
+        }
+    }, 1500);
 }
-
-// Initial Letter Overlay (Custom)
-
-
-window.closeLetter = function () {
-    const letter = document.getElementById('letter-overlay');
-    if (letter) {
-        letter.style.opacity = '0';
-        letter.classList.remove('visible');
-        setTimeout(() => {
-            letter.classList.add('hidden');
-        }, 1000);
-    }
-};
 
 
 

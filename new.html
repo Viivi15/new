@@ -17,6 +17,8 @@
         rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="new.css">
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 </head>
 
 <body>
@@ -130,10 +132,47 @@
             <p class="text-3xl font-serif text-white drop-shadow-xl">And you're still creating your own universe.</p>
         </div>
 
-        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-2000"
-            data-screen="3">
-            <p class="text-2xl font-serif text-white mb-8">Make a wish.</p>
-            <div class="w-2 h-2 bg-white rounded-full shadow-[0_0_20px_white] animate-ping"></div>
+        <!-- NEW: Interactive Cake & Candle -->
+        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-1000"
+            data-screen="3" id="slide-cake">
+            <p class="text-2xl font-serif text-white mb-12 animate-bounce">Make a wish & blow the candle! 🕯️</p>
+
+            <div class="cake-container relative cursor-pointer" onclick="blowCandle()" title="Click to blow!">
+                <div class="candle">
+                    <div class="flame" id="candle-flame"></div>
+                </div>
+                <!-- CSS Cake Layers -->
+                <div class="cake-frosting"></div>
+                <div class="cake-layer top-layer"></div>
+                <div class="cake-layer middle-layer"></div>
+                <div class="cake-layer bottom-layer"></div>
+                <div class="plate"></div>
+            </div>
+
+            <p id="wish-msg"
+                class="mt-8 text-pink-300 opacity-0 transition-opacity duration-1000 font-serif italic text-lg"></p>
+        </div>
+
+        <!-- NEW: Cake Cutting -->
+        <div class="birthday-screen absolute inset-0 flex flex-col items-center justify-center opacity-0 transition-opacity duration-1000"
+            data-screen="4" id="slide-cut">
+            <p class="text-2xl font-serif text-white mb-12">Now... cut the cake! 🍰</p>
+
+            <div class="cake-container relative cursor-pointer group" onclick="cutCake()" title="Click to cut!">
+                <!-- Reused Visuals for Continuity, replaced with cut version on click -->
+                <div id="cake-whole" class="relative transition-transform duration-300 group-hover:scale-105">
+                    <div class="cake-frosting"></div>
+                    <div class="cake-layer top-layer"></div>
+                    <div class="cake-layer middle-layer"></div>
+                    <div class="cake-layer bottom-layer"></div>
+                    <div class="plate"></div>
+                </div>
+
+                <!-- Knife Icon following cursor or static overlay -->
+                <div
+                    class="knife absolute -right-10 top-0 text-6xl transform -rotate-45 transition-all duration-300 group-hover:-translate-x-10 group-hover:translate-y-10 pointer-events-none">
+                    🔪</div>
+            </div>
         </div>
 
     </div>
@@ -154,28 +193,48 @@
             class="mt-8 text-xs text-blue-200/50 tracking-[0.3em] uppercase opacity-50 transition-opacity duration-1000">
             Approaching</div>
 
-        <!-- Navigation Buttons -->
-        <div class="mt-12 flex gap-4 z-50 pointer-events-auto">
-            <button onclick="playBirthdaySequence()"
-                class="px-6 py-2 bg-pink-500/20 hover:bg-pink-500/40 border border-pink-400/30 text-pink-200 text-xs uppercase tracking-widest rounded-full transition-all duration-300 hover:scale-105 backdrop-blur-sm cursor-pointer">
-                🎂 Birthday
-            </button>
-            <button onclick="playJourneyIntro()"
-                class="px-6 py-2 bg-blue-500/20 hover:bg-blue-500/40 border border-blue-400/30 text-blue-200 text-xs uppercase tracking-widest rounded-full transition-all duration-300 hover:scale-105 backdrop-blur-sm cursor-pointer">
-                🚀 Journey
-            </button>
-            <button onclick="enterDesktop()"
-                class="px-6 py-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white/50 hover:text-white text-xs uppercase tracking-widest rounded-full transition-all duration-300 hover:scale-105 backdrop-blur-sm cursor-pointer">
-                🖥️ Desktop
-            </button>
-        </div>
-
+        <!-- Skip Button -->
+        <button onclick="skipCountdown()" id="skip-btn"
+            class="absolute bottom-10 px-6 py-2 border border-white/20 rounded-full text-[10px] uppercase tracking-widest hover:bg-white/10 transition opacity-50 hover:opacity-100">
+            Skip Countdown
+        </button>
     </div>
 
     <!-- AUDIO -->
     <audio id="bg-music" loop>
         <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3">
     </audio>
+
+    <!-- NEW: LETTER OVERLAY (Paper Style) -->
+    <div id="letter-overlay"
+        class="fixed inset-0 z-[50000] flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-1000">
+        <div class="relative bg-[#fdfbf7] w-[90%] max-w-lg p-8 md:p-12 rounded-sm shadow-2xl transform scale-95 transition-transform duration-700"
+            id="letter-content">
+            <!-- Paper Texture Effect -->
+            <div class="absolute inset-0 opacity-10 pointer-events-none"
+                style="background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');"></div>
+
+            <button onclick="closeLetter()"
+                class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors text-xl font-bold">&times;</button>
+
+            <div class="relative z-10 font-serif text-gray-800">
+                <h1 class="text-3xl md:text-4xl text-pink-600 mb-6 font-bold"
+                    style="font-family: 'Dancing Script', cursive;">Happy Birthday!</h1>
+                <div class="space-y-4 text-lg leading-relaxed opacity-90">
+                    <p>To Harshit,</p>
+                    <p>If you are reading this, you successfully blew out the candle and cut the cake (CSS is hard,
+                        okay?). 😂</p>
+                    <p>I just wanted to say... <strong>Happy Birthday</strong>.</p>
+                    <p>This entire OS is a collection of our moments, inside jokes, and the things that make "us".
+                        Explore the folders, find the hidden eggs (there are rabbits everywhere), and just know that you
+                        are appreciated.</p>
+                    <p>You matter. Your chaos matters. Your silence matters.</p>
+                    <p class="mt-8 text-right text-pink-500 font-bold"
+                        style="font-family: 'Dancing Script', cursive; font-size: 1.5em;">- Vi (Shravii)</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- MAIN DESKTOP -->
     <main id="desktop">
