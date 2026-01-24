@@ -7,6 +7,7 @@
 !function (t, e) { !function t(e, n, a, i) { var o = !!(e.Worker && e.Blob && e.Promise && e.OffscreenCanvas && e.OffscreenCanvasRenderingContext2D && e.HTMLCanvasElement && e.HTMLCanvasElement.prototype.transferControlToOffscreen && e.URL && e.URL.createObjectURL); function r() { } function l(t) { var a = n.exports.Promise, i = void 0 !== a ? a : e.Promise; return "function" == typeof i ? new i(t) : (t(r, r), null) } var c, s, u, h, f, d, m, g, b, v = (u = Math.floor(1e3 / 60), h = {}, f = 0, "function" == typeof requestAnimationFrame && "function" == typeof cancelAnimationFrame ? (c = function (t) { var e = Math.random(); return h[e] = requestAnimationFrame((function n(a) { f === a || f + u - 1 < a ? (f = a, delete h[e], t()) : h[e] = requestAnimationFrame(n) })), e }, s = function (t) { h[t] && cancelAnimationFrame(h[t]) }) : (c = function (t) { return setTimeout(t, u) }, s = function (t) { return clearTimeout(t) }), { frame: c, cancel: s }), M = (g = {}, function () { if (d) return d; if (!a && o) { var e = ["var CONFETTI, SIZE = {}, module = {};", "(" + t.toString() + ")(this, module, true, SIZE);", "onmessage = function(msg) {", "  if (msg.data.options) {", "    CONFETTI(msg.data.options).then(function () {", "      if (msg.data.callback) {", "        postMessage({ callback: msg.data.callback });", "      }", "    });", "  } else if (msg.data.reset) {", "    CONFETTI && CONFETTI.reset();", "  } else if (msg.data.resize) {", "    SIZE.width = msg.data.resize.width;", "    SIZE.height = msg.data.resize.height;", "  } else if (msg.data.canvas) {", "    SIZE.width = msg.data.canvas.width;", "    SIZE.height = msg.data.canvas.height;", "    CONFETTI = module.exports.create(msg.data.canvas);", "  }", "}"].join("\n"); try { d = new Worker(URL.createObjectURL(new Blob([e]))) } catch (t) { return void 0 !== typeof console && "function" == typeof console.warn && console.warn("🎊 Could not load worker", t), null } !function (t) { function e(e, n) { t.postMessage({ options: e || {}, callback: n }) } t.init = function (e) { var n = e.transferControlToOffscreen(); t.postMessage({ canvas: n }, [n]) }, t.fire = function (n, a, i) { if (m) return e(n, null), m; var o = Math.random().toString(36).slice(2); return m = l((function (a) { function r(e) { e.data.callback === o && (delete g[o], t.removeEventListener("message", r), m = null, i(), a()) } t.addEventListener("message", r), e(n, o), g[o] = r.bind(null, { data: { callback: o } }) })) }, t.reset = function () { for (var e in t.postMessage({ reset: !0 }), g) g[e](), delete g[e] } }(d) } return d }), p = { particleCount: 50, angle: 90, spread: 45, startVelocity: 45, decay: .9, gravity: 1, drift: 0, ticks: 200, x: .5, y: .5, shapes: ["square", "circle"], zIndex: 100, colors: ["#26ccff", "#a25afd", "#ff5e7e", "#88ff5a", "#fcff42", "#ffa62d", "#ff36ff"], disableForReducedMotion: !1, scalar: 1 }; function y(t, e, n) { return function (t, e) { return e ? e(t) : t }(t && null != t[e] ? t[e] : p[e], n) } function w(t) { return t < 0 ? 0 : Math.floor(t) } function x(t) { return parseInt(t, 16) } function C(t) { return t.map(T) } function T(t) { var e = String(t).replace(/[^0-9a-f]/gi, ""); return e.length < 6 && (e = e[0] + e[0] + e[1] + e[1] + e[2] + e[2]), { r: x(e.substring(0, 2)), g: x(e.substring(2, 4)), b: x(e.substring(4, 6)) } } function I(t) { t.width = document.documentElement.clientWidth, t.height = document.documentElement.clientHeight } function k(t) { var e = t.getBoundingClientRect(); t.width = e.width, t.height = e.height } function E(t, e, n, o, r) { var c, s, u = e.slice(), h = t.getContext("2d"), f = l((function (e) { function l() { c = s = null, h.clearRect(0, 0, o.width, o.height), r(), e() } c = v.frame((function e() { !a || o.width === i.width && o.height === i.height || (o.width = t.width = i.width, o.height = t.height = i.height), o.width || o.height || (n(t), o.width = t.width, o.height = t.height), h.clearRect(0, 0, o.width, o.height), u = u.filter((function (t) { return function (t, e) { e.x += Math.cos(e.angle2D) * e.velocity + e.drift, e.y += Math.sin(e.angle2D) * e.velocity + e.gravity, e.wobble += e.wobbleSpeed, e.velocity *= e.decay, e.tiltAngle += .1, e.tiltSin = Math.sin(e.tiltAngle), e.tiltCos = Math.cos(e.tiltAngle), e.random = Math.random() + 2, e.wobbleX = e.x + 10 * e.scalar * Math.cos(e.wobble), e.wobbleY = e.y + 10 * e.scalar * Math.sin(e.wobble); var n = e.tick++ / e.totalTicks, a = e.x + e.random * e.tiltCos, i = e.y + e.random * e.tiltSin, o = e.wobbleX + e.random * e.tiltCos, r = e.wobbleY + e.random * e.tiltSin; if (t.fillStyle = "rgba(" + e.color.r + ", " + e.color.g + ", " + e.color.b + ", " + (1 - n) + ")", t.beginPath(), "circle" === e.shape) t.ellipse ? t.ellipse(e.x, e.y, Math.abs(o - a) * e.ovalScalar, Math.abs(r - i) * e.ovalScalar, Math.PI / 10 * e.wobble, 0, 2 * Math.PI) : function (t, e, n, a, i, o, r, l, c) { t.save(), t.translate(e, n), t.rotate(o), t.scale(a, i), t.arc(0, 0, 1, r, l, c), t.restore() }(t, e.x, e.y, Math.abs(o - a) * e.ovalScalar, Math.abs(r - i) * e.ovalScalar, Math.PI / 10 * e.wobble, 0, 2 * Math.PI); else if ("star" === e.shape) for (var l = Math.PI / 2 * 3, c = 4 * e.scalar, s = 8 * e.scalar, u = e.x, h = e.y, f = 5, d = Math.PI / f; f--;)u = e.x + Math.cos(l) * s, h = e.y + Math.sin(l) * s, t.lineTo(u, h), l += d, u = e.x + Math.cos(l) * c, h = e.y + Math.sin(l) * c, t.lineTo(u, h), l += d; else t.moveTo(Math.floor(e.x), Math.floor(e.y)), t.lineTo(Math.floor(e.wobbleX), Math.floor(i)), t.lineTo(Math.floor(o), Math.floor(r)), t.lineTo(Math.floor(a), Math.floor(e.wobbleY)); return t.closePath(), t.fill(), e.tick < e.totalTicks }(h, t) })), u.length ? c = v.frame(e) : l() })), s = l })); return { addFettis: function (t) { return u = u.concat(t), f }, canvas: t, promise: f, reset: function () { c && v.cancel(c), s && s() } } } function S(t, n) { var a, i = !t, r = !!y(n || {}, "resize"), c = y(n, "disableForReducedMotion", Boolean), s = o && !!y(n || {}, "useWorker") ? M() : null, u = i ? I : k, h = !(!t || !s) && !!t.__confetti_initialized, f = "function" == typeof matchMedia && matchMedia("(prefers-reduced-motion)").matches; function d(e, n, i) { for (var o, r, l, c, s, h = y(e, "particleCount", w), f = y(e, "angle", Number), d = y(e, "spread", Number), m = y(e, "startVelocity", Number), g = y(e, "decay", Number), b = y(e, "gravity", Number), v = y(e, "drift", Number), M = y(e, "colors", C), p = y(e, "ticks", Number), x = y(e, "shapes"), T = y(e, "scalar"), I = function (t) { var e = y(t, "origin", Object); return e.x = y(e, "x", Number), e.y = y(e, "y", Number), e }(e), k = h, S = [], F = t.width * I.x, N = t.height * I.y; k--;)S.push((o = { x: F, y: N, angle: f, spread: d, startVelocity: m, color: M[k % M.length], shape: x[(c = 0, s = x.length, Math.floor(Math.random() * (s - c)) + c)], ticks: p, decay: g, gravity: b, drift: v, scalar: T }, r = void 0, l = void 0, r = o.angle * (Math.PI / 180), l = o.spread * (Math.PI / 180), { x: o.x, y: o.y, wobble: 10 * Math.random(), wobbleSpeed: Math.min(.11, .1 * Math.random() + .05), velocity: .5 * o.startVelocity + Math.random() * o.startVelocity, angle2D: -r + (.5 * l - Math.random() * l), tiltAngle: (.5 * Math.random() + .25) * Math.PI, color: o.color, shape: o.shape, tick: 0, totalTicks: o.ticks, decay: o.decay, drift: o.drift, random: Math.random() + 2, tiltSin: 0, tiltCos: 0, wobbleX: 0, wobbleY: 0, gravity: 3 * o.gravity, ovalScalar: .6, scalar: o.scalar })); return a ? a.addFettis(S) : (a = E(t, S, u, n, i)).promise } function m(n) { var o = c || y(n, "disableForReducedMotion", Boolean), m = y(n, "zIndex", Number); if (o && f) return l((function (t) { t() })); i && a ? t = a.canvas : i && !t && (t = function (t) { var e = document.createElement("canvas"); return e.style.position = "fixed", e.style.top = "0px", e.style.left = "0px", e.style.pointerEvents = "none", e.style.zIndex = t, e }(m), document.body.appendChild(t)), r && !h && u(t); var g = { width: t.width, height: t.height }; function b() { if (s) { var e = { getBoundingClientRect: function () { if (!i) return t.getBoundingClientRect() } }; return u(e), void s.postMessage({ resize: { width: e.width, height: e.height } }) } g.width = g.height = null } function v() { a = null, r && e.removeEventListener("resize", b), i && t && (document.body.removeChild(t), t = null, h = !1) } return s && !h && s.init(t), h = !0, s && (t.__confetti_initialized = !0), r && e.addEventListener("resize", b, !1), s ? s.fire(n, g, v) : d(n, g, v) } return m.reset = function () { s && s.reset(), a && a.reset() }, m } function F() { return b || (b = S(null, { useWorker: !0, resize: !0 })), b } n.exports = function () { return F().apply(this, arguments) }, n.exports.reset = function () { F().reset() }, n.exports.create = S }(function () { return void 0 !== t ? t : "undefined" != typeof self ? self : this || {} }(), e, !1), t.confetti = e.exports }(window, {});
 //# sourceMappingURL=/sm/6de00f2697a1683b235e589897df757a94e6809643432a9e3ad259420752442d.map
 /* === CONFIGURATION === */
+
 function updateClock() {
     try {
         const now = new Date();
@@ -15,11 +16,26 @@ function updateClock() {
         let hours = now.getHours();
         const minutes = now.getMinutes().toString().padStart(2, '0');
         const ampm = hours >= 12 ? 'PM' : 'AM';
+        const rawHours = hours;
         hours = hours % 12 || 12;
         const str = `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}, ${hours}:${minutes} ${ampm}`;
         const clock = document.getElementById('clock');
         if (clock) {
             clock.textContent = str;
+        }
+
+        /* === EASTER EGG: 12:21 AM === */
+        // Check for 00:21 (12:21 AM)
+        if (rawHours === 0 && minutes === '21') {
+            // Use a session flag to avoid spamming
+            if (!window.hasTriggered1221) {
+                window.hasTriggered1221 = true;
+                createModal({
+                    title: "12:21 AM",
+                    desc: "The time it all started.<br>Some moments last forever. ✨",
+                    icon: "🌙"
+                });
+            }
         }
     } catch (e) { }
 }
@@ -471,7 +487,7 @@ const apps = [
             <h1 class="font-serif text-4xl text-pink-500 mb-6 drop-shadow-sm">To Harshit,</h1>
             <div class="letter-text text-gray-700 space-y-4">
                 <p>If you are reading this, you successfully blew out the candle and cut the cake (CSS is hard, okay?). 😂</p>
-                <p>I just wanted to say... <strong>Happy Birthday</strong>.</p>
+                <p>I just wanted to say... <strong class="text-pink-500 font-serif text-xl">Happy Birthday</strong>.</p>
                 <p>This entire OS is a collection of our moments, inside jokes, and the things that make "us". Explore the folders, find the hidden eggs (there are rabbits everywhere), and just know that you are appreciated.</p>
                 <p>You matter. Your chaos matters. Your silence matters.</p>
                 <div class="mt-8 border-t border-pink-100 pt-4 font-dancing text-2xl text-pink-400">
@@ -639,8 +655,11 @@ const apps = [
                 <h3 class="text-xl font-bold mb-6 text-gray-700 font-serif">Restricted Access</h3>
                 <input type="password" id="vault-passcode" class="border-2 border-gray-300 rounded-lg px-4 py-2 text-center mb-4 w-48 text-xl tracking-widest outline-none focus:border-blue-500 transition" placeholder="PASSCODE" onkeydown="if(event.key === 'Enter') unlockVault()">
                 <button onclick="unlockVault()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-2 rounded-full transition shadow-lg transform hover:scale-105">Unlock</button>
-                <div id="vault-error" class="text-red-500 text-sm mt-4 opacity-0 font-bold transition-opacity">Incorrect Passcode</div>
-                <div class="mt-8 text-xs text-gray-400">Hint: When did it all start? (DDMMYY)</div>
+                <div id="vault-error" class="text-red-500 text-sm mt-4 opacity-0 font-bold transition-opacity">Access Denied</div>
+                <div class="mt-8 text-center">
+                    <div class="text-xs text-gray-500 font-medium mb-1">Hint: The date it all began (DDMMYY)</div>
+                    <div class="text-[10px] text-gray-400 italic">Protected Memory. Contact Shravii for access.</div>
+                </div>
             </div>
 
             <!-- Content (Hidden by default) -->
@@ -1245,6 +1264,44 @@ const apps = [
             
             <!-- Confetti trigger on open -->
             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onload="if(typeof confetti === 'function') { confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); }" style="display:none;">
+        </div>
+    `},
+
+    /* === EASTER EGG APPS === */
+    {
+        id: 'secret-gallery', title: 'The Hidden Corner', icon: '<img src="assets/icons/app_gallery.png" alt="hidden" style="filter: sepia(1) hue-rotate(280deg);">', dock: false, width: 900, height: 650, content: `
+        <div class="h-full bg-black p-8 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-slate-900 animate-pulse-slow"></div>
+            
+            <div class="relative z-10 text-center mb-8">
+                <div class="text-4xl mb-2">🎞️</div>
+                <h2 class="text-2xl font-serif text-white tracking-widest uppercase">Unseen Fragments</h2>
+                <div class="w-12 h-1 bg-blue-500/50 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="relative z-10 grid grid-cols-2 md:grid-cols-3 gap-4 overflow-y-auto max-h-[450px] custom-scroll p-4">
+                 <!-- Placeholders for hidden moments - reusing diverse images for effect -->
+                <div class="aspect-square bg-gray-800 rounded-lg overflow-hidden relative group hover:scale-105 transition duration-500">
+                    <img src="https://images.unsplash.com/photo-1549488497-758969f91a51?q=80&w=600" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition">
+                    <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black to-transparent text-[10px] text-gray-300 opacity-0 group-hover:opacity-100 transition">The subtle vibes.</div>
+                </div>
+                 <div class="aspect-square bg-gray-800 rounded-lg overflow-hidden relative group hover:scale-105 transition duration-500">
+                    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=600" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition">
+                    <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black to-transparent text-[10px] text-gray-300 opacity-0 group-hover:opacity-100 transition">Captured lighting.</div>
+                </div>
+                 <div class="aspect-square bg-gray-800 rounded-lg overflow-hidden relative group hover:scale-105 transition duration-500">
+                    <img src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?q=80&w=600" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition">
+                    <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black to-transparent text-[10px] text-gray-300 opacity-0 group-hover:opacity-100 transition">Cosmic view.</div>
+                </div>
+                 <div class="aspect-square bg-gray-800 rounded-lg overflow-hidden relative group hover:scale-105 transition duration-500">
+                    <img src="https://images.unsplash.com/photo-1621600411688-4be93cd68504?q=80&w=600" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition">
+                    <div class="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black to-transparent text-[10px] text-gray-300 opacity-0 group-hover:opacity-100 transition">Just peace.</div>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-4 left-0 w-full text-center text-[10px] text-gray-600 font-mono">
+                SECRET_ACCESS_GRANTED • LEVEL_7
+            </div>
         </div>
     `},
 
@@ -2641,6 +2698,9 @@ function initDesktop() {
     grid.appendChild(bpIcon);
 
     setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }); }, 1000);
+
+    // Start Notifications
+    startGhostNotifications();
 }
 
 // Global function for Dev Button
@@ -3211,7 +3271,7 @@ if (typeof _origMin === 'undefined') {
 function showAffirmation(i) { const el = document.getElementById('aff-text'); if (el) { el.style.opacity = 0; setTimeout(() => { el.innerText = `"${affirmations[i]}"`; el.style.opacity = 1; }, 300); } }
 function playMusic(m) {
     createModal({ title: 'Now Playing', desc: `Playing ${m} 🎵`, icon: '🎧' });
-    setSystemStatus(`Playing ${m}...`, 5000);
+
 }
 function checkUnlock() { if (state.countdownFinished && state.appsOpened.size >= 5) { document.getElementById('lock-msg').style.display = 'none'; document.getElementById('unlock-msg').classList.remove('hidden'); } }
 
@@ -4450,17 +4510,7 @@ window.onload = function () {
 /* ==== ENHANCED MENU BAR LOGIC ==== */
 /* ========================================= */
 
-// 1. System Status
-function setSystemStatus(text, duration = 0) {
-    const el = document.getElementById('system-status');
-    if (!el) return;
-    el.innerText = 'Status: ' + text;
-    if (duration > 0) {
-        setTimeout(() => {
-            el.innerText = 'Status: Online';
-        }, duration);
-    }
-}
+
 
 // 2. Battery
 function initBattery() {
@@ -4674,8 +4724,11 @@ window.System = System; // Expose
 /* ==== TOP BAR ENHANCEMENTS ==== */
 /* ========================================= */
 
+
 // Calendar Logic
 let calendarDate = new Date(); // Global state for navigation
+let calendarClickCount = 0;
+let calendarClickTimer = null;
 
 function changeMonth(offset) {
     calendarDate.setMonth(calendarDate.getMonth() + offset);
@@ -4683,6 +4736,20 @@ function changeMonth(offset) {
 }
 
 function toggleCalendar() {
+    // EASTER EGG: Multiple Clicks
+    calendarClickCount++;
+    if (calendarClickTimer) clearTimeout(calendarClickTimer);
+    calendarClickTimer = setTimeout(() => {
+        calendarClickCount = 0;
+    }, 1000); // 1.5s to click
+
+    if (calendarClickCount >= 7) {
+        Apps.open('secret-gallery');
+        // Reset
+        calendarClickCount = 0;
+        return;
+    }
+
     const cal = document.getElementById('mini-calendar');
     if (!cal) return;
 
@@ -5751,40 +5818,56 @@ function submitAnswer() {
 window.submitAnswer = submitAnswer;
 
 /* === GHOST NOTIFICATIONS SYSTEM === */
-const memories = [
-    { text: "System Alert: Bhindi detected in vicinity. Evacuate.", time: 5000 }, // 5 seconds
+const ghostMemories = [
+    { text: "System Alert: Bhindi detected in vicinity. Evacuate.", time: 5000 },
     { text: "Reminder: You promised to sleep > 4 hours.", time: 15000 },
     { text: "New Message: 'Where ya from Harry?' (June 20, 2024)", time: 30000 },
-    { text: "Critical: Ota's Medicine No. 1 is due.", time: 60000 }
+    { text: "Critical: Ota's Medicine No. 1 is due.", time: 45000 }, // Fixed time
+    { text: "System Note: Drink water.", time: 60000 }
 ];
 
-memories.forEach(memory => {
-    setTimeout(() => {
-        showNotification('V-Space Memory', memory.text);
-    }, memory.time);
-});
+function startGhostNotifications() {
+    console.log("Starting Ghost Notifications...");
+
+    // 1. Initial Sequence (Relative to Desktop Start)
+    ghostMemories.forEach(memory => {
+        setTimeout(() => {
+            showNotification('V-Space Memory', memory.text);
+        }, memory.time);
+    });
+
+    // 2. Random Loop (Every 2 minutes)
+    setInterval(() => {
+        const randomMem = ghostMemories[Math.floor(Math.random() * ghostMemories.length)];
+        // 30% chance to show a "Live" system status instead
+        if (Math.random() > 0.7) {
+            showNotification('System Update', 'All systems nominal. You are doing great.');
+        } else {
+            showNotification('Memory Echo', randomMem.text);
+        }
+    }, 120000);
+}
 
 function showNotification(title, body) {
     // Create notification element
     const notif = document.createElement('div');
-    notif.className = 'fixed top-4 right-4 bg-white/90 backdrop-blur text-gray-800 p-4 rounded-xl shadow-2xl border-l-4 border-blue-500 transform translate-x-full transition-transform duration-500 z-[9999]';
+    notif.className = 'ghost-notification';
+    if (title.includes('Alert') || title.includes('Critical')) {
+        notif.classList.add('system');
+    }
+
     notif.innerHTML = `
-    <div class="font-bold text-sm" > ${title}</div>
-        <div class="text-xs mt-1">${body}</div>
-`;
+        <div class="font-bold text-sm mb-1">${title}</div>
+        <div class="text-xs opacity-90 leading-relaxed">${body}</div>
+    `;
 
     document.body.appendChild(notif);
 
-    // Slide in
-    requestAnimationFrame(() => {
-        notif.style.transform = 'translateX(0)';
-    });
-
-    // Slide out and remove
+    // Auto-remove after animation (0.5s in + 4s wait + 0.5s out = 5s total)
+    // Animation timing matches CSS
     setTimeout(() => {
-        notif.style.transform = 'translateX(120%)';
-        setTimeout(() => notif.remove(), 500);
-    }, 4000);
+        notif.remove();
+    }, 5500);
 }
 
 
@@ -6306,6 +6389,104 @@ window.closeLetter = function () {
         }, 1000);
     }
 };
+
+/* === ACCESSIBILITY ENHANCEMENTS === */
+function setupAccessibility() {
+    // 1. Initial Tab Indexing for already present elements
+    const interactiveSelectors = [
+        '.dock-icon',
+        '.desktop-icon',
+        '.traffic-light',
+        '.menu-item-apple',
+        '.macos-menu-left > span',
+        '.macos-menu-left > div > div',
+        '.macos-menu-right > div',
+        '.modal-btn',
+        'button'
+    ];
+
+    function makeFocusable(el) {
+        if (!el.hasAttribute('tabindex')) {
+            el.setAttribute('tabindex', '0');
+            el.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    el.click();
+                }
+            });
+        }
+    }
+
+    document.querySelectorAll(interactiveSelectors.join(',')).forEach(makeFocusable);
+
+    // 2. Global Shortcuts
+    document.addEventListener('keydown', (e) => {
+        // ESC -> Close things
+        if (e.key === 'Escape') {
+            const spotlight = document.getElementById('spotlight-overlay');
+            if (spotlight && !spotlight.classList.contains('hidden')) {
+                toggleSpotlight();
+                return;
+            }
+
+            const cc = document.getElementById('control-center');
+            if (cc && !cc.classList.contains('hidden')) {
+                toggleControlCenter();
+                return;
+            }
+
+            const cal = document.getElementById('mini-calendar');
+            if (cal && !cal.classList.contains('hidden')) {
+                toggleCalendar();
+                return;
+            }
+
+            const openMenus = document.querySelectorAll('[id$="-menu"]:not(.hidden)');
+            if (openMenus.length > 0) {
+                document.querySelectorAll('[id$="-menu"]').forEach(el => el.classList.add('hidden'));
+                return;
+            }
+
+            const letter = document.getElementById('letter-overlay');
+            if (letter && !letter.classList.contains('hidden') && letter.style.display !== 'none') {
+                if (window.closeLetter) window.closeLetter();
+                return;
+            }
+
+            const modal = document.getElementById('custom-modal-overlay');
+            if (modal && modal.style.display !== 'none' && modal.style.display !== '') {
+                if (typeof closeModal === 'function') closeModal();
+                else modal.style.display = 'none';
+                return;
+            }
+        }
+    });
+
+    // 3. Observer for new elements
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.addedNodes.length) {
+                mutation.addedNodes.forEach((node) => {
+                    if (node.nodeType === 1) {
+                        if (node.matches && node.matches(interactiveSelectors.join(','))) {
+                            makeFocusable(node);
+                        }
+                        if (node.querySelectorAll) {
+                            node.querySelectorAll(interactiveSelectors.join(',')).forEach(makeFocusable);
+                        }
+                    }
+                });
+            }
+        });
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupAccessibility);
+} else {
+    setupAccessibility();
+}
 
 
 

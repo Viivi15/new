@@ -117,13 +117,14 @@
                 class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors text-xl font-bold">&times;</button>
 
             <div class="relative z-10 font-serif text-gray-800">
-                <h1 class="text-3xl md:text-4xl text-pink-600 mb-6 font-bold"
+                <h1 class="text-4xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-600 mb-6 font-bold drop-shadow-sm animate-pulse"
                     style="font-family: 'Dancing Script', cursive;">Happy Birthday!</h1>
                 <div class="space-y-4 text-lg leading-relaxed opacity-90">
                     <p>To Harshit,</p>
                     <p>If you are reading this, you successfully blew out the candle and cut the cake (CSS is hard,
                         okay?). 😂</p>
-                    <p>I just wanted to say... <strong>Happy Birthday</strong>.</p>
+                    <p>I just wanted to say... <strong class="text-pink-500 font-serif text-xl">Happy Birthday</strong>.
+                    </p>
                     <p>This entire OS is a collection of our moments, inside jokes, and the things that make "us".
                         Explore the folders, find the hidden eggs (there are rabbits everywhere), and just know that you
                         are appreciated.</p>
@@ -332,9 +333,7 @@
 
             <div class="macos-menu-right">
 
-                <span id="system-status"
-                    class="text-xs text-white/50 tracking-wide font-medium mr-4 cursor-default select-none">
-                    Status: Online</span>
+
 
                 <div class="flex items-center gap-2 cursor-default" title="Battery Utility">
                     <span id="battery-level" class="text-xs font-medium opacity-80">--%</span>
@@ -413,7 +412,7 @@
                 </div>
 
                 <span id="clock"
-                    class="text-[13px] font-medium min-w-[130px] text-right cursor-pointer hover:text-blue-200 transition-colors"
+                    class="text-[13px] font-medium min-w-[220px] text-right cursor-pointer hover:text-blue-200 transition-colors"
                     onclick="toggleCalendar()" title="Show Calendar">--:--</span>
             </div>
 
@@ -469,6 +468,7 @@
         <div id="desktop-grid"></div>
 
         <div id="dock-container">
+            <div id="dock-hint">This space stays.</div>
             <div id="dock"></div>
         </div>
 
