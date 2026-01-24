@@ -2607,14 +2607,14 @@ function showBirthdaySlide(index) {
         currentSlide.classList.add('active');
         currentSlide.style.opacity = 1;
 
-        // Reveal paragraphs sequentially
-        const paras = currentSlide.querySelectorAll('p');
-        paras.forEach((p, i) => {
+        // Reveal paragraphs and headings sequentially
+        const elements = currentSlide.querySelectorAll('p, h1');
+        elements.forEach((el, i) => {
             // Reset state in case it was already revealed
-            p.classList.remove('revealed');
+            el.classList.remove('revealed');
             const t = setTimeout(() => {
-                p.classList.add('revealed');
-            }, 500 + (i * 1500)); // 0.5s initial delay, 1.5s between paragraphs
+                el.classList.add('revealed');
+            }, 500 + (i * 1200)); // 0.5s initial delay, 1.2s between elements
             window.paraTimeouts.push(t);
         });
     }, 100);
