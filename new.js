@@ -2244,7 +2244,7 @@ function triggerAction(action) {
                 const grid = document.getElementById('desktop-grid');
                 const icon = document.createElement('div');
                 icon.className = 'desktop-icon group';
-                icon.innerHTML = `<div class="icon-img text-3xl mb-2">📁</div><div class="icon-label bg-black/20 text-white/80 px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm">${name}</div>`;
+                icon.innerHTML = `<div class="icon-img text-3xl mb-2">📁</div><div class="icon-label text-white px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm shadow-black/50 drop-shadow-md">${name}</div>`;
                 icon.onclick = () => alert("This folder is empty for now.");
                 grid.appendChild(icon);
             }
@@ -2824,7 +2824,7 @@ function initDesktop() {
         if (app.id !== 'hidden-unlock' && !app.folder) {
             const icon = document.createElement('div');
             icon.className = 'desktop-icon group';
-            icon.innerHTML = `<div class="icon-img text-3xl mb-2 filter grayscale group-hover:grayscale-0 transition duration-500">${app.icon}</div><div class="icon-label bg-black/20 text-white/80 px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm">${app.title}</div>`;
+            icon.innerHTML = `<div class="icon-img text-3xl mb-2 transition duration-500">${app.icon}</div><div class="icon-label text-white px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm shadow-black/50 drop-shadow-md">${app.title}</div>`;
             icon.onclick = () => Apps.open(app.id);
             grid.appendChild(icon);
         }
@@ -2840,7 +2840,7 @@ function initDesktop() {
     // Blueprint Icon (Manual Add)
     const bpIcon = document.createElement('div');
     bpIcon.className = 'desktop-icon group';
-    bpIcon.innerHTML = `<div class="icon-img text-3xl mb-2 filter grayscale group-hover:grayscale-0 transition duration-500">📐</div><div class="icon-label bg-black/20 text-white/80 px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm">Blueprint.bp</div>`;
+    bpIcon.innerHTML = `<div class="icon-img text-3xl mb-2 transition duration-500">📐</div><div class="icon-label text-white px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm shadow-black/50 drop-shadow-md">Blueprint.bp</div>`;
     bpIcon.onclick = openBlueprint;
     grid.appendChild(bpIcon);
 
