@@ -5299,6 +5299,7 @@ body {
     font-family: 'Inter', sans-serif;
     background: linear-gradient(to bottom, #fde047, #eab308);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(2px 2px 0px rgba(161, 98, 7, 0.3));
     line-height: 1;
@@ -5480,20 +5481,50 @@ body {
 }
 
 /* Cut Animation */
-.cake-cut-left {
-    clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
-    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+/* Cut Animation - 3 Parts */
+.cake-left-rem {
+    clip-path: polygon(0 0, 42% 0, 42% 100%, 0 100%);
+    transition: transform 1s ease;
 }
 
-.cake-cut-right {
-    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
-    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+.cake-right-rem {
+    clip-path: polygon(58% 0, 100% 0, 100% 100%, 58% 100%);
+    transition: transform 1s ease;
 }
 
-/* Knife Hover */
-.cake-container:hover .knife {
-    transform: rotate(0deg) translate(-10px, 10px);
+.cake-piece-out {
+    clip-path: polygon(42% 0, 58% 0, 58% 100%, 42% 100%);
+    transition: all 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 50;
 }
+
+/* Knife Action Animation */
+.knife.cutting {
+    animation: cutMotion 1s forwards ease-in-out;
+}
+
+@keyframes cutMotion {
+    0% {
+        transform: rotate(-45deg) translate(0, 0);
+    }
+
+    30% {
+        transform: rotate(0deg) translate(-20px, 120px);
+        /* Deep cut */
+    }
+
+    60% {
+        transform: rotate(0deg) translate(-20px, 120px);
+        /* Hold */
+    }
+
+    100% {
+        transform: rotate(-45deg) translate(50px, -50px);
+        opacity: 0;
+    }
+}
+
+
 
 /* === LETTER OVERLAY === */
 #letter-overlay {

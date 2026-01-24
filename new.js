@@ -2673,44 +2673,64 @@ window.blowCandle = function () {
 window.cutCake = function () {
     const cakeWhole = document.getElementById('cake-whole');
     const instruction = document.getElementById('cut-instruction');
+    const knife = document.querySelector('.knife');
 
-    // Confetti
-    if (typeof confetti === 'function') {
-        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+    if (knife) {
+        knife.classList.add('cutting');
     }
 
-    if (cakeWhole) {
-        // Step 1: Replace content with the two halves but NO transform yet
-        cakeWhole.innerHTML = `
-            <div id="cake-left" class="absolute inset-0 cake-cut-left">
+    // Wait for knife to "hit" the cake (approx 300ms)
+    setTimeout(() => {
+        // Confetti
+        if (typeof confetti === 'function') {
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        }
+
+        if (cakeWhole) {
+            // Step 1: Replace content with the three parts (Left, Slice, Right)
+            // Note: The structure inside each part is identical to the whole cake
+            // We reuse the styling, just apply different clip-paths via classes
+            const innerCake = `
                  <div class="cake-frosting"></div>
                  <div class="cake-layer top-layer"></div>
                  <div class="cake-layer middle-layer"></div>
                  <div class="cake-layer bottom-layer"></div>
+            `;
+
+            cakeWhole.innerHTML = `
+            <div id="cake-left" class="absolute inset-0 cake-left-rem">
+                 ${innerCake}
             </div>
-            <div id="cake-right" class="absolute inset-0 cake-cut-right">
-                 <div class="cake-frosting"></div>
-                 <div class="cake-layer top-layer"></div>
-                 <div class="cake-layer middle-layer"></div>
-                 <div class="cake-layer bottom-layer"></div>
+            <div id="cake-right" class="absolute inset-0 cake-right-rem">
+                 ${innerCake}
+            </div>
+             <div id="cake-slice" class="absolute inset-0 cake-piece-out">
+                 ${innerCake}
             </div>
             <div class="plate"></div>
         `;
 
-        // Step 2: Trigger the separation animation in next frame
-        requestAnimationFrame(() => {
-            const left = document.getElementById('cake-left');
-            const right = document.getElementById('cake-right');
-            if (left) left.style.transform = 'translateX(-20px) rotate(-2deg)';
-            if (right) right.style.transform = 'translateX(20px) rotate(2deg)';
-        });
+            // Step 2: Trigger the slice extraction
+            requestAnimationFrame(() => {
+                const slice = document.getElementById('cake-slice');
+                const left = document.getElementById('cake-left');
+                const right = document.getElementById('cake-right');
 
-        if (instruction) instruction.innerText = "Enjoy! 🍰";
+                if (slice) {
+                    // Move the slice forward (down) and scale up slightly
+                    slice.style.transform = 'translateY(100px) scale(1.1)';
+                }
+                if (left) left.style.transform = 'translateX(-10px)'; // Make room
+                if (right) right.style.transform = 'translateX(10px)'; // Make room
+            });
 
-        setTimeout(() => {
-            showLetterOverlay();
-        }, 3000);
-    }
+            if (instruction) instruction.innerText = "Here is a piece for you! 🍰";
+
+            setTimeout(() => {
+                showLetterOverlay();
+            }, 3500);
+        }
+    }, 400); // Trigger cut right when knife is down
 };
 
 function finishBirthdaySequence() {
