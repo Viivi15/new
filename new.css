@@ -5600,4 +5600,66 @@ body {
         transform: translateX(120%);
         opacity: 0;
     }
+}/* === SYSTEM BOOT SEQUENCE === */
+#boot-sequence {
+    position: fixed;
+    inset: 0;
+    z-index: 20000;
+    background: #000;
+    color: #0f0;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow: hidden;
 }
+
+.boot-line {
+    opacity: 0;
+    margin-bottom: 5px;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+.boot-line.active {
+    opacity: 1;
+}
+
+.boot-cursor::after {
+    content: '';
+    animation: blink 1s infinite;
+    margin-left: 5px;
+    color: #0f0;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.system-check-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.check-item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed #333;
+    padding-bottom: 5px;
+}
+
+.check-status {
+    font-weight: bold;
+}
+
+.status-ok { color: #0f0; }
+.status-warn { color: #ebbc26; }
+.status-load { color: #3b82f6; }
