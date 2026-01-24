@@ -274,7 +274,7 @@ const journeyData = [
 
 
 /* === STATE === */
-const state = { appsOpened: new Set(), countdownFinished: false, vaultUnlockAttempts: 0 };
+const state = { appsOpened: new Set(), countdownFinished: false, vaultUnlockAttempts: 0, birthdaySequenceStarted: false };
 
 /* === RABBIT SQUAD APP LOGIC === */
 const RabbitSquad = {
@@ -2539,7 +2539,9 @@ let birthdaySlideIndex = 0;
 let birthdaySlides = [];
 
 function playBirthdaySequence() {
+    if (state.birthdaySequenceStarted) return;
     if (document.getElementById('desktop').style.display === 'block') return;
+    state.birthdaySequenceStarted = true;
 
     // Hide Countdown
     const cd = document.getElementById('countdown-phase');
@@ -2592,12 +2594,29 @@ function showBirthdaySlide(index) {
         return;
     }
 
+    // Clear any previous paragraph reveal timeouts
+    if (window.paraTimeouts) {
+        window.paraTimeouts.forEach(t => clearTimeout(t));
+    }
+    window.paraTimeouts = [];
+
     const currentSlide = birthdaySlides[index];
     currentSlide.style.display = 'flex';
     // Small delay to allow display flex to apply before opacity transition
     setTimeout(() => {
         currentSlide.classList.add('active');
         currentSlide.style.opacity = 1;
+
+        // Reveal paragraphs sequentially
+        const paras = currentSlide.querySelectorAll('p');
+        paras.forEach((p, i) => {
+            // Reset state in case it was already revealed
+            p.classList.remove('revealed');
+            const t = setTimeout(() => {
+                p.classList.add('revealed');
+            }, 500 + (i * 1500)); // 0.5s initial delay, 1.5s between paragraphs
+            window.paraTimeouts.push(t);
+        });
     }, 100);
 
     birthdaySlideIndex = index;
@@ -2687,15 +2706,15 @@ window.cutCake = function () {
 };
 
 function finishBirthdaySequence() {
+    console.log("Finishing Birthday Sequence...");
     const intro = document.getElementById('birthday-intro');
     if (intro) {
-        intro.style.transition = 'opacity 2s';
+        intro.style.transition = 'opacity 1.5s ease';
         intro.style.opacity = 0;
         setTimeout(() => {
             intro.style.display = 'none';
-            /* CHAIN: Birthday -> Journey */
             playJourneyIntro();
-        }, 2000);
+        }, 1500);
     } else {
         playJourneyIntro();
     }
@@ -2709,15 +2728,13 @@ window.runSystemBoot = function () {
     const boot = document.getElementById('boot-sequence');
     const intro = document.getElementById('journey-intro');
 
-    // Ensure previous phase is gone
     if (intro) intro.style.display = 'none';
 
     if (boot) {
-        boot.style.display = 'flex'; // Changed to flex for centering
-        boot.style.flexDirection = 'column'; // Corrected 'col' to 'column'
+        boot.style.display = 'flex';
+        boot.style.flexDirection = 'column';
         boot.style.opacity = 1;
 
-        // Boot duration approx 6s
         setTimeout(() => {
             boot.style.transition = 'opacity 1s';
             boot.style.opacity = 0;
@@ -3611,26 +3628,7 @@ function createPolaroid(src, caption, container, date = "") {
 /* === PHASE -1: SYSTEM BOOT (Silence) === */
 /* === PHASE -1: SYSTEM BOOT (Refined) === */
 /* === PHASE 1: SYSTEM BOOT (Green Text) === */
-async function runSystemBoot() {
-    const bootScreen = document.getElementById('boot-sequence');
-    if (!bootScreen) return;
-
-    bootScreen.style.display = 'flex';
-    // Small delay to allow opacity transition if needed
-    requestAnimationFrame(() => bootScreen.style.opacity = 1);
-
-    // Boot lasts ~7-8s then triggers Journey
-    setTimeout(() => {
-        bootScreen.style.transition = 'opacity 1.5s ease';
-        bootScreen.style.opacity = 0;
-
-        setTimeout(() => {
-            bootScreen.style.display = 'none';
-            // Trigger Phase 2: Journey
-            playJourneyIntro();
-        }, 1500);
-    }, 7500);
-}
+// Duplicate async runSystemBoot removed. Using window.runSystemBoot at line 2718 instead.
 
 /* === QUIZ LOGIC === */
 let qIdx = 0;
@@ -6447,25 +6445,7 @@ window.nextNotDumbSlide = nextNotDumbSlide;
 
 
 
-function finishBirthdaySequence() {
-    const intro = document.getElementById('birthday-intro');
-    const desktop = document.getElementById('desktop');
-    const desktopBg = document.getElementById('desktop-bg');
-
-    // Fade out intro
-    if (intro) {
-        intro.style.transition = 'opacity 1s';
-        intro.style.opacity = '0';
-        setTimeout(() => {
-            intro.style.display = 'none';
-            if (window.playJourneyIntro) {
-                window.playJourneyIntro();
-            } else {
-                console.error("Journey Intro not found!");
-            }
-        }, 1000);
-    }
-}
+// Duplicate finishBirthdaySequence removed from here as it is now at line 2699
 
 // Initial Letter Overlay (Custom)
 

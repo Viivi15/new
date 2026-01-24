@@ -5402,14 +5402,13 @@ body {
 }
 
 /* Typewriter for Birthday Intro */
-.birthday-screen.active p {
-    overflow: hidden;
-    white-space: nowrap;
-    margin: 0 auto;
-    letter-spacing: .15em;
-    animation:
-        typing 3.5s steps(40, end),
-        blink-caret .75s step-end infinite;
+.birthday-screen p {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.birthday-screen p.revealed {
+    opacity: 1;
 }
 
 @keyframes typing {
