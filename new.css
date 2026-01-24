@@ -5508,18 +5508,24 @@ body {
         transform: rotate(-45deg) translate(0, 0);
     }
 
-    30% {
-        transform: rotate(0deg) translate(-20px, 120px);
-        /* Deep cut */
+    15% {
+        transform: rotate(-55deg) translate(10px, -20px);
+        /* Anticipation: Lift up & cock back */
+    }
+
+    40% {
+        transform: rotate(-30deg) translate(-30px, 130px);
+        /* Slice Down: Fast & deep, slight angle change */
     }
 
     60% {
-        transform: rotate(0deg) translate(-20px, 120px);
-        /* Hold */
+        transform: rotate(-30deg) translate(-30px, 135px);
+        /* Hold/Press */
     }
 
     100% {
-        transform: rotate(-45deg) translate(50px, -50px);
+        transform: rotate(-45deg) translate(60px, 0px);
+        /* Pull out smoothly to the right */
         opacity: 0;
     }
 }
