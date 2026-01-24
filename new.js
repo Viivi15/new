@@ -2638,18 +2638,26 @@ window.showBirthdaySlide = showBirthdaySlide;
 /* INTERACTIONS */
 /* INTERACTIONS */
 window.blowCandle = function () {
-    const flame = document.getElementById('candle-flame');
+    const flames = document.querySelectorAll('.candles-container .flame');
     const msg = document.getElementById('wish-msg');
+    let anyBlown = false;
 
-    if (flame && !flame.classList.contains('blown')) {
-        flame.classList.add('blown');
+    flames.forEach(flame => {
+        if (!flame.classList.contains('blown')) {
+            flame.classList.add('blown');
+            anyBlown = true;
 
-        // Add smoke logic
-        const smoke = document.createElement('div');
-        smoke.className = 'smoke';
-        // Position smoke exactly where the flame was
-        flame.parentElement.appendChild(smoke);
+            // Add smoke logic
+            const smoke = document.createElement('div');
+            smoke.className = 'smoke';
+            // Position smoke exactly where the flame was
+            if (flame.parentElement) {
+                flame.parentElement.appendChild(smoke);
+            }
+        }
+    });
 
+    if (anyBlown) {
         if (msg) {
             msg.innerText = "Yay! May all your wishes come true! ✨";
             msg.style.opacity = '1';

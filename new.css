@@ -5281,28 +5281,44 @@ body {
 }
 
 /* Candle */
-.candle {
+/* Number Candles */
+.candles-container {
     position: absolute;
-    bottom: 175px;
+    bottom: 165px;
     left: 50%;
     transform: translateX(-50%);
-    width: 12px;
-    height: 50px;
-    background: linear-gradient(to right, #e2e8f0 0%, #fff 50%, #cbd5e1 100%);
+    display: flex;
+    gap: 15px;
     z-index: 20;
-    border-radius: 2px;
 }
 
-.candle::before {
+.candle-num {
+    position: relative;
+    font-size: 60px;
+    font-weight: 900;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to bottom, #fde047, #eab308);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(2px 2px 0px rgba(161, 98, 7, 0.3));
+    line-height: 1;
+}
+
+.candle-num::before {
     content: '';
     position: absolute;
-    top: -10px;
+    top: -8px;
     left: 50%;
     transform: translateX(-50%);
     width: 2px;
-    height: 10px;
+    height: 12px;
     background: #555;
-    border-radius: 1px;
+    z-index: -1;
+}
+
+/* Adjust flame position for numbers */
+.candle-num .flame {
+    top: -22px;
 }
 
 /* Flame */
