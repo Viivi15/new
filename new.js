@@ -8,6 +8,88 @@
 //# sourceMappingURL=/sm/6de00f2697a1683b235e589897df757a94e6809643432a9e3ad259420752442d.map
 /* === CONFIGURATION === */
 
+/* === TIME BASED SYSTEM === */
+let hasShownTimeGreeting = false;
+
+function getTimePhase(hours) {
+    if (hours >= 6 && hours < 12) return 'morning';
+    if (hours >= 12 && hours < 18) return 'afternoon';
+    if (hours >= 18 && hours < 24) return 'evening';
+    return 'night'; // 0-6
+}
+
+function updateSystemBasedOnTime(hours) {
+    if (hours === undefined) hours = new Date().getHours();
+    const phase = getTimePhase(hours);
+    const now = new Date();
+    const releaseDate = new Date(2026, 1, 1); // Feb 1st, 2026
+
+    // 1. Update Weather (Widget remains active)
+    const wIcon = document.getElementById('weather-icon');
+    const wText = document.getElementById('weather-text');
+    const wTip = document.querySelector('.weather-tooltip');
+
+    if (wIcon && wText) {
+        let mood = { icon: 'fas fa-cloud', text: 'Loading...', tip: '...' };
+
+        switch (phase) {
+            case 'morning':
+                mood = { icon: 'fas fa-cloud-sun', text: 'Morning Shine', tip: 'Start the day right.' };
+                break;
+            case 'afternoon':
+                mood = { icon: 'fas fa-sun', text: 'Sunny Afternoon', tip: 'Keep shining.' };
+                break;
+            case 'evening':
+                mood = { icon: 'fas fa-cloud-moon', text: 'Evening Calm', tip: 'Unwind and relax.' };
+                break;
+            case 'night':
+                mood = { icon: 'fas fa-moon', text: 'Starry Night', tip: 'Peace and quiet.' };
+                break;
+        }
+        wIcon.className = mood.icon + ' text-blue-300';
+        wText.innerText = mood.text;
+        if (wTip) wTip.innerText = mood.tip;
+    }
+
+    // 2. Greeting (Once per session when desktop is visible)
+    const desktop = document.getElementById('desktop');
+    if (desktop && !hasShownTimeGreeting) {
+        // Check if desktop is effectively visible
+        const style = window.getComputedStyle(desktop);
+        if (style.display !== 'none' && style.opacity !== '0' && style.visibility !== 'hidden') {
+            hasShownTimeGreeting = true;
+
+            // Stealth Notification for Author (Visible in Console)
+            console.info("%c[Author Notification] Space successfully accessed.", "color: #8b5cf6; font-weight: bold; font-size: 12px; background: #1e1b4b; padding: 4px 8px; border-radius: 4px;");
+            if (userStats.lastVisit) {
+                console.info(`%cTarget's Last Visit: ${userStats.lastVisit}`, "color: #94a3b8; font-style: italic;");
+            }
+
+            // Only show greetings user-side AFTER Feb 1st
+            if (now >= releaseDate) {
+                let msg = "";
+                switch (phase) {
+                    case 'morning': msg = "Good morning! ☀️"; break;
+                    case 'afternoon': msg = "Happy afternoon! 🌤️"; break;
+                    case 'evening': msg = "Happy evening! 🌙"; break;
+                    case 'night': msg = "You're up late! 🌃"; break;
+                }
+
+                // Wait a moment for desktop transition
+                setTimeout(() => {
+                    if (typeof createModal === 'function') {
+                        createModal({
+                            title: "Harshit OS",
+                            desc: msg,
+                            icon: "✨"
+                        });
+                    }
+                }, 2000);
+            }
+        }
+    }
+}
+
 function updateClock() {
     try {
         const now = new Date();
@@ -30,14 +112,24 @@ function updateClock() {
             // Use a session flag to avoid spamming
             if (!window.hasTriggered1221) {
                 window.hasTriggered1221 = true;
-                createModal({
-                    title: "12:21 AM",
-                    desc: "The time it all started.<br>Some moments last forever. ✨",
-                    icon: "🌙"
-                });
+                if (typeof createModal === 'function') {
+                    createModal({
+                        title: "12:21 AM",
+                        desc: "The time it all started.<br>Some moments last forever. ✨",
+                        icon: "🌙"
+                    });
+                }
             }
         }
+
+        updateSystemBasedOnTime(rawHours);
+
     } catch (e) { }
+}
+
+// Ensure Loop
+if (!window.clockInterval) {
+    window.clockInterval = setInterval(updateClock, 1000);
 }
 updateClock();
 
@@ -47,6 +139,59 @@ updateClock();
 
 
 
+
+/* === PERSISTENCE LAYER === */
+const Persistence = {
+    init() {
+        let visits = parseInt(localStorage.getItem('visitCount') || '0');
+        visits++;
+        localStorage.setItem('visitCount', visits);
+
+        let lastVisit = localStorage.getItem('lastVisitDate');
+        const now = new Date().toLocaleString();
+        localStorage.setItem('lastVisitDate', now);
+
+        // Init arrays if missing
+        if (!localStorage.getItem('foldersOpened')) localStorage.setItem('foldersOpened', '[]');
+        if (!localStorage.getItem('achievementsUnlocked')) localStorage.setItem('achievementsUnlocked', '[]');
+
+        return { visits, lastVisit };
+    },
+
+    trackOpen(id) {
+        try {
+            let system = JSON.parse(localStorage.getItem('foldersOpened') || '[]');
+            if (!system.includes(id)) {
+                system.push(id);
+                localStorage.setItem('foldersOpened', JSON.stringify(system));
+            }
+        } catch (e) { console.error(e); }
+    },
+
+    unlock(title) {
+        try {
+            let system = JSON.parse(localStorage.getItem('achievementsUnlocked') || '[]');
+            if (!system.includes(title)) {
+                system.push(title);
+                localStorage.setItem('achievementsUnlocked', JSON.stringify(system));
+
+                if (typeof createModal === 'function') {
+                    createModal({ title: 'Achievement Unlocked! 🏆', desc: title, icon: '🌟' });
+                }
+            }
+        } catch (e) { console.error(e); }
+    },
+
+    hasUnlocked(title) {
+        try {
+            let system = JSON.parse(localStorage.getItem('achievementsUnlocked') || '[]');
+            return system.includes(title);
+        } catch (e) { return false; }
+    }
+};
+
+// Initialize immediately
+const userStats = Persistence.init();
 
 /* === SETTINGS STATE === */
 const settingsState = {
@@ -129,7 +274,7 @@ const journeyData = [
 
 
 /* === STATE === */
-const state = { appsOpened: new Set(), countdownFinished: false };
+const state = { appsOpened: new Set(), countdownFinished: false, vaultUnlockAttempts: 0 };
 
 /* === RABBIT SQUAD APP LOGIC === */
 const RabbitSquad = {
@@ -557,78 +702,7 @@ const apps = [
         </div>
     `},
 
-    {
-        id: 'memory-gallery', title: 'Our Moments', icon: '<img src="assets/icons/app_gallery.png" alt="gallery" style="filter: sepia(1) saturate(3) hue-rotate(300deg);">', dock: false, width: 900, height: 600, content: `
-    <div class="h-full bg-[#e2e8f0] p-8 overflow-x-auto overflow-y-hidden flex items-center gap-12 select-none custom-scroll">
-        
-        <!-- 1. First Meet -->
-        <div class="relative group min-w-[280px] h-[350px] bg-white p-4 pb-12 shadow-[0_10px_20px_rgba(0,0,0,0.1)] transform rotate-[-2deg] hover:rotate-0 transition duration-500 hover:z-50 hover:scale-110">
-            <div class="w-full h-full bg-gray-200 overflow-hidden mb-4">
-                <img src="assets/picswme/Screenshot_20240715_181142.webp" class="w-full h-full object-cover">
-            </div>
-            <div class="absolute bottom-4 left-0 w-full text-center font-[Handlee] text-gray-600 rotate-0">
-                "4 hours sleep is enough" 💀<br>
-                <span class="text-xs text-gray-400">June 20, 2024</span>
-            </div>
-        </div>
-
-        <!-- 2. The Accident -->
-        <div class="relative group min-w-[280px] h-[350px] bg-white p-4 pb-12 shadow-lg transform rotate-[3deg] hover:rotate-0 transition duration-500 hover:z-50 hover:scale-110">
-            <div class="w-full h-full bg-black flex items-center justify-center text-white text-4xl">
-                🩹
-            </div>
-            <div class="absolute bottom-4 left-0 w-full text-center font-[Handlee] text-gray-600">
-                The Accident & The Distraction<br>
-                <span class="text-xs text-gray-400">July 30, 2024</span>
-            </div>
-        </div>
-
-        <!-- 3. Math Failure -->
-        <div class="relative group min-w-[280px] h-[350px] bg-white p-4 pb-12 shadow-lg transform rotate-[-1deg] hover:rotate-0 transition duration-500 hover:z-50 hover:scale-110">
-            <div class="w-full h-full bg-gray-200 overflow-hidden">
-                <img src="assets/picswme/Screenshot_20250130_235831.webp" class="w-full h-full object-cover">
-            </div>
-            <div class="absolute bottom-4 left-0 w-full text-center font-[Handlee] text-gray-600">
-                11:59 PM Math Failure 😂<br>
-                <span class="text-xs text-gray-400">Jan 30, 2025</span>
-            </div>
-        </div>
-
-         <!-- 4. September Memory -->
-        <div class="relative group min-w-[280px] h-[350px] bg-white p-4 pb-12 shadow-lg transform rotate-[2deg] hover:rotate-0 transition duration-500 hover:z-50 hover:scale-110">
-            <div class="w-full h-full bg-gray-200 overflow-hidden">
-                <img src="assets/picswme/IMG-20240925-WA0038.jpg" class="w-full h-full object-cover">
-            </div>
-            <div class="absolute bottom-4 left-0 w-full text-center font-[Handlee] text-gray-600">
-                September Moments ✨<br>
-                <span class="text-xs text-gray-400">Sept 25, 2024</span>
-            </div>
-        </div>
-
-        <!-- 5. November Vibes -->
-        <div class="relative group min-w-[280px] h-[350px] bg-white p-4 pb-12 shadow-lg transform rotate-[-3deg] hover:rotate-0 transition duration-500 hover:z-50 hover:scale-110">
-            <div class="w-full h-full bg-gray-200 overflow-hidden">
-                <img src="assets/picswme/Screenshot_20241122_115947.webp" class="w-full h-full object-cover">
-            </div>
-            <div class="absolute bottom-4 left-0 w-full text-center font-[Handlee] text-gray-600">
-                Connection lost...<br>
-                <span class="text-xs text-gray-400">Nov 22, 2024</span>
-            </div>
-        </div>
-
-        <!-- 6. December Chill -->
-        <div class="relative group min-w-[280px] h-[350px] bg-white p-4 pb-12 shadow-lg transform rotate-[1deg] hover:rotate-0 transition duration-500 hover:z-50 hover:scale-110">
-            <div class="w-full h-full bg-gray-200 overflow-hidden">
-                <img src="assets/picswme/Screenshot_20241223_231858.webp" class="w-full h-full object-cover">
-            </div>
-            <div class="absolute bottom-4 left-0 w-full text-center font-[Handlee] text-gray-600">
-                End of Year Vibes ❄️<br>
-                <span class="text-xs text-gray-400">Dec 23, 2024</span>
-            </div>
-        </div>
-
-        </div>
-`},
+    ,
 
     {
         id: 'folder-fun', title: 'Unstable Features', icon: '<img src="assets/icons/folder_fun.png" alt="folder" style="filter: sepia(1) saturate(4) hue-rotate(50deg);">', dock: false, width: 800, height: 600, content: `
@@ -651,14 +725,16 @@ const apps = [
         <div class="h-full bg-gray-900 flex flex-col relative overflow-hidden">
             <!-- Lock Screen -->
             <div id="vault-lock-screen" class="absolute inset-0 z-20 bg-gray-100 flex flex-col items-center justify-center select-none">
+                <div id="vault-badge" class="vault-attempt-badge">System Secure</div>
                 <div class="text-6xl mb-6">🔐</div>
                 <h3 class="text-xl font-bold mb-6 text-gray-700 font-serif">Restricted Access</h3>
-                <input type="password" id="vault-passcode" class="border-2 border-gray-300 rounded-lg px-4 py-2 text-center mb-4 w-48 text-xl tracking-widest outline-none focus:border-blue-500 transition" placeholder="PASSCODE" onkeydown="if(event.key === 'Enter') unlockVault()">
+                <input type="password" id="vault-passcode" class="border-2 border-gray-300 rounded-lg px-4 py-2 text-center mb-1 w-48 text-xl tracking-widest outline-none focus:border-blue-500 transition" placeholder="PASSCODE" onkeydown="if(event.key === 'Enter') unlockVault()">
+                <div id="vault-forgot-btn" class="forgot-btn mb-6 opacity-60 hover:opacity-100" onclick="showVaultHint()">Forgot password?</div>
                 <button onclick="unlockVault()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-2 rounded-full transition shadow-lg transform hover:scale-105">Unlock</button>
                 <div id="vault-error" class="text-red-500 text-sm mt-4 opacity-0 font-bold transition-opacity">Access Denied</div>
-                <div class="mt-8 text-center">
-                    <div class="text-xs text-gray-500 font-medium mb-1">Hint: The date it all began (DDMMYY)</div>
-                    <div class="text-[10px] text-gray-400 italic">Protected Memory. Contact Shravii for access.</div>
+                <div class="mt-8 text-center px-6">
+                    <div id="vault-hint-main" class="text-xs text-gray-500 font-medium mb-1 opacity-40 transition-opacity">Protected Memory. Correct credentials required.</div>
+                    <div id="vault-hint-extra" class="text-[10px] text-gray-400 italic">Contact Shravii for access.</div>
                 </div>
             </div>
 
@@ -3122,6 +3198,11 @@ const Apps = {
         // Dynamic Menu Bar Name
         setAppName(app.title);
 
+        // Track Persistence
+        if (typeof Persistence !== 'undefined') {
+            Persistence.trackOpen(id);
+        }
+
         // Hook for resets - REMOVED PREMATURE CALL
 
         state.appsOpened.add(id);
@@ -3420,7 +3501,12 @@ function initBubbleWrap() {
 /* === POLAROID GALLERY LOGIC === */
 function initGallery() {
     const container = document.getElementById('gallery-container');
-    if (!container || container.children.length > 0) return; // Prevent duplicates
+    if (!container) return;
+
+    // Clear and check if already populated by this session
+    if (container.dataset.loaded === 'true') return;
+    container.innerHTML = '';
+    container.dataset.loaded = 'true';
 
     // Add Upload Button
     const uploadBtn = document.createElement('div');
@@ -3428,7 +3514,7 @@ function initGallery() {
     uploadBtn.innerHTML = `
         <div class="flex flex-col items-center justify-center h-full text-gray-400 cursor-pointer" onclick="document.getElementById('photo-upload').click()">
             <div class="text-4xl mb-2">+</div>
-            <div class="text-xs">Add Memory</div>
+            <div class="text-xs tracking-widest uppercase font-bold">Add Memory</div>
         </div>
         <input type="file" id="photo-upload" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this)">
     `;
@@ -3438,65 +3524,55 @@ function initGallery() {
     container.appendChild(uploadBtn);
 
     const photos = [
-        { src: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=400', caption: "Mr. Snow" },
-        { src: 'https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=400', caption: "Doggo Mode" },
-        { src: 'https://images.unsplash.com/photo-1523307730650-594bc63f9d67?q=80&w=400', caption: "Smart Stuff" },
-        { src: 'https://images.unsplash.com/photo-1478737270239-2f02b77ac6d5?q=80&w=400', caption: "Cold Vibes" },
-        { src: 'https://images.unsplash.com/photo-1492571350019-22de08371fd3?q=80&w=400', caption: "Focus." },
-        // { src: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400', caption: "(Place real photos here)" }
+        { src: 'assets/picswme/Screenshot_20240715_181142.webp', caption: "Connection established. 4 hours is enough. ✨", date: "June 20, 2024" },
+        { src: 'https://media.tenor.com/_Ry11d_7K2sAAAAM/static-glitch.gif', caption: "The Accident + The Distraction", date: "July 30, 2024" },
+        { src: 'assets/picswme/Screenshot_20250130_235831.webp', caption: "The 11:59 PM Math Failure 😂", date: "Jan 30, 2025" },
+        { src: 'assets/picswme/IMG-20240925-WA0038.jpg', caption: "September Vibes", date: "Sept 25, 2024" },
+        { src: 'assets/picswme/Screenshot_20241122_115947.webp', caption: "Lost and Found.", date: "Nov 22, 2024" },
+        { src: 'assets/picswme/Screenshot_20241223_231858.webp', caption: "Year End Chill.", date: "Dec 12, 2024" }
     ];
 
-    photos.forEach(photo => createPolaroid(photo.src, photo.caption, container));
+    photos.forEach(photo => createPolaroid(photo.src, photo.caption, container, photo.date));
 }
 
-function handlePhotoUpload(input) {
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const caption = prompt("Enter a caption for this memory:", "New Memory");
-            if (caption !== null) {
-                createPolaroid(e.target.result, caption, document.getElementById('gallery-container'));
-            }
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-function createPolaroid(src, caption, container) {
+function createPolaroid(src, caption, container, date = "") {
     const card = document.createElement('div');
     card.className = 'polaroid-card';
-    card.innerHTML = `<img src="${src}"><div class="caption">${caption}</div>`;
+    card.innerHTML = `
+        <div class="photo-inner">
+            <img src="${src}" onerror="this.src='https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=50&w=200'">
+        </div>
+        <div class="caption font-handlee">${caption}</div>
+        ${date ? `<div class="date text-[8px] opacity-30 mt-1">${date}</div>` : ''}
+    `;
 
     // Random Scatter
-    const randomRot = Math.random() * 20 - 10; // -10 to +10 deg
-    const randomTop = Math.random() * 200;
-    // Ensure bounds
-    const maxLeft = container.clientWidth - 220;
+    const randomRot = Math.random() * 16 - 8;
+    const randomTop = Math.random() * (container.clientHeight - 300);
+    const maxLeft = container.clientWidth - 200;
     const randomLeft = Math.random() * (maxLeft > 0 ? maxLeft : 100);
 
     card.style.transform = `rotate(${randomRot}deg)`;
-    card.style.top = `${randomTop + 50}px`;
-    card.style.left = `${randomLeft}px`;
+    card.style.top = `${Math.max(20, randomTop)}px`;
+    card.style.left = `${Math.max(20, randomLeft)}px`;
 
-    // Draggable Logic (Simple)
+    // Draggable Logic
     card.onmousedown = function (e) {
-        card.style.zIndex = 200;
+        if (e.target.tagName === 'INPUT') return;
+        card.style.zIndex = ++zIndex;
         const offX = e.clientX - card.getBoundingClientRect().left;
         const offY = e.clientY - card.getBoundingClientRect().top;
 
         function move(ev) {
             const rect = container.getBoundingClientRect();
-            // Prevent dragging fully out
             let newL = ev.clientX - offX - rect.left;
             let newT = ev.clientY - offY - rect.top;
-
             card.style.left = newL + 'px';
             card.style.top = newT + 'px';
         }
         function stop() {
             document.removeEventListener('mousemove', move);
             document.removeEventListener('mouseup', stop);
-            card.style.zIndex = "";
         }
         document.addEventListener('mousemove', move);
         document.addEventListener('mouseup', stop);
@@ -3504,6 +3580,7 @@ function createPolaroid(src, caption, container) {
 
     container.appendChild(card);
 }
+
 
 /* === PHASE -1: SYSTEM BOOT (Silence) === */
 /* === PHASE -1: SYSTEM BOOT (Refined) === */
@@ -4618,25 +4695,9 @@ document.getElementById('brightness-slider')?.addEventListener('input', (e) => {
 });
 
 // 6. Weather
+// 6. Weather
 function initWeather() {
-    const wIcon = document.getElementById('weather-icon');
-    const wText = document.getElementById('weather-text');
-    const wTip = document.querySelector('.weather-tooltip');
-
-    const moods = [
-        { icon: 'fas fa-cloud-sun', text: 'Mostly Sunny', tip: 'Perfect day for a walk.' },
-        { icon: 'fas fa-cloud-moon', text: 'Clear Night', tip: 'Look at the stars.' },
-        { icon: 'fas fa-bolt', text: 'Stormy', tip: 'Stay inside and code.' },
-        { icon: 'fas fa-snowflake', text: 'Frosty', tip: 'Mr. Snow is chilling.' },
-        { icon: 'fas fa-coffee', text: 'Cozy', tip: 'Time for hot cocoa.' }
-    ];
-    const mood = moods[Math.floor(Math.random() * moods.length)];
-
-    if (wIcon && wText) {
-        wIcon.className = mood.icon + ' text-blue-300';
-        wText.innerText = mood.text;
-        if (wTip) wTip.innerText = mood.tip;
-    }
+    updateSystemBasedOnTime();
 }
 
 
@@ -5739,24 +5800,86 @@ const VAULT_CONTENT = `
 function unlockVault() {
     const input = document.getElementById('vault-passcode');
     const errorMsg = document.getElementById('vault-error');
+    const lockScreen = document.getElementById('vault-lock-screen');
+    const badge = document.getElementById('vault-badge');
+    const hintMain = document.getElementById('vault-hint-main');
 
     // Passcode: 200624
     if (input.value === '200624') {
-        const win = document.getElementById('win-app-vault');
-        if (win) {
-            const contentArea = win.querySelector('.win-content');
-            contentArea.innerHTML = VAULT_CONTENT;
+        // Success
+        input.classList.remove('shake-premium');
+        input.style.borderColor = '#10b981'; // Green-500
+
+        if (typeof confetti === 'function') {
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
         }
-    } else {
-        errorMsg.style.opacity = '1';
-        input.classList.add('shake');
+
+        // Play success animation on lock screen
+        lockScreen.classList.add('vault-unlocked-anim');
+
         setTimeout(() => {
-            input.classList.remove('shake');
+            const win = document.getElementById('win-app-vault');
+            if (win) {
+                const contentArea = win.querySelector('.win-content');
+                contentArea.innerHTML = VAULT_CONTENT;
+                // Add success noise/feeling?
+                if (typeof Persistence !== 'undefined') Persistence.unlock('Deep Access Level 1');
+            }
+        }, 800);
+
+    } else {
+        // Fail
+        state.vaultUnlockAttempts++;
+
+        // Update Badge
+        if (badge) {
+            badge.innerText = `Attempts: ${state.vaultUnlockAttempts}`;
+            badge.style.color = state.vaultUnlockAttempts > 3 ? '#ef4444' : '#94a3b8';
+        }
+
+        // Shake & Error
+        errorMsg.innerText = state.vaultUnlockAttempts > 3 ? "SYSTEM LOCKED: Incorrect Format" : "Access Denied";
+        errorMsg.style.opacity = '1';
+        input.classList.add('shake-premium');
+
+        // Hint progression
+        if (state.vaultUnlockAttempts >= 2 && hintMain) {
+            hintMain.innerText = "Hint: It's a date in DDMMYY format.";
+            hintMain.style.opacity = "1";
+        }
+        if (state.vaultUnlockAttempts >= 5 && hintMain) {
+            hintMain.innerText = "Hint: The day we first spoke at 12:21 AM.";
+        }
+
+        setTimeout(() => {
+            input.classList.remove('shake-premium');
             errorMsg.style.opacity = '0';
         }, 1000);
+
         input.value = '';
     }
 }
+
+function showVaultHint() {
+    const hintMain = document.getElementById('vault-hint-main');
+    const hintExtra = document.getElementById('vault-hint-extra');
+
+    if (hintMain) {
+        hintMain.innerText = "It's a date: DDMMYY. The start of everything.";
+        hintMain.style.opacity = "1";
+        hintMain.classList.add('text-indigo-600');
+    }
+    if (hintExtra) {
+        hintExtra.innerText = "June 20, 2024 ... but numbers only.";
+        hintExtra.style.opacity = "1";
+    }
+}
+
+window.showVaultHint = showVaultHint;
 
 
 /* === THE US QUIZ LOGIC === */
@@ -5987,37 +6110,7 @@ function initMap() {
 }
 window.initMap = initMap;
 
-/* === GALLERY LOGIC === */
-function initGallery() {
-    const container = document.getElementById('gallery-container');
-    if (!container) return;
 
-
-    // Using placeholder/generated images since actual files aren't confirmed in directory
-    const memories = [
-        { src: "https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif", caption: "The Beginning", date: "20 June" },
-        { src: "https://media.tenor.com/PFC1L2aEwEIAAAAj/mocha-bear.gif", caption: "Sleep Mode", date: "Daily" },
-        { src: "https://media.tenor.com/N2s4YqCqK90AAAAj/music-dance.gif", caption: "Chaos Hours", date: "Always" },
-        { src: "https://media.tenor.com/_Ry11d_7K2sAAAAM/static-glitch.gif", caption: "The Accident + The Distortion", date: "July 30, 2024" }
-    ];
-
-    container.innerHTML = '';
-
-    memories.forEach((mem, i) => {
-        const card = document.createElement('div');
-        card.className = 'polaroid';
-        card.innerHTML = `
-    < img src = "${mem.src}" >
-            <div class="caption">${mem.caption}</div>
-            <div class="date">${mem.date}</div>
-`;
-        // Add random tilt
-        const rot = Math.random() * 6 - 3;
-        card.style.transform = `rotate(${rot}deg)`;
-
-        container.appendChild(card);
-    });
-}
 
 /* === INKPOT APP LOGIC === */
 const poems = [
