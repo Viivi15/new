@@ -2404,33 +2404,58 @@ function startCountdownGatekeeper() {
     const cdScreen = document.getElementById('countdown-phase');
     const cdDisplay = document.getElementById('countdown-display');
     const cdSub = document.getElementById('countdown-sub');
+    const cdProgress = document.getElementById('countdown-progress');
 
-    // Ensure visible
     if (cdScreen) cdScreen.style.display = 'flex';
 
-    // Target: Jan 30, 2026 00:00:00
-    const targetDate = new Date().getTime() + 5000; // 5 seconds from now
+    // Target: Jan 30, 2026 00:00:00 (Setting to 10s from now for immediate demo)
+    const targetDate = Date.now() + 10000;
+    const startDate = Date.now() - 3600000; // Start 1 hour ago for progress visual
+    const totalDuration = targetDate - startDate;
+
+    window.goToDesktop = skipToDesktop; // Map the new button action
+
+    const phrases = [
+        "Curating the memories...",
+        "Calibrating the tribute...",
+        "Organizing the surprises...",
+        "Finalizing journey parameters...",
+        "Polishing the moments...",
+        "Setting the stage...",
+        "Preparing the new chapter..."
+    ];
 
     const int = setInterval(() => {
-        if (document.getElementById('desktop').style.display === 'block') { clearInterval(int); return; } // Stop if skipped
+        if (document.getElementById('desktop').style.display === 'block') { clearInterval(int); return; }
 
         const now = new Date().getTime();
         const distance = targetDate - now;
 
+        // Update Progress Bar
+        if (cdProgress) {
+            const elapsed = now - startDate;
+            const percentage = Math.min(Math.max((elapsed / totalDuration) * 100, 0), 100);
+            cdProgress.style.width = percentage + "%";
+        }
+
+        // Update Subtext randomly/sequentially
+        if (cdSub && Math.random() < 0.05) {
+            cdSub.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+        }
+
         if (distance < 0) {
             clearInterval(int);
-            // Removed "Now." logic
-            cdDisplay.style.opacity = 0;
-            cdSub.innerText = "";
+            if (cdDisplay) cdDisplay.innerText = "0d 0h 0m 0s";
+            if (cdSub) cdSub.innerText = "ACCESS GRANTED";
+
             setTimeout(() => {
-                cdScreen.style.opacity = 0;
+                if (cdScreen) cdScreen.style.opacity = 0;
                 setTimeout(() => {
-                    cdScreen.style.display = 'none';
+                    if (cdScreen) cdScreen.style.display = 'none';
                     state.countdownFinished = true;
-                    // Trigger Phase 1: Birthday Sequence
                     playBirthdaySequence();
                 }, 1000);
-            }, 1000);
+            }, 1500);
             return;
         }
 
@@ -2439,8 +2464,9 @@ function startCountdownGatekeeper() {
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        cdDisplay.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        cdSub.innerText = "The moment is here.";
+        if (cdDisplay) {
+            cdDisplay.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
     }, 1000);
 }
 
