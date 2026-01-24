@@ -5231,26 +5231,26 @@ body {
 .bottom-layer {
     bottom: 0;
     height: 60px;
-    background: #fbcfe8;
-    /* Pink-200 */
-    border-bottom: 4px solid #f9a8d4;
+    background: #1e40af;
+    /* Blue-800 */
+    border-bottom: 4px solid #172554;
     width: 240px;
 }
 
 .middle-layer {
     bottom: 60px;
     height: 50px;
-    background: #fdf2f8;
-    /* Pink-50 */
-    border-bottom: 4px solid #fbcfe8;
+    background: #3b82f6;
+    /* Blue-500 */
+    border-bottom: 4px solid #1e40af;
     width: 210px;
 }
 
 .top-layer {
     bottom: 110px;
     height: 50px;
-    background: #fbcfe8;
-    /* Pink-200 */
+    background: #60a5fa;
+    /* Blue-400 */
     width: 180px;
 }
 
