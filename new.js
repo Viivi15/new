@@ -5798,6 +5798,7 @@ function initSecretVault() {
 
     // Clear previous state
     input.value = '';
+    state.vaultUnlockAttempts = 0; // Reset attempts on open
 
     // Explicit visibility reset
     document.getElementById('vault-lock').style.display = 'flex';
@@ -5838,13 +5839,10 @@ function checkVaultPass(code) {
     } else {
         // Error
         const err = document.getElementById('vault-error');
-        err.style.opacity = '1';
-        document.getElementById('vault-pass').classList.add('animate-shake');
-        setTimeout(() => {
-            document.getElementById('vault-pass').classList.remove('animate-shake');
-            document.getElementById('vault-pass').value = '';
-            err.style.opacity = '0';
-        }, 1000);
+        err.style.opacity = '1';  // Show error message
+        const inp = document.getElementById('vault-pass');
+        inp.classList.add('shake');
+        setTimeout(() => inp.classList.remove('shake'), 500);
     }
 }
 
@@ -5947,12 +5945,12 @@ function unlockVault() {
         input.classList.add('shake-premium');
 
         // Hint progression
-        if (state.vaultUnlockAttempts >= 2 && hintMain) {
-            hintMain.innerText = "Hint: It's a date in DDMMYY format.";
+        if (state.vaultUnlockAttempts >= 1 && hintMain) {
+            hintMain.innerText = "Hint: A score of days, six moons deep, in the year where two dozen secrets we keep.";
             hintMain.style.opacity = "1";
         }
-        if (state.vaultUnlockAttempts >= 5 && hintMain) {
-            hintMain.innerText = "Hint: The day we first spoke at 12:21 AM.";
+        if (state.vaultUnlockAttempts >= 3 && hintMain) {
+            hintMain.innerText = "Hint: Day 172 of the year where February had 29.";
         }
 
         setTimeout(() => {
@@ -5989,23 +5987,25 @@ const vaultRiddles = [
 window.vaultHintStep = 0;
 
 function showVaultRiddleSequence() {
-    // 1st Hint: Hard
-    if (window.vaultHintStep === 0) {
-        createModal({
-            title: "Cryptic Cipher 🧩",
-            desc: "A score of days, six moons deep, in the year where two dozen secrets we keep.",
-            icon: '🔐'
-        });
-        window.vaultHintStep = 1; // Unlocks next hint level
-    }
-    // 2nd Hint: Easier
-    else {
+    // Sync with unlock attempts for the "same riddle" experience
+    if (state.vaultUnlockAttempts >= 3) {
         createModal({
             title: "Leap Year Logic 📅",
             desc: "Day 172 of the year where February had 29.",
             icon: '📆'
         });
-        // Stay on this one or cycle back? Let's stay on easiest until unlocked.
+    } else if (state.vaultUnlockAttempts >= 1) {
+        createModal({
+            title: "Cryptic Cipher 🧩",
+            desc: "A score of days, six moons deep, in the year where two dozen secrets we keep.",
+            icon: '🔐'
+        });
+    } else {
+        createModal({
+            title: "Vault Hint",
+            desc: "Access restricted. Try entering a code once to initialize hint protocols.",
+            icon: '🛡️'
+        });
     }
 }
 window.showVaultRiddleSequence = showVaultRiddleSequence;
@@ -6777,38 +6777,200 @@ apps.push({
 /* 3. CONSTELLATION (Visual Experience) */
 apps.push({
     id: 'app-stars', title: 'Constellation', icon: '✨', dock: false, width: 800, height: 600, content: `
-    <div class="stars-app relative h-full bg-[#050505] overflow-hidden flex items-center justify-center">
-        <!-- Reusing Global Star Animations locally -->
-        <div class="absolute inset-0 opacity-80">
-            <div class="stars-small" style="position:absolute; inset:0;"></div>
-            <div class="stars-medium" style="position:absolute; inset:0;"></div>
+    <div class="stars-app relative h-full bg-[#050505] overflow-hidden flex flex-col items-center justify-center cursor-crosshair">
+        <!-- Background Layer -->
+        <div class="absolute inset-0 opacity-80 pointer-events-none">
+            <div id="star-echoes" class="absolute inset-0 overflow-hidden z-0"></div>
+            <div class="stars-small" style="position:absolute; inset:0; opacity: 0.8;"></div>
+            <div class="stars-medium" style="position:absolute; inset:0; opacity: 0.6;"></div>
         </div>
+
+        <!-- Interactive Stardust Canvas -->
+        <canvas id="stardust-canvas" class="absolute inset-0 z-0 pointer-events-none"></canvas>
         
-        <div class="relative z-10 text-center p-10 animate-fade-in-up">
-            <div class="text-4xl md:text-6xl text-white font-serif mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
+        <!-- Main Content -->
+        <div id="constellation-core" class="relative z-10 text-center p-10 animate-fade-in-up select-none transition-all duration-1000">
+            <div class="text-4xl md:text-5xl text-white font-serif mb-4 drop-shadow-[0_0_25px_rgba(255,255,255,0.3)] animate-breath">
                 The Sky is Full of Us.
             </div>
-            <div class="w-24 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent mx-auto mb-6"></div>
-            <div class="text-slate-300 font-light tracking-wide leading-relaxed max-w-md mx-auto italic">
+            <div class="w-16 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent mx-auto mb-6 opacity-80"></div>
+            <div id="constellation-msg" class="text-slate-300 font-light tracking-wide leading-relaxed max-w-md mx-auto italic opacity-90 transition-all duration-700">
                 "We don't need lines to connect.<br>We just shine in the same sky."
             </div>
             
-            <div class="mt-12 flex justify-center gap-4">
-                 <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                 <div class="w-2 h-2 bg-white rounded-full animate-pulse" style="animation-delay: 0.3s"></div>
-                 <div class="w-2 h-2 bg-white rounded-full animate-pulse" style="animation-delay: 0.6s"></div>
+            <!-- Signal Button (Option 2) -->
+            <div class="mt-8">
+                <button onclick="receiveSignal()" class="group relative px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-all duration-500 overflow-hidden">
+                    <span class="relative z-10 text-[10px] uppercase tracking-[0.3em] font-bold text-blue-200 group-hover:text-white">Signal for Connection</span>
+                    <div class="absolute inset-0 bg-blue-500/20 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
+                </button>
             </div>
         </div>
 
-        <!-- Shooting Star Effect -->
+        <!-- Digital Wish Input (Option 1) -->
+        <div class="absolute bottom-10 z-20 w-full max-w-xs px-6 transition-all duration-700 hover:scale-105">
+            <input type="text" id="star-wish-input" 
+                class="w-full bg-white/5 border border-white/10 rounded-full px-6 py-2 text-xs text-white placeholder-slate-500 outline-none focus:border-blue-400/50 focus:bg-white/10 transition-all text-center font-light tracking-wider"
+                placeholder="Release a thought to the stars..."
+                onkeydown="if(event.key === 'Enter') releaseStarWish(this)">
+            <div class="text-[8px] text-slate-600 mt-2 uppercase tracking-widest text-center opacity-0 hover:opacity-100 transition-opacity">Press Enter to release</div>
+        </div>
+        
+        <!-- Shooting Star Container -->
+        <div id="wish-star-layer" class="absolute inset-0 pointer-events-none z-30"></div>
+
+        <!-- Restored Original Shooting Stars -->
         <div class="absolute top-10 left-[20%] w-[2px] h-[100px] bg-gradient-to-b from-transparent via-white to-transparent transform rotate-45 opacity-0 animate-[shootingStar_4s_infinite_ease-in-out_2s]"></div>
         <div class="absolute top-40 right-[30%] w-[1px] h-[80px] bg-gradient-to-b from-transparent via-blue-200 to-transparent transform rotate-[-30deg] opacity-0 animate-[shootingStar_6s_infinite_ease-in-out_4s]"></div>
 
+        <script>
+            // Option 2: Receive Signal Logic
+            window.receiveSignal = function() {
+                const messages = [
+                    "Remember you are loved even when it's quiet.",
+                    "You are doing much better than you think.",
+                    "The stars are rooting for you today.",
+                    "Slow down. You've already reached far.",
+                    "Your peace is worth protecting.",
+                    "Everything you seek is already within you.",
+                    "You are my favorite part of the universe."
+                ];
+                
+                const msgEl = document.getElementById('constellation-msg');
+                const core = document.getElementById('constellation-core');
+                
+                // Visual effect
+                core.style.transform = "scale(0.95) translateY(-5px)";
+                core.style.filter = "blur(2px)";
+                core.style.opacity = "0.5";
+                
+                setTimeout(() => {
+                    msgEl.innerHTML = \`<span class="text-blue-100 not-italic glow-text">\${messages[Math.floor(Math.random() * messages.length)]}</span>\`;
+                    core.style.transform = "scale(1.05) translateY(0)";
+                    core.style.filter = "blur(0)";
+                    core.style.opacity = "1";
+                    
+                    // Transient glow
+                    msgEl.classList.add('animate-pulse');
+                    setTimeout(() => msgEl.classList.remove('animate-pulse'), 3000);
+                }, 800);
+            };
+
+            // Option 1: Release Wish Logic
+            window.releaseStarWish = function(input) {
+                if(!input.value.trim()) return;
+                
+                const text = input.value;
+                input.value = '';
+                input.blur();
+                
+                const layer = document.getElementById('wish-star-layer');
+                const star = document.createElement('div');
+                star.className = 'absolute text-white text-xs whitespace-nowrap drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]';
+                star.innerText = '✦ ' + text;
+                
+                // Random start position near the input
+                const rect = input.getBoundingClientRect();
+                const containerRect = layer.getBoundingClientRect();
+                
+                star.style.left = (rect.left - containerRect.left + rect.width / 2) + 'px';
+                star.style.bottom = '60px';
+                star.style.opacity = '1';
+                star.style.transition = 'all 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
+                
+                layer.appendChild(star);
+                
+                // Animate flying away
+                setTimeout(() => {
+                    const angle = -45 - (Math.random() * 30); // Up and left/right
+                    const dist = 800;
+                    const tx = Math.cos(angle * Math.PI / 180) * dist;
+                    const ty = Math.sin(angle * Math.PI / 180) * dist;
+                    
+                    star.style.transform = \`translate(\${tx}px, \${ty}px) scale(0)\`;
+                    star.style.opacity = '0';
+                    star.style.filter = 'blur(4px)';
+                }, 100);
+                
+                setTimeout(() => star.remove(), 4100);
+            };
+
+            setTimeout(() => {
+                const echoContainer = document.getElementById('star-echoes');
+                const canvas = document.getElementById('stardust-canvas');
+                
+                if (echoContainer) {
+                    const words = ["12:21 AM", "June 20", "The Spark", "Trust", "Growth", "Comfort", "Ota", "Safe Space", "Always", "Hala Madrid", "Silence", "Connection"];
+                    setInterval(() => {
+                        const el = document.createElement('div');
+                        el.innerText = words[Math.floor(Math.random() * words.length)];
+                        el.className = 'absolute text-slate-500/10 font-serif text-[10px] whitespace-nowrap pointer-events-none transition-opacity duration-1000';
+                        el.style.left = Math.random() * 100 + '%';
+                        el.style.top = Math.random() * 100 + '%';
+                        el.style.animation = 'floatDrift ' + (20 + Math.random() * 20) + 's linear forwards';
+                        el.style.opacity = '0';
+                        echoContainer.appendChild(el);
+                        requestAnimationFrame(() => el.style.opacity = '0.3');
+                        setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 1000); }, 15000);
+                    }, 3000);
+                }
+
+                if (canvas) {
+                    const ctx = canvas.getContext('2d');
+                    const starsApp = document.querySelector('.stars-app');
+                    if (!starsApp) return;
+                    canvas.width = starsApp.offsetWidth;
+                    canvas.height = starsApp.offsetHeight;
+                    let particles = [];
+                    starsApp.addEventListener('mousemove', (e) => {
+                        const rect = canvas.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        for(let i=0; i<2; i++) {
+                            particles.push({
+                                x: x, y: y,
+                                vx: (Math.random() - 0.5) * 0.5,
+                                vy: (Math.random() - 0.5) * 0.5,
+                                life: 1,
+                                color: 'rgba(200, 230, 255,'
+                            });
+                        }
+                    });
+                    function animate() {
+                        if(!ctx) return;
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        particles.forEach((p, i) => {
+                            p.x += p.vx;
+                            p.y += p.vy;
+                            p.life -= 0.01;
+                            ctx.fillStyle = p.color + (p.life * 0.3) + ')';
+                            ctx.fillRect(p.x, p.y, 1, 1);
+                            if(p.life <= 0) particles.splice(i, 1);
+                        });
+                        requestAnimationFrame(animate);
+                    }
+                    animate();
+                }
+            }, 100);
+        </script>
+
         <style>
+            .glow-text { text-shadow: 0 0 15px rgba(191, 219, 254, 0.6); }
             @keyframes shootingStar {
                 0% { transform: translateY(-100px) rotate(45deg); opacity: 1; }
                 100% { transform: translateY(500px) rotate(45deg); opacity: 0; }
             }
+            @keyframes floatDrift {
+                0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+                20% { opacity: 0.3; }
+                80% { opacity: 0.3; }
+                100% { transform: translateY(-40px) rotate(5deg); opacity: 0; }
+            }
+            @keyframes breath {
+                0%, 100% { opacity: 0.9; transform: scale(1); }
+                50% { opacity: 1; transform: scale(1.02); text-shadow: 0 0 30px rgba(255,255,255,0.4); }
+            }
+            .animate-breath { animation: breath 8s ease-in-out infinite; }
         </style>
     </div>
 `});
