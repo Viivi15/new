@@ -1116,7 +1116,7 @@ const apps = [
                 100% { background-position: 100% 50%; }
             }
             .lightning-overlay {
-                background: url('https://media.giphy.com/media/26uf43dkw9bYvZ8mx/giphy.gif') center/cover;
+                background: url('assets/gifs/lightning.gif') center/cover;
                 mix-blend-mode: screen;
                 opacity: 0.3;
             }
@@ -1247,7 +1247,7 @@ const apps = [
         id: 'inkpot', title: 'The Inkpot', icon: '<img src="assets/icons/app_inkpot.png" alt="inkpot">', dock: false, folder: 'folder-feelings', width: 800, height: 750, onOpen: initInkpot, content: `
         <div class="inkpot-wrapper h-full relative overflow-hidden bg-[#f0e6d2]">
             <!-- Paper Texture -->
-            <div class="paper-texture absolute inset-0 opacity-40 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png'); mix-blend-mode: multiply;"></div>
+            <div class="paper-texture absolute inset-0 opacity-40 pointer-events-none" style="background-image: url('assets/images/pattern_paper.png'); mix-blend-mode: multiply;"></div>
             
             <!-- Ink Stains -->
             <div class="ink-stain stain-1"></div>
@@ -1606,7 +1606,7 @@ const apps = [
                 <div class="relative w-64">
                     <input type="password" id="vault-pass" class="w-full bg-white/20 border border-white/30 rounded-lg px-4 py-3 text-center text-xl tracking-[0.5em] focus:outline-none focus:border-white/50 transition placeholder-gray-500" placeholder="••••••" maxlength="6">
                 </div>
-                <p id="vault-hint" class="text-xs text-gray-500 hover:text-gray-300 cursor-pointer transition" onclick="createModal({ title: 'Numerical Cipher', desc: 'A score of days, six moons deep, in the year where two dozen secrets we keep.', icon: '🔐' })">Hint: Numerical Rhythm</p>
+                <p id="vault-hint" class="text-xs text-gray-500 hover:text-gray-300 cursor-pointer transition" onclick="showVaultRiddleSequence()">Hint: ?</p>
                 <div id="vault-error" class="text-red-400 text-sm font-bold opacity-0 transition">Access Denied</div>
              </div>
 
@@ -3654,7 +3654,7 @@ function initGallery() {
 
     const photos = [
         { src: 'assets/picswme/Screenshot_20240715_181142.webp', caption: "Connection established. 4 hours is enough. ✨", date: "June 20, 2024" },
-        { src: 'https://media.tenor.com/_Ry11d_7K2sAAAAM/static-glitch.gif', caption: "The Accident + The Distraction", date: "July 30, 2024" },
+        { src: 'assets/gifs/glitch.gif', caption: "The Accident + The Distraction", date: "July 30, 2024" },
         { src: 'assets/picswme/Screenshot_20250130_235831.webp', caption: "The 11:59 PM Math Failure 😂", date: "Jan 30, 2025" },
         { src: 'assets/picswme/IMG-20240925-WA0038.jpg', caption: "September Vibes", date: "Sept 25, 2024" },
         { src: 'assets/picswme/Screenshot_20241122_115947.webp', caption: "Lost and Found.", date: "Nov 22, 2024" },
@@ -5787,7 +5787,7 @@ const vaultSlides = [
         type: 'text', title: 'Why You?', content: 'Because you listened when no one else did.<br>Because you stayed.'
     },
     {
-        type: 'image', title: 'Us (Concept)', content: 'https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif'
+        type: 'image', title: 'Us (Concept)', content: 'assets/gifs/bear_love.gif'
     }
 ];
 let currentVaultSlide = 0;
@@ -5913,6 +5913,9 @@ function unlockVault() {
         input.classList.remove('shake-premium');
         input.style.borderColor = '#10b981'; // Green-500
 
+        // Reset Hint Sequence Logic
+        window.vaultHintStep = 0;
+
 
 
         // Play success animation on lock screen
@@ -5966,15 +5969,47 @@ function showVaultHint() {
     const hintExtra = document.getElementById('vault-hint-extra');
 
     if (hintMain) {
-        hintMain.innerText = "Cipher: 20... 6... 24. The rhythm of a specific night.";
+        hintMain.innerText = "Cipher: 20... 6... 24. A sequence that changed the timeline.";
         hintMain.style.opacity = "1";
         hintMain.classList.add('text-indigo-600');
     }
     if (hintExtra) {
-        hintExtra.innerText = "Six digits: DDMMYY.";
+        hintExtra.innerText = "Format: DDMMYY";
         hintExtra.style.opacity = "1";
     }
 }
+
+// Global Riddles for the Modal 
+// (We keep this array for random use if needed later, but now we use sequence)
+const vaultRiddles = [
+    { title: "The Solstice Precursor ☀️", desc: "One sun before the longest day, the timeline started on its way." },
+    // ... others kept for reference
+];
+
+window.vaultHintStep = 0;
+
+function showVaultRiddleSequence() {
+    // 1st Hint: Hard
+    if (window.vaultHintStep === 0) {
+        createModal({
+            title: "Cryptic Cipher 🧩",
+            desc: "A score of days, six moons deep, in the year where two dozen secrets we keep.",
+            icon: '🔐'
+        });
+        window.vaultHintStep = 1; // Unlocks next hint level
+    }
+    // 2nd Hint: Easier
+    else {
+        createModal({
+            title: "Leap Year Logic 📅",
+            desc: "Day 172 of the year where February had 29.",
+            icon: '📆'
+        });
+        // Stay on this one or cycle back? Let's stay on easiest until unlocked.
+    }
+}
+window.showVaultRiddleSequence = showVaultRiddleSequence;
+// window.showRandomVaultRiddle = showRandomVaultRiddle; (Disabled in favor of sequence)
 
 window.showVaultHint = showVaultHint;
 
@@ -6858,46 +6893,22 @@ apps.push({
 
 /* 8. DAILY BLOOM (Enhanced with High-Quality Images) */
 const dailyBloomData = [
-    { image: 'https://images.unsplash.com/photo-1596073419667-9d77d59f033f?auto=format&fit=crop&w=600&q=80', name: 'Red Rose', message: "Harshit, today is a clean slate. Fill it with your best efforts." },
-    { image: 'https://images.unsplash.com/photo-1597848212624-a19eb35e2651?auto=format&fit=crop&w=600&q=80', name: 'Sunflower', message: "Like this sunflower, always turn your face toward the light, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1572454591674-2739f30d8c40?auto=format&fit=crop&w=600&q=80', name: 'Tulip', message: "Every morning is a fresh start. Make today count, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1588610543265-d069c9b5f096?auto=format&fit=crop&w=600&q=80', name: 'Lotus', message: "Harshit, potential is within you. Bloom with confidence today." },
-    { image: 'https://images.unsplash.com/photo-1568212282298-508b8352b216?auto=format&fit=crop&w=600&q=80', name: 'Hibiscus', message: "Your energy is contagious. Spread positivity today, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=600&q=80', name: 'Cherry Blossom', message: "Life's beauty is in the details. Notice them today, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1606041008023-472dfb5e530f?auto=format&fit=crop&w=600&q=80', name: 'Daisy', message: "Stay simple, stay true. You are enough exactly as you are, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1563241527-3af1629d9705?auto=format&fit=crop&w=600&q=80', name: 'Bouquet', message: "Harshit, you deserve a day as wonderful as you make others feel." },
-    { image: 'https://images.unsplash.com/photo-1555992336-03a23c7b20ee?auto=format&fit=crop&w=600&q=80', name: 'White Lily', message: "Peace begins with a smile. Share yours today, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1566938928-86d405786d5e?auto=format&fit=crop&w=600&q=80', name: 'Purple Orchid', message: "You are unique and rare. Embrace your individuality, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1496062031456-07b8f162a3ea?auto=format&fit=crop&w=600&q=80', name: 'Lavender Field', message: "Find calm in the chaos. You've got this, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1582297883253-902eeb47f2be?auto=format&fit=crop&w=600&q=80', name: 'Yellow Daffodil', message: "New beginnings are beautiful. Step into today with joy, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1563729784474-d77b97d4a833?auto=format&fit=crop&w=600&q=80', name: 'Pink Peony', message: "Harshit, let your kindness be your compass today." },
-    { image: 'https://images.unsplash.com/photo-1600650669868-3e5eccc75094?auto=format&fit=crop&w=600&q=80', name: 'Orange Marigold', message: "The sun is shining for you. Shine back, Harshit!" },
-    { image: 'https://images.unsplash.com/photo-1590518776899-733d3d75c048?auto=format&fit=crop&w=600&q=80', name: 'Wild Bluebells', message: "Gratitude turns what we have into enough. Be grateful today, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1602660146030-a8dc13a47c20?auto=format&fit=crop&w=600&q=80', name: 'White Jasmine', message: "Small steps lead to big changes. Keep going, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1590074251205-d36cb2037953?auto=format&fit=crop&w=600&q=80', name: 'Red Poppy', message: "Your strength is quiet but powerful. Trust it today, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1501570533814-729f21f1fb6c?auto=format&fit=crop&w=600&q=80', name: 'Hydrangea', message: "Harshit, remember that you are loved and appreciated." },
-    { image: 'https://images.unsplash.com/photo-1548690312-e3b97b003ee4?auto=format&fit=crop&w=600&q=80', name: 'Dark Red Rose', message: "Passion fuels purpose. Pursue what you love today, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1524316682772-e42774c05b84?auto=format&fit=crop&w=600&q=80', name: 'Magnolia', message: "Walk with dignity. You are capable of amazing things, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1507290439931-a861b5a38200?auto=format&fit=crop&w=600&q=80', name: 'Anemone', message: "Focus on the beauty of now, Harshit. This moment is your life." },
-    { image: 'https://images.unsplash.com/photo-1508610048659-a06b669e3321?auto=format&fit=crop&w=600&q=80', name: 'Dahlia', message: "Your strength lies in your resilience, Harshit. Keep growing." },
-    { image: 'https://images.unsplash.com/photo-1597166160100-88048227096e?auto=format&fit=crop&w=600&q=80', name: 'Camellia', message: "Gently pursue your dreams today, Harshit. Consistency is key." },
-    { image: 'https://images.unsplash.com/photo-1520564177196-03102026fbb7?auto=format&fit=crop&w=600&q=80', name: 'Iris', message: "Wisdom comes to those who listen. Hear your inner voice, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1518105658639-66c89f81f9b0?auto=format&fit=crop&w=600&q=80', name: 'Protea', message: "You are hardy and capable, Harshit. No challenge is too big." },
-    { image: 'https://images.unsplash.com/photo-1519378304602-2bb61749ec6d?auto=format&fit=crop&w=600&q=80', name: 'Ranunculus', message: "Harshit, you are radiant. Let your inner light shine today." },
-    { image: 'https://images.unsplash.com/photo-1533038590840-1cde6e668a91?auto=format&fit=crop&w=600&q=80', name: 'Forget-Me-Not', message: "Never forget how far you've come, Harshit. Be proud." },
-    { image: 'https://images.unsplash.com/photo-1591833504368-7c8702336338?auto=format&fit=crop&w=600&q=80', name: 'Snapdragon', message: "Speak your truth with grace, Harshit. Your voice matters." },
-    { image: 'https://images.unsplash.com/photo-1502444330042-d1a1ddf9bb5b?auto=format&fit=crop&w=600&q=80', name: 'Morning Glory', message: "A new day brings new opportunities. Seize them, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1589139263156-f61b0ea5a8bc?auto=format&fit=crop&w=600&q=80', name: 'Zinnias', message: "Stay vibrant and full of life, Harshit. The world needs your energy." },
-    { image: 'https://images.unsplash.com/photo-1594911776517-f65582f3478b?auto=format&fit=crop&w=600&q=80', name: 'Carnation', message: "Harshit, you are deeply admired. Believe in your worth today." },
-    { image: 'https://images.unsplash.com/photo-1584381373327-0cf7f9ba5b10?auto=format&fit=crop&w=600&q=80', name: 'Begonia', message: "Harmonize your thoughts with your actions today, Harshit." },
-    { image: 'https://images.unsplash.com/photo-1510443209594-c18ec6222b40?auto=format&fit=crop&w=600&q=80', name: 'Gardenia', message: "Harshit, there is a sweetness in your soul. Let it bloom." },
-    { image: 'https://images.unsplash.com/photo-1595113337452-9694ea4e93fb?auto=format&fit=crop&w=600&q=80', name: 'Azalea', message: "First love yourself, Harshit. Everything else will follow." },
-    { image: 'https://images.unsplash.com/photo-1559823610-2c3552254942?auto=format&fit=crop&w=600&q=80', name: 'Clematis', message: "Aspire to reach new heights today, Harshit. The sky is the limit." },
-    { image: 'https://images.unsplash.com/photo-1591147139174-88062837332f?auto=format&fit=crop&w=600&q=80', name: 'Freesia', message: "Harshit, your trust is your greatest strength. Stay inspired." },
-    { image: 'https://images.unsplash.com/photo-1563241527-4a00cb105267?auto=format&fit=crop&w=600&q=80', name: 'Cornflower', message: "Stay true to your roots, Harshit. They anchor your growth." },
-    { image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80', name: 'Bluebell Macro', message: "Calmness is a superpower, Harshit. Breathe it in deeply." },
-    { image: 'https://images.unsplash.com/photo-1501570533814-729f21f1fb6c?auto=format&fit=crop&w=600&q=80', name: 'Geranium', message: "Harshit, you bring color and warmth to every life you touch." },
-    { image: 'https://images.unsplash.com/photo-1533038590840-1cde6e668a91?auto=format&fit=crop&w=600&q=80', name: 'Gladiolus', message: "Character and integrity define you, Harshit. Shine on." }
+    { image: 'assets/images/flower_rose.jpg', name: 'Red Rose', message: "Harshit, today is a clean slate. Fill it with your best efforts." },
+    { image: 'assets/images/flower_sunflower.jpg', name: 'Sunflower', message: "Like this sunflower, always turn your face toward the light, Harshit." },
+    { image: 'assets/images/flower_lotus.jpg', name: 'Tulip', message: "Every morning is a fresh start. Make today count, Harshit." },
+    { image: 'assets/images/flower_cherry.jpg', name: 'Lotus', message: "Harshit, potential is within you. Bloom with confidence today." },
+    { image: 'assets/images/flower_daisy.jpg', name: 'Hibiscus', message: "Your energy is contagious. Spread positivity today, Harshit." },
+    { image: 'assets/images/flower_cherry.jpg', name: 'Cherry Blossom', message: "Life's beauty is in the details. Notice them today, Harshit." },
+    { image: 'assets/images/flower_daisy.jpg', name: 'Daisy', message: "Stay simple, stay true. You are enough exactly as you are, Harshit." },
+    { image: 'assets/images/flower_rose.jpg', name: 'Bouquet', message: "Harshit, you deserve a day as wonderful as you make others feel." },
+    { image: 'assets/images/flower_lotus.jpg', name: 'White Lily', message: "Peace begins with a smile. Share yours today, Harshit." },
+    { image: 'assets/images/flower_sunflower.jpg', name: 'Purple Orchid', message: "You are unique and rare. Embrace your individuality, Harshit." },
+    { image: 'assets/images/flower_cherry.jpg', name: 'Lavender Field', message: "Find calm in the chaos. You've got this, Harshit." },
+    { image: 'assets/images/flower_daisy.jpg', name: 'Yellow Daffodil', message: "New beginnings are beautiful. Step into today with joy, Harshit." },
+    { image: 'assets/images/flower_rose.jpg', name: 'Pink Peony', message: "Harshit, let your kindness be your compass today." },
+    { image: 'assets/images/flower_sunflower.jpg', name: 'Orange Marigold', message: "The sun is shining for you. Shine back, Harshit!" },
+    { image: 'assets/images/flower_lotus.jpg', name: 'Wild Bluebells', message: "Gratitude turns what we have into enough. Be grateful today, Harshit." },
+    { image: 'assets/images/flower_cherry.jpg', name: 'White Jasmine', message: "Small steps lead to big changes. Keep going, Harshit." }
 ];
 
 apps.push({
@@ -6932,7 +6943,8 @@ apps.push({
     }, content: `
     <div class="bloom-app h-full flex flex-col items-center justify-center bg-gradient-to-b from-rose-50 to-white overflow-hidden relative">
         <!-- Background Bloom Pattern -->
-        <div class="absolute inset-0 z-0 opacity-10 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/cubes.png');"></div>
+        <!-- Background Bloom Pattern -->
+        <div class="absolute inset-0 z-0 opacity-10 pointer-events-none" style="background-image: url('assets/images/pattern_cubes.png');"></div>
         
         <!-- Main Flower Image Container -->
         <div class="relative z-10 w-72 h-72 mb-8 group perspective-[1000px]">
@@ -6940,7 +6952,7 @@ apps.push({
             <div class="absolute inset-0 bg-rose-300 rounded-2xl blur-3xl opacity-40 group-hover:opacity-70 transition duration-700 animate-pulse"></div>
             
             <!-- The Image -->
-            <img id="bloom-img" src="https://images.unsplash.com/photo-1596073419667-9d77d59f033f?auto=format&fit=crop&w=600&q=80" 
+            <img id="bloom-img" src="assets/images/flower_rose.jpg" 
                  class="w-full h-full object-cover rounded-2xl shadow-2xl transform border-4 border-white relative z-10 transition-all duration-1000" 
                  alt="Daily Bloom"
                  onerror="this.src='https://placehold.co/600x600/pink/white?text=Flower+Bloom'">
@@ -7396,7 +7408,7 @@ apps.push({
         
         <!-- Ambient Background -->
         <div id="tired-bg-pulse" class="absolute inset-0 bg-blue-900/10 blur-[100px] transition-opacity duration-1000"></div>
-        <div class="absolute inset-0 opacity-10" style="background-image: url('https://www.transparenttextures.com/patterns/stardust.png');"></div>
+        <div class="absolute inset-0 opacity-10" style="background-image: url('assets/images/pattern_stardust.png');"></div>
 
         <!-- Main Display Area -->
         <div class="relative z-10 flex-1 flex flex-col items-center justify-center p-10 text-center">
