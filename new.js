@@ -6776,20 +6776,17 @@ apps.push({
 
 /* 3. CONSTELLATION (Visual Experience) */
 apps.push({
-    id: 'app-stars', title: 'Constellation', icon: '✨', dock: false, width: 800, height: 600, content: `
+    id: 'app-stars', title: 'Constellation', icon: '✨', dock: false, width: 800, height: 600, onOpen: () => ConstellationApp.init(), content: `
     <div class="stars-app relative h-full bg-[#050505] overflow-hidden flex flex-col items-center justify-center cursor-crosshair">
-        <!-- Background Layer -->
         <div class="absolute inset-0 opacity-80 pointer-events-none">
             <div id="star-echoes" class="absolute inset-0 overflow-hidden z-0"></div>
             <div class="stars-small" style="position:absolute; inset:0; opacity: 0.8;"></div>
             <div class="stars-medium" style="position:absolute; inset:0; opacity: 0.6;"></div>
         </div>
 
-        <!-- Interactive Stardust Canvas -->
         <canvas id="stardust-canvas" class="absolute inset-0 z-0 pointer-events-none"></canvas>
         
-        <!-- Main Content -->
-        <div id="constellation-core" class="relative z-10 text-center p-10 animate-fade-in-up select-none transition-all duration-1000">
+        <div id="constellation-core" class="relative z-10 text-center p-10 select-none transition-all duration-1000">
             <div class="text-4xl md:text-5xl text-white font-serif mb-4 drop-shadow-[0_0_25px_rgba(255,255,255,0.3)] animate-breath">
                 The Sky is Full of Us.
             </div>
@@ -6798,180 +6795,26 @@ apps.push({
                 "We don't need lines to connect.<br>We just shine in the same sky."
             </div>
             
-            <!-- Signal Button (Option 2) -->
             <div class="mt-8">
-                <button onclick="receiveSignal()" class="group relative px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-all duration-500 overflow-hidden">
+                <button onclick="ConstellationApp.receiveSignal()" class="group relative px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-all duration-500 overflow-hidden">
                     <span class="relative z-10 text-[10px] uppercase tracking-[0.3em] font-bold text-blue-200 group-hover:text-white">Signal for Connection</span>
                     <div class="absolute inset-0 bg-blue-500/20 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
                 </button>
             </div>
         </div>
 
-        <!-- Digital Wish Input (Option 1) -->
         <div class="absolute bottom-10 z-20 w-full max-w-xs px-6 transition-all duration-700 hover:scale-105">
             <input type="text" id="star-wish-input" 
                 class="w-full bg-white/5 border border-white/10 rounded-full px-6 py-2 text-xs text-white placeholder-slate-500 outline-none focus:border-blue-400/50 focus:bg-white/10 transition-all text-center font-light tracking-wider"
                 placeholder="Release a thought to the stars..."
-                onkeydown="if(event.key === 'Enter') releaseStarWish(this)">
+                onkeydown="if(event.key === 'Enter') ConstellationApp.releaseStarWish(this)">
             <div class="text-[8px] text-slate-600 mt-2 uppercase tracking-widest text-center opacity-0 hover:opacity-100 transition-opacity">Press Enter to release</div>
         </div>
         
-        <!-- Shooting Star Container -->
         <div id="wish-star-layer" class="absolute inset-0 pointer-events-none z-30"></div>
 
-        <!-- Restored Original Shooting Stars -->
-        <div class="absolute top-10 left-[20%] w-[2px] h-[100px] bg-gradient-to-b from-transparent via-white to-transparent transform rotate-45 opacity-0 animate-[shootingStar_4s_infinite_ease-in-out_2s]"></div>
-        <div class="absolute top-40 right-[30%] w-[1px] h-[80px] bg-gradient-to-b from-transparent via-blue-200 to-transparent transform rotate-[-30deg] opacity-0 animate-[shootingStar_6s_infinite_ease-in-out_4s]"></div>
-
-        <script>
-            // Option 2: Receive Signal Logic
-            window.receiveSignal = function() {
-                const messages = [
-                    "Remember you are loved even when it's quiet.",
-                    "You are doing much better than you think.",
-                    "The stars are rooting for you today.",
-                    "Slow down. You've already reached far.",
-                    "Your peace is worth protecting.",
-                    "Everything you seek is already within you.",
-                    "You are my favorite part of the universe."
-                ];
-                
-                const msgEl = document.getElementById('constellation-msg');
-                const core = document.getElementById('constellation-core');
-                
-                // Visual effect
-                core.style.transform = "scale(0.95) translateY(-5px)";
-                core.style.filter = "blur(2px)";
-                core.style.opacity = "0.5";
-                
-                setTimeout(() => {
-                    msgEl.innerHTML = \`<span class="text-blue-100 not-italic glow-text">\${messages[Math.floor(Math.random() * messages.length)]}</span>\`;
-                    core.style.transform = "scale(1.05) translateY(0)";
-                    core.style.filter = "blur(0)";
-                    core.style.opacity = "1";
-                    
-                    // Transient glow
-                    msgEl.classList.add('animate-pulse');
-                    setTimeout(() => msgEl.classList.remove('animate-pulse'), 3000);
-                }, 800);
-            };
-
-            // Option 1: Release Wish Logic
-            window.releaseStarWish = function(input) {
-                if(!input.value.trim()) return;
-                
-                const text = input.value;
-                input.value = '';
-                input.blur();
-                
-                const layer = document.getElementById('wish-star-layer');
-                const star = document.createElement('div');
-                star.className = 'absolute text-white text-xs whitespace-nowrap drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]';
-                star.innerText = '✦ ' + text;
-                
-                // Random start position near the input
-                const rect = input.getBoundingClientRect();
-                const containerRect = layer.getBoundingClientRect();
-                
-                star.style.left = (rect.left - containerRect.left + rect.width / 2) + 'px';
-                star.style.bottom = '60px';
-                star.style.opacity = '1';
-                star.style.transition = 'all 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
-                
-                layer.appendChild(star);
-                
-                // Animate flying away
-                setTimeout(() => {
-                    const angle = -45 - (Math.random() * 30); // Up and left/right
-                    const dist = 800;
-                    const tx = Math.cos(angle * Math.PI / 180) * dist;
-                    const ty = Math.sin(angle * Math.PI / 180) * dist;
-                    
-                    star.style.transform = \`translate(\${tx}px, \${ty}px) scale(0)\`;
-                    star.style.opacity = '0';
-                    star.style.filter = 'blur(4px)';
-                }, 100);
-                
-                setTimeout(() => star.remove(), 4100);
-            };
-
-            setTimeout(() => {
-                const echoContainer = document.getElementById('star-echoes');
-                const canvas = document.getElementById('stardust-canvas');
-                
-                if (echoContainer) {
-                    const words = ["12:21 AM", "June 20", "The Spark", "Trust", "Growth", "Comfort", "Ota", "Safe Space", "Always", "Hala Madrid", "Silence", "Connection"];
-                    setInterval(() => {
-                        const el = document.createElement('div');
-                        el.innerText = words[Math.floor(Math.random() * words.length)];
-                        el.className = 'absolute text-slate-500/10 font-serif text-[10px] whitespace-nowrap pointer-events-none transition-opacity duration-1000';
-                        el.style.left = Math.random() * 100 + '%';
-                        el.style.top = Math.random() * 100 + '%';
-                        el.style.animation = 'floatDrift ' + (20 + Math.random() * 20) + 's linear forwards';
-                        el.style.opacity = '0';
-                        echoContainer.appendChild(el);
-                        requestAnimationFrame(() => el.style.opacity = '0.3');
-                        setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 1000); }, 15000);
-                    }, 3000);
-                }
-
-                if (canvas) {
-                    const ctx = canvas.getContext('2d');
-                    const starsApp = document.querySelector('.stars-app');
-                    if (!starsApp) return;
-                    canvas.width = starsApp.offsetWidth;
-                    canvas.height = starsApp.offsetHeight;
-                    let particles = [];
-                    starsApp.addEventListener('mousemove', (e) => {
-                        const rect = canvas.getBoundingClientRect();
-                        const x = e.clientX - rect.left;
-                        const y = e.clientY - rect.top;
-                        for(let i=0; i<2; i++) {
-                            particles.push({
-                                x: x, y: y,
-                                vx: (Math.random() - 0.5) * 0.5,
-                                vy: (Math.random() - 0.5) * 0.5,
-                                life: 1,
-                                color: 'rgba(200, 230, 255,'
-                            });
-                        }
-                    });
-                    function animate() {
-                        if(!ctx) return;
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        particles.forEach((p, i) => {
-                            p.x += p.vx;
-                            p.y += p.vy;
-                            p.life -= 0.01;
-                            ctx.fillStyle = p.color + (p.life * 0.3) + ')';
-                            ctx.fillRect(p.x, p.y, 1, 1);
-                            if(p.life <= 0) particles.splice(i, 1);
-                        });
-                        requestAnimationFrame(animate);
-                    }
-                    animate();
-                }
-            }, 100);
-        </script>
-
-        <style>
-            .glow-text { text-shadow: 0 0 15px rgba(191, 219, 254, 0.6); }
-            @keyframes shootingStar {
-                0% { transform: translateY(-100px) rotate(45deg); opacity: 1; }
-                100% { transform: translateY(500px) rotate(45deg); opacity: 0; }
-            }
-            @keyframes floatDrift {
-                0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-                20% { opacity: 0.3; }
-                80% { opacity: 0.3; }
-                100% { transform: translateY(-40px) rotate(5deg); opacity: 0; }
-            }
-            @keyframes breath {
-                0%, 100% { opacity: 0.9; transform: scale(1); }
-                50% { opacity: 1; transform: scale(1.02); text-shadow: 0 0 30px rgba(255,255,255,0.4); }
-            }
-            .animate-breath { animation: breath 8s ease-in-out infinite; }
-        </style>
+        <div class="absolute top-10 left-[20%] w-[2px] h-[100px] bg-gradient-to-b from-transparent via-white to-transparent transform rotate-45 opacity-0 animate-shooting-star-1"></div>
+        <div class="absolute top-40 right-[30%] w-[1px] h-[80px] bg-gradient-to-b from-transparent via-blue-200 to-transparent transform rotate-[-30deg] opacity-0 animate-shooting-star-2"></div>
     </div>
 `});
 
@@ -7602,20 +7445,307 @@ apps.push({
     </div>
 `});
 
-/* === CURSOR SPARKLES === */
-document.addEventListener('mousemove', (e) => {
-    if (Math.random() < 0.2) {
+const ConstellationApp = {
+    messages: [
+        "Remember you are loved even when it's quiet.",
+        "You are doing much better than you think.",
+        "The stars are rooting for you today.",
+        "Slow down. You've already reached far.",
+        "Your peace is worth protecting.",
+        "Everything you seek is already within you.",
+        "You are my favorite part of the universe."
+    ],
+    words: ["12:21 AM", "June 20", "The Spark", "Trust", "Growth", "Comfort", "Ota", "Safe Space", "Always", "Hala Madrid", "Silence", "Connection"],
+    particles: [],
+
+    init() {
+        setTimeout(() => {
+            this.initEchoes();
+            this.initCanvas();
+        }, 100);
+    },
+
+    receiveSignal() {
+        const msgEl = document.getElementById('constellation-msg');
+        const core = document.getElementById('constellation-core');
+        if (!msgEl || !core) return;
+
+        core.style.transform = "scale(0.95) translateY(-5px)";
+        core.style.filter = "blur(2px)";
+        core.style.opacity = "0.5";
+
+        setTimeout(() => {
+            msgEl.innerHTML = `<span class="text-blue-100 not-italic glow-text">${this.messages[Math.floor(Math.random() * this.messages.length)]}</span>`;
+            core.style.transform = "scale(1.05) translateY(0)";
+            core.style.filter = "blur(0)";
+            core.style.opacity = "1";
+            msgEl.classList.add('animate-pulse');
+            setTimeout(() => msgEl.classList.remove('animate-pulse'), 3000);
+        }, 800);
+    },
+
+    releaseStarWish(input) {
+        if (!input.value.trim()) return;
+        const text = input.value;
+        input.value = '';
+        input.blur();
+
+        const layer = document.getElementById('wish-star-layer');
+        if (!layer) return;
+
+        const star = document.createElement('div');
+        star.className = 'absolute text-white text-xs whitespace-nowrap drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]';
+        star.innerText = '✦ ' + text;
+
+        const rect = input.getBoundingClientRect();
+        const containerRect = layer.getBoundingClientRect();
+
+        star.style.left = (rect.left - containerRect.left + rect.width / 2) + 'px';
+        star.style.bottom = '60px';
+        star.style.opacity = '1';
+        star.style.transition = 'all 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
+
+        layer.appendChild(star);
+
+        setTimeout(() => {
+            const angle = -45 - (Math.random() * 30);
+            const dist = 800;
+            const tx = Math.cos(angle * Math.PI / 180) * dist;
+            const ty = Math.sin(angle * Math.PI / 180) * dist;
+            star.style.transform = `translate(${tx}px, ${ty}px) scale(0)`;
+            star.style.opacity = '0';
+            star.style.filter = 'blur(4px)';
+        }, 100);
+
+        setTimeout(() => star.remove(), 4100);
+    },
+
+    initEchoes() {
+        const echoContainer = document.getElementById('star-echoes');
+        if (!echoContainer) return;
+        if (this.echoInterval) clearInterval(this.echoInterval);
+        this.echoInterval = setInterval(() => {
+            const el = document.createElement('div');
+            el.innerText = this.words[Math.floor(Math.random() * this.words.length)];
+            el.className = 'absolute text-slate-500/10 font-serif text-[10px] whitespace-nowrap pointer-events-none transition-opacity duration-1000';
+            el.style.left = Math.random() * 100 + '%';
+            el.style.top = Math.random() * 100 + '%';
+            el.style.animation = 'floatDrift ' + (20 + Math.random() * 20) + 's linear forwards';
+            el.style.opacity = '0';
+            echoContainer.appendChild(el);
+            requestAnimationFrame(() => el.style.opacity = '0.3');
+            setTimeout(() => {
+                el.style.opacity = '0';
+                setTimeout(() => el.remove(), 1000);
+            }, 15000);
+        }, 3000);
+    },
+
+    initCanvas() {
+        const canvas = document.getElementById('stardust-canvas');
+        const starsApp = document.querySelector('.stars-app');
+        if (!canvas || !starsApp) return;
+
+        const ctx = canvas.getContext('2d');
+        canvas.width = starsApp.offsetWidth;
+        canvas.height = starsApp.offsetHeight;
+        this.particles = [];
+
+        starsApp.onmousemove = (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            for (let i = 0; i < 2; i++) {
+                this.particles.push({
+                    x: x, y: y,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    life: 1,
+                    color: 'rgba(200, 230, 255,'
+                });
+            }
+        };
+
+        const animate = () => {
+            if (!ctx) return;
+            if (!document.getElementById('stardust-canvas')) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            this.particles.forEach((p, i) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life -= 0.01;
+                ctx.fillStyle = p.color + (p.life * 0.3) + ')';
+                ctx.fillRect(p.x, p.y, 1, 1);
+                if (p.life <= 0) this.particles.splice(i, 1);
+            });
+            requestAnimationFrame(animate);
+        };
+        animate();
+    }
+};
+
+const WeatherEngine = {
+    snowContainer: null,
+    rainContainer: null,
+    flakes: [],
+    drops: [],
+    windX: 0,
+    targetWindX: 0,
+
+    init() {
+        this.snowContainer = document.getElementById('bg-snow-container');
+        this.rainContainer = document.getElementById('bg-rain-container');
+        if (!this.snowContainer || !this.rainContainer) return;
+
+        // Atmospheric cycles
+        setInterval(() => this.createFlake(), 200); // Snow (Him)
+        setInterval(() => this.createRaindrop(), 120); // Rain (Me)
+
+        document.addEventListener('mousemove', (e) => {
+            this.targetWindX = (e.clientX / window.innerWidth - 0.5) * 2;
+        });
+
+        this.animate();
+    },
+
+    createFlake() {
+        const flake = document.createElement('div');
+        flake.className = 'bg-snow-flake';
+        const size = Math.random() * 3 + 1 + 'px';
+        flake.style.width = size;
+        flake.style.height = size;
+        flake.style.left = Math.random() * 110 - 5 + '%';
+        const duration = Math.random() * 5 + 5;
+        flake.style.animationDuration = duration + 's';
+        flake.style.opacity = Math.random() * 0.5 + 0.3;
+
+        this.snowContainer.appendChild(flake);
+        this.flakes.push({
+            el: flake,
+            x: parseFloat(flake.style.left),
+            y: -10,
+            speedX: (Math.random() - 0.5) * 0.1,
+            speedY: 100 / (duration * 60) // Per frame
+        });
+
+        setTimeout(() => {
+            flake.remove();
+            this.flakes = this.flakes.filter(f => f.el !== flake);
+        }, duration * 1000);
+    },
+
+    createRaindrop() {
+        const drop = document.createElement('div');
+        drop.className = 'rain-drop';
+        drop.style.left = Math.random() * 100 + '%';
+        const duration = Math.random() * 0.4 + 0.7;
+        drop.style.animationDuration = duration + 's';
+
+        this.rainContainer.appendChild(drop);
+        this.drops.push({
+            el: drop,
+            x: parseFloat(drop.style.left),
+            y: -10,
+            speedY: 100 / (duration * 60)
+        });
+
+        setTimeout(() => {
+            drop.remove();
+            this.drops = this.drops.filter(d => d.el !== drop);
+        }, duration * 1000);
+    },
+
+    checkCollisions() {
+        // Heartfelt Connection: When rain finds snow
+        for (let i = 0; i < this.flakes.length; i++) {
+            const f = this.flakes[i];
+            for (let j = 0; j < this.drops.length; j++) {
+                const d = this.drops[j];
+
+                const dx = Math.abs(f.x - d.x);
+                const dy = Math.abs(f.y - d.y);
+
+                if (dx < 1.0 && dy < 4) {
+                    this.spawnSparkle(f.x, f.y);
+                    f.el.style.opacity = '0';
+                    d.el.style.opacity = '0';
+                    return;
+                }
+            }
+        }
+    },
+
+    spawnSparkle(x, y) {
         const sparkle = document.createElement('div');
-        sparkle.className = 'click-sparkle';
-        sparkle.style.left = e.clientX + 'px';
-        sparkle.style.top = e.clientY + 'px';
+        sparkle.className = 'collision-sparkle';
+        sparkle.innerText = Math.random() < 0.5 ? '✨' : '🤍';
+        sparkle.style.left = x + '%';
+        sparkle.style.top = y + '%';
+        this.snowContainer.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1000);
+    },
 
-        const size = Math.random() * 15 + 5;
-        sparkle.style.width = size + 'px';
-        sparkle.style.height = size + 'px';
+    animate() {
+        this.windX += (this.targetWindX - this.windX) * 0.05;
 
-        document.body.appendChild(sparkle);
-        setTimeout(() => sparkle.remove(), 800);
+        this.flakes.forEach(f => {
+            f.y += f.speedY; // Track Y for collision
+            f.x += f.speedX + (this.windX * 0.1);
+            f.el.style.left = f.x + '%';
+        });
+
+        this.drops.forEach(d => {
+            d.y += d.speedY;
+            d.el.style.transform = `translateX(${this.windX * 30}px) rotate(${this.windX * 15}deg)`;
+        });
+
+        this.checkCollisions();
+
+        const pile = document.getElementById('snow-pile');
+        if (pile) {
+            const wave = Math.sin(Date.now() / 2000) * 2;
+            const shift = this.windX * 15;
+            pile.style.transform = `translateY(25px) translateX(${shift}px) rotate(${wave}deg)`;
+        }
+
+        requestAnimationFrame(() => this.animate());
+    }
+};
+
+window.addEventListener('load', () => WeatherEngine.init());
+
+
+/* === CURSOR TRAIL (SNOW) === */
+
+document.addEventListener('mousemove', (e) => {
+    // Increase frequency slightly for smooth trail
+    if (Math.random() < 0.25) {
+        const flake = document.createElement('div');
+
+        // Randomly pick between common snowflake shapes
+        const icons = ['❄', '❅', '❆', '•'];
+        const isDot = Math.random() < 0.3;
+
+        flake.className = 'snow-flake';
+        flake.innerText = isDot ? '•' : icons[Math.floor(Math.random() * icons.length)];
+
+        // Set random drift and rotation for the animation
+        const drift = (Math.random() - 0.5) * 200 + 'px';
+        const rot = (Math.random() - 0.5) * 720 + 'deg';
+        flake.style.setProperty('--drift', drift);
+        flake.style.setProperty('--rot', rot);
+
+        flake.style.left = e.clientX + 'px';
+        flake.style.top = e.clientY + 'px';
+
+        // Scale variation
+        const scale = Math.random() * 0.5 + 0.5;
+        flake.style.transform = `scale(${scale})`;
+
+        document.body.appendChild(flake);
+
+        // Match timeout with CSS animation duration (2.5s)
+        setTimeout(() => flake.remove(), 2500);
     }
 });
 
