@@ -4203,9 +4203,30 @@ function renderSpiral(word) {
 
 /* === PERSONALITY QUIZ LOGIC === */
 const pQuizData = [
-    { q: "When things break, you...", a: [{ t: "Fix them quietly", s: "Builder" }, { t: "Feel everything", s: "Healer" }, { t: "Ignore it", s: "Dreamer" }] },
-    { q: "Your best quality?", a: [{ t: "Loyalty", s: "Builder" }, { t: "Empathy", s: "Healer" }, { t: "Imagination", s: "Dreamer" }] },
-    { q: "What do you need right now?", a: [{ t: "Peace", s: "Healer" }, { t: "Progress", s: "Builder" }, { t: "Escape", s: "Dreamer" }] }
+    {
+        q: "It's 2 AM. What is Harshit usually doing?",
+        a: [
+            { t: "Solving a bug / Gaming 🎮", s: "Builder" },
+            { t: "Listening to music / Overthinking 🎧", s: "Dreamer" },
+            { t: "Actually sleeping? (Rare event) 😴", s: "Healer" }
+        ]
+    },
+    {
+        q: "When Shravii creates 'chaos' or starts yapping, you...",
+        a: [
+            { t: "Listen patiently (The Anchor) 🛡️", s: "Healer" },
+            { t: "Roast her logically 🤓", s: "Builder" },
+            { t: "Enjoy the drama silently 🍿", s: "Dreamer" }
+        ]
+    },
+    {
+        q: "Your Super Power in this friendship is...",
+        a: [
+            { t: "Never leaving (Staying) ❤️", s: "Healer" },
+            { t: "Fixing everything (Logic) 🧩", s: "Builder" },
+            { t: "Predicting the future (Insight) 👁️", s: "Dreamer" }
+        ]
+    }
 ];
 let pQuizIdx = 0;
 let pScores = {};
