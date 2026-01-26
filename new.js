@@ -74,7 +74,19 @@ function updateSystemBasedOnTime(hours) {
                     case 'evening': msg = "Happy evening! 🌙"; break;
                     case 'night': msg = "You're up late! 🌃"; break;
                 }
-
+                /* === EASTER EGG: 12:21 AM === */
+                // Check for 00:21 (12:21 AM)
+                if (hours === 0 && minutes === '21') { // Use 'hours' for 24-hour format
+                    // Use a session flag to avoid spamming
+                    if (!window.hasTriggered1221) {
+                        window.hasTriggered1221 = true;
+                        createModal({
+                            title: "12:21 AM — June 20, 2024",
+                            desc: "You stayed up to see this.<br><br>That means something.<br><br>This was the minute we first talked. The minute a random 'Hi' turned into months of late nights, inside jokes, and a friendship I never saw coming.<br><br>You didn't just pass through my life.<br>You changed it.<br><br>Some connections are meant to last.<br>This is one of them. ❤️",
+                            icon: "🌙"
+                        });
+                    }
+                }
                 // Wait a moment for desktop transition
                 setTimeout(() => {
                     if (typeof createModal === 'function') {
@@ -609,6 +621,7 @@ const apps = [
 
             <div class="win-icon" onclick="Apps.open('app-decision')"><div class="icon-img text-4xl">🎲</div><div class="icon-label">Decision<br>Helper</div></div>
             <div class="win-icon" onclick="Apps.open('app-wifi')"><div class="icon-img text-4xl">📶</div><div class="icon-label">Bangalore<br>Network</div></div>
+            <div class="win-icon" onclick="Apps.open('frequency-3015')"><div class="icon-img text-4xl">📡</div><div class="icon-label">Frequency<br>3015.exe</div></div>
         </div>
     `},
 
@@ -1939,19 +1952,211 @@ const apps = [
         </div>
     `},
 
+    {
+        id: 'frequency-3015',
+        title: 'Frequency_3015.exe',
+        icon: '📡',
+        dock: true,
+        width: 550,
+        height: 700,
+        content: `
+        <div class="frequency-app h-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col relative overflow-hidden">
+            <!-- Animated Background -->
+            <div class="absolute inset-0 opacity-10 pointer-events-none">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse"></div>
+                <div class="absolute bottom-0 right-0 w-64 h-64 bg-cyan-500/20 rounded-full blur-[100px]"></div>
+                <div class="absolute top-20 left-10 w-32 h-32 bg-purple-500/10 rounded-full blur-[60px]"></div>
+            </div>
+
+            <!-- Header -->
+            <div class="relative z-10 px-6 py-4 border-b border-cyan-500/20 backdrop-blur-sm bg-slate-800/50">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-3 h-3 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,211,238,0.6)]"></div>
+                        <div>
+                            <div class="text-cyan-300 font-bold text-sm tracking-wider">SECURE SIGNAL</div>
+                            <div class="text-cyan-500/60 text-[10px] font-mono uppercase tracking-widest">Frequency: 3015 MHz</div>
+                        </div>
+                    </div>
+                    <div class="text-[10px] font-mono text-cyan-400/40 uppercase">Encrypted</div>
+                </div>
+            </div>
+
+            <!-- Chat Messages Area -->
+            <div id="freq-messages" class="relative z-10 flex-1 overflow-y-auto custom-scroll px-6 py-4 space-y-4">
+                <!-- Initial System Message -->
+                <div class="flex justify-center">
+                    <div class="bg-cyan-950/40 border border-cyan-500/20 rounded-lg px-4 py-2 text-center">
+                        <div class="text-[10px] text-cyan-400/60 uppercase tracking-widest mb-1">System Status</div>
+                        <div class="text-xs text-cyan-300 font-mono">Connection Established</div>
+                        <div class="text-[9px] text-cyan-500/40 mt-1">End-to-End Encrypted</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="relative z-10 px-6 py-4 border-t border-cyan-500/20 bg-slate-800/50 backdrop-blur-sm">
+                <div class="flex items-center gap-3">
+                    <input 
+                        type="text" 
+                        id="freq-input" 
+                        class="flex-1 bg-slate-700/50 border border-cyan-500/30 rounded-lg px-4 py-2.5 text-sm text-cyan-100 placeholder-cyan-500/30 outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 transition font-mono"
+                        placeholder="Type a message..."
+                        onkeydown="if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); FrequencyApp.send(); }"
+                    />
+                    <button 
+                        onclick="FrequencyApp.send()" 
+                        class="bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg px-5 py-2.5 font-bold text-sm transition shadow-lg shadow-cyan-900/50 hover:shadow-cyan-500/30"
+                    >
+                        Send
+                    </button>
+                </div>
+                <div class="mt-2 flex items-center gap-2 text-[10px] text-cyan-500/40 font-mono">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    <span>Status: Online</span>
+                </div>
+            </div>
+
+            <!-- Watermark -->
+            <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-[8px] text-cyan-500/20 font-mono uppercase tracking-widest pointer-events-none">
+                Classified Communication Channel
+            </div>
+        </div>
+        `,
+        onOpen: () => {
+            setTimeout(() => {
+                const input = document.getElementById('freq-input');
+                if (input) input.focus();
+                FrequencyApp.loadMessages();
+            }, 100);
+        }
+    },
 
 ];
 
+
+
+
 /* === LAST LOGIC === */
 
+/* === FREQUENCY APP (Secret Signal Chat) === */
+const FrequencyApp = {
+    storageKey: 'frequency_3015_messages',
 
+    loadMessages() {
+        try {
+            const stored = localStorage.getItem(this.storageKey);
+            const messages = stored ? JSON.parse(stored) : [];
+            const container = document.getElementById('freq-messages');
 
+            if (!container) return;
 
+            // Clear existing (except system message)
+            const systemMsg = container.querySelector('.flex.justify-center');
+            container.innerHTML = '';
+            if (systemMsg) container.appendChild(systemMsg);
 
+            // Render all messages
+            messages.forEach(msg => this.renderMessage(msg, false));
 
+            // Scroll to bottom
+            container.scrollTop = container.scrollHeight;
+        } catch (e) {
+            console.error('Failed to load messages:', e);
+        }
+    },
 
+    send() {
+        const input = document.getElementById('freq-input');
+        if (!input) return;
 
+        const text = input.value.trim();
+        if (!text) return;
 
+        const message = {
+            id: Date.now(),
+            text: text,
+            sender: 'user',
+            timestamp: new Date().toISOString()
+        };
+
+        // Save to localStorage
+        this.saveMessage(message);
+
+        // Render
+        this.renderMessage(message, true);
+
+        // Clear input
+        input.value = '';
+        input.focus();
+
+        // Auto-scroll
+        const container = document.getElementById('freq-messages');
+        if (container) {
+            setTimeout(() => {
+                container.scrollTop = container.scrollHeight;
+            }, 100);
+        }
+    },
+
+    saveMessage(message) {
+        try {
+            const stored = localStorage.getItem(this.storageKey);
+            const messages = stored ? JSON.parse(stored) : [];
+            messages.push(message);
+            localStorage.setItem(this.storageKey, JSON.stringify(messages));
+        } catch (e) {
+            console.error('Failed to save message:', e);
+        }
+    },
+
+    renderMessage(msg, animate = false) {
+        const container = document.getElementById('freq-messages');
+        if (!container) return;
+
+        const isUser = msg.sender === 'user';
+        const time = new Date(msg.timestamp).toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'} ${animate ? 'opacity-0' : ''}`;
+
+        msgDiv.innerHTML = `
+            <div class="max-w-[75%] ${isUser ? 'bg-cyan-600' : 'bg-slate-700'} rounded-lg px-4 py-2.5 shadow-lg">
+                <div class="text-sm text-white break-words">${this.escapeHtml(msg.text)}</div>
+                <div class="text-[9px] ${isUser ? 'text-cyan-200' : 'text-slate-400'} mt-1 font-mono">${time}</div>
+            </div>
+        `;
+
+        container.appendChild(msgDiv);
+
+        if (animate) {
+            requestAnimationFrame(() => {
+                msgDiv.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+                msgDiv.style.transform = 'translateY(10px)';
+                requestAnimationFrame(() => {
+                    msgDiv.style.opacity = '1';
+                    msgDiv.style.transform = 'translateY(0)';
+                });
+            });
+        }
+    },
+
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    },
+
+    clearAll() {
+        if (confirm('Clear all messages? This cannot be undone.')) {
+            localStorage.removeItem(this.storageKey);
+            this.loadMessages();
+        }
+    }
+};
 
 const DecisionApp = {
     options: ["Subway 🥪", "Pizza 🍕", "Chinese 🍜", "Nothing (Hawa) 🌬️", "Maggi 🍝", "Ice Cream 🍦"],
@@ -2491,6 +2696,7 @@ function startCountdownGatekeeper() {
 }
 
 
+
 // Skip Countdown Logic
 window.skipCountdown = function () {
     state.countdownFinished = true;
@@ -2499,6 +2705,16 @@ window.skipCountdown = function () {
     if (cd) cd.style.display = 'none';
     playBirthdaySequence();
 };
+
+// Test 12:21 AM Easter Egg
+window.test1221EasterEgg = function () {
+    createModal({
+        title: "12:21 AM — June 20, 2024",
+        desc: "You stayed up to see this.<br><br>That means something.<br><br>This was the minute we first talked. The minute a random 'Hi' turned into months of late nights, inside jokes, and a friendship I never saw coming.<br><br>You didn't just pass through my life.<br>You changed it.<br><br>Some connections are meant to last.<br>This is one of them. ❤️",
+        icon: "🌙"
+    });
+};
+
 
 /* === PHASE 2: JOURNEY SEQUENCE === */
 function playJourneyIntro() {
@@ -2809,9 +3025,18 @@ function enterDesktop() {
     const boot = document.getElementById('boot-sequence');
     if (boot) boot.style.display = 'none';
 
-    // 2. Fade OUT Space Background
+    // 2. Fade OUT Space Background with Warp
     const space = document.getElementById('space-bg');
-    if (space) space.style.opacity = 0;
+    if (space) {
+        space.classList.add('space-warp');
+        // Delayed opacity fade to let the stretch effect play out
+        setTimeout(() => {
+            space.style.opacity = 0;
+        }, 800);
+        setTimeout(() => {
+            space.style.display = 'none';
+        }, 2000);
+    }
 
     // 3. Fade IN Light Desktop Background
     const desktopBg = document.getElementById('desktop-bg');
@@ -4729,7 +4954,7 @@ function initNetworkStatus() {
             icon.className = isOnline ? 'fas fa-wifi text-[14px]' : 'fas fa-wifi text-[14px] text-red-500 opacity-50';
             icon.parentElement.title = isOnline ? 'Wi-Fi: Connected (Strong)' : 'Wi-Fi: Disconnected';
         }
-        setSystemStatus(isOnline ? 'Online' : 'Offline', 0);
+        // setSystemStatus(isOnline ? 'Online' : 'Offline', 0); // Function not defined, commented out
     };
     window.addEventListener('online', update);
     window.addEventListener('offline', update);
@@ -5108,14 +5333,135 @@ function toggleUCLMode() {
 
 function createModal({ title, desc, icon }) {
     const modal = document.createElement('div');
-    modal.className = 'fixed inset-0 z-[99999] flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fade-in';
+    modal.className = 'fixed inset-0 z-[99999] flex items-center justify-center p-4';
+    modal.style.cssText = 'animation: modalFadeIn 0.5s ease-out forwards;';
+
     modal.innerHTML = `
-        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl transform scale-100 transition-all">
-            <div class="text-center flex flex-col items-center">
-                <div class="text-4xl mb-4">${icon || 'ℹ️'}</div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">${title}</h3>
-                <p class="text-gray-500 text-center mb-6">${desc}</p>
-                <button class="bg-blue-500 text-white px-6 py-2 rounded-full font-bold hover:bg-blue-600 transition" onclick="this.closest('.fixed').remove()">Okay</button>
+        <style>
+            @keyframes modalFadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes modalSlideUp {
+                from { 
+                    opacity: 0;
+                    transform: translateY(30px) scale(0.95);
+                }
+                to { 
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+            }
+            @keyframes heartBeat {
+                0%, 100% { transform: scale(1); }
+                10%, 30% { transform: scale(1.1); }
+                20%, 40% { transform: scale(1.05); }
+            }
+            @keyframes shimmer {
+                0% { background-position: -1000px 0; }
+                100% { background-position: 1000px 0; }
+            }
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
+            }
+            .modal-container {
+                animation: modalSlideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            }
+            .modal-icon {
+                animation: float 3s ease-in-out infinite;
+                filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+            }
+            .modal-bg {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                position: relative;
+                overflow: hidden;
+            }
+            .modal-bg::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: linear-gradient(
+                    45deg,
+                    transparent 30%,
+                    rgba(255, 255, 255, 0.1) 50%,
+                    transparent 70%
+                );
+                background-size: 200% 200%;
+                animation: shimmer 3s linear infinite;
+            }
+            .modal-stars {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+            }
+            .star {
+                position: absolute;
+                width: 2px;
+                height: 2px;
+                background: white;
+                border-radius: 50%;
+                opacity: 0.7;
+                animation: twinkle 2s ease-in-out infinite;
+            }
+            @keyframes twinkle {
+                0%, 100% { opacity: 0.3; }
+                50% { opacity: 1; }
+            }
+        </style>
+        
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-md"></div>
+        
+        <!-- Modal Container -->
+        <div class="modal-container relative bg-white rounded-3xl shadow-2xl overflow-hidden max-w-md w-full">
+            <!-- Gradient Background -->
+            <div class="modal-bg p-8 pb-6 relative">
+                <!-- Animated Stars -->
+                <div class="modal-stars">
+                    <div class="star" style="top: 10%; left: 15%; animation-delay: 0s;"></div>
+                    <div class="star" style="top: 20%; left: 80%; animation-delay: 0.5s;"></div>
+                    <div class="star" style="top: 60%; left: 20%; animation-delay: 1s;"></div>
+                    <div class="star" style="top: 70%; left: 70%; animation-delay: 1.5s;"></div>
+                    <div class="star" style="top: 40%; left: 50%; animation-delay: 0.8s;"></div>
+                    <div class="star" style="top: 85%; left: 40%; animation-delay: 1.2s;"></div>
+                </div>
+                
+                <!-- Icon -->
+                <div class="modal-icon text-7xl mb-4 text-center relative z-10">
+                    ${icon || 'ℹ️'}
+                </div>
+                
+                <!-- Title -->
+                <h3 class="text-2xl font-serif font-bold text-white text-center mb-2 relative z-10 tracking-wide">
+                    ${title}
+                </h3>
+            </div>
+            
+            <!-- Content -->
+            <div class="p-8 pt-6 bg-gradient-to-b from-white to-gray-50">
+                <p class="text-gray-700 text-center leading-relaxed text-base font-light" style="line-height: 1.8;">
+                    ${desc}
+                </p>
+                
+                <!-- Button -->
+                <div class="mt-8 flex justify-center">
+                    <button 
+                        class="group relative px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 overflow-hidden"
+                        onclick="this.closest('.fixed').style.animation='modalFadeIn 0.3s ease-out reverse'; setTimeout(() => this.closest('.fixed').remove(), 300);">
+                        <span class="absolute inset-0 bg-gradient-to-r from-purple-400 to-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                        <span class="relative flex items-center gap-2">
+                            <span>Close</span>
+                            <span class="text-sm">❤️</span>
+                        </span>
+                    </button>
+                </div>
             </div>
         </div>
     `;
@@ -6825,8 +7171,6 @@ apps.push({
 
 
 
-
-
 /* 6. HARSHIT'S COMPASS */
 window.spinCompass = function () {
     const n = document.getElementById('c-needle');
@@ -7750,4 +8094,969 @@ document.addEventListener('mousemove', (e) => {
 });
 
 
+
+/**
+ * ========================================
+ * NOTIFICATION SYSTEM FOR V-SPACE
+ * ========================================
+ * A loving notification system with time-based,
+ * interactive, and care-filled messages
+ */
+
+// === CONFIGURATION ===
+const NotificationConfig = {
+    enabled: true,
+    seenNotifications: new Set(),
+    currentInterval: null,
+    currentNotification: null,
+    sessionStartTime: new Date(),
+    last1221Check: null
+};
+
+// === NOTIFICATION DATABASE ===
+const NotificationDatabase = {
+    // Affirmations (show randomly)
+    affirmations: [
+        {
+            id: 'virtual-hug',
+            title: 'ðŸ¤— Virtual Hug Incoming',
+            body: 'A virtual hug is being sent your way. Please accept.',
+            emoji: 'ðŸ¤—',
+            action: () => showHugAnimation()
+        },
+        {
+            id: 'precious-file',
+            title: 'ðŸ’Ž System Rename',
+            body: 'If you were a file, you\'d be named `precious-things.dat`',
+            emoji: 'ðŸ“',
+            action: () => showFileRenameEffect()
+        },
+        {
+            id: 'positivity-wave',
+            title: 'âœ¨ Positivity Transmission',
+            body: 'Sending a wave of positivity directly to your screen.',
+            emoji: 'ðŸŒŠ',
+            action: () => showPositivityWave()
+        }
+    ],
+
+    // Time-based care reminders (minutes from session start)
+    careReminders: [
+        {
+            id: 'hydration-2min',
+            minutes: 2,
+            title: '💧 Hydration Check',
+            body: 'Gentle reminder: Please stay hydrated. A glass of water is recommended.',
+            emoji: '💧',
+            action: () => openWaterTracker()
+        },
+        {
+            id: 'eye-rest-5min',
+            minutes: 5,
+            title: 'ðŸ‘€ Eye Care Protocol',
+            body: 'Don\'t forget to rest your eyes for a bit. You deserve a break.',
+            emoji: 'ðŸ‘ï¸',
+            action: () => startEyeRestMode()
+        },
+        {
+            id: 'walk-15min',
+            minutes: 15,
+            title: 'ðŸš¶ Movement Scheduled',
+            body: 'A short walk has been scheduled. It\'s a great way to defragment your thoughts.',
+            emoji: 'ðŸŒ±',
+            action: () => showWalkEncouragement()
+        },
+        {
+            id: 'music-25min',
+            minutes: 25,
+            title: 'ðŸŽµ Music Break',
+            body: 'Time to listen to a favorite song and just vibe.',
+            emoji: 'ðŸŽ§',
+            action: () => Apps.open('app-mixtape')
+        },
+        {
+            id: 'cleanup-38min',
+            minutes: 38,
+            title: 'ðŸ§¹ Space Optimization',
+            body: 'A tidy space can lead to a tidy mind. Maybe a quick 5-minute cleanup?',
+            emoji: 'âœ¨',
+            action: () => showCleanupTips()
+        },
+        {
+            id: 'checkin-60min',
+            minutes: 60,
+            title: 'ðŸ’­ System Check-In',
+            body: 'Just checking in. No reason, just wanted to see how you are.',
+            emoji: 'ðŸ’™',
+            action: () => showCheckInMessage()
+        }
+    ],
+
+    // Fun notifications (random triggers)
+    funNotifications: [
+        {
+            id: 'riddle-4min',
+            minutes: 4,
+            title: 'ðŸ¤” Riddle Time',
+            body: 'What has an eye but cannot see?',
+            emoji: 'ðŸ§©',
+            action: () => showRiddleGame()
+        },
+        {
+            id: 'dad-joke',
+            title: 'ðŸ˜„ Dad Joke Module Active',
+            body: 'Why don\'t scientists trust atoms? Because they make up everything!',
+            emoji: 'ðŸ¤“',
+            action: () => showMoreJokes()
+        },
+        {
+            id: 'poem-35min',
+            minutes: 35,
+            title: 'ðŸ“œ Poem Detected',
+            body: 'Roses are red, violets are blue, this is a notification, boo!',
+            emoji: 'ðŸŒ¹',
+            action: () => showFullPoem()
+        },
+        {
+            id: 'mouse-zoomies-50min',
+            minutes: 50,
+            title: 'ðŸ–±ï¸ Mouse Activity Required',
+            body: 'Your computer mouse wants to play. Let\'s do some zoomies on the screen.',
+            emoji: 'ðŸ–±ï¸',
+            action: () => startMouseGame()
+        },
+        {
+            id: 'cryptic-message-57min',
+            minutes: 57,
+            title: 'ðŸ” Encrypted Message',
+            body: 'A secret admirer has left you a cryptic message: `01001001 01001100 01011001`',
+            emoji: 'ðŸ’Œ',
+            action: () => decodeCrypticMessage()
+        }
+    ],
+
+    // Inside jokes & special moments
+    insideJokes: [
+        {
+            id: 'hmmm-detected',
+            title: 'ðŸ¤” A "hmmm" was detected...',
+            body: 'Someone is thinking. Click to see what about.',
+            emoji: 'ðŸ’­',
+            action: () => showThinkingBubble()
+        },
+        {
+            id: 'goodnight-sweet',
+            title: 'ðŸŒ™ Sweet Dreams',
+            body: 'goodnight sweetdreams take care sleep well',
+            emoji: 'ðŸ˜´',
+            action: () => showGoodnightSequence()
+        },
+        {
+            id: 'hydration-reminder',
+            title: 'ðŸ’§ Thirsty?',
+            body: 'A reminder to drink some water. Stay hydrated!',
+            emoji: '',
+            action: () => openWaterTracker()
+        },
+        {
+            id: 'sweet-gibberish',
+            title: 'ðŸ’• Someone\'s Being Cute',
+            body: '"ole olee" was detected in the archives.',
+            emoji: 'ðŸ¥°',
+            action: () => showCuteArchives()
+        },
+        {
+            id: 'acche-sapne',
+            title: 'âœ¨ Sweet Dreams Are Made of This',
+            body: '"acche acche sapne dekh" - A wish for a peaceful night',
+            emoji: 'ðŸŒŸ',
+            action: () => showDreamWish()
+        }
+    ],
+
+    // Time-specific greetings
+    timeGreetings: {
+        morning: {
+            id: 'morning-greeting',
+            title: 'Good morning! â˜€ï¸',
+            body: 'I hope today is gentle with you.',
+            emoji: 'ðŸŒ…',
+            action: () => showMorningMotivation()
+        },
+        afternoon: {
+            id: 'afternoon-greeting',
+            title: 'Happy afternoon! ðŸŒ¤ï¸',
+            body: 'You\'re doing great. Keep going.',
+            emoji: 'â˜€ï¸',
+            action: () => showAfternoonBoost()
+        },
+        evening: {
+            id: 'evening-greeting',
+            title: 'Happy evening! ðŸŒ™',
+            body: 'Take a moment to breathe. You made it through another day.',
+            emoji: 'ðŸŒ†',
+            action: () => showEveningReflection()
+        },
+        night: {
+            id: 'night-greeting',
+            title: 'You\'re up late! ðŸŒƒ',
+            body: 'It\'s late. Please rest when you can. Even at this hourâ€¦ you\'re not alone.',
+            emoji: 'â­',
+            action: () => showNightCare()
+        }
+    },
+
+    // Care messages (show periodically)
+    careMessages: [
+        {
+            id: 'water-check',
+            title: 'ðŸ’§ Hydration Status',
+            body: 'Have you had some water today? Just checking.',
+            emoji: '',
+            action: () => openWaterTracker()
+        },
+        {
+            id: 'smile-reminder',
+            title: 'ðŸ˜Š Emotion Module',
+            body: 'Heyâ€¦ smile a little. Just for me.',
+            emoji: 'ðŸ’›',
+            action: () => showSmileEncouragement()
+        },
+        {
+            id: 'proud-of-you',
+            title: 'â­ Achievement Logged',
+            body: 'Still proud of you. Yes, again.',
+            emoji: 'ðŸŒŸ',
+            action: () => showPrideMessage()
+        },
+        {
+            id: 'lunch-reminder',
+            title: 'ðŸ½ï¸ Nutrition Alert',
+            body: 'No skipping lunch ðŸ¤¨',
+            emoji: 'ðŸ¥—',
+            action: () => showLunchReminder()
+        },
+        {
+            id: 'stretch-reminder',
+            title: 'ðŸ§˜ Physical Wellbeing',
+            body: 'Stretch your neck and shoulders.',
+            emoji: 'ðŸ’ª',
+            action: () => showStretchGuide()
+        },
+        {
+            id: 'take-care',
+            title: 'ðŸ’™ System Message',
+            body: 'Take care, please.',
+            emoji: 'ðŸ’™',
+            action: () => showCareMessage()
+        }
+    ]
+};
+
+// === NOTIFICATION TRACKER ===
+const NotificationTracker = {
+    shown: new Set(),
+    lastTimeBased: 0,
+    lastCareMessage: 0,
+    lastFunNotif: 0
+};
+
+// === CORE NOTIFICATION ENGINE ===
+function initNotificationSystem() {
+    console.log('%c[Notification System] ðŸ’Œ Initializing...', 'color: #ec4899; font-weight: bold;');
+
+    // Check for 12:21 AM every minute
+    setInterval(check1221EasterEgg, 60000);
+
+    // Start time-based notification checker
+    setInterval(checkTimeBasedNotifications, 60000); // Check every minute
+
+    // Random care messages every 10-20 minutes
+    const randomCareInterval = () => {
+        const min = 10 * 60 * 1000; // 10 minutes
+        const max = 20 * 60 * 1000; // 20 minutes
+        return Math.random() * (max - min) + min;
+    };
+
+    const scheduleNextCareMessage = () => {
+        setTimeout(() => {
+            showRandomCareMessage();
+            scheduleNextCareMessage();
+        }, randomCareInterval());
+    };
+
+    scheduleNextCareMessage();
+
+    // Random fun notification every 15-30 minutes
+    const randomFunInterval = () => {
+        const min = 15 * 60 * 1000;
+        const max = 30 * 60 * 1000;
+        return Math.random() * (max - min) + min;
+    };
+
+    const scheduleNextFunNotif = () => {
+        setTimeout(() => {
+            showRandomFunNotification();
+            scheduleNextFunNotif();
+        }, randomFunInterval());
+    };
+
+    scheduleNextFunNotif();
+
+    console.log('%c[Notification System] âœ… Ready to care for you', 'color: #10b981; font-weight: bold;');
+}
+
+// === 12:21 AM EASTER EGG ===
+function check1221EasterEgg() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+
+    if (hours === 0 && minutes === 21) {
+        const today = now.toDateString();
+        if (NotificationConfig.last1221Check !== today) {
+            NotificationConfig.last1221Check = today;
+            show1221Notification();
+        }
+    }
+}
+
+function show1221Notification() {
+    const notification = {
+        id: '1221-easter-egg',
+        title: 'ðŸŒ™ 12:21 AM - The Time It All Started',
+        body: 'Some moments last forever. âœ¨\n\nJune 20, 2024 â€¢ 12:21 AM\nA conversation began.',
+        emoji: 'â°',
+        action: () => {
+            if (typeof Apps !== 'undefined') {
+                Apps.open('first-conversation');
+            }
+            fireConfetti();
+        }
+    };
+
+    displayNotification(notification, true); // Special = true for this one
+}
+
+// === TIME-BASED NOTIFICATIONS ===
+function checkTimeBasedNotifications() {
+    const sessionTime = Math.floor((new Date() - NotificationConfig.sessionStartTime) / 60000); // Minutes
+
+    // Check care reminders
+    NotificationDatabase.careReminders.forEach(reminder => {
+        if (sessionTime >= reminder.minutes && !NotificationTracker.shown.has(reminder.id)) {
+            NotificationTracker.shown.add(reminder.id);
+            displayNotification(reminder);
+        }
+    });
+
+    // Check fun notifications
+    NotificationDatabase.funNotifications.forEach(fun => {
+        if (fun.minutes && sessionTime >= fun.minutes && !NotificationTracker.shown.has(fun.id)) {
+            NotificationTracker.shown.add(fun.id);
+            displayNotification(fun);
+        }
+    });
+}
+
+// === RANDOM MESSAGE SELECTORS ===
+function showRandomCareMessage() {
+    const now = Date.now();
+    if (now - NotificationTracker.lastCareMessage < 5 * 60 * 1000) return; // Don't spam
+
+    const messages = NotificationDatabase.careMessages.filter(m => !NotificationTracker.shown.has(m.id));
+    if (messages.length === 0) NotificationTracker.shown.clear(); // Reset if all shown
+
+    const message = messages[Math.floor(Math.random() * messages.length)] || NotificationDatabase.careMessages[0];
+    NotificationTracker.lastCareMessage = now;
+    displayNotification(message);
+}
+
+function showRandomFunNotification() {
+    const now = Date.now();
+    if (now - NotificationTracker.lastFunNotif < 10 * 60 * 1000) return;
+
+    const funs = NotificationDatabase.funNotifications.filter(f => !f.minutes); // Get non-time-based
+    const fun = funs[Math.floor(Math.random() * funs.length)];
+
+    if (fun) {
+        NotificationTracker.lastFunNotif = now;
+        displayNotification(fun);
+    }
+}
+
+// === DISPLAY NOTIFICATION (Main Function) ===
+function displayNotification(notification, isSpecial = false) {
+    // Create notification element
+    const notifEl = document.createElement('div');
+    notifEl.className = `notification-toast ${isSpecial ? 'special' : ''}`;
+    notifEl.innerHTML = `
+        <div class="notif-icon">${notification.emoji}</div>
+        <div class="notif-content">
+            <div class="notif-title">${notification.title}</div>
+            <div class="notif-body">${notification.body}</div>
+        </div>
+        <div class="notif-close" onclick="this.parentElement.classList.add('dismissed')">Ã—</div>
+    `;
+
+    // Add click handler
+    notifEl.onclick = (e) => {
+        if (e.target.classList.contains('notif-close')) return;
+        notifEl.classList.add('clicked');
+        if (notification.action) {
+            notification.action();
+        }
+        setTimeout(() => {
+            notifEl.classList.add('dismissed');
+        }, 300);
+    };
+
+    // Add to DOM
+    let container = document.getElementById('notification-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'notification-container';
+        document.body.appendChild(container);
+    }
+
+    container.appendChild(notifEl);
+
+    // Animate in
+    setTimeout(() => notifEl.classList.add('show'), 10);
+
+    // Auto-dismiss after 10 seconds (unless special)
+    if (!isSpecial) {
+        setTimeout(() => {
+            if (!notifEl.classList.contains('dismissed')) {
+                notifEl.classList.add('dismissed');
+            }
+        }, 10000);
+    }
+
+    // Remove from DOM after animation
+    notifEl.addEventListener('transitionend', (e) => {
+        if (e.propertyName === 'opacity' && notifEl.classList.contains('dismissed')) {
+            setTimeout(() => notifEl.remove(), 300);
+        }
+    });
+}
+
+// === NOTIFICATION ACTIONS (Interactive Windows) ===
+function showHugAnimation() {
+    const modal = createInteractiveModal({
+        title: 'ðŸ¤— Virtual Hug',
+        content: `
+            <div class="hug-animation">
+                <div class="hug-circle"></div>
+                <div class="hug-text">*warm hug*</div>
+                <div class="hug-message">You're appreciated. Always.</div>
+            </div>
+        `
+    });
+    fireConfetti();
+}
+
+function showFileRenameEffect() {
+    createInteractiveModal({
+        title: 'ðŸ“ File Renamed',
+        content: `
+            <div class="file-rename-effect">
+                <div class="old-name">random_person_2024.tmp</div>
+                <div class="arrow">â†’</div>
+                <div class="new-name glow-text">precious-things.dat</div>
+                <div class="file-info">Status: <span class="text-green-400">Protected</span></div>
+                <div class="file-info">Importance: <span class="text-yellow-400">Maximum</span></div>
+            </div>
+        `
+    });
+}
+
+function showPositivityWave() {
+    createInteractiveModal({
+        title: 'âœ¨ Positivity Wave',
+        content: `
+            <div class="positivity-wave">
+                <div class="wave-rings">
+                    <div class="wave-ring"></div>
+                    <div class="wave-ring"></div>
+                    <div class="wave-ring"></div>
+                </div>
+                <div class="wave-message">
+                    <p>ðŸŒŠ Sending good vibes...</p>
+                    <p>ðŸ’« Transmitting encouragement...</p>
+                    <p>âœ¨ Broadcasting appreciation...</p>
+                    <p class="mt-4 text-lg font-bold">You've got this.</p>
+                </div>
+            </div>
+        `
+    });
+    fireConfetti();
+}
+
+function openWaterTracker() {
+    createInteractiveModal({
+        title: 'ðŸ’§ Hydration Tracker',
+        content: `
+            <div class="water-tracker">
+                <div class="water-glass">
+                    <div class="water-level" id="water-level"></div>
+                    <div class="glass-outline"></div>
+                </div>
+                <div class="water-message">
+                    <p>Your body needs water to function.</p>
+                    <p>Your mind needs care to flourish.</p>
+                    <p class="mt-4">Click to mark hydration complete:</p>
+                    <button class="btn-primary mt-2" onclick="markHydrated()">I Drank Water! ðŸ’§</button>
+                </div>
+            </div>
+        `
+    });
+}
+
+function markHydrated() {
+    const level = document.getElementById('water-level');
+    if (level) {
+        level.style.height = '80%';
+        setTimeout(() => {
+            createModal({
+                title: 'Hydration Complete',
+                desc: 'Good job! Your cells are celebrating. ðŸŽ‰',
+                icon: 'âœ…'
+            });
+        }, 500);
+    }
+}
+
+function startEyeRestMode() {
+    createInteractiveModal({
+        title: 'ðŸ‘ï¸ Eye Rest Mode',
+        content: `
+            <div class="eye-rest-mode">
+                <div class="eye-icon">ðŸ‘ï¸</div>
+                <div class="rest-message">
+                    <h3>20-20-20 Rule</h3>
+                    <p>Every 20 minutes, look at something 20 feet away for 20 seconds.</p>
+                    <div class="timer-display" id="eye-timer">20</div>
+                    <button class="btn-primary" onclick="startEyeTimer()">Start Timer</button>
+                </div>
+            </div>
+        `
+    });
+}
+
+function startEyeTimer() {
+    let seconds = 20;
+    const timerEl = document.getElementById('eye-timer');
+    const interval = setInterval(() => {
+        seconds--;
+        if (timerEl) timerEl.textContent = seconds;
+        if (seconds <= 0) {
+            clearInterval(interval);
+            if (timerEl) timerEl.textContent = 'âœ… Done!';
+            fireConfetti();
+        }
+    }, 1000);
+}
+
+function showWalkEncouragement() {
+    createInteractiveModal({
+        title: 'ðŸš¶ Movement Break',
+        content: `
+            <div class="walk-encouragement">
+                <div class="walking-figure">ðŸš¶â€â™‚ï¸</div>
+                <div class="walk-message">
+                    <h3>Your body wants to move</h3>
+                    <p>Even 5 minutes helps:</p>
+                    <ul class="walk-benefits">
+                        <li>âœ“ Clears your mind</li>
+                        <li>âœ“ Boosts energy</li>
+                        <li>âœ“ Improves mood</li>
+                        <li>âœ“ Helps you think better</li>
+                    </ul>
+                    <p class="mt-4 italic">Take a short walk. Your future self will thank you.</p>
+                </div>
+            </div>
+        `
+    });
+}
+
+function showCleanupTips() {
+    createInteractiveModal({
+        title: 'ðŸ§¹ Space Optimization',
+        content: `
+            <div class="cleanup-tips">
+                <h3>5-Minute Cleanup Challenge</h3>
+                <div class="cleanup-tasks">
+                    <div class="task">ðŸ“‹ Clear your desk</div>
+                    <div class="task">ðŸ—‘ï¸ Empty trash</div>
+                    <div class="task">ðŸ“š Organize one area</div>
+                    <div class="task">ðŸ’¡ Tidy your space</div>
+                </div>
+                <p class="cleanup-quote">"A clear space creates room for clear thoughts."</p>
+            </div>
+        `
+    });
+}
+
+function showCheckInMessage() {
+    createInteractiveModal({
+        title: 'ðŸ’­ How Are You?',
+        content: `
+            <div class="checkin-message">
+                <p class="checkin-text">Just checking in.</p>
+                <p class="checkin-sub">No reason. Just wanted to see how you are.</p>
+                <div class="mood-selector">
+                    <button class="mood-btn" onclick="respondMood('great')">ðŸ˜Š Great</button>
+                    <button class="mood-btn" onclick="respondMood('okay')">ðŸ˜ Okay</button>
+                    <button class="mood-btn" onclick="respondMood('tired')">ðŸ˜” Tired</button>
+                    <button class="mood-btn" onclick="respondMood('stressed')">ðŸ˜“ Stressed</button>
+                </div>
+                <p class="mt-4 text-sm text-gray-400">Whatever you're feeling, it's valid.</p>
+            </div>
+        `
+    });
+}
+
+function respondMood(mood) {
+    const responses = {
+        great: "That's wonderful! I'm happy you're doing well. Keep shining! âœ¨",
+        okay: "That's okay. Some days are just 'okay,' and that's perfectly fine. You're doing your best. ðŸ’™",
+        tired: "I hear you. Rest when you can. You deserve it. Take care of yourself. ðŸ˜´",
+        stressed: "I'm sorry you're feeling stressed. Take a deep breath. One step at a time. You've got this. ðŸ’ª"
+    };
+
+    createModal({
+        title: 'Message Received',
+        desc: responses[mood],
+        icon: 'ðŸ’Œ'
+    });
+}
+
+function showRiddleGame() {
+    createInteractiveModal({
+        title: 'ðŸ§© Riddle Time',
+        content: `
+            <div class="riddle-game">
+                <div class="riddle-question">What has an eye but cannot see?</div>
+                <input type="text" id="riddle-answer" class="riddle-input" placeholder="Type your answer...">
+                <button class="btn-primary mt-4" onclick="checkRiddleAnswer()">Submit</button>
+                <div id="riddle-result" class="riddle-result"></div>
+            </div>
+        `
+    });
+}
+
+function checkRiddleAnswer() {
+    const answer = document.getElementById('riddle-answer')?.value.toLowerCase() || '';
+    const result = document.getElementById('riddle-result');
+
+    if (answer.includes('needle') || answer.includes('storm') || answer.includes('potato')) {
+        result.innerHTML = 'âœ… Correct! Smart cookie! ðŸª';
+        result.className = 'riddle-result correct';
+        fireConfetti();
+    } else {
+        result.innerHTML = 'ðŸ¤” Try again! (Hint: Think sewing... or weather... or vegetables!)';
+        result.className = 'riddle-result incorrect';
+    }
+}
+
+function showMoreJokes() {
+    const jokes = [
+        "What do you call a fake noodle? An impasta!",
+        "Why did the scarecrow win an award? He was outstanding in his field!",
+        "What do you call a bear with no teeth? A gummy bear!",
+        "Why don't eggs tell jokes? They'd crack each other up!",
+        "What's orange and sounds like a parrot? A carrot!"
+    ];
+
+    const joke = jokes[Math.floor(Math.random() * jokes.length)];
+    createModal({
+        title: 'ðŸ˜„ Dad Joke Activated',
+        desc: joke,
+        icon: 'ðŸ¤“'
+    });
+}
+
+function showFullPoem() {
+    createInteractiveModal({
+        title: 'ðŸ“œ Poem For You',
+        content: `
+            <div class="poem-display">
+                <div class="poem-text">
+                    Roses are red,<br>
+                    Violets are blue,<br>
+                    This notification appeared,<br>
+                    Just to check on you.<br>
+                    <br>
+                    You matter here,<br>
+                    In this digital space,<br>
+                    Where care is coded<br>
+                    In every place. âœ¨
+                </div>
+            </div>
+        `
+    });
+}
+
+function startMouseGame() {
+    createInteractiveModal({
+        title: 'ðŸ–±ï¸ Mouse Zoomies!',
+        content: `
+            <div class="mouse-game">
+                <div class="game-instructions">Move your mouse around the box!</div>
+                <div class="mouse-playground" id="mouse-playground">
+                    <div class="mouse-trail" id="mouse-trail"></div>
+                </div>
+                <div class="game-score">Zoomies: <span id="zoomie-count">0</span></div>
+            </div>
+        `,
+        onOpen: initMouseGame
+    });
+}
+
+function initMouseGame() {
+    const playground = document.getElementById('mouse-playground');
+    const trail = document.getElementById('mouse-trail');
+    const counter = document.getElementById('zoomie-count');
+    let zoomies = 0;
+
+    if (playground) {
+        playground.addEventListener('mousemove', (e) => {
+            const rect = playground.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const particle = document.createElement('div');
+            particle.className = 'mouse-particle';
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            playground.appendChild(particle);
+
+            setTimeout(() => particle.remove(), 500);
+
+            zoomies++;
+            if (counter) counter.textContent = zoomies;
+        });
+    }
+}
+
+function decodeCrypticMessage() {
+    createInteractiveModal({
+        title: 'ðŸ” Encrypted Message',
+        content: `
+            <div class="cryptic-message">
+                <div class="encrypted-text">01001001 01001100 01011001</div>
+                <button class="btn-primary mt-4" onclick="revealCrypticMessage()">Decrypt</button>
+                <div id="decrypted-message" class="decrypted-message"></div>
+            </div>
+        `
+    });
+}
+
+function revealCrypticMessage() {
+    const msgEl = document.getElementById('decrypted-message');
+    if (msgEl) {
+        msgEl.innerHTML = `
+            <div class="decrypt-animation">
+                <div class="decrypting">Decrypting...</div>
+                <div class="decoded-text">I Love You â¤ï¸</div>
+            </div>
+        `;
+        setTimeout(() => fireConfetti(), 500);
+    }
+}
+
+// Additional care functions
+function showThinkingBubble() {
+    createModal({
+        title: 'ðŸ¤” Thinking...',
+        desc: 'Probably thinking about something important. Or food. Could be food.',
+        icon: 'ðŸ’­'
+    });
+}
+
+function showGoodnightSequence() {
+    createInteractiveModal({
+        title: 'ðŸŒ™ Goodnight',
+        content: `
+            <div class="goodnight-sequence">
+                <div class="moon-icon">ðŸŒ™</div>
+                <div class="goodnight-text">
+                    <p>Goodnight.</p>
+                    <p>Sweet dreams.</p>
+                    <p>Take care.</p>
+                    <p>Sleep well.</p>
+                </div>
+                <div class="stars-container">
+                    <div class="star">â­</div>
+                    <div class="star">âœ¨</div>
+                    <div class="star">â­</div>
+                </div>
+            </div>
+        `
+    });
+}
+
+function showCuteArchives() {
+    createModal({
+        title: 'ðŸ’• Cute Archive Found',
+        desc: 'The "ole olee" files have been detected. Maximum cuteness levels confirmed. ðŸ¥°',
+        icon: 'ðŸ“'
+    });
+}
+
+function showDreamWish() {
+    createModal({
+        title: 'âœ¨ Dream Wish',
+        desc: 'Acche acche sapne dekh. (Have the sweetest dreams.) May tonight bring you peace and rest. ðŸŒŸ',
+        icon: 'ðŸŒ™'
+    });
+}
+
+function showMorningMotivation() {
+    createModal({
+        title: 'Good Morning â˜€ï¸',
+        desc: 'A new day. A fresh start. You\'ve got this. I hope today is gentle with you.',
+        icon: 'ðŸŒ…'
+    });
+}
+
+function showAfternoonBoost() {
+    createModal({
+        title: 'Happy Afternoon ðŸŒ¤ï¸',
+        desc: 'You\'re doing great. Keep going. You\'re making progress, even if it doesn\'t feel like it.',
+        icon: 'âœ¨'
+    });
+}
+
+function showEveningReflection() {
+    createModal({
+        title: 'Happy Evening ðŸŒ™',
+        desc: 'Take a moment to breathe. You made it through another day. That matters.',
+        icon: 'ðŸŒ†'
+    });
+}
+
+function showNightCare() {
+    createInteractiveModal({
+        title: 'You\'re Up Late ðŸŒƒ',
+        content: `
+            <div class="night-care">
+                <div class="night-message">
+                    <p>It's late. Please rest when you can.</p>
+                    <p>Even at this hourâ€¦ you're not alone.</p>
+                    <p class="mt-4 text-sm text-gray-400">Whatever's keeping you up, I hope you find peace soon.</p>
+                </div>
+                <div class="night-actions">
+                    <button class="btn-secondary" onclick="Apps.open('mr-snow')">Need Comfort?</button>
+                    <button class="btn-secondary" onclick="Apps.open('app-bloom')">Read Something Soft</button>
+                </div>
+            </div>
+        `
+    });
+}
+
+function showSmileEncouragement() {
+    createModal({
+        title: 'ðŸ˜Š For You',
+        desc: 'Heyâ€¦ smile a little. Just for me. (Even a tiny one counts.) ðŸ’›',
+        icon: 'ðŸ’›'
+    });
+}
+
+function showPrideMessage() {
+    createModal({
+        title: 'â­ Still Proud',
+        desc: 'Still proud of you. Yes, again. You don\'t hear it enough, so I\'m saying it. You\'re doing well. ðŸŒŸ',
+        icon: 'ðŸŒŸ'
+    });
+}
+
+function showLunchReminder() {
+    createModal({
+        title: 'ðŸ½ï¸ Lunch Time',
+        desc: 'No skipping lunch ðŸ¤¨. Your body needs fuel. Take care of yourself.',
+        icon: 'ðŸ¥—'
+    });
+}
+
+function showStretchGuide() {
+    createInteractiveModal({
+        title: 'ðŸ§˜ Stretch Break',
+        content: `
+            <div class="stretch-guide">
+                <h3>Quick Stretches</h3>
+                <div class="stretch-list">
+                    <div class="stretch">ðŸ”„ Roll your shoulders back</div>
+                    <div class="stretch">â†”ï¸ Neck side-to-side</div>
+                    <div class="stretch">ðŸ™† Reach arms overhead</div>
+                    <div class="stretch">ðŸ¤² Wrist circles</div>
+                </div>
+                <p class="mt-4">Your body carries you all day. Show it some love.</p>
+            </div>
+        `
+    });
+}
+
+function showCareMessage() {
+    createModal({
+        title: 'ðŸ’™ System Message',
+        desc: 'Take care, please. You matter to me. Whatever you\'re going through, I\'m here for you.',
+        icon: 'ðŸ’™'
+    });
+}
+
+// === HELPER: INTERACTIVE MODAL ===
+function createInteractiveModal({ title, content, onOpen }) {
+    const overlay = document.createElement('div');
+    overlay.className = 'interactive-modal-overlay';
+    overlay.innerHTML = `
+        <div class="interactive-modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title">${title}</h3>
+                <button class="modal-close" onclick="this.closest('.interactive-modal-overlay').remove()">Ã—</button>
+            </div>
+            <div class="modal-body">
+                ${content}
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    // Click outside to close
+    overlay.onclick = (e) => {
+        if (e.target === overlay) overlay.remove();
+    };
+
+    // Trigger onOpen callback if provided
+    if (onOpen) setTimeout(onOpen, 100);
+
+    return overlay;
+}
+
+// === HELPER: CONFETTI ===
+function fireConfetti() {
+    if (typeof confetti === 'function') {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
+    }
+}
+
+// === INITIALIZE ON DESKTOP LOAD ===
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait for desktop to be visible before starting notifications
+    const checkDesktop = setInterval(() => {
+        const desktop = document.getElementById('desktop');
+        if (desktop && window.getComputedStyle(desktop).display !== 'none') {
+            clearInterval(checkDesktop);
+            setTimeout(initNotificationSystem, 3000); // Start 3 seconds after desktop loads
+        }
+    }, 500);
+});
+
+console.log('%c[Notification System]  Loaded and ready', 'color: #ec4899; font-weight: bold;');
 
