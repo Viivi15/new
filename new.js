@@ -1,15 +1,4 @@
-﻿/**
- * Minified by jsDelivr using Terser v5.37.0.
- * Original file: /npm/canvas-confetti@1.6.0/dist/confetti.browser.js
- *
- * Do NOT use SRI with dynamically generated files! More information: https://www.jsdelivr.com/using-sri-with-dynamic-files
- */
-!function (t, e) { !function t(e, n, a, i) { var o = !!(e.Worker && e.Blob && e.Promise && e.OffscreenCanvas && e.OffscreenCanvasRenderingContext2D && e.HTMLCanvasElement && e.HTMLCanvasElement.prototype.transferControlToOffscreen && e.URL && e.URL.createObjectURL); function r() { } function l(t) { var a = n.exports.Promise, i = void 0 !== a ? a : e.Promise; return "function" == typeof i ? new i(t) : (t(r, r), null) } var c, s, u, h, f, d, m, g, b, v = (u = Math.floor(1e3 / 60), h = {}, f = 0, "function" == typeof requestAnimationFrame && "function" == typeof cancelAnimationFrame ? (c = function (t) { var e = Math.random(); return h[e] = requestAnimationFrame((function n(a) { f === a || f + u - 1 < a ? (f = a, delete h[e], t()) : h[e] = requestAnimationFrame(n) })), e }, s = function (t) { h[t] && cancelAnimationFrame(h[t]) }) : (c = function (t) { return setTimeout(t, u) }, s = function (t) { return clearTimeout(t) }), { frame: c, cancel: s }), M = (g = {}, function () { if (d) return d; if (!a && o) { var e = ["var CONFETTI, SIZE = {}, module = {};", "(" + t.toString() + ")(this, module, true, SIZE);", "onmessage = function(msg) {", "  if (msg.data.options) {", "    CONFETTI(msg.data.options).then(function () {", "      if (msg.data.callback) {", "        postMessage({ callback: msg.data.callback });", "      }", "    });", "  } else if (msg.data.reset) {", "    CONFETTI && CONFETTI.reset();", "  } else if (msg.data.resize) {", "    SIZE.width = msg.data.resize.width;", "    SIZE.height = msg.data.resize.height;", "  } else if (msg.data.canvas) {", "    SIZE.width = msg.data.canvas.width;", "    SIZE.height = msg.data.canvas.height;", "    CONFETTI = module.exports.create(msg.data.canvas);", "  }", "}"].join("\n"); try { d = new Worker(URL.createObjectURL(new Blob([e]))) } catch (t) { return void 0 !== typeof console && "function" == typeof console.warn && console.warn("🎊 Could not load worker", t), null } !function (t) { function e(e, n) { t.postMessage({ options: e || {}, callback: n }) } t.init = function (e) { var n = e.transferControlToOffscreen(); t.postMessage({ canvas: n }, [n]) }, t.fire = function (n, a, i) { if (m) return e(n, null), m; var o = Math.random().toString(36).slice(2); return m = l((function (a) { function r(e) { e.data.callback === o && (delete g[o], t.removeEventListener("message", r), m = null, i(), a()) } t.addEventListener("message", r), e(n, o), g[o] = r.bind(null, { data: { callback: o } }) })) }, t.reset = function () { for (var e in t.postMessage({ reset: !0 }), g) g[e](), delete g[e] } }(d) } return d }), p = { particleCount: 50, angle: 90, spread: 45, startVelocity: 45, decay: .9, gravity: 1, drift: 0, ticks: 200, x: .5, y: .5, shapes: ["square", "circle"], zIndex: 100, colors: ["#26ccff", "#a25afd", "#ff5e7e", "#88ff5a", "#fcff42", "#ffa62d", "#ff36ff"], disableForReducedMotion: !1, scalar: 1 }; function y(t, e, n) { return function (t, e) { return e ? e(t) : t }(t && null != t[e] ? t[e] : p[e], n) } function w(t) { return t < 0 ? 0 : Math.floor(t) } function x(t) { return parseInt(t, 16) } function C(t) { return t.map(T) } function T(t) { var e = String(t).replace(/[^0-9a-f]/gi, ""); return e.length < 6 && (e = e[0] + e[0] + e[1] + e[1] + e[2] + e[2]), { r: x(e.substring(0, 2)), g: x(e.substring(2, 4)), b: x(e.substring(4, 6)) } } function I(t) { t.width = document.documentElement.clientWidth, t.height = document.documentElement.clientHeight } function k(t) { var e = t.getBoundingClientRect(); t.width = e.width, t.height = e.height } function E(t, e, n, o, r) { var c, s, u = e.slice(), h = t.getContext("2d"), f = l((function (e) { function l() { c = s = null, h.clearRect(0, 0, o.width, o.height), r(), e() } c = v.frame((function e() { !a || o.width === i.width && o.height === i.height || (o.width = t.width = i.width, o.height = t.height = i.height), o.width || o.height || (n(t), o.width = t.width, o.height = t.height), h.clearRect(0, 0, o.width, o.height), u = u.filter((function (t) { return function (t, e) { e.x += Math.cos(e.angle2D) * e.velocity + e.drift, e.y += Math.sin(e.angle2D) * e.velocity + e.gravity, e.wobble += e.wobbleSpeed, e.velocity *= e.decay, e.tiltAngle += .1, e.tiltSin = Math.sin(e.tiltAngle), e.tiltCos = Math.cos(e.tiltAngle), e.random = Math.random() + 2, e.wobbleX = e.x + 10 * e.scalar * Math.cos(e.wobble), e.wobbleY = e.y + 10 * e.scalar * Math.sin(e.wobble); var n = e.tick++ / e.totalTicks, a = e.x + e.random * e.tiltCos, i = e.y + e.random * e.tiltSin, o = e.wobbleX + e.random * e.tiltCos, r = e.wobbleY + e.random * e.tiltSin; if (t.fillStyle = "rgba(" + e.color.r + ", " + e.color.g + ", " + e.color.b + ", " + (1 - n) + ")", t.beginPath(), "circle" === e.shape) t.ellipse ? t.ellipse(e.x, e.y, Math.abs(o - a) * e.ovalScalar, Math.abs(r - i) * e.ovalScalar, Math.PI / 10 * e.wobble, 0, 2 * Math.PI) : function (t, e, n, a, i, o, r, l, c) { t.save(), t.translate(e, n), t.rotate(o), t.scale(a, i), t.arc(0, 0, 1, r, l, c), t.restore() }(t, e.x, e.y, Math.abs(o - a) * e.ovalScalar, Math.abs(r - i) * e.ovalScalar, Math.PI / 10 * e.wobble, 0, 2 * Math.PI); else if ("star" === e.shape) for (var l = Math.PI / 2 * 3, c = 4 * e.scalar, s = 8 * e.scalar, u = e.x, h = e.y, f = 5, d = Math.PI / f; f--;)u = e.x + Math.cos(l) * s, h = e.y + Math.sin(l) * s, t.lineTo(u, h), l += d, u = e.x + Math.cos(l) * c, h = e.y + Math.sin(l) * c, t.lineTo(u, h), l += d; else t.moveTo(Math.floor(e.x), Math.floor(e.y)), t.lineTo(Math.floor(e.wobbleX), Math.floor(i)), t.lineTo(Math.floor(o), Math.floor(r)), t.lineTo(Math.floor(a), Math.floor(e.wobbleY)); return t.closePath(), t.fill(), e.tick < e.totalTicks }(h, t) })), u.length ? c = v.frame(e) : l() })), s = l })); return { addFettis: function (t) { return u = u.concat(t), f }, canvas: t, promise: f, reset: function () { c && v.cancel(c), s && s() } } } function S(t, n) { var a, i = !t, r = !!y(n || {}, "resize"), c = y(n, "disableForReducedMotion", Boolean), s = o && !!y(n || {}, "useWorker") ? M() : null, u = i ? I : k, h = !(!t || !s) && !!t.__confetti_initialized, f = "function" == typeof matchMedia && matchMedia("(prefers-reduced-motion)").matches; function d(e, n, i) { for (var o, r, l, c, s, h = y(e, "particleCount", w), f = y(e, "angle", Number), d = y(e, "spread", Number), m = y(e, "startVelocity", Number), g = y(e, "decay", Number), b = y(e, "gravity", Number), v = y(e, "drift", Number), M = y(e, "colors", C), p = y(e, "ticks", Number), x = y(e, "shapes"), T = y(e, "scalar"), I = function (t) { var e = y(t, "origin", Object); return e.x = y(e, "x", Number), e.y = y(e, "y", Number), e }(e), k = h, S = [], F = t.width * I.x, N = t.height * I.y; k--;)S.push((o = { x: F, y: N, angle: f, spread: d, startVelocity: m, color: M[k % M.length], shape: x[(c = 0, s = x.length, Math.floor(Math.random() * (s - c)) + c)], ticks: p, decay: g, gravity: b, drift: v, scalar: T }, r = void 0, l = void 0, r = o.angle * (Math.PI / 180), l = o.spread * (Math.PI / 180), { x: o.x, y: o.y, wobble: 10 * Math.random(), wobbleSpeed: Math.min(.11, .1 * Math.random() + .05), velocity: .5 * o.startVelocity + Math.random() * o.startVelocity, angle2D: -r + (.5 * l - Math.random() * l), tiltAngle: (.5 * Math.random() + .25) * Math.PI, color: o.color, shape: o.shape, tick: 0, totalTicks: o.ticks, decay: o.decay, drift: o.drift, random: Math.random() + 2, tiltSin: 0, tiltCos: 0, wobbleX: 0, wobbleY: 0, gravity: 3 * o.gravity, ovalScalar: .6, scalar: o.scalar })); return a ? a.addFettis(S) : (a = E(t, S, u, n, i)).promise } function m(n) { var o = c || y(n, "disableForReducedMotion", Boolean), m = y(n, "zIndex", Number); if (o && f) return l((function (t) { t() })); i && a ? t = a.canvas : i && !t && (t = function (t) { var e = document.createElement("canvas"); return e.style.position = "fixed", e.style.top = "0px", e.style.left = "0px", e.style.pointerEvents = "none", e.style.zIndex = t, e }(m), document.body.appendChild(t)), r && !h && u(t); var g = { width: t.width, height: t.height }; function b() { if (s) { var e = { getBoundingClientRect: function () { if (!i) return t.getBoundingClientRect() } }; return u(e), void s.postMessage({ resize: { width: e.width, height: e.height } }) } g.width = g.height = null } function v() { a = null, r && e.removeEventListener("resize", b), i && t && (document.body.removeChild(t), t = null, h = !1) } return s && !h && s.init(t), h = !0, s && (t.__confetti_initialized = !0), r && e.addEventListener("resize", b, !1), s ? s.fire(n, g, v) : d(n, g, v) } return m.reset = function () { s && s.reset(), a && a.reset() }, m } function F() { return b || (b = S(null, { useWorker: !0, resize: !0 })), b } n.exports = function () { return F().apply(this, arguments) }, n.exports.reset = function () { F().reset() }, n.exports.create = S }(function () { return void 0 !== t ? t : "undefined" != typeof self ? self : this || {} }(), e, !1), t.confetti = e.exports }(window, {});
-//# sourceMappingURL=/sm/6de00f2697a1683b235e589897df757a94e6809643432a9e3ad259420752442d.map
-/* === CONFIGURATION === */
-
-/* === TIME BASED SYSTEM === */
-let hasShownTimeGreeting = false;
+﻿let hasShownTimeGreeting = false;
 
 function getTimePhase(hours) {
     if (hours >= 6 && hours < 12) return 'morning';
@@ -24,7 +13,6 @@ function updateSystemBasedOnTime(hours) {
     const now = new Date();
     const releaseDate = new Date(2026, 1, 1); // Feb 1st, 2026
 
-    // 1. Update Weather (Widget remains active)
     const wIcon = document.getElementById('weather-icon');
     const wText = document.getElementById('weather-text');
     const wTip = document.querySelector('.weather-tooltip');
@@ -51,21 +39,17 @@ function updateSystemBasedOnTime(hours) {
         if (wTip) wTip.innerText = mood.tip;
     }
 
-    // 2. Greeting (Once per session when desktop is visible)
     const desktop = document.getElementById('desktop');
     if (desktop && !hasShownTimeGreeting) {
-        // Check if desktop is effectively visible
         const style = window.getComputedStyle(desktop);
         if (style.display !== 'none' && style.opacity !== '0' && style.visibility !== 'hidden') {
             hasShownTimeGreeting = true;
 
-            // Stealth Notification for Author (Visible in Console)
             console.info("%c[Author Notification] Space successfully accessed.", "color: #8b5cf6; font-weight: bold; font-size: 12px; background: #1e1b4b; padding: 4px 8px; border-radius: 4px;");
             if (userStats.lastVisit) {
                 console.info(`%cTarget's Last Visit: ${userStats.lastVisit}`, "color: #94a3b8; font-style: italic;");
             }
 
-            // Only show greetings user-side AFTER Feb 1st
             if (now >= releaseDate) {
                 let msg = "";
                 switch (phase) {
@@ -74,10 +58,7 @@ function updateSystemBasedOnTime(hours) {
                     case 'evening': msg = "Happy evening! 🌙"; break;
                     case 'night': msg = "You're up late! 🌃"; break;
                 }
-                /* === EASTER EGG: 12:21 AM === */
-                // Check for 00:21 (12:21 AM)
-                if (hours === 0 && minutes === '21') { // Use 'hours' for 24-hour format
-                    // Use a session flag to avoid spamming
+                if (hours === 0 && minutes === '21') {
                     if (!window.hasTriggered1221) {
                         window.hasTriggered1221 = true;
                         createModal({
@@ -87,7 +68,6 @@ function updateSystemBasedOnTime(hours) {
                         });
                     }
                 }
-                // Wait a moment for desktop transition
                 setTimeout(() => {
                     if (typeof createModal === 'function') {
                         createModal({
@@ -125,20 +105,11 @@ function updateClock() {
     } catch (e) { }
 }
 
-// Ensure Loop
 if (!window.clockInterval) {
     window.clockInterval = setInterval(updateClock, 1000);
 }
 updateClock();
 
-
-
-
-
-
-
-
-/* === PERSISTENCE LAYER === */
 const Persistence = {
     init() {
         let visits = parseInt(localStorage.getItem('visitCount') || '0');
@@ -173,7 +144,6 @@ const Persistence = {
                 system.push(title);
                 localStorage.setItem('achievementsUnlocked', JSON.stringify(system));
 
-                // Achievement unlocked logic (logging only)
                 console.log('Achievement Unlocked:', title);
             }
         } catch (e) { console.error(e); }
@@ -187,10 +157,8 @@ const Persistence = {
     }
 };
 
-// Initialize immediately
 const userStats = Persistence.init();
 
-/* === SETTINGS STATE === */
 const settingsState = {
     theme: 'light',
     accent: '#007AFF',
@@ -206,7 +174,6 @@ const wallpapers = [
     { thumb: 'assets/images/album-cover.jpg', full: 'assets/images/album-cover.jpg' } // Custom Album Cover
 ];
 
-/* === JOURNEY DATA === */
 const journeyData = [
     {
         chapter: 1,
@@ -270,11 +237,8 @@ const journeyData = [
     }
 ];
 
-
-/* === STATE === */
 const state = { appsOpened: new Set(), countdownFinished: false, vaultUnlockAttempts: 0, birthdaySequenceStarted: false };
 
-/* === RABBIT SQUAD APP LOGIC === */
 const RabbitSquad = {
     rabbits: [],
     bounds: { w: 600, h: 500 },
@@ -295,21 +259,18 @@ const RabbitSquad = {
         el.className = 'bun-item ' + type.cls;
         el.innerHTML = '<div class="text-4xl dropdown-shadow-md">' + type.emoji + '</div><div class="bun-msg">' + type.msg + '</div>';
 
-        // Random Pos (keep away from edges)
         const x = Math.random() * (this.bounds.w - 100) + 20;
         const y = Math.random() * (this.bounds.h - 150) + 80;
 
         el.style.left = x + 'px';
         el.style.top = y + 'px';
 
-        // Click Interaction
         el.onclick = () => {
             el.classList.add('talking');
             if (type.action) type.action(el);
             setTimeout(() => el.classList.remove('talking'), 2000);
         };
 
-        // Animate Loop
         const speed = Math.random() * 2000 + 2000;
         const moveInt = setInterval(() => {
             const nx = Math.random() * (this.bounds.w - 100) + 20;
@@ -356,7 +317,6 @@ const RabbitSquad = {
                 r.el.innerHTML = '<div class="text-5xl dropdown-shadow-md">⚽🥅</div><div class="bun-msg">SIUUU!</div>';
                 r.el.classList.add('talking');
 
-                // Audio check
                 const sfx = document.getElementById('madrid-siuuu');
                 if (sfx) sfx.play().catch(e => console.log(e));
 
@@ -384,8 +344,6 @@ const RabbitSquad = {
 };
 
 
-
-/* === MR. SNOW APP LOGIC === */
 function initMrSnowApp() {
     const canvas = document.getElementById('snow-canvas');
     if (!canvas) return;
@@ -530,11 +488,7 @@ function mrSnowFlurry() {
     }
 }
 
-/* === APP REGISTRY (Refined for Harshit) === */
 const apps = [
-
-
-    /* === FOLDERS === */
     {
         id: 'folder-system', title: 'System Core', icon: '<img src="assets/icons/folder_system.png" alt="folder" style="filter: sepia(1) saturate(3) hue-rotate(200deg);">', dock: false, width: 800, height: 600, content: `
         <div class="h-full bg-gradient-to-b from-gray-50 to-white p-6 overflow-y-auto custom-scroll">
@@ -667,7 +621,6 @@ const apps = [
         </div>
     `},
 
-    /* === SYSTEM CORE APPS (Inside Folder) === */
     {
         id: 'terminal-app', title: 'Terminal.sh', icon: '<img src="assets/icons/app_terminal.png" alt="terminal">', dock: false, folder: 'folder-system', width: 800, height: 600, content: `
         <div class="terminal-window h-full bg-[#1e1e1e] text-green-500 font-mono text-sm p-4 flex flex-col">
@@ -893,7 +846,6 @@ const apps = [
     </script>
     `},
 
-    /* CLUSTER 2: FUN / MASTI (Lightweight) */
     {
         id: 'facts', title: 'Harshit Facts.txt', icon: '<img src="assets/icons/app_facts.png" alt="facts" style="filter: hue-rotate(0deg);">', folder: 'system', dock: false, width: 800, height: 750, onOpen: startFactsApp, content: `
     <div class="facts-app custom-scroll" id="facts-app-root">
@@ -997,7 +949,6 @@ const apps = [
     </div>
 `},
 
-    // Internal filename: emotionally_dumb_but_lovable.js
     {
         id: 'not-dumb', title: 'Not Dumb', icon: '<img src="assets/icons/app_not_dumb.png" alt="not dumb" style="width: 100%; height: 100%;">', folder: 'system', dock: false, width: 600, height: 700, onOpen: initNotDumb, content: `
         <div id="not-dumb-container" class="h-full not-dumb-glass-bg text-gray-800 font-sans text-sm relative overflow-hidden flex flex-col">
@@ -1109,7 +1060,6 @@ const apps = [
         }
     },
 
-    /* === FUN & CHAOS (Inside Folder) === */
     {
         id: 'flash', title: 'Fastest Alive', icon: '<img src="assets/icons/app_speed.png" alt="flash" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 800, height: 600, content: `
         <style>
@@ -1173,8 +1123,6 @@ const apps = [
                 <button onclick="FlashApp.reset()" onmouseenter="FlashApp.playHover()" class="px-6 py-2 border border-white/20 hover:bg-white/10 text-white rounded uppercase tracking-widest text-xs transition">Try Again</button>
             </div>
         </div>
-
-
     `},
 
     {
@@ -1210,14 +1158,6 @@ const apps = [
         </div>
     `},
 
-
-
-    /* CLUSTER 3: COMFORT & CALM (Safe Spaces) */
-
-
-
-
-    /* === EASTER EGG APPS === */
     {
         id: 'secret-gallery', title: 'The Hidden Corner', icon: '<img src="assets/icons/app_memories_new.png" alt="hidden" style="width: 100%; height: 100%;">', dock: false, width: 900, height: 650, content: `
         <div class="h-full bg-black p-8 relative overflow-hidden">
@@ -1316,11 +1256,6 @@ const apps = [
         </div>
     `},
 
-
-
-
-
-    /* CLUSTER 4: GROWTH & 19 (Mature) */
     {
         id: 'app-grown', title: '19.exe', icon: '<img src="assets/icons/app_19.png" alt="19">', dock: true, width: 800, height: 700, content: `
         <div class="h-full bg-gradient-to-br from-slate-50 to-indigo-50/50 p-8 flex flex-col items-center relative overflow-hidden">
@@ -1391,8 +1326,6 @@ const apps = [
         </div>
     `},
 
-    /* === NEW APPS === */
-    /* === SOFT STUFF (Inside Folder) === */
     {
         id: 'inkpot-new', title: 'The Inkpot', icon: '<img src="assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 500, height: 600, onOpen: initInkpot, content: `
         <div class="inkpot-bg">
@@ -1400,10 +1333,6 @@ const apps = [
             <div class="inkpot-quill" onclick="nextPoem()">🖋️</div>
         </div>
     `},
-
-
-
-    /* === FUN & CHAOS (Inside Folder) === */
     {
         id: 'radio-harshit', title: 'Radio Harshit', icon: '<img src="assets/icons/app_radio.png" alt="radio">', dock: true, folder: 'folder-fun', width: 500, height: 600, onOpen: initRadio, content: `
         <div class="radio-ui">
@@ -1416,8 +1345,6 @@ const apps = [
             </div>
         </div>
     `},
-
-
 
     {
         id: 'the-path', title: 'The Path', icon: '<img src="assets/icons/app_path.png" alt="path" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 800, height: 600, onOpen: startPathGame, content: `
@@ -1470,10 +1397,6 @@ const apps = [
         </div>
     `},
 
-
-
-
-
     {
         id: 'spotify', title: 'Spotify - Vibe Check', icon: '<img src="assets/icons/app_spotify.png" alt="spotify" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-fun', width: 450, height: 600, content: `
         <div class="h-full bg-gradient-to-b from-[#1DB954] to-black text-white p-6 flex flex-col items-center justify-center relative overflow-hidden">
@@ -1503,11 +1426,6 @@ const apps = [
             </audio>
         </div>
     `},
-
-
-
-
-    /* === VAULT APPS (Inside Folder) === */
     {
         id: 'do-not-open', title: 'Do Not Open', icon: '<img src="assets/icons/app_warning.png" alt="do not open" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 400, height: 300, content: `
         <div class="h-full flex flex-col items-center justify-center bg-red-50 text-red-900 text-center p-6 overflow-y-auto custom-scroll">
@@ -1517,7 +1435,6 @@ const apps = [
             </div>
         </div>
     `},
-
 
     {
         id: 'through-my-eyes', title: 'Through My Eyes', icon: '<img src="assets/icons/app_eyes.png" alt="letter" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 800, height: 750, content: `
@@ -1529,7 +1446,7 @@ const apps = [
                     <div class="letter-divider"></div>
                 </div>
 
-                <p>I need to be very careful and honest here — and also very real with you 🤍.</p>
+                <p>I need to be very careful and honest here and also very real with you 🤍.</p>
 
                 <p>
                     What I’ll share below is only what I truly know, based on what you’ve shared with me,
@@ -1590,10 +1507,6 @@ const apps = [
     `,
         onOpen: initLetterReveal
     },
-
-
-
-
 
     {
         id: 'voice-box', title: 'VoiceBox', icon: '<img src="assets/icons/app_voice.png" alt="voice" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 550, height: 700, onOpen: initVoiceBox, content: `
@@ -1736,8 +1649,6 @@ const apps = [
             <div id="map-markers" class="w-full h-full relative"></div>
         </div>
     `},
-
-    /* === DESKTOP VISIBLE APPS (No Folder) === */
     {
         id: 'shravii', title: 'Shravii.exe', icon: '<img src="assets/icons/app_shravii.png" alt="shravii" style="width: 100%; height: 100%;">', dock: true, width: 500, height: 600, content: `
         <div class="h-full bg-[#fff0f5] p-6 custom-scroll">
@@ -1835,9 +1746,6 @@ const apps = [
         </div>
     `},
 
-    /* === NEW APPS ADDED === */
-
-
     {
         id: 'app-anime', title: 'Anime Gallery', icon: '<img src="assets/icons/app_anime_new.png" alt="anime" style="width: 100%; height: 100%;">', dock: false, width: 700, height: 600, content: `
         <div class="anime-app">
@@ -1855,9 +1763,6 @@ const apps = [
             </div>
         </div>
     `},
-
-
-    /* === NEWEST APPS === */
 
     {
         id: 'app-decision', title: 'Decision Helper', icon: '<img src="assets/icons/app_decision_new.png" alt="decision" style="width: 100%; height: 100%;">', dock: false, width: 600, height: 600, content: `
@@ -1992,12 +1897,6 @@ const apps = [
 
 ];
 
-
-
-
-/* === LAST LOGIC === */
-
-/* === FREQUENCY APP (Secret Signal Chat) === */
 const FrequencyApp = {
     storageKey: 'frequency_3015_messages',
 
@@ -2009,15 +1908,12 @@ const FrequencyApp = {
 
             if (!container) return;
 
-            // Clear existing (except system message)
             const systemMsg = container.querySelector('.flex.justify-center');
             container.innerHTML = '';
             if (systemMsg) container.appendChild(systemMsg);
 
-            // Render all messages
             messages.forEach(msg => this.renderMessage(msg, false));
 
-            // Scroll to bottom
             container.scrollTop = container.scrollHeight;
         } catch (e) {
             console.error('Failed to load messages:', e);
@@ -2038,17 +1934,13 @@ const FrequencyApp = {
             timestamp: new Date().toISOString()
         };
 
-        // Save to localStorage
         this.saveMessage(message);
 
-        // Render
         this.renderMessage(message, true);
 
-        // Clear input
         input.value = '';
         input.focus();
 
-        // Auto-scroll
         const container = document.getElementById('freq-messages');
         if (container) {
             setTimeout(() => {
@@ -2144,10 +2036,6 @@ const DecisionApp = {
         }, 3000);
     }
 };
-
-
-
-/* === NEW LOGIC HELPERS === */
 const BanterApp = {
     bure: 0,
     achhe: 0,
@@ -2202,46 +2090,13 @@ const BanterApp = {
             }, 200);
         }
     },
-    complain() {
-        const complaints = [
-            "Your complaint has been forwarded to /dev/null 🗑️",
-            "Complaint registered. Status: Ignored ✅",
-            "Harshit says: 'Mai kahe sunu?' 🙄",
-            "Error 404: Care not found 😴",
-            "Complaint noted. Action: None 📝",
-            "Processing... Just kidding, deleted! 🚮",
-            "Your feedback is important to us (not really) 💀",
-            "Complaint saved in 'Never Read' folder 📁",
-            "Harshit's response: 'Aapka kahe?' 🤷",
-            "System busy ignoring complaints... ⏳"
-        ];
-
-        const randomComplaint = complaints[Math.floor(Math.random() * complaints.length)];
-
-        // Update the quote display with complaint response
-        const quoteEl = document.getElementById('banter-quote');
-        if (quoteEl) {
-            quoteEl.style.opacity = 0;
-            quoteEl.style.transform = 'scale(0.9) translateY(10px)';
-            setTimeout(() => {
-                quoteEl.innerText = '"' + randomComplaint + '"';
-                quoteEl.style.opacity = 1;
-                quoteEl.style.transform = 'scale(1) translateY(0)';
-            }, 300);
-        }
-    }
 };
-
 const AnimeApp = {
     playSound() {
         if (typeof createModal === 'function')
             createModal({ title: "Soundboard", desc: "Playing: 'Nu nu nu nu nu!' 🎶", icon: "🔊" });
-        // In a real app, we'd play audio here
     }
 };
-
-
-
 const VCApp = {
     join() { createModal({ title: "Connecting...", desc: "Joining General...<br><span style='color:green'>Connected</span>", icon: "🔊" }); },
     leave() { createModal({ title: "Left Channel", desc: "Disconnected.<br>Reason: 'Gayi hoon mai toh'", icon: "👋" }); },
@@ -2263,7 +2118,6 @@ const RoutineApp = {
     }
 };
 
-/* === SETTINGS FUNCTIONS === */
 function showUpdate(el) {
     if (el) {
         el.parentElement.querySelectorAll('div').forEach(d => {
@@ -2335,19 +2189,14 @@ function renderSettings() {
     }
 }
 
-
-
 function setTheme(mode, el) {
     settingsState.theme = mode;
-    // Update active UI
     document.querySelectorAll('.appearance-card').forEach(c => c.classList.remove('active'));
     el.classList.add('active');
 
-    // Apply (Example: Toggle dark class on body or #desktop-bg)
     const bg = document.getElementById('desktop-bg');
     if (mode === 'dark') {
         bg.style.background = '#1e1e1e url("https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=2069") center/cover';
-        // Logic for Dark Theme CSS overrides would go here
     } else {
         bg.style.background = 'linear-gradient(180deg, #bccbf9 0%, #dbe4ff 100%)';
     }
@@ -2370,23 +2219,17 @@ function setWallpaper(url, el) {
     el.classList.add('active');
 }
 
-
-
-/* === MENU BAR LOGIC === */
 function toggleMenu(menuId) {
     const menu = document.getElementById(menuId);
     if (!menu) return;
 
-    // Close others
     document.querySelectorAll('[id$="-menu"]').forEach(el => {
         if (el.id !== menuId) el.classList.add('hidden');
         else el.classList.toggle('hidden');
     });
 
-    // Close control center if open
     document.getElementById('control-center')?.classList.add('hidden');
 
-    // Stop propagation so document click doesn't immediately close it
     event?.stopPropagation();
 }
 
@@ -2394,7 +2237,6 @@ function toggleControlCenter() {
     const cc = document.getElementById('control-center');
     cc.classList.toggle('hidden');
 
-    // Close other menus
     document.querySelectorAll('[id$="-menu"]').forEach(el => el.classList.add('hidden'));
 
     event?.stopPropagation();
