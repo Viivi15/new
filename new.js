@@ -8995,3 +8995,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
 console.log('%c[Notification System]  Loaded and ready', 'color: #ec4899; font-weight: bold;');
 
+/* === CONTEXT MENU LOGIC === */
+document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    const menu = document.getElementById('ctx-menu');
+    if (!menu) return;
+
+    // Position
+    let x = e.clientX;
+    let y = e.clientY;
+
+    // Boundary check
+    if (x + 200 > window.innerWidth) x -= 200;
+    if (y + 300 > window.innerHeight) y -= 300;
+
+    menu.style.left = x + 'px';
+    menu.style.top = y + 'px';
+    menu.classList.remove('hidden');
+    menu.style.display = 'block';
+});
+
+document.addEventListener('click', (e) => {
+    const menu = document.getElementById('ctx-menu');
+    if (menu && !menu.contains(e.target)) {
+        menu.classList.add('hidden');
+        menu.style.display = 'none';
+    }
+});
+
+/* === HELPER: CLOSE MODAL === */
+window.closeModal = function (id) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.style.display = 'none';
+        el.classList.add('hidden');
+    }
+};
+
