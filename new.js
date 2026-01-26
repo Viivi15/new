@@ -2631,11 +2631,23 @@ function startCountdownGatekeeper() {
     const cdSub = document.getElementById('countdown-sub');
     const cdProgress = document.getElementById('countdown-progress');
 
+    // === DATE-BASED PHASE CONTROL ===
+    const now = new Date();
+    // Bypasses intro phases from Jan 31, 2026 until the next birthday in 2027
+    const skipStart = new Date(2026, 0, 31, 0, 0, 0);
+    const nextBirthday = new Date(2027, 0, 30, 0, 0, 0);
+
+    if (now >= skipStart && now < nextBirthday) {
+        if (cdScreen) cdScreen.style.display = 'none';
+        runSystemBoot();
+        return;
+    }
+
     if (cdScreen) cdScreen.style.display = 'flex';
 
-    // Target: Jan 30, 2026 00:00:00 (Setting to 10s from now for immediate demo)
-    const targetDate = Date.now() + 10000;
-    const startDate = Date.now() - 3600000; // Start 1 hour ago for progress visual
+    // Target: Jan 30, 2026 00:00:00
+    const targetDate = new Date(2026, 0, 30, 0, 0, 0).getTime();
+    const startDate = new Date(2026, 0, 1, 0, 0, 0).getTime(); // Start of month for progress visual
     const totalDuration = targetDate - startDate;
 
     window.goToDesktop = skipToDesktop; // Map the new button action
