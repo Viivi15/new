@@ -1417,7 +1417,7 @@ const apps = [
         </div>
     `},
 
- 
+
 
     {
         id: 'the-path', title: 'The Path', icon: '<img src="assets/icons/app_path.png" alt="path" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 800, height: 600, onOpen: startPathGame, content: `
@@ -1593,34 +1593,7 @@ const apps = [
 
 
 
-    {
-        id: 'secret-vault', title: 'Secret Vault', icon: '<img src="assets/icons/app_vault.png" alt="vault" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 800, height: 600, onOpen: initSecretVault, content: `
-        <div id="vault-container" class="relative w-full h-full bg-gray-900 text-white overflow-hidden flex flex-col items-center justify-center">
-             
-             <!-- Lock Screen -->
-             <div id="vault-lock" class="flex flex-col items-center gap-6 p-8 transition-opacity duration-500" style="display: flex;">
-                <div class="text-6xl mb-4">🔐</div>
-                <h2 class="text-2xl font-light tracking-widest uppercase">Restricted Access</h2>
-                <div class="relative w-64">
-                    <input type="password" id="vault-pass" class="w-full bg-white/20 border border-white/30 rounded-lg px-4 py-3 text-center text-xl tracking-[0.5em] focus:outline-none focus:border-white/50 transition placeholder-gray-500" placeholder="••••••" maxlength="6">
-                </div>
-                <p id="vault-hint" class="text-xs text-gray-500 hover:text-gray-300 cursor-pointer transition" onclick="showVaultRiddleSequence()">Hint: ?</p>
-                <div id="vault-error" class="text-red-400 text-sm font-bold opacity-0 transition">Access Denied</div>
-             </div>
 
-             <!-- Unlocked Content (Carousel) -->
-             <div id="vault-content" class="absolute inset-0 transition-opacity duration-1000 bg-black" style="display: none; opacity: 0;">
-                 <div class="w-full h-full relative" id="vault-carousel">
-                    <!-- Slides injected via JS -->
-                 </div>
-                 
-                 <!-- Controls -->
-                 <button class="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-4xl z-10 p-2" onclick="vaultPrevSlide()">&#10094;</button>
-                 <button class="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-4xl z-10 p-2" onclick="vaultNextSlide()">&#10095;</button>
-             </div>
-
-        </div>
-    `},
 
     {
         id: 'voice-box', title: 'VoiceBox', icon: '<img src="assets/icons/app_voice.png" alt="voice" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 550, height: 700, onOpen: initVoiceBox, content: `
@@ -4763,42 +4736,111 @@ function orderCravings() {
 
 
 /* === APP VAULT FOLDER LOGIC === */
+function initAppVault() {
+    // Reset Lock Screen
+    const lock = document.getElementById('vault-lock-screen');
+    const pass = document.getElementById('vault-passcode');
+    const badge = document.getElementById('vault-badge');
+    const hintMain = document.getElementById('vault-hint-main');
+    const hintExtra = document.getElementById('vault-hint-extra');
+    const grid = document.getElementById('vault-grid');
+    const errorMsg = document.getElementById('vault-error');
+
+    if (lock) {
+        lock.style.display = 'flex';
+        lock.style.opacity = '1';
+        lock.classList.remove('vault-unlocked-anim');
+    }
+    if (grid) {
+        grid.style.display = 'none';
+        grid.classList.add('hidden');
+    }
+    if (pass) {
+        pass.value = '';
+        pass.classList.remove('shake-premium', 'border-red-500');
+        pass.style.borderColor = '#e5e7eb'; // Gray-200 default
+    }
+    if (badge) {
+        badge.innerText = 'System Secure';
+        badge.style.color = '#94a3b8';
+    }
+    if (hintMain) {
+        hintMain.innerText = 'Protected Memory. Correct credentials required.';
+        hintMain.style.opacity = '0.4';
+        hintMain.classList.remove('text-indigo-600');
+    }
+    if (hintExtra) hintExtra.style.opacity = '0';
+    if (errorMsg) errorMsg.style.opacity = '0';
+
+    state.vaultUnlockAttempts = 0;
+
+    // Auto-focus
+    setTimeout(() => { if (pass) pass.focus(); }, 200);
+}
+
 function unlockVault() {
-    const inp = document.getElementById('vault-passcode');
-    const err = document.getElementById('vault-error');
-    if (!inp) return;
+    const input = document.getElementById('vault-passcode');
+    const errorMsg = document.getElementById('vault-error');
+    const lockScreen = document.getElementById('vault-lock-screen');
+    const badge = document.getElementById('vault-badge');
+    const hintMain = document.getElementById('vault-hint-main');
+    const grid = document.getElementById('vault-grid');
 
-    // Check pass: 200624 (Connection Date)
-    if (inp.value === '200624') {
-        inp.blur();
-        document.getElementById('vault-lock-screen').style.transition = 'opacity 0.5s';
-        document.getElementById('vault-lock-screen').style.opacity = '0';
+    if (!input) return;
 
+    // Passcode: 200624
+    if (input.value === '200624') {
+        // Success
+        input.classList.remove('shake-premium');
+        input.style.borderColor = '#10b981'; // Green-500
+
+        // Play success animation on lock screen
+        lockScreen.classList.add('vault-unlocked-anim');
+
+        // Reveal content
         setTimeout(() => {
-            document.getElementById('vault-lock-screen').style.display = 'none';
-            document.getElementById('vault-grid').classList.remove('hidden');
-            document.getElementById('vault-grid').style.display = 'block';
-        }, 500);
+            lockScreen.style.display = 'none';
+            if (grid) {
+                grid.classList.remove('hidden');
+                grid.style.display = 'block';
+            }
+            if (typeof Persistence !== 'undefined') Persistence.unlock('Deep Access Level 1');
+        }, 800);
+
     } else {
-        err.style.opacity = '1';
-        inp.classList.add('animate-pulse', 'border-red-500');
+        // Fail
+        state.vaultUnlockAttempts = (state.vaultUnlockAttempts || 0) + 1;
+
+        // Update Badge
+        if (badge) {
+            badge.innerText = `Attempts: ${state.vaultUnlockAttempts}`;
+            badge.style.color = state.vaultUnlockAttempts > 3 ? '#ef4444' : '#94a3b8';
+        }
+
+        // Shake & Error
+        if (errorMsg) {
+            errorMsg.innerText = state.vaultUnlockAttempts > 3 ? "SYSTEM LOCKED: Incorrect Format" : "Access Denied";
+            errorMsg.style.opacity = '1';
+        }
+        input.classList.add('shake-premium');
+        input.style.borderColor = '#ef4444';
+
+        // Hint progression
+        if (state.vaultUnlockAttempts >= 1 && hintMain) {
+            hintMain.innerText = "Hint: A score of days, six moons deep, in the year where two dozen secrets we keep.";
+            hintMain.style.opacity = "1";
+        }
+
         setTimeout(() => {
-            inp.classList.remove('animate-pulse', 'border-red-500');
-            err.style.opacity = '0';
-        }, 1500);
-        inp.value = '';
+            input.classList.remove('shake-premium');
+            if (errorMsg) errorMsg.style.opacity = '0';
+        }, 1000);
+
+        input.value = '';
     }
 }
 window.unlockVault = unlockVault;
-
-// Global Exports
-window.initVoiceBox = initVoiceBox;
-
-window.orderCravings = orderCravings;
-window.initSecretVault = initSecretVault;
-window.checkVaultPassword = checkVaultPassword;
-window.vaultNextSlide = vaultNextSlide;
-window.vaultPrevSlide = vaultPrevSlide;
+window.initAppVault = initAppVault;
 window.startRabbitGame = startRabbitGame;
 window.initRabbitGame = initRabbitGame;
 window.handleTerminalAppCommand = handleTerminalAppCommand;
@@ -6311,134 +6353,7 @@ function vaultPrevSlide() {
     renderVaultSlide(currentVaultSlide);
 }
 /* === VAULT SECURITY === */
-const VAULT_CONTENT = `
-<div class="folder-window-grid">
-    <div class="desktop-icon text-center scale-75 m-1" onclick="Apps.open('do-not-open')"><div class="icon-img">🚫</div><div class="icon-label">Do Not<br />Open</div></div>
 
-    <div class="desktop-icon text-center scale-75 m-1" onclick="Apps.open('secret-vault')"><div class="icon-img">🔐</div><div class="icon-label">Secret Vault</div></div>
-    <div class="desktop-icon text-center scale-75 m-1" onclick="Apps.open('voice-box')"><div class="icon-img">🎙️</div><div class="icon-label">VoiceBox</div></div>
-    <div class="desktop-icon text-center scale-75 m-1" onclick="Apps.open('readme-letter')"><div class="icon-img">💌</div><div class="icon-label">ReadMe.txt</div></div>
-    <div class="desktop-icon text-center scale-75 m-1" onclick="Apps.open('memories-gallery')"><div class="icon-img">📸</div><div class="icon-label">Memories</div></div>
-    <div class="desktop-icon text-center scale-75 m-1" onclick="Apps.open('through-my-eyes')"><div class="icon-img">📝</div><div class="icon-label">Through<br />My Eyes</div></div>
-    <div class="desktop-icon text-center scale-75 m-1" onclick="Apps.open('truth-archives')"><div class="icon-img">🗂️</div><div class="icon-label">Truth<br />Archives</div></div>
-    <div class="desktop-icon text-center scale-75 m-1" onclick="Apps.open('map-of-us')"><div class="icon-img">🗺️</div><div class="icon-label">Map of Us</div></div>
-</div>
-`;
-
-function unlockVault() {
-    const input = document.getElementById('vault-passcode');
-    const errorMsg = document.getElementById('vault-error');
-    const lockScreen = document.getElementById('vault-lock-screen');
-    const badge = document.getElementById('vault-badge');
-    const hintMain = document.getElementById('vault-hint-main');
-
-    // Passcode: 200624
-    if (input.value === '200624') {
-        // Success
-        input.classList.remove('shake-premium');
-        input.style.borderColor = '#10b981'; // Green-500
-
-        // Reset Hint Sequence Logic
-        window.vaultHintStep = 0;
-
-
-
-        // Play success animation on lock screen
-        lockScreen.classList.add('vault-unlocked-anim');
-
-        setTimeout(() => {
-            const win = document.getElementById('win-app-vault');
-            if (win) {
-                const contentArea = win.querySelector('.win-content');
-                contentArea.innerHTML = VAULT_CONTENT;
-                // Add success noise/feeling?
-                if (typeof Persistence !== 'undefined') Persistence.unlock('Deep Access Level 1');
-            }
-        }, 800);
-
-    } else {
-        // Fail
-        state.vaultUnlockAttempts++;
-
-        // Update Badge
-        if (badge) {
-            badge.innerText = `Attempts: ${state.vaultUnlockAttempts}`;
-            badge.style.color = state.vaultUnlockAttempts > 3 ? '#ef4444' : '#94a3b8';
-        }
-
-        // Shake & Error
-        errorMsg.innerText = state.vaultUnlockAttempts > 3 ? "SYSTEM LOCKED: Incorrect Format" : "Access Denied";
-        errorMsg.style.opacity = '1';
-        input.classList.add('shake-premium');
-
-        // Hint progression
-        if (state.vaultUnlockAttempts >= 1 && hintMain) {
-            hintMain.innerText = "Hint: A score of days, six moons deep, in the year where two dozen secrets we keep.";
-            hintMain.style.opacity = "1";
-        }
-        if (state.vaultUnlockAttempts >= 3 && hintMain) {
-            hintMain.innerText = "Hint: Day 172 of the year where February had 29.";
-        }
-
-        setTimeout(() => {
-            input.classList.remove('shake-premium');
-            errorMsg.style.opacity = '0';
-        }, 1000);
-
-        input.value = '';
-    }
-}
-
-function showVaultHint() {
-    const hintMain = document.getElementById('vault-hint-main');
-    const hintExtra = document.getElementById('vault-hint-extra');
-
-    if (hintMain) {
-        hintMain.innerText = "Cipher: 20... 6... 24. A sequence that changed the timeline.";
-        hintMain.style.opacity = "1";
-        hintMain.classList.add('text-indigo-600');
-    }
-    if (hintExtra) {
-        hintExtra.innerText = "Format: DDMMYY";
-        hintExtra.style.opacity = "1";
-    }
-}
-
-// Global Riddles for the Modal 
-// (We keep this array for random use if needed later, but now we use sequence)
-const vaultRiddles = [
-    { title: "The Solstice Precursor ☀️", desc: "One sun before the longest day, the timeline started on its way." },
-    // ... others kept for reference
-];
-
-window.vaultHintStep = 0;
-
-function showVaultRiddleSequence() {
-    // Sync with unlock attempts for the "same riddle" experience
-    if (state.vaultUnlockAttempts >= 3) {
-        createModal({
-            title: "Leap Year Logic 📅",
-            desc: "Day 172 of the year where February had 29.",
-            icon: '📆'
-        });
-    } else if (state.vaultUnlockAttempts >= 1) {
-        createModal({
-            title: "Cryptic Cipher 🧩",
-            desc: "A score of days, six moons deep, in the year where two dozen secrets we keep.",
-            icon: '🔐'
-        });
-    } else {
-        createModal({
-            title: "Vault Hint",
-            desc: "Access restricted. Try entering a code once to initialize hint protocols.",
-            icon: '🛡️'
-        });
-    }
-}
-window.showVaultRiddleSequence = showVaultRiddleSequence;
-// window.showRandomVaultRiddle = showRandomVaultRiddle; (Disabled in favor of sequence)
-
-window.showVaultHint = showVaultHint;
 
 
 
