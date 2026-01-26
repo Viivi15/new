@@ -612,7 +612,6 @@ const apps = [
             <div class="win-icon" onclick="Apps.open('the-path')"><div class="icon-img"><img src="assets/icons/app_path.png" alt="path" style="width: 100%; height: 100%;"></div><div class="icon-label">The Path</div></div>
             <div class="win-icon" onclick="Apps.open('personality-quiz')"><div class="icon-img"><img src="assets/icons/app_us_quiz.png" alt="quiz" style="width: 100%; height: 100%;"></div><div class="icon-label">Who Are You?</div></div>
              <div class="win-icon" onclick="Apps.open('radio-harshit')"><div class="icon-img"><img src="assets/icons/app_radio.png" alt="radio" style="filter: sepia(1) saturate(3) hue-rotate(300deg);"></div><div class="icon-label">Radio<br>Harshit</div></div>
-            <div class="win-icon" onclick="Apps.open('quiz')"><div class="icon-img"><img src="assets/icons/app_us_quiz.png" alt="quiz" style="width: 100%; height: 100%;"></div><div class="icon-label">The Us Quiz</div></div>
 
             <div class="win-icon" onclick="Apps.open('spotify')"><div class="icon-img"><img src="assets/icons/app_spotify.png" alt="spotify" style="filter: sepia(1) saturate(5) hue-rotate(100deg);"></div><div class="icon-label">Vibe Check</div></div>
 
@@ -1418,21 +1417,7 @@ const apps = [
         </div>
     `},
 
-    {
-        id: 'quiz', title: 'The Us Quiz', icon: '<img src="assets/icons/app_us_quiz.png" alt="quiz" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 600, height: 700, onOpen: startQuiz, content: `
-        <div class="h-full bg-indigo-50 flex flex-col items-center justify-center text-center p-8 relative overflow-hidden" id="quiz-container">
-            <div class="text-6xl mb-6 animate-bounce">🧩</div>
-            <h2 class="text-2xl font-bold text-indigo-900 mb-2">The Us Quiz</h2>
-            <p class="text-sm text-indigo-400 mb-8">How well do you know the lore?</p>
-            
-            <div class="w-full max-w-xs bg-white p-6 rounded-2xl shadow-xl border border-indigo-100">
-                <div id="q-text" class="text-lg font-medium text-gray-800 mb-6 min-h-[60px] flex items-center justify-center">Loading...</div>
-                <input type="text" id="q-input" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-center mb-4 focus:outline-none focus:border-indigo-400 transition" placeholder="Type answer..." autocomplete="off" onkeydown="if(event.key === 'Enter') submitAnswer()">
-                <button onclick="submitAnswer()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg shadow-lg active:scale-95 transition">Submit</button>
-                <div id="q-feedback" class="text-xs mt-4 h-4 font-bold tracking-wide transition-colors"></div>
-            </div>
-        </div>
-    `},
+ 
 
     {
         id: 'the-path', title: 'The Path', icon: '<img src="assets/icons/app_path.png" alt="path" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 800, height: 600, onOpen: startPathGame, content: `
@@ -6454,65 +6439,6 @@ window.showVaultRiddleSequence = showVaultRiddleSequence;
 // window.showRandomVaultRiddle = showRandomVaultRiddle; (Disabled in favor of sequence)
 
 window.showVaultHint = showVaultHint;
-
-
-/* === THE US QUIZ LOGIC === */
-const usQuizQuestions = [
-    { q: "Where did we first meet?", a: ["online", "dc"] },
-    { q: "What sport does Harshit NOT watch?", a: ["cricket"] },
-    { q: "What is Harshit's favorite club?", a: ["real madrid", "madrid"] },
-    { q: "Who is the 'Dumb' one?", a: ["vi", "shravii", "me"] }
-];
-let currentQuizQ = 0;
-
-function startQuiz() {
-    currentQuizQ = 0;
-    showQuizQuestion();
-}
-window.startQuiz = startQuiz;
-
-function showQuizQuestion() {
-    const qEl = document.getElementById('q-text');
-    const fEl = document.getElementById('q-feedback');
-    const iEl = document.getElementById('q-input');
-
-    if (!qEl) return;
-
-    if (currentQuizQ >= usQuizQuestions.length) {
-        qEl.innerText = "Quiz Complete! You know everything! 🌟";
-        iEl.style.display = 'none';
-        fEl.innerText = "";
-        return;
-    }
-
-    qEl.innerText = usQuizQuestions[currentQuizQ].q;
-    iEl.value = '';
-    iEl.focus();
-    fEl.innerText = "";
-}
-
-function submitAnswer() {
-    const input = document.getElementById('q-input');
-    const feedback = document.getElementById('q-feedback');
-
-    if (!input) return;
-
-    const val = input.value.trim().toLowerCase();
-    const correct = usQuizQuestions[currentQuizQ].a.includes(val);
-
-    if (correct) {
-        feedback.innerText = "Correct! 🎉";
-        feedback.className = "text-xs mt-4 h-4 font-bold tracking-wide text-green-500";
-        currentQuizQ++;
-        setTimeout(showQuizQuestion, 1000);
-    } else {
-        feedback.innerText = "Nope! Try again. 😅";
-        feedback.className = "text-xs mt-4 h-4 font-bold tracking-wide text-red-500";
-        input.classList.add('shake');
-        setTimeout(() => input.classList.remove('shake'), 500);
-    }
-}
-window.submitAnswer = submitAnswer;
 
 
 
