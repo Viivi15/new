@@ -186,3 +186,168 @@ You now have a **fully automatic, interactive, loving notification system** inte
 **No extra files. No buttons. Just pure automatic care.** 💙✨
 
 Open `new.html` and wait 2 minutes to see the magic begin!
+
+
+
+const fs = require('fs');
+
+console.log('Fixing emoji encoding...');
+
+// Read the file
+const filePath = 'd:/recents/new/new.js';
+let content = fs.readFileSync(filePath, 'utf8');
+
+// Define replacements - corrupted to correct
+const replacements = {
+    'ðŸ¤—': '🤗',
+    'ðŸ'Ž': '💎',
+    'ðŸ"': '📁',
+    'âœ¨': '✨',
+    'ðŸŒŠ': '🌊',
+    'ðŸ'§': '💧',
+    'ðŸ'€': '👀',
+    'ðŸ'ï¸': '👁️',
+    'ðŸš¶': '🚶',
+    'ðŸŽµ': '🎵',
+    'ðŸ§¹': '🧹',
+    'ðŸ'­': '💭',
+    'ðŸ§©': '🧩',
+    'ðŸ˜„': '😄',
+    'ðŸ"œ': '📜',
+    'ðŸ–±ï¸': '🖱️',
+    'ðŸ"': '🔐',
+    'ðŸ¤"': '🤔',
+    'ðŸŒ™': '🌙',
+    'ðŸ'•': '💕',
+    'ðŸ¥°': '🥰',
+    'ðŸ˜Š': '😊',
+    'â­': '⭐',
+    'ðŸ½ï¸': '🍽️',
+    'ðŸ§˜': '🧘',
+    'ðŸ'™': '💙',
+    'â˜€ï¸': '☀️',
+    'ðŸŒ¤ï¸': '🌤️',
+    'ðŸŒƒ': '🌃',
+    'â°': '⏰',
+    'ðŸŒŸ': '🌟',
+    'ðŸ'Œ': '💌',
+    'ðŸŽ‰': '🎉',
+    'âœ…': '✅',
+    'ðŸŒ±': '🌱',
+    'ðŸŽ§': '🎧',
+    'ðŸ¥—': '🥗',
+    'ðŸ¤¨': '🤨',
+    'ðŸ'ª': '💪',
+    'ðŸŒ¹': '🌹',
+    'ðŸ¤£': '🤣',
+    'ðŸ˜´': '😴',
+    'ðŸ'›': '💛',
+    'ðŸŒ…': '🌅',
+    'ðŸŒ†': '🌆',
+    'â€¢': '•'
+};
+
+let count = 0;
+
+// Replace all corrupted emojis
+for (const [corrupted, correct] of Object.entries(replacements)) {
+    const regex = new RegExp(corrupted.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+    const matches = (content.match(regex) || []).length;
+    if (matches > 0) {
+        content = content.replace(regex, correct);
+        count += matches;
+        console.log(`Replaced ${matches} instances of ${corrupted} with ${correct}`);
+    }
+}
+
+// Fix empty emoji fields
+content = content.replace(/emoji: '',/g, "emoji: '💧',");
+
+// Write back to file
+fs.writeFileSync(filePath, content, 'utf8');
+
+console.log(`\n✅ Fixed ${count} emoji instances!`);
+console.log('Refresh your browser to see the changes.');
+
+
+# Fix emoji encoding in new.js
+Write-Host "Fixing emoji encoding..." -ForegroundColor Cyan
+
+# Read the file
+$jsPath = "d:\recents\new\new.js"
+$content = Get-Content $jsPath -Raw -Encoding UTF8
+
+# Count replacements
+$count = 0
+
+# Replace corrupted emoji patterns with proper emojis
+$replacements = @(
+    @('ðŸ¤—', '🤗'),
+    @('ðŸ'Ž', '💎'),
+    @('ðŸ"', '📁'),
+    @('âœ¨', '✨'),
+    @('ðŸŒŠ', '🌊'),
+    @('ðŸ'§', '💧'),
+    @('ðŸ'€', '👀'),
+    @('ðŸ'ï¸', '👁️'),
+    @('ðŸš¶', '🚶'),
+    @('ðŸŽµ', '🎵'),
+    @('ðŸ§¹', '🧹'),
+    @('ðŸ'­', '💭'),
+    @('ðŸ§©', '🧩'),
+    @('ðŸ˜„', '😄'),
+    @('ðŸ"œ', '📜'),
+    @('ðŸ–±ï¸', '🖱️'),
+    @('ðŸ"', '🔐'),
+    @('ðŸ¤"', '🤔'),
+    @('ðŸŒ™', '🌙'),
+    @('ðŸ'•', '💕'),
+    @('ðŸ¥°', '🥰'),
+    @('ðŸ˜Š', '😊'),
+    @('â­', '⭐'),
+    @('ðŸ½ï¸', '🍽️'),
+    @('ðŸ§˜', '🧘'),
+    @('ðŸ'™', '💙'),
+    @('â˜€ï¸', '☀️'),
+    @('ðŸŒ¤ï¸', '🌤️'),
+    @('ðŸŒƒ', '🌃'),
+    @('â°', '⏰'),
+    @('ðŸŒŸ', '🌟'),
+    @('ðŸ'Œ', '💌'),
+    @('ðŸŽ‰', '🎉'),
+    @('âœ…', '✅'),
+    @('ðŸŒ±', '🌱'),
+    @('ðŸŽ§', '🎧'),
+    @('ðŸ¥—', '🥗'),
+    @('ðŸ¤¨', '🤨'),
+    @('ðŸ'ª', '💪'),
+    @('ðŸŒ¹', '🌹'),
+    @('ðŸ¤£', '🤣'),
+    @('ðŸ˜´', '😴'),
+    @('ðŸ'›', '💛'),
+    @('ðŸŒ…', '�'),
+    @('ðŸŒ†', '🌆'),
+    @('ðŸ"', '📁'),
+    @('â€¢', '•')
+)
+
+foreach ($pair in $replacements) {
+    $old = $pair[0]
+    $new = $pair[1]
+    if ($content -match [regex]::Escape($old)) {
+        $content = $content -replace [regex]::Escape($old), $new
+        $count++
+    }
+}
+
+# Also add missing emojis where emoji field is empty
+$content = $content -replace "emoji: '',", "emoji: '💧',"
+
+# Save the file with UTF8 encoding
+$content | Out-File -FilePath $jsPath -Encoding UTF8 -NoNewline
+
+Write-Host "✅ Fixed $count emoji patterns!" -ForegroundColor Green
+Write-Host "Refresh your browser to see the changes." -ForegroundColor Yellow
+
+
+

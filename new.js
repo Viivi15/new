@@ -82,7 +82,7 @@ function updateSystemBasedOnTime(hours) {
                         window.hasTriggered1221 = true;
                         createModal({
                             title: "12:21 AM — June 20, 2024",
-                            desc: "You stayed up to see this.<br><br>That means something.<br><br>This was the minute we first talked. The minute a random 'Hi' turned into months of late nights, inside jokes, and a friendship I never saw coming.<br><br>You didn't just pass through my life.<br>You changed it.<br><br>Some connections are meant to last.<br>This is one of them. ❤️",
+                            desc: "OH HEYYY IT'S 12:21 rememberr this dayy 🤔<br><br>This was the minute we first talked. The minute a random 'Hi' turned into months of late nights, inside jokes, and a friendship I never saw coming.<br><br>You didn't just pass through my life.<br>You changed it.<br><br>Some connections are meant to last.<br>This is one of them. ❤️",
                             icon: "🌙"
                         });
                     }
@@ -541,7 +541,7 @@ const apps = [
             <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6 border-b border-gray-100 pb-2">Root Directory</div>
             <div class="folder-window-grid">
 
-                <div class="win-icon group" onclick="Apps.open('app-stars')"><div class="icon-img text-4xl">✨</div><div class="icon-label">Constellation</div></div>
+                <div class="win-icon group" onclick="Apps.open('app-stars')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_stars_new.png" alt="stars" style="width: 100%; height: 100%;"></div><div class="icon-label">Constellation</div></div>
  
                 <div class="win-icon group" onclick="Apps.open('first-conversation')">
                     <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_1221.png" alt="chat" style="width: 100%; height: 100%;"></div>
@@ -583,19 +583,19 @@ const apps = [
     `},
 
     {
-        id: 'folder-feelings', title: 'Soft Stuff', icon: '<div class="flex items-center justify-center text-3xl filter drop-shadow-lg scale-110">🧸</div>', dock: false, width: 800, height: 600, content: `
+        id: 'folder-feelings', title: 'Soft Stuff', icon: '<img src="assets/icons/folder_feelings.png" alt="feelings" style="filter: sepia(0.3) saturate(1.2) hue-rotate(-10deg); width: 100%; height: 100%;">', dock: false, width: 800, height: 600, content: `
         <div class="folder-window-grid">
-            <div class="win-icon group" onclick="Apps.open('app-letters')"><div class="icon-img text-4xl">📜</div><div class="icon-label">Letters</div></div>
-            <div class="win-icon group" onclick="Apps.open('app-mixtape')"><div class="icon-img text-4xl">📼</div><div class="icon-label">Mixtape</div></div>
-            <div class="win-icon group" onclick="Apps.open('app-bloom')"><div class="icon-img text-4xl">🌼</div><div class="icon-label">Daily Bloom</div></div>
+            <div class="win-icon group" onclick="Apps.open('app-letters')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_letters_new.png" alt="letters" style="width: 100%; height: 100%;"></div><div class="icon-label">Letters</div></div>
+            <div class="win-icon group" onclick="Apps.open('app-mixtape')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_mixtape_new.png" alt="mixtape" style="width: 100%; height: 100%;"></div><div class="icon-label">Mixtape</div></div>
+            <div class="win-icon group" onclick="Apps.open('app-bloom')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_bloom_new.png" alt="bloom" style="width: 100%; height: 100%;"></div><div class="icon-label">Daily Bloom</div></div>
             <div class="win-icon" onclick="Apps.open('why-matter')"><div class="icon-img"><img src="assets/icons/app_matter.png" alt="why matter" style="width: 100%; height: 100%;"></div><div class="icon-label">Why You Matter</div></div>
             <div class="win-icon" onclick="Apps.open('tired')"><div class="icon-img"><img src="assets/icons/app_sleep.png" alt="tired" style="width: 100%; height: 100%;"></div><div class="icon-label">When Tired</div></div>
             <div class="win-icon" onclick="Apps.open('future')"><div class="icon-img"><img src="assets/icons/app_future_new.png" alt="future" style="width: 100%; height: 100%;"></div><div class="icon-label">Future You</div></div>
-            <div class="win-icon" onclick="Apps.open('thank-you')"><div class="icon-img text-3xl">✨</div><div class="icon-label">Gratitude</div></div>
+            <div class="win-icon" onclick="Apps.open('thank-you')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_gratitude_new.png" alt="gratitude" style="width: 100%; height: 100%;"></div><div class="icon-label">Gratitude</div></div>
             <div class="win-icon" onclick="Apps.open('inkpot-new')"><div class="icon-img"><img src="assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;"></div><div class="icon-label">The Inkpot</div></div>
-            <div class="win-icon" onclick="Apps.open('app-capsule')"><div class="icon-img text-4xl">⏳</div><div class="icon-label">Time Capsule</div></div>
-            <div class="win-icon" onclick="Apps.open('app-planes')"><div class="icon-img text-4xl">✈️</div><div class="icon-label">Paper Planes</div></div>
-            <div class="win-icon" onclick="Apps.open('app-journal')"><div class="icon-img text-4xl">📚</div><div class="icon-label">Our Story</div></div>
+            <div class="win-icon" onclick="Apps.open('app-capsule')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_capsule_new.png" alt="capsule" style="width: 100%; height: 100%;"></div><div class="icon-label">Time Capsule</div></div>
+            <div class="win-icon" onclick="Apps.open('app-planes')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_planes.png" alt="planes" style="width: 100%; height: 100%;"></div><div class="icon-label">Paper Planes</div></div>
+            <div class="win-icon" onclick="Apps.open('app-journal')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_journal_new.png" alt="journal" style="width: 100%; height: 100%;"></div><div class="icon-label">Our Story</div></div>
             <div class="win-icon" onclick="Apps.open('last-thing')"><div class="icon-img"><img src="assets/icons/app_rose.png" alt="last thing" style="width: 100%; height: 100%;"></div><div class="icon-label">One Last Thing</div></div>
             <div class="win-icon" onclick="Apps.open('admire')"><div class="icon-img"><img src="assets/icons/app_truth_new.png" alt="truth" style="width: 100%; height: 100%;"></div><div class="icon-label">Deep Truths</div></div>
         </div>
@@ -616,12 +616,12 @@ const apps = [
 
             <div class="win-icon" onclick="Apps.open('spotify')"><div class="icon-img"><img src="assets/icons/app_spotify.png" alt="spotify" style="filter: sepia(1) saturate(5) hue-rotate(100deg);"></div><div class="icon-label">Vibe Check</div></div>
 
-            <div class="win-icon" onclick="Apps.open('app-anime')"><div class="icon-img text-4xl">⛩️</div><div class="icon-label">Anime<br>Gallery</div></div>
+            <div class="win-icon" onclick="Apps.open('app-anime')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_anime_new.png" alt="anime" style="width: 100%; height: 100%;"></div><div class="icon-label">Anime<br>Gallery</div></div>
 
 
-            <div class="win-icon" onclick="Apps.open('app-decision')"><div class="icon-img text-4xl">🎲</div><div class="icon-label">Decision<br>Helper</div></div>
-            <div class="win-icon" onclick="Apps.open('app-wifi')"><div class="icon-img text-4xl">📶</div><div class="icon-label">Bangalore<br>Network</div></div>
-            <div class="win-icon" onclick="Apps.open('frequency-3015')"><div class="icon-img text-4xl">📡</div><div class="icon-label">Frequency<br>3015.exe</div></div>
+            <div class="win-icon" onclick="Apps.open('app-decision')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_decision_new.png" alt="decision" style="width: 100%; height: 100%;"></div><div class="icon-label">Decision<br>Helper</div></div>
+            <div class="win-icon" onclick="Apps.open('app-wifi')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_wifi.png" alt="wifi" style="width: 100%; height: 100%;"></div><div class="icon-label">Bangalore<br>Network</div></div>
+            <div class="win-icon" onclick="Apps.open('frequency-3015')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_radio.png" alt="frequency" style="width: 100%; height: 100%;"></div><div class="icon-label">Frequency<br>3015.exe</div></div>
         </div>
     `},
 
@@ -1609,7 +1609,7 @@ const apps = [
 
 
     {
-        id: 'secret-vault', title: 'Secret Vault', icon: '🔐', dock: false, folder: 'app-vault', width: 800, height: 600, onOpen: initSecretVault, content: `
+        id: 'secret-vault', title: 'Secret Vault', icon: '<img src="assets/icons/app_vault.png" alt="vault" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 800, height: 600, onOpen: initSecretVault, content: `
         <div id="vault-container" class="relative w-full h-full bg-gray-900 text-white overflow-hidden flex flex-col items-center justify-center">
              
              <!-- Lock Screen -->
@@ -1638,7 +1638,7 @@ const apps = [
     `},
 
     {
-        id: 'voice-box', title: 'VoiceBox', icon: '🎙️', dock: false, folder: 'app-vault', width: 550, height: 700, onOpen: initVoiceBox, content: `
+        id: 'voice-box', title: 'VoiceBox', icon: '<img src="assets/icons/app_voice.png" alt="voice" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 550, height: 700, onOpen: initVoiceBox, content: `
         <div class="h-full flex flex-col font-sans select-none relative overflow-hidden">
             <!-- Case Texture -->
             <div class="absolute inset-0 bg-neutral-800 dictaphone-case"></div>
@@ -1718,7 +1718,7 @@ const apps = [
     `},
 
     {
-        id: 'readme-letter', title: 'ReadMe.txt', icon: '💌', dock: false, folder: 'app-vault', width: 800, height: 800, content: `
+        id: 'readme-letter', title: 'ReadMe.txt', icon: '<img src="assets/icons/app_letters_new.png" alt="readme" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 800, height: 800, content: `
         <div class="h-full bg-white p-10 font-serif text-gray-800 leading-relaxed custom-scroll overflow-y-auto" style="background-image: linear-gradient(#999 1px, transparent 1px); background-size: 100% 2em; line-height: 2em;">
             <div class="text-3xl font-bold text-red-500 mb-6 handwritten" style="font-family: 'Dancing Script', cursive;">Dear Harshit,</div>
             <p>If you are reading this, the system is working. But more importantly, <i>we</i> are working.</p>
@@ -1731,14 +1731,14 @@ const apps = [
     `},
 
     {
-        id: 'memories-gallery', title: 'Memories', icon: '📸', dock: false, folder: 'app-vault', width: 950, height: 700, onOpen: initGallery, content: `
+        id: 'memories-gallery', title: 'Memories', icon: '<img src="assets/icons/app_memories_new.png" alt="memories" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 950, height: 700, onOpen: initGallery, content: `
         <div id="gallery-container" class="polaroid-gallery custom-scroll">
             <!-- Dynamic Polaroids will be injected here -->
         </div>
     `},
 
     {
-        id: 'truth-archives', title: 'Truth Archives', icon: '🗂️', dock: false, folder: 'app-vault', width: 800, height: 600, onOpen: initTruths, content: `
+        id: 'truth-archives', title: 'Truth Archives', icon: '<img src="assets/icons/app_files.png" alt="archives" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 800, height: 600, onOpen: initTruths, content: `
         <div class="h-full bg-[#1a1a1a] text-green-400 p-6 font-mono flex flex-col">
              <div class="border-b border-green-800 pb-4 mb-4 flex justify-between items-center">
                 <h2 class="text-xl tracking-widest uppercase">Truth_Database_v1.0</h2>
@@ -1760,7 +1760,7 @@ const apps = [
     `},
 
     {
-        id: 'map-of-us', title: 'Map of Us', icon: '🗺️', dock: false, folder: 'app-vault', width: 900, height: 600, onOpen: initMap, content: `
+        id: 'map-of-us', title: 'Map of Us', icon: '<img src="assets/icons/app_map_icon.png" alt="map" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 900, height: 600, onOpen: initMap, content: `
         <div class="h-full bg-[#e0e7ff] relative overflow-hidden select-none">
             <!-- Map Background (Stylized) -->
             <div class="absolute inset-0 bg-[url('https://thumbs.dreamstime.com/b/world-map-tech-background-blue-technology-163456072.jpg')] bg-cover bg-center opacity-10 mix-blend-multiply"></div>
@@ -1781,7 +1781,7 @@ const apps = [
 
     /* === DESKTOP VISIBLE APPS (No Folder) === */
     {
-        id: 'shravii', title: 'Shravii.exe', icon: '🫧', dock: true, width: 500, height: 600, content: `
+        id: 'shravii', title: 'Shravii.exe', icon: '<img src="assets/icons/app_shravii.png" alt="shravii" style="width: 100%; height: 100%;">', dock: true, width: 500, height: 600, content: `
         <div class="h-full bg-[#fff0f5] p-6 custom-scroll">
             <div class="bg-white p-4 rounded-lg shadow-sm mb-4">
                 <div class="text-xs text-gray-400 mb-1">System User</div>
@@ -1800,7 +1800,7 @@ const apps = [
     `},
 
     {
-        id: 'about-us', title: 'The Dynamic', icon: '👥', dock: false, width: 800, height: 600, content: `
+        id: 'about-us', title: 'The Dynamic', icon: '<img src="assets/icons/app_dynamic.png" alt="dynamic" style="width: 100%; height: 100%;">', dock: false, width: 800, height: 600, content: `
         <div class="about-container relative w-full h-full bg-slate-50 overflow-y-auto custom-scroll flex flex-col items-center">
             <div class="min-h-full flex flex-col items-center justify-center py-10 w-full">
             <!-- Background Elements -->
@@ -1881,7 +1881,7 @@ const apps = [
 
 
     {
-        id: 'app-anime', title: 'Anime Gallery', icon: '⛩️', dock: false, width: 700, height: 600, content: `
+        id: 'app-anime', title: 'Anime Gallery', icon: '<img src="assets/icons/app_anime_new.png" alt="anime" style="width: 100%; height: 100%;">', dock: false, width: 700, height: 600, content: `
         <div class="anime-app">
             <div class="anime-grid custom-scroll">
                 <div class="anime-item" onclick="AnimeApp.playSound()"><img src="assets/gifs/bear_love.gif"></div>
@@ -1902,7 +1902,7 @@ const apps = [
     /* === NEWEST APPS === */
 
     {
-        id: 'app-decision', title: 'Decision Helper', icon: '🎲', dock: false, width: 600, height: 600, content: `
+        id: 'app-decision', title: 'Decision Helper', icon: '<img src="assets/icons/app_decision_new.png" alt="decision" style="width: 100%; height: 100%;">', dock: false, width: 600, height: 600, content: `
     <div class="decision-app">
             <h2 class="text-2xl font-bold text-blue-900 mb-4">What should we do?</h2>
             <div class="decision-wheel" id="decision-wheel">🤔</div>
@@ -1916,7 +1916,7 @@ const apps = [
     {
         id: 'app-wifi',
         title: 'Network Manager',
-        icon: '📶',
+        icon: '<img src="assets/icons/app_wifi.png" alt="wifi" style="width: 100%; height: 100%;">',
         dock: false,
         width: 450,
         height: 550,
@@ -1955,7 +1955,7 @@ const apps = [
     {
         id: 'frequency-3015',
         title: 'Frequency_3015.exe',
-        icon: '📡',
+        icon: '<img src="assets/icons/app_radio.png" alt="frequency" style="width: 100%; height: 100%;">',
         dock: true,
         width: 550,
         height: 700,
@@ -2469,7 +2469,7 @@ function triggerAction(action) {
                 const grid = document.getElementById('desktop-grid');
                 const icon = document.createElement('div');
                 icon.className = 'desktop-icon group';
-                icon.innerHTML = `<div class="icon-img text-3xl mb-2">📁</div><div class="icon-label text-white px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm shadow-black/50 drop-shadow-md">${name}</div>`;
+                icon.innerHTML = `<div class="icon-img text-3xl mb-2"><img src="assets/icons/folder_system.png" alt="folder" style="width: 100%; height: 100%;"></div><div class="icon-label text-white px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm shadow-black/50 drop-shadow-md">${name}</div>`;
                 icon.onclick = () => alert("This folder is empty for now.");
                 grid.appendChild(icon);
             }
@@ -2710,7 +2710,7 @@ window.skipCountdown = function () {
 window.test1221EasterEgg = function () {
     createModal({
         title: "12:21 AM — June 20, 2024",
-        desc: "You stayed up to see this.<br><br>That means something.<br><br>This was the minute we first talked. The minute a random 'Hi' turned into months of late nights, inside jokes, and a friendship I never saw coming.<br><br>You didn't just pass through my life.<br>You changed it.<br><br>Some connections are meant to last.<br>This is one of them. ❤️",
+        desc: "OH HEYYY IT'S 12:21 rememberr this dayy 🤔<br><br>This was the minute we first talked. The minute a random 'Hi' turned into months of late nights, inside jokes, and a friendship I never saw coming.<br><br>You didn't just pass through my life.<br>You changed it.<br><br>Some connections are meant to last.<br>This is one of them. ❤️",
         icon: "🌙"
     });
 };
@@ -3088,7 +3088,7 @@ function initDesktop() {
     // Blueprint Icon (Manual Add)
     const bpIcon = document.createElement('div');
     bpIcon.className = 'desktop-icon group';
-    bpIcon.innerHTML = `<div class="icon-img text-3xl mb-2 transition duration-500">📐</div><div class="icon-label text-white px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm shadow-black/50 drop-shadow-md">Blueprint.bp</div>`;
+    bpIcon.innerHTML = `<div class="icon-img text-3xl mb-2 transition duration-500"><img src="assets/icons/app_blueprint.png" alt="blueprint" style="width: 100%; height: 100%;"></div><div class="icon-label text-white px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm shadow-black/50 drop-shadow-md">Blueprint.bp</div>`;
     bpIcon.onclick = openBlueprint;
     grid.appendChild(bpIcon);
 
@@ -3713,7 +3713,7 @@ function checkUnlock() { if (state.countdownFinished && state.appsOpened.size >=
 /* Drag with Focus Logic */
 let dragItem = null, offX = 0, offY = 0;
 function startDrag(e, id) {
-    if (e.target.closest('.traffic-lights')) return;
+    if (e.target.closest('.traffic-lights') || e.target.closest('.dark-close-btn')) return;
 
     // Focus App Name
     const appId = id.replace('win-', '');
@@ -4006,11 +4006,74 @@ function submitAnswer() {
 
 /* === BLUEPRINT LOGIC === */
 function openBlueprint() {
-    document.getElementById('blueprint-window').style.display = 'flex';
+    const win = document.getElementById('blueprint-window');
+    if (!win) return;
+
+    win.style.display = 'flex';
+    win.style.zIndex = ++zIndex;
+
+    const body = win.querySelector('.dark-body');
+    if (body) {
+        // Save original if not already saved
+        if (!body.dataset.original) {
+            body.dataset.original = body.innerHTML;
+        }
+
+        // Clear and type
+        body.innerHTML = body.dataset.original;
+
+        // Start typing effect
+        runSmartTypewriter(body);
+    }
 }
 
 function closeBlueprint() {
     document.getElementById('blueprint-window').style.display = 'none';
+}
+
+function closeWindow(id) {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+}
+
+function runSmartTypewriter(element, speed = 15) {
+    const nodes = [];
+
+    function walk(node) {
+        if (node.nodeType === 3) { // Text node
+            nodes.push({
+                node: node,
+                text: node.textContent
+            });
+            node.textContent = ""; // Clear immediately
+        } else {
+            for (let child of node.childNodes) {
+                walk(child);
+            }
+        }
+    }
+
+    walk(element);
+
+    let nodeIndex = 0;
+    let charIndex = 0;
+
+    function type() {
+        if (nodeIndex < nodes.length) {
+            const item = nodes[nodeIndex];
+            if (charIndex < item.text.length) {
+                item.node.textContent += item.text[charIndex];
+                charIndex++;
+                setTimeout(type, speed);
+            } else {
+                nodeIndex++;
+                charIndex = 0;
+                type();
+            }
+        }
+    }
+
+    type();
 }
 
 
@@ -7104,7 +7167,7 @@ function sealLetter() {
 }
 
 apps.push({
-    id: 'app-letters', title: 'Unsent Letters', icon: '📜', dock: false, width: 600, height: 700, content: `
+    id: 'app-letters', title: 'Unsent Letters', icon: '<img src="assets/icons/app_letters_new.png" alt="letters" style="width: 100%; height: 100%;">', dock: true, width: 600, height: 700, content: `
     <div class="letters-app">
         <textarea id="letter-paper" class="letters-paper custom-scroll" placeholder="Write a letter to the void..."></textarea>
         
@@ -7122,7 +7185,7 @@ apps.push({
 
 /* 3. CONSTELLATION (Visual Experience) */
 apps.push({
-    id: 'app-stars', title: 'Constellation', icon: '✨', dock: false, width: 800, height: 600, onOpen: () => ConstellationApp.init(), content: `
+    id: 'app-stars', title: 'Constellation', icon: '<img src="assets/icons/app_stars_new.png" alt="stars" style="width: 100%; height: 100%;">', dock: true, width: 800, height: 600, onOpen: () => ConstellationApp.init(), content: `
     <div class="stars-app relative h-full bg-[#050505] overflow-hidden flex flex-col items-center justify-center cursor-crosshair">
         <div class="absolute inset-0 opacity-80 pointer-events-none">
             <div id="star-echoes" class="absolute inset-0 overflow-hidden z-0"></div>
@@ -7192,7 +7255,7 @@ window.spinCompass = function () {
 }
 
 apps.push({
-    id: 'app-compass', title: 'The Compass', icon: '🧭', dock: false, width: 500, height: 500, content: `
+    id: 'app-compass', title: 'The Compass', icon: '<img src="assets/icons/app_compass.png" alt="compass" style="width: 100%; height: 100%;">', dock: false, width: 500, height: 500, content: `
     <div class="compass-app">
         <div class="compass-container bg-compass-face">
             <div class="text-[10px] absolute top-2 left-1/2 -translate-x-1/2 font-bold text-gray-400">N</div>
@@ -7209,7 +7272,7 @@ apps.push({
 
 /* 7. MIXTAPE OF SOULS */
 apps.push({
-    id: 'app-mixtape', title: 'Soul Mixtape', icon: '📼', dock: false, width: 600, height: 450, content: `
+    id: 'app-mixtape', title: 'Soul Mixtape', icon: '<img src="assets/icons/app_mixtape_new.png" alt="mixtape" style="width: 100%; height: 100%;">', dock: false, width: 600, height: 450, content: `
     <div class="h-full bg-zinc-900 text-white p-6 flex flex-col items-center justify-center">
         <div class="w-full max-w-sm bg-zinc-800 p-4 rounded-xl border border-zinc-700 shadow-2xl relative">
             <!-- Cassette Look -->
@@ -7261,7 +7324,7 @@ const dailyBloomData = [
 ];
 
 apps.push({
-    id: 'app-bloom', title: 'Daily Bloom', icon: '🌼', dock: false, width: 500, height: 600, onOpen: () => {
+    id: 'app-bloom', title: 'Daily Bloom', icon: '<img src="assets/icons/app_bloom_new.png" alt="bloom" style="width: 100%; height: 100%;">', dock: false, width: 500, height: 600, onOpen: () => {
         // Calculate Logic: Pick NEW random bloom every time opens
         const bloom = dailyBloomData[Math.floor(Math.random() * dailyBloomData.length)];
 
@@ -7457,7 +7520,7 @@ const TimeCapsuleApp = {
 };
 
 apps.push({
-    id: 'app-capsule', title: 'Time Capsule', icon: '⏳', dock: false, width: 600, height: 500, onOpen: () => TimeCapsuleApp.render(), content: `
+    id: 'app-capsule', title: 'Time Capsule', icon: '<img src="assets/icons/app_capsule_new.png" alt="capsule" style="width: 100%; height: 100%;">', dock: false, width: 600, height: 500, onOpen: () => TimeCapsuleApp.render(), content: `
     <div class="h-full bg-[#0f172a] text-white p-8 flex flex-col">
         <div class="text-center mb-10">
             <h2 class="text-2xl font-serif font-bold text-indigo-300">Harshit's Time Vault</h2>
@@ -7515,7 +7578,7 @@ const PlanesApp = {
 };
 
 apps.push({
-    id: 'app-planes', title: 'Paper Planes', icon: '✈️', dock: false, width: 700, height: 500, onClose: () => clearInterval(PlanesApp.interval), onOpen: () => PlanesApp.init(), content: `
+    id: 'app-planes', title: 'Paper Planes', icon: '<img src="assets/icons/app_planes.png" alt="planes" style="width: 100%; height: 100%;">', dock: false, width: 700, height: 500, onClose: () => clearInterval(PlanesApp.interval), onOpen: () => PlanesApp.init(), content: `
     <div class="h-full bg-gradient-to-b from-sky-400 via-sky-200 to-indigo-100 relative overflow-hidden flex flex-col items-center justify-end pb-12">
         <div id="planes-sky" class="absolute inset-0">
              <!-- Clouds -->
@@ -7563,7 +7626,7 @@ const JournalApp = {
 };
 
 apps.push({
-    id: 'app-journal', title: 'Our Story', icon: '📚', dock: false, width: 700, height: 600, onOpen: () => JournalApp.render(), content: `
+    id: 'app-journal', title: 'Our Story', icon: '<img src="assets/icons/app_journal_new.png" alt="journal" style="width: 100%; height: 100%;">', dock: false, width: 700, height: 600, onOpen: () => JournalApp.render(), content: `
     <div class="h-full bg-[#fdfaf5] p-10 flex items-center justify-center relative">
         <div class="w-full max-w-xl h-full bg-white shadow-2xl rounded-sm border-l-[15px] border-amber-900 p-12 flex flex-col justify-between relative overflow-hidden">
              <!-- Paper Texture -->
@@ -7590,7 +7653,7 @@ apps.push({
 apps.push({
     id: 'thank-you',
     title: 'Gratitude',
-    icon: '✨',
+    icon: '<img src="assets/icons/app_gratitude_new.png" alt="gratitude" style="width: 100%; height: 100%;">',
     dock: false,
     width: 600,
     height: 600,
@@ -8119,23 +8182,23 @@ const NotificationDatabase = {
     affirmations: [
         {
             id: 'virtual-hug',
-            title: 'ðŸ¤— Virtual Hug Incoming',
+            title: '🤗 Virtual Hug Incoming',
             body: 'A virtual hug is being sent your way. Please accept.',
-            emoji: 'ðŸ¤—',
+            emoji: '🤗',
             action: () => showHugAnimation()
         },
         {
             id: 'precious-file',
-            title: 'ðŸ’Ž System Rename',
+            title: '💎 System Rename',
             body: 'If you were a file, you\'d be named `precious-things.dat`',
-            emoji: 'ðŸ“',
+            emoji: '💎',
             action: () => showFileRenameEffect()
         },
         {
             id: 'positivity-wave',
-            title: 'âœ¨ Positivity Transmission',
+            title: '✨ Positivity Transmission',
             body: 'Sending a wave of positivity directly to your screen.',
-            emoji: 'ðŸŒŠ',
+            emoji: '🌊',
             action: () => showPositivityWave()
         }
     ],
@@ -8153,39 +8216,39 @@ const NotificationDatabase = {
         {
             id: 'eye-rest-5min',
             minutes: 5,
-            title: 'ðŸ‘€ Eye Care Protocol',
+            title: '👀 Eye Care Protocol',
             body: 'Don\'t forget to rest your eyes for a bit. You deserve a break.',
-            emoji: 'ðŸ‘ï¸',
+            emoji: '👁️',
             action: () => startEyeRestMode()
         },
         {
             id: 'walk-15min',
             minutes: 15,
-            title: 'ðŸš¶ Movement Scheduled',
+            title: '🚶 Movement Scheduled',
             body: 'A short walk has been scheduled. It\'s a great way to defragment your thoughts.',
-            emoji: 'ðŸŒ±',
+            emoji: '🌱',
             action: () => showWalkEncouragement()
         },
         {
             id: 'music-25min',
             minutes: 25,
-            title: 'ðŸŽµ Music Break',
+            title: '🎵 Music Break',
             body: 'Time to listen to a favorite song and just vibe.',
-            emoji: 'ðŸŽ§',
+            emoji: '🎧',
             action: () => Apps.open('app-mixtape')
         },
         {
             id: 'cleanup-38min',
             minutes: 38,
-            title: 'ðŸ§¹ Space Optimization',
+            title: '🧹 Space Optimization',
             body: 'A tidy space can lead to a tidy mind. Maybe a quick 5-minute cleanup?',
-            emoji: 'âœ¨',
+            emoji: '✨',
             action: () => showCleanupTips()
         },
         {
             id: 'checkin-60min',
             minutes: 60,
-            title: 'ðŸ’­ System Check-In',
+            title: '💭 System Check-In',
             body: 'Just checking in. No reason, just wanted to see how you are.',
             emoji: 'ðŸ’™',
             action: () => showCheckInMessage()
@@ -8197,40 +8260,40 @@ const NotificationDatabase = {
         {
             id: 'riddle-4min',
             minutes: 4,
-            title: 'ðŸ¤” Riddle Time',
+            title: '🤔 Riddle Time',
             body: 'What has an eye but cannot see?',
-            emoji: 'ðŸ§©',
+            emoji: '🧩',
             action: () => showRiddleGame()
         },
         {
             id: 'dad-joke',
-            title: 'ðŸ˜„ Dad Joke Module Active',
+            title: '😄 Dad Joke Module Active',
             body: 'Why don\'t scientists trust atoms? Because they make up everything!',
-            emoji: 'ðŸ¤“',
+            emoji: '🧐',
             action: () => showMoreJokes()
         },
         {
             id: 'poem-35min',
             minutes: 35,
-            title: 'ðŸ“œ Poem Detected',
+            title: '📜 Poem Detected',
             body: 'Roses are red, violets are blue, this is a notification, boo!',
-            emoji: 'ðŸŒ¹',
+            emoji: '🌹',
             action: () => showFullPoem()
         },
         {
             id: 'mouse-zoomies-50min',
             minutes: 50,
-            title: 'ðŸ–±ï¸ Mouse Activity Required',
+            title: '🖱️ Mouse Activity Required',
             body: 'Your computer mouse wants to play. Let\'s do some zoomies on the screen.',
-            emoji: 'ðŸ–±ï¸',
+            emoji: '🖱️',
             action: () => startMouseGame()
         },
         {
             id: 'cryptic-message-57min',
             minutes: 57,
-            title: 'ðŸ” Encrypted Message',
+            title: '🔎 Encrypted Message',
             body: 'A secret admirer has left you a cryptic message: `01001001 01001100 01011001`',
-            emoji: 'ðŸ’Œ',
+            emoji: '💌',
             action: () => decodeCrypticMessage()
         }
     ],
@@ -8239,37 +8302,37 @@ const NotificationDatabase = {
     insideJokes: [
         {
             id: 'hmmm-detected',
-            title: 'ðŸ¤” A "hmmm" was detected...',
+            title: '🤔 A "hmmm" was detected...',
             body: 'Someone is thinking. Click to see what about.',
-            emoji: 'ðŸ’­',
+            emoji: '💭',
             action: () => showThinkingBubble()
         },
         {
             id: 'goodnight-sweet',
-            title: 'ðŸŒ™ Sweet Dreams',
+            title: '🌙 Sweet Dreams',
             body: 'goodnight sweetdreams take care sleep well',
-            emoji: 'ðŸ˜´',
+            emoji: '😴',
             action: () => showGoodnightSequence()
         },
         {
             id: 'hydration-reminder',
-            title: 'ðŸ’§ Thirsty?',
+            title: '💧 Thirsty?',
             body: 'A reminder to drink some water. Stay hydrated!',
-            emoji: '',
+            emoji: '💧',
             action: () => openWaterTracker()
         },
         {
             id: 'sweet-gibberish',
-            title: 'ðŸ’• Someone\'s Being Cute',
+            title: '💕 Someone\'s Being Cute',
             body: '"ole olee" was detected in the archives.',
-            emoji: 'ðŸ¥°',
+            emoji: '🥰',
             action: () => showCuteArchives()
         },
         {
             id: 'acche-sapne',
-            title: 'âœ¨ Sweet Dreams Are Made of This',
+            title: '✨ Sweet Dreams Are Made of This',
             body: '"acche acche sapne dekh" - A wish for a peaceful night',
-            emoji: 'ðŸŒŸ',
+            emoji: '🌟',
             action: () => showDreamWish()
         }
     ],
@@ -8278,30 +8341,30 @@ const NotificationDatabase = {
     timeGreetings: {
         morning: {
             id: 'morning-greeting',
-            title: 'Good morning! â˜€ï¸',
+            title: 'Good morning! ☀️',
             body: 'I hope today is gentle with you.',
-            emoji: 'ðŸŒ…',
+            emoji: '🌅',
             action: () => showMorningMotivation()
         },
         afternoon: {
             id: 'afternoon-greeting',
-            title: 'Happy afternoon! ðŸŒ¤ï¸',
+            title: 'Happy afternoon! 🌤️',
             body: 'You\'re doing great. Keep going.',
-            emoji: 'â˜€ï¸',
+            emoji: '☀️',
             action: () => showAfternoonBoost()
         },
         evening: {
             id: 'evening-greeting',
-            title: 'Happy evening! ðŸŒ™',
+            title: 'Happy evening! 🌙',
             body: 'Take a moment to breathe. You made it through another day.',
-            emoji: 'ðŸŒ†',
+            emoji: '🌇',
             action: () => showEveningReflection()
         },
         night: {
             id: 'night-greeting',
-            title: 'You\'re up late! ðŸŒƒ',
-            body: 'It\'s late. Please rest when you can. Even at this hourâ€¦ you\'re not alone.',
-            emoji: 'â­',
+            title: 'You\'re up late! 🌃',
+            body: 'It\'s late. Please rest when you can. Even at this hour... you\'re not alone.',
+            emoji: '⭐',
             action: () => showNightCare()
         }
     },
@@ -8310,44 +8373,44 @@ const NotificationDatabase = {
     careMessages: [
         {
             id: 'water-check',
-            title: 'ðŸ’§ Hydration Status',
+            title: '💧 Hydration Status',
             body: 'Have you had some water today? Just checking.',
-            emoji: '',
+            emoji: '💧',
             action: () => openWaterTracker()
         },
         {
             id: 'smile-reminder',
-            title: 'ðŸ˜Š Emotion Module',
-            body: 'Heyâ€¦ smile a little. Just for me.',
-            emoji: 'ðŸ’›',
+            title: '😊 Emotion Module',
+            body: 'Hey... smile a little. Just for me.',
+            emoji: '💛',
             action: () => showSmileEncouragement()
         },
         {
             id: 'proud-of-you',
-            title: 'â­ Achievement Logged',
+            title: '⭐ Achievement Logged',
             body: 'Still proud of you. Yes, again.',
-            emoji: 'ðŸŒŸ',
+            emoji: '🌟',
             action: () => showPrideMessage()
         },
         {
             id: 'lunch-reminder',
-            title: 'ðŸ½ï¸ Nutrition Alert',
-            body: 'No skipping lunch ðŸ¤¨',
-            emoji: 'ðŸ¥—',
+            title: '🍽️ Nutrition Alert',
+            body: 'No skipping lunch 🤨',
+            emoji: '🥗',
             action: () => showLunchReminder()
         },
         {
             id: 'stretch-reminder',
-            title: 'ðŸ§˜ Physical Wellbeing',
+            title: '🧘 Physical Wellbeing',
             body: 'Stretch your neck and shoulders.',
-            emoji: 'ðŸ’ª',
+            emoji: '💪',
             action: () => showStretchGuide()
         },
         {
             id: 'take-care',
-            title: 'ðŸ’™ System Message',
+            title: '💙 System Message',
             body: 'Take care, please.',
-            emoji: 'ðŸ’™',
+            emoji: '💙',
             action: () => showCareMessage()
         }
     ]
@@ -8496,7 +8559,7 @@ function displayNotification(notification, isSpecial = false) {
             <div class="notif-title">${notification.title}</div>
             <div class="notif-body">${notification.body}</div>
         </div>
-        <div class="notif-close" onclick="this.parentElement.classList.add('dismissed')">Ã—</div>
+        <div class="notif-close" onclick="this.parentElement.classList.add('dismissed')">×</div>
     `;
 
     // Add click handler
@@ -8544,7 +8607,7 @@ function displayNotification(notification, isSpecial = false) {
 // === NOTIFICATION ACTIONS (Interactive Windows) ===
 function showHugAnimation() {
     const modal = createInteractiveModal({
-        title: 'ðŸ¤— Virtual Hug',
+        title: '🤗 Virtual Hug',
         content: `
             <div class="hug-animation">
                 <div class="hug-circle"></div>
@@ -8558,11 +8621,11 @@ function showHugAnimation() {
 
 function showFileRenameEffect() {
     createInteractiveModal({
-        title: 'ðŸ“ File Renamed',
+        title: '📁 File Renamed',
         content: `
             <div class="file-rename-effect">
                 <div class="old-name">random_person_2024.tmp</div>
-                <div class="arrow">â†’</div>
+                \u003cdiv class=\"arrow\"\u003e→\u003c/div\u003e
                 <div class="new-name glow-text">precious-things.dat</div>
                 <div class="file-info">Status: <span class="text-green-400">Protected</span></div>
                 <div class="file-info">Importance: <span class="text-yellow-400">Maximum</span></div>
@@ -8573,7 +8636,7 @@ function showFileRenameEffect() {
 
 function showPositivityWave() {
     createInteractiveModal({
-        title: 'âœ¨ Positivity Wave',
+        title: '✨ Positivity Wave',
         content: `
             <div class="positivity-wave">
                 <div class="wave-rings">
@@ -8582,9 +8645,7 @@ function showPositivityWave() {
                     <div class="wave-ring"></div>
                 </div>
                 <div class="wave-message">
-                    <p>ðŸŒŠ Sending good vibes...</p>
-                    <p>ðŸ’« Transmitting encouragement...</p>
-                    <p>âœ¨ Broadcasting appreciation...</p>
+                    \u003cp\u003e🌊 Sending good vibes...\u003c/p\u003e\r\n                    \u003cp\u003e💫 Transmitting encouragement...\u003c/p\u003e\r\n                    \u003cp\u003e✨ Broadcasting appreciation...\u003c/p\u003e
                     <p class="mt-4 text-lg font-bold">You've got this.</p>
                 </div>
             </div>
@@ -8595,7 +8656,7 @@ function showPositivityWave() {
 
 function openWaterTracker() {
     createInteractiveModal({
-        title: 'ðŸ’§ Hydration Tracker',
+        title: '💧 Hydration Tracker',
         content: `
             <div class="water-tracker">
                 <div class="water-glass">
@@ -8606,7 +8667,7 @@ function openWaterTracker() {
                     <p>Your body needs water to function.</p>
                     <p>Your mind needs care to flourish.</p>
                     <p class="mt-4">Click to mark hydration complete:</p>
-                    <button class="btn-primary mt-2" onclick="markHydrated()">I Drank Water! ðŸ’§</button>
+                    \u003cbutton class=\"btn-primary mt-2\" onclick=\"markHydrated()\"\u003eI Drank Water! 💧\u003c/button\u003e
                 </div>
             </div>
         `
@@ -8620,8 +8681,8 @@ function markHydrated() {
         setTimeout(() => {
             createModal({
                 title: 'Hydration Complete',
-                desc: 'Good job! Your cells are celebrating. ðŸŽ‰',
-                icon: 'âœ…'
+                desc: 'Good job! Your cells are celebrating. 🎉',
+                icon: '✅'
             });
         }, 500);
     }
@@ -8629,10 +8690,10 @@ function markHydrated() {
 
 function startEyeRestMode() {
     createInteractiveModal({
-        title: 'ðŸ‘ï¸ Eye Rest Mode',
+        title: '👁️ Eye Rest Mode',
         content: `
             <div class="eye-rest-mode">
-                <div class="eye-icon">ðŸ‘ï¸</div>
+                <div class="eye-icon">👁️</div>
                 <div class="rest-message">
                     <h3>20-20-20 Rule</h3>
                     <p>Every 20 minutes, look at something 20 feet away for 20 seconds.</p>
@@ -8652,7 +8713,7 @@ function startEyeTimer() {
         if (timerEl) timerEl.textContent = seconds;
         if (seconds <= 0) {
             clearInterval(interval);
-            if (timerEl) timerEl.textContent = 'âœ… Done!';
+            if (timerEl) timerEl.textContent = '✅ Done!';
             fireConfetti();
         }
     }, 1000);
@@ -8660,18 +8721,18 @@ function startEyeTimer() {
 
 function showWalkEncouragement() {
     createInteractiveModal({
-        title: 'ðŸš¶ Movement Break',
+        title: '🚶 Movement Break',
         content: `
             <div class="walk-encouragement">
-                <div class="walking-figure">ðŸš¶â€â™‚ï¸</div>
+                <div class="walking-figure">🚶‍♂️</div>
                 <div class="walk-message">
                     <h3>Your body wants to move</h3>
                     <p>Even 5 minutes helps:</p>
                     <ul class="walk-benefits">
-                        <li>âœ“ Clears your mind</li>
-                        <li>âœ“ Boosts energy</li>
-                        <li>âœ“ Improves mood</li>
-                        <li>âœ“ Helps you think better</li>
+                        <li>✔ Clears your mind</li>
+                        <li>✔ Boosts energy</li>
+                        <li>✔ Improves mood</li>
+                        <li>✔ Helps you think better</li>
                     </ul>
                     <p class="mt-4 italic">Take a short walk. Your future self will thank you.</p>
                 </div>
@@ -8682,15 +8743,15 @@ function showWalkEncouragement() {
 
 function showCleanupTips() {
     createInteractiveModal({
-        title: 'ðŸ§¹ Space Optimization',
+        title: '🧹 Space Optimization',
         content: `
             <div class="cleanup-tips">
                 <h3>5-Minute Cleanup Challenge</h3>
                 <div class="cleanup-tasks">
-                    <div class="task">ðŸ“‹ Clear your desk</div>
-                    <div class="task">ðŸ—‘ï¸ Empty trash</div>
-                    <div class="task">ðŸ“š Organize one area</div>
-                    <div class="task">ðŸ’¡ Tidy your space</div>
+                    <div class="task">📋 Clear your desk</div>
+                    <div class="task">🗑️ Empty trash</div>
+                    <div class="task">📚 Organize one area</div>
+                    <div class="task">💡 Tidy your space</div>
                 </div>
                 <p class="cleanup-quote">"A clear space creates room for clear thoughts."</p>
             </div>
@@ -8700,16 +8761,16 @@ function showCleanupTips() {
 
 function showCheckInMessage() {
     createInteractiveModal({
-        title: 'ðŸ’­ How Are You?',
+        title: '💭 How Are You?',
         content: `
             <div class="checkin-message">
                 <p class="checkin-text">Just checking in.</p>
                 <p class="checkin-sub">No reason. Just wanted to see how you are.</p>
                 <div class="mood-selector">
-                    <button class="mood-btn" onclick="respondMood('great')">ðŸ˜Š Great</button>
-                    <button class="mood-btn" onclick="respondMood('okay')">ðŸ˜ Okay</button>
-                    <button class="mood-btn" onclick="respondMood('tired')">ðŸ˜” Tired</button>
-                    <button class="mood-btn" onclick="respondMood('stressed')">ðŸ˜“ Stressed</button>
+                    <button class="mood-btn" onclick="respondMood('great')">😊 Great</button>
+                    <button class="mood-btn" onclick="respondMood('okay')">😐 Okay</button>
+                    <button class="mood-btn" onclick="respondMood('tired')">😔 Tired</button>
+                    <button class="mood-btn" onclick="respondMood('stressed')">😰 Stressed</button>
                 </div>
                 <p class="mt-4 text-sm text-gray-400">Whatever you're feeling, it's valid.</p>
             </div>
@@ -8719,22 +8780,22 @@ function showCheckInMessage() {
 
 function respondMood(mood) {
     const responses = {
-        great: "That's wonderful! I'm happy you're doing well. Keep shining! âœ¨",
-        okay: "That's okay. Some days are just 'okay,' and that's perfectly fine. You're doing your best. ðŸ’™",
-        tired: "I hear you. Rest when you can. You deserve it. Take care of yourself. ðŸ˜´",
-        stressed: "I'm sorry you're feeling stressed. Take a deep breath. One step at a time. You've got this. ðŸ’ª"
+        great: "That's wonderful! I'm happy you're doing well. Keep shining! ✨",
+        okay: "That's okay. Some days are just 'okay,' and that's perfectly fine. You're doing your best. 💙",
+        tired: "I hear you. Rest when you can. You deserve it. Take care of yourself. 😴",
+        stressed: "I'm sorry you're feeling stressed. Take a deep breath. One step at a time. You've got this. 💪"
     };
 
     createModal({
         title: 'Message Received',
         desc: responses[mood],
-        icon: 'ðŸ’Œ'
+        icon: '💌'
     });
 }
 
 function showRiddleGame() {
     createInteractiveModal({
-        title: 'ðŸ§© Riddle Time',
+        title: '🧩 Riddle Time',
         content: `
             <div class="riddle-game">
                 <div class="riddle-question">What has an eye but cannot see?</div>
@@ -8800,7 +8861,7 @@ function showFullPoem() {
 
 function startMouseGame() {
     createInteractiveModal({
-        title: 'ðŸ–±ï¸ Mouse Zoomies!',
+        title: '🖱️ Mouse Zoomies!',
         content: `
             <div class="mouse-game">
                 <div class="game-instructions">Move your mouse around the box!</div>
@@ -8842,7 +8903,7 @@ function initMouseGame() {
 
 function decodeCrypticMessage() {
     createInteractiveModal({
-        title: 'ðŸ” Encrypted Message',
+        title: '🔎 Encrypted Message',
         content: `
             <div class="cryptic-message">
                 <div class="encrypted-text">01001001 01001100 01011001</div>
@@ -8859,7 +8920,7 @@ function revealCrypticMessage() {
         msgEl.innerHTML = `
             <div class="decrypt-animation">
                 <div class="decrypting">Decrypting...</div>
-                <div class="decoded-text">I Love You â¤ï¸</div>
+                <div class="decoded-text">I Love You ❤️</div>
             </div>
         `;
         setTimeout(() => fireConfetti(), 500);
@@ -8869,18 +8930,18 @@ function revealCrypticMessage() {
 // Additional care functions
 function showThinkingBubble() {
     createModal({
-        title: 'ðŸ¤” Thinking...',
+        title: '🤔 Thinking...',
         desc: 'Probably thinking about something important. Or food. Could be food.',
-        icon: 'ðŸ’­'
+        icon: '💭'
     });
 }
 
 function showGoodnightSequence() {
     createInteractiveModal({
-        title: 'ðŸŒ™ Goodnight',
+        title: '🌙 Goodnight',
         content: `
             <div class="goodnight-sequence">
-                <div class="moon-icon">ðŸŒ™</div>
+                <div class="moon-icon">🌙</div>
                 <div class="goodnight-text">
                     <p>Goodnight.</p>
                     <p>Sweet dreams.</p>
@@ -8888,9 +8949,9 @@ function showGoodnightSequence() {
                     <p>Sleep well.</p>
                 </div>
                 <div class="stars-container">
-                    <div class="star">â­</div>
-                    <div class="star">âœ¨</div>
-                    <div class="star">â­</div>
+                    <div class="star">⭐</div>
+                    <div class="star">✨</div>
+                    <div class="star">⭐</div>
                 </div>
             </div>
         `
@@ -8899,52 +8960,52 @@ function showGoodnightSequence() {
 
 function showCuteArchives() {
     createModal({
-        title: 'ðŸ’• Cute Archive Found',
-        desc: 'The "ole olee" files have been detected. Maximum cuteness levels confirmed. ðŸ¥°',
-        icon: 'ðŸ“'
+        title: '💕 Cute Archive Found',
+        desc: 'The "ole olee" files have been detected. Maximum cuteness levels confirmed. 🥰',
+        icon: '📁'
     });
 }
 
 function showDreamWish() {
     createModal({
-        title: 'âœ¨ Dream Wish',
-        desc: 'Acche acche sapne dekh. (Have the sweetest dreams.) May tonight bring you peace and rest. ðŸŒŸ',
-        icon: 'ðŸŒ™'
+        title: '✨ Dream Wish',
+        desc: 'Acche acche sapne dekh. (Have the sweetest dreams.) May tonight bring you peace and rest. 🌟',
+        icon: '🌙'
     });
 }
 
 function showMorningMotivation() {
     createModal({
-        title: 'Good Morning â˜€ï¸',
+        title: 'Good Morning ☀️',
         desc: 'A new day. A fresh start. You\'ve got this. I hope today is gentle with you.',
-        icon: 'ðŸŒ…'
+        icon: '🌅'
     });
 }
 
 function showAfternoonBoost() {
     createModal({
-        title: 'Happy Afternoon ðŸŒ¤ï¸',
+        title: 'Happy Afternoon 🌤️',
         desc: 'You\'re doing great. Keep going. You\'re making progress, even if it doesn\'t feel like it.',
-        icon: 'âœ¨'
+        icon: '✨'
     });
 }
 
 function showEveningReflection() {
     createModal({
-        title: 'Happy Evening ðŸŒ™',
+        title: 'Happy Evening 🌙',
         desc: 'Take a moment to breathe. You made it through another day. That matters.',
-        icon: 'ðŸŒ†'
+        icon: '🌇'
     });
 }
 
 function showNightCare() {
     createInteractiveModal({
-        title: 'You\'re Up Late ðŸŒƒ',
+        title: 'You\'re Up Late 🌃',
         content: `
             <div class="night-care">
                 <div class="night-message">
                     <p>It's late. Please rest when you can.</p>
-                    <p>Even at this hourâ€¦ you're not alone.</p>
+                    <p>Even at this hour… you're not alone.</p>
                     <p class="mt-4 text-sm text-gray-400">Whatever's keeping you up, I hope you find peace soon.</p>
                 </div>
                 <div class="night-actions">
@@ -8958,39 +9019,39 @@ function showNightCare() {
 
 function showSmileEncouragement() {
     createModal({
-        title: 'ðŸ˜Š For You',
-        desc: 'Heyâ€¦ smile a little. Just for me. (Even a tiny one counts.) ðŸ’›',
-        icon: 'ðŸ’›'
+        title: '😊 For You',
+        desc: 'Hey… smile a little. Just for me. (Even a tiny one counts.) 💛',
+        icon: '💛'
     });
 }
 
 function showPrideMessage() {
     createModal({
-        title: 'â­ Still Proud',
-        desc: 'Still proud of you. Yes, again. You don\'t hear it enough, so I\'m saying it. You\'re doing well. ðŸŒŸ',
-        icon: 'ðŸŒŸ'
+        title: '⭐ Still Proud',
+        desc: 'Still proud of you. Yes, again. You don\'t hear it enough, so I\'m saying it. You\'re doing well. 🌟',
+        icon: '🌟'
     });
 }
 
 function showLunchReminder() {
     createModal({
-        title: 'ðŸ½ï¸ Lunch Time',
-        desc: 'No skipping lunch ðŸ¤¨. Your body needs fuel. Take care of yourself.',
-        icon: 'ðŸ¥—'
+        title: '🍽️ Lunch Time',
+        desc: 'No skipping lunch 🤨. Your body needs fuel. Take care of yourself.',
+        icon: '🥗'
     });
 }
 
 function showStretchGuide() {
     createInteractiveModal({
-        title: 'ðŸ§˜ Stretch Break',
+        title: '🧘 Stretch Break',
         content: `
             <div class="stretch-guide">
                 <h3>Quick Stretches</h3>
                 <div class="stretch-list">
-                    <div class="stretch">ðŸ”„ Roll your shoulders back</div>
-                    <div class="stretch">â†”ï¸ Neck side-to-side</div>
-                    <div class="stretch">ðŸ™† Reach arms overhead</div>
-                    <div class="stretch">ðŸ¤² Wrist circles</div>
+                    <div class="stretch">🔄 Roll your shoulders back</div>
+                    <div class="stretch">↔️ Neck side-to-side</div>
+                    <div class="stretch">🙆 Reach arms overhead</div>
+                    <div class="stretch">🤲 Wrist circles</div>
                 </div>
                 <p class="mt-4">Your body carries you all day. Show it some love.</p>
             </div>
@@ -9000,9 +9061,9 @@ function showStretchGuide() {
 
 function showCareMessage() {
     createModal({
-        title: 'ðŸ’™ System Message',
+        title: '💙 System Message',
         desc: 'Take care, please. You matter to me. Whatever you\'re going through, I\'m here for you.',
-        icon: 'ðŸ’™'
+        icon: '💙'
     });
 }
 
@@ -9014,7 +9075,7 @@ function createInteractiveModal({ title, content, onOpen }) {
         <div class="interactive-modal-box">
             <div class="modal-header">
                 <h3 class="modal-title">${title}</h3>
-                <button class="modal-close" onclick="this.closest('.interactive-modal-overlay').remove()">Ã—</button>
+                <button class="modal-close" onclick="this.closest('.interactive-modal-overlay').remove()">×</button>
             </div>
             <div class="modal-body">
                 ${content}
