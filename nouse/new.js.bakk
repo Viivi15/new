@@ -3069,7 +3069,6 @@ const Apps = {
         // Dynamic Menu Bar Name
         setAppName(app.title);
 
-        // Hook for resets - REMOVED PREMATURE CALL
 
         state.appsOpened.add(id);
         const exist = document.getElementById(`win-${id}`);

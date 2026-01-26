@@ -10,7 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link
-        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@600&family=Permanent+Marker&family=Handlee&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700&family=Outfit:wght@300;400;600;700&family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@600&family=Permanent+Marker&family=Handlee&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="new.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
@@ -531,6 +531,13 @@
         <div id="dock-container">
             <div id="dock-hint">This space stays.</div>
             <div id="dock"></div>
+        </div>
+
+        <div id="desktop-pet"
+            class="fixed bottom-24 right-10 w-32 h-32 cursor-pointer z-10 transition-transform hover:scale-110"
+            onclick="togglePet()" title="Click to change me!">
+            <img id="pet-img" src="assets/gifs/milk_mascot.gif"
+                class="w-full h-full object-contain filter drop-shadow-xl">
         </div>
 
         <div id="crack" class="crack"></div>

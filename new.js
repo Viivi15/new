@@ -106,21 +106,7 @@ function updateClock() {
             clock.textContent = str;
         }
 
-        /* === EASTER EGG: 12:21 AM === */
-        // Check for 00:21 (12:21 AM)
-        if (rawHours === 0 && minutes === '21') {
-            // Use a session flag to avoid spamming
-            if (!window.hasTriggered1221) {
-                window.hasTriggered1221 = true;
-                if (typeof createModal === 'function') {
-                    createModal({
-                        title: "12:21 AM",
-                        desc: "The time it all started.<br>Some moments last forever. ✨",
-                        icon: "🌙"
-                    });
-                }
-            }
-        }
+
 
         updateSystemBasedOnTime(rawHours);
 
@@ -175,9 +161,8 @@ const Persistence = {
                 system.push(title);
                 localStorage.setItem('achievementsUnlocked', JSON.stringify(system));
 
-                if (typeof createModal === 'function') {
-                    createModal({ title: 'Achievement Unlocked! 🏆', desc: title, icon: '🌟' });
-                }
+                // Achievement unlocked logic (logging only)
+                console.log('Achievement Unlocked:', title);
             }
         } catch (e) { console.error(e); }
     },
@@ -205,7 +190,8 @@ const wallpapers = [
     { thumb: 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?q=80&w=200', full: 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?q=80&w=2069' }, // Space
     { thumb: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=200', full: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=2069' }, // Nature
     { thumb: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=200', full: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2069' }, // Mountains
-    { thumb: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=200', full: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=2069' }  // Colors
+    { thumb: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=200', full: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=2069' }, // Colors
+    { thumb: 'assets/images/album-cover.jpg', full: 'assets/images/album-cover.jpg' } // Custom Album Cover
 ];
 
 /* === JOURNEY DATA === */
@@ -219,7 +205,7 @@ const journeyData = [
             { type: 'title', text: "Chapter 1: The First Spark" },
             { type: 'chat', speaker: 'System', text: "Connection Established: June 20, 2024 • 12:21 AM" },
             { type: 'scene', text: "It was a pleasant meeting. You talked about Euros and football tournaments. I found out you'd never watched cricket in your life!" },
-            { type: 'chat', speaker: 'Harshit', text: "4 hours of sleep is enough, I've slept only 4 hours my whole life... (and then the brain tumor story 💀)" },
+            { type: 'chat', speaker: 'Harshit', text: "The night is just getting started... (and then the brain tumor story 💀)" },
             { type: 'scene', text: "Next day: You woke up at 11, pinged a 'hated' girl by mistake, and shared some... choice words. 😂" }
         ]
     },
@@ -385,104 +371,7 @@ const RabbitSquad = {
     }
 };
 
-/* === MASTI MODE (Mocha & Bear) === */
-const MastiMode = {
-    chars: [],
-    bounds: { w: 300, h: 200 },
 
-    init() {
-        const den = document.getElementById('masti-den');
-        if (!den) return;
-        this.bounds.w = den.offsetWidth;
-        this.bounds.h = den.offsetHeight;
-        this.spawn();
-    },
-
-    spawn() {
-        const den = document.getElementById('masti-den');
-        if (!den) return;
-        den.innerHTML = '<div id="masti-msg" class="absolute top-10 w-full text-center text-xs font-bold text-pink-600 opacity-0 transition-opacity"></div>'; // clear & add msg layer
-
-        // Bear (Brown)
-        const bear = this.createChar('🐻', 'bun-bear', 60, 100);
-        // Mocha (White)
-        const mocha = this.createChar('🐻‍❄️', 'bun-mocha', 180, 100);
-
-        den.appendChild(bear.el);
-        den.appendChild(mocha.el);
-        this.chars = [bear, mocha];
-    },
-
-    createChar(emoji, cls, x, y) {
-        const el = document.createElement('div');
-        el.className = 'absolute text-5xl cursor-pointer transition-transform duration-300 select-none ' + cls;
-        el.innerText = emoji;
-        el.style.left = x + 'px';
-        el.style.top = y + 'px';
-
-        // Simple bounce
-        let dy = 0;
-        let yPos = y;
-        const int = setInterval(() => {
-            yPos += Math.sin(Date.now() / 300) * 0.5;
-            el.style.top = yPos + 'px';
-        }, 50);
-
-        return { el, x, y, int };
-    },
-
-    dance() {
-        this.showMsg("🎶 Vibing 🎶");
-        this.chars.forEach(c => {
-            c.el.classList.add('animate-bounce');
-            setTimeout(() => c.el.classList.remove('animate-bounce'), 2000);
-        });
-    },
-
-    pinch() {
-        this.showMsg("🤏 Cheeks Pinched!");
-        // Move Mocha to Bear
-        const bear = this.chars[0];
-        const mocha = this.chars[1];
-
-        mocha.el.style.transform = 'translateX(-60px)'; // Move Left
-        setTimeout(() => {
-            mocha.el.style.transform = 'translateX(0)';
-            this.showMsg("♥️");
-        }, 1000);
-    },
-
-    feed() {
-        const den = document.getElementById('masti-den');
-        this.showMsg("☕ Coffee & Cookies 🍪");
-
-        // Spawn treats
-        for (let i = 0; i < 6; i++) {
-            const t = document.createElement('div');
-            t.innerText = i % 2 === 0 ? '☕' : '🍪';
-            t.className = 'absolute text-xl animate-bounce';
-            t.style.left = Math.random() * 250 + 'px';
-            t.style.top = '-20px';
-            t.style.transition = 'top 1s';
-            den.appendChild(t);
-
-            setTimeout(() => {
-                t.style.top = Math.random() * 150 + 50 + 'px';
-            }, 50);
-
-            setTimeout(() => t.remove(), 2000);
-        }
-    },
-
-    showMsg(txt) {
-        const m = document.getElementById('masti-msg');
-        if (m) {
-            m.innerText = txt;
-            m.style.opacity = 1;
-            setTimeout(() => m.style.opacity = 0, 1500);
-        }
-    }
-};
 
 /* === MR. SNOW APP LOGIC === */
 function initMrSnowApp() {
@@ -571,7 +460,12 @@ function initMrSnowApp() {
         mouse.y = -200;
     };
 
-    window.addEventListener('resize', resize);
+    const observer = new ResizeObserver(() => {
+        resize();
+        createParticles();
+    });
+    observer.observe(container);
+
     resize();
     createParticles();
     animate();
@@ -626,21 +520,7 @@ function mrSnowFlurry() {
 
 /* === APP REGISTRY (Refined for Harshit) === */
 const apps = [
-    {
-        id: 'readme-letter', title: 'Happy Birthday', icon: '<img src="assets/icons/app_birthday.png" alt="birthday" style="width: 100%; height: 100%;">', dock: false, width: 600, height: 700, content: `
-        <div class="h-full bg-white p-10 flex flex-col overflow-y-auto custom-scroll">
-            <h1 class="font-serif text-4xl text-pink-500 mb-6 drop-shadow-sm">To Harshit,</h1>
-            <div class="letter-text text-gray-700 space-y-4">
-                <p>If you are reading this, you successfully blew out the candle and cut the cake (CSS is hard, okay?). 😂</p>
-                <p>I just wanted to say... <strong class="text-pink-500 font-serif text-xl">Happy Birthday</strong>.</p>
-                <p>This entire OS is a collection of our moments, inside jokes, and the things that make "us". Explore the folders, find the hidden eggs (there are rabbits everywhere), and just know that you are appreciated.</p>
-                <p>You matter. Your chaos matters. Your silence matters.</p>
-                <div class="mt-8 border-t border-pink-100 pt-4 font-dancing text-2xl text-pink-400">
-                    - Vi (Shravii)
-                </div>
-            </div>
-        </div>
-    `},
+
 
     /* === FOLDERS === */
     {
@@ -648,6 +528,9 @@ const apps = [
         <div class="h-full bg-gradient-to-b from-gray-50 to-white p-6 overflow-y-auto custom-scroll">
             <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6 border-b border-gray-100 pb-2">Root Directory</div>
             <div class="folder-window-grid">
+
+                <div class="win-icon group" onclick="Apps.open('app-stars')"><div class="icon-img text-4xl">✨</div><div class="icon-label">Constellation</div></div>
+ 
                 <div class="win-icon group" onclick="Apps.open('first-conversation')">
                     <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_1221.png" alt="chat" style="width: 100%; height: 100%;"></div>
                     <div class="icon-label group-hover:text-blue-600 transition-colors">12:21 AM</div>
@@ -681,32 +564,35 @@ const apps = [
                     <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_terminal.png" alt="terminal" style="filter: sepia(1) saturate(4) hue-rotate(100deg);"></div>
                     <div class="icon-label group-hover:text-emerald-500 transition-colors">Terminal.sh</div>
                 </div>
+
             </div>
             <div class="w-full text-center text-[10px] text-gray-300 mt-8 uppercase tracking-widest font-mono">System Core • v19.0</div>
         </div>
     `},
 
     {
-        id: 'folder-feelings', title: 'Soft Stuff', icon: '<img src="assets/icons/folder_feelings.png" alt="folder" style="filter: sepia(1) saturate(4) hue-rotate(340deg);">', dock: false, width: 800, height: 600, content: `
+        id: 'folder-feelings', title: 'Soft Stuff', icon: '<div class="flex items-center justify-center text-3xl filter drop-shadow-lg scale-110">🧸</div>', dock: false, width: 800, height: 600, content: `
         <div class="folder-window-grid">
-            <div class="win-icon" onclick="Apps.open('why-matter')"><div class="icon-img"><img src="assets/icons/app_matter.png" alt="why matter" style="width: 100%; height: 100%;"></div><div class="icon-label">Why You<br>Matter</div></div>
+            <div class="win-icon group" onclick="Apps.open('app-letters')"><div class="icon-img text-4xl">📜</div><div class="icon-label">Letters</div></div>
+            <div class="win-icon group" onclick="Apps.open('app-mixtape')"><div class="icon-img text-4xl">📼</div><div class="icon-label">Mixtape</div></div>
+            <div class="win-icon group" onclick="Apps.open('app-bloom')"><div class="icon-img text-4xl">🌼</div><div class="icon-label">Daily Bloom</div></div>
+            <div class="win-icon" onclick="Apps.open('why-matter')"><div class="icon-img"><img src="assets/icons/app_matter.png" alt="why matter" style="width: 100%; height: 100%;"></div><div class="icon-label">Why You Matter</div></div>
             <div class="win-icon" onclick="Apps.open('tired')"><div class="icon-img"><img src="assets/icons/app_sleep.png" alt="tired" style="width: 100%; height: 100%;"></div><div class="icon-label">When Tired</div></div>
-
-
-            <div class="win-icon" onclick="Apps.open('music-night')"><div class="icon-img"><img src="assets/icons/app_night.png" alt="music" style="width: 100%; height: 100%;"></div><div class="icon-label">Late Night</div></div>
-             <div class="win-icon" onclick="Apps.open('future')"><div class="icon-img"><img src="assets/icons/app_future_new.png" alt="future" style="width: 100%; height: 100%;"></div><div class="icon-label">Future You</div></div>
-             <div class="win-icon" onclick="Apps.open('thank-you')"><div class="icon-img"><img src="assets/icons/app_thankyou.png" alt="thank you" style="width: 100%; height: 100%;"></div><div class="icon-label">Thank You</div></div>
-             <div class="win-icon" onclick="Apps.open('inkpot')"><div class="icon-img"><img src="assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;"></div><div class="icon-label">The Inkpot</div></div>
-             <div class="win-icon" onclick="Apps.open('last-thing')"><div class="icon-img"><img src="assets/icons/app_rose.png" alt="last thing" style="width: 100%; height: 100%;"></div><div class="icon-label">One Last<br>Thing</div></div>
-             <div class="win-icon" onclick="Apps.open('admire')"><div class="icon-img"><img src="assets/icons/app_truth_new.png" alt="truth" style="width: 100%; height: 100%;"></div><div class="icon-label">Deep<br>Truths</div></div>
+            <div class="win-icon" onclick="Apps.open('future')"><div class="icon-img"><img src="assets/icons/app_future_new.png" alt="future" style="width: 100%; height: 100%;"></div><div class="icon-label">Future You</div></div>
+            <div class="win-icon" onclick="Apps.open('thank-you')"><div class="icon-img text-3xl">✨</div><div class="icon-label">Gratitude</div></div>
+            <div class="win-icon" onclick="Apps.open('inkpot-new')"><div class="icon-img"><img src="assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;"></div><div class="icon-label">The Inkpot</div></div>
+            <div class="win-icon" onclick="Apps.open('app-capsule')"><div class="icon-img text-4xl">⏳</div><div class="icon-label">Time Capsule</div></div>
+            <div class="win-icon" onclick="Apps.open('app-planes')"><div class="icon-img text-4xl">✈️</div><div class="icon-label">Paper Planes</div></div>
+            <div class="win-icon" onclick="Apps.open('app-journal')"><div class="icon-img text-4xl">📚</div><div class="icon-label">Our Story</div></div>
+            <div class="win-icon" onclick="Apps.open('last-thing')"><div class="icon-img"><img src="assets/icons/app_rose.png" alt="last thing" style="width: 100%; height: 100%;"></div><div class="icon-label">One Last Thing</div></div>
+            <div class="win-icon" onclick="Apps.open('admire')"><div class="icon-img"><img src="assets/icons/app_truth_new.png" alt="truth" style="width: 100%; height: 100%;"></div><div class="icon-label">Deep Truths</div></div>
         </div>
     `},
-
-    ,
 
     {
         id: 'folder-fun', title: 'Unstable Features', icon: '<img src="assets/icons/folder_fun.png" alt="folder" style="filter: sepia(1) saturate(4) hue-rotate(50deg);">', dock: false, width: 800, height: 600, content: `
         <div class="folder-window-grid">
+
             <div class="win-icon" onclick="Apps.open('flash')"><div class="icon-img"><img src="assets/icons/app_speed.png" alt="flash" style="width: 100%; height: 100%;"></div><div class="icon-label">Fastest<br>Alive</div></div>
              <div class="win-icon" onclick="Apps.open('rabbit')"><div class="icon-img"><img src="assets/icons/app_rabbit_new.png" alt="rabbit" style="width: 100%; height: 100%;"></div><div class="icon-label">Rabbit<br>Mode</div></div>
             <div class="win-icon" onclick="Apps.open('rabbit-runner')"><div class="icon-img"><img src="assets/icons/app_rabbit_new.png" alt="rabbit" style="width: 100%; height: 100%;"></div><div class="icon-label">Rabbit<br>Runner</div></div>
@@ -715,8 +601,14 @@ const apps = [
             <div class="win-icon" onclick="Apps.open('personality-quiz')"><div class="icon-img"><img src="assets/icons/app_us_quiz.png" alt="quiz" style="width: 100%; height: 100%;"></div><div class="icon-label">Who Are You?</div></div>
              <div class="win-icon" onclick="Apps.open('radio-harshit')"><div class="icon-img"><img src="assets/icons/app_radio.png" alt="radio" style="filter: sepia(1) saturate(3) hue-rotate(300deg);"></div><div class="icon-label">Radio<br>Harshit</div></div>
             <div class="win-icon" onclick="Apps.open('quiz')"><div class="icon-img"><img src="assets/icons/app_us_quiz.png" alt="quiz" style="width: 100%; height: 100%;"></div><div class="icon-label">The Us Quiz</div></div>
-            <div class="win-icon" onclick="Apps.open('bear')"><div class="icon-img"><img src="assets/icons/app_bear.png" alt="bear"></div><div class="icon-label">Masti Mode</div></div>
+
             <div class="win-icon" onclick="Apps.open('spotify')"><div class="icon-img"><img src="assets/icons/app_spotify.png" alt="spotify" style="filter: sepia(1) saturate(5) hue-rotate(100deg);"></div><div class="icon-label">Vibe Check</div></div>
+
+            <div class="win-icon" onclick="Apps.open('app-anime')"><div class="icon-img text-4xl">⛩️</div><div class="icon-label">Anime<br>Gallery</div></div>
+
+
+            <div class="win-icon" onclick="Apps.open('app-decision')"><div class="icon-img text-4xl">🎲</div><div class="icon-label">Decision<br>Helper</div></div>
+            <div class="win-icon" onclick="Apps.open('app-wifi')"><div class="icon-img text-4xl">📶</div><div class="icon-label">Bangalore<br>Network</div></div>
         </div>
     `},
 
@@ -823,9 +715,9 @@ const apps = [
         <div class="mr-snow-view relative h-full">
             <canvas id="snow-canvas" class="absolute inset-0 z-0"></canvas>
             
-            <div class="relative z-10 h-full flex flex-col items-center justify-center p-8 pointer-events-none">
-                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl max-w-sm pointer-events-auto transform transition hover:scale-105 duration-700">
-                    <h3 class="mr-snow-title text-3xl font-serif text-white mb-6 text-center drop-shadow-md">The Nature</h3>
+            <div class="relative z-10 h-full flex flex-col items-center justify-center p-8 overflow-y-auto custom-scroll">
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl max-w-sm pointer-events-auto transform transition hover:scale-105 duration-700 my-auto">
+                    <h3 class="mr-snow-title text-3xl font-serif text-white mb-6 text-center drop-shadow-md">❄️</h3>
                     <div class="mr-snow-text text-white/90 font-serif leading-relaxed text-center text-sm space-y-4">
                         <p>In the hush of winter, he found himself.<br>He kept the name, held close to Rain.<br>Silent, steady, he learned to remain.</p>
                         <p>Gentle enough to hold the fall,<br>strong enough to stay through all.</p>
@@ -838,14 +730,14 @@ const apps = [
                         <button class="snow-btn px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-xs text-white uppercase tracking-wider backdrop-blur-sm border border-white/10 transition" onclick="mrSnowFlurry()">Flurry</button>
                     </div>
                 </div>
-                <div id="comfort-msg" class="mt-8 text-white/90 text-lg font-serif italic drop-shadow-lg transition-opacity duration-1000 opacity-0 bg-black/20 px-6 py-2 rounded-full backdrop-blur-sm border border-white/10"></div>
+                <div id="comfort-msg"></div>
             </div>
         </div>
     `},
 
     {
         id: 'why-matter', title: 'Why You Matter', icon: '<img src="assets/icons/app_matter.png" alt="why matter" style="width: 100%; height: 100%;">', dock: false, width: 700, height: 500, content: `
-        <div class="h-full bg-gradient-to-br from-rose-50 via-white to-teal-50 p-12 flex flex-col items-center justify-center text-center cursor-pointer relative overflow-hidden" onclick="nextWhy()">
+        <div class="h-full bg-gradient-to-br from-rose-50 via-white to-teal-50 p-12 flex flex-col items-center justify-center text-center cursor-pointer relative overflow-y-auto custom-scroll" onclick="nextWhy()">
              <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-rose-200 to-transparent opacity-50"></div>
             
             <div class="absolute top-6 left-0 w-full text-center z-10">
@@ -973,7 +865,7 @@ const apps = [
             <div class="mt-auto border-t border-white/5 pt-4 flex justify-between items-end">
                 <div class="text-[9px] text-slate-500 font-mono">
                     ID: 847-HK-TRUE<br>
-                    CLR: TOP SECRET
+                    CLR: 
                 </div>
                  <div class="text-xs text-slate-400 tracking-widest uppercase opacity-70 animate-pulse">Access Granted</div>
             </div>
@@ -991,11 +883,31 @@ const apps = [
 
     /* CLUSTER 2: FUN / MASTI (Lightweight) */
     {
-        id: 'facts', title: 'Harshit Facts.txt', icon: '<img src="assets/icons/app_facts.png" alt="facts" style="filter: hue-rotate(0deg);">', folder: 'system', dock: false, width: 800, height: 700, content: `
+        id: 'facts', title: 'Harshit Facts.txt', icon: '<img src="assets/icons/app_facts.png" alt="facts" style="filter: hue-rotate(0deg);">', folder: 'system', dock: false, width: 800, height: 750, onOpen: startFactsApp, content: `
     <div class="facts-app custom-scroll" id="facts-app-root">
-        <div class="facts-content active" id="facts-main-content">
+        <!-- Digital Terminal Screen (Initial State) -->
+        <div class="facts-terminal" id="facts-terminal">
+            <div class="facts-log-line" style="animation-delay: 0.1s;">[SYSTEM] Initializing Profile Sync...</div>
+            <div class="facts-log-line" style="animation-delay: 0.3s;">[AUTH] Identity:Mehta</div>
+            <div class="facts-log-line" style="animation-delay: 0.5s;">[DATA] Fetching behavioral patterns...</div>
+            <div class="facts-log-line" style="animation-delay: 0.8s;">[DATA] Warning: Emotional layers found... bypassing...</div>
+            <div class="facts-log-line" style="animation-delay: 1.2s;">[SYNC] Profile successfully reconstructed.</div>
+            <button class="facts-enter-btn" onclick="startFactsApp()">Access File</button>
+        </div>
+
+        <div class="facts-content" id="facts-main-content">
             
-            <div class="facts-section revealed">
+            <div class="facts-section">
+                <div class="facts-section-title">SYSTEM SPECIFICATIONS 💻</div>
+                <div class="facts-specs-list">
+                    <div class="spec-item"><span class="spec-label">MODEL_ID</span><span class="spec-val">HARSHIT_MEHTA_19</span></div>
+                    <div class="spec-item"><span class="spec-label">CORE_KERNEL</span><span class="spec-val">COMPASSION_OS_v2.0</span></div>
+                    <div class="spec-item"><span class="spec-label">SYSTEM_UPTIME</span><span class="spec-val">ACTIVE_2004_PRESENT</span></div>
+                    <div class="spec-item"><span class="spec-label">LOGIC_MODE</span><span class="spec-val">INDUCTIVE / WITTY</span></div>
+                </div>
+            </div>
+
+            <div class="facts-section">
                 <div class="facts-section-title">IDENTITY LAYERS 🎭</div>
                 <div class="facts-alias-slider">
                     <div class="facts-alias-card">
@@ -1021,7 +933,7 @@ const apps = [
                 </div>
             </div>
 
-            <div class="facts-section revealed">
+            <div class="facts-section">
                 <div class="facts-section-title">OPERATING PARAMETERS 🧬</div>
                 <div class="facts-grid">
                     <div class="facts-card">
@@ -1034,10 +946,10 @@ const apps = [
                         <div class="fact-val">Bhindi (Okra) 🤢</div>
                         <div class="sys-note" style="color: #ef4444;">CRITICAL ERROR. DO NOT SERVE.</div>
                     </div>
-                    <div class="facts-card">
-                        <h4>Sleep Logic</h4>
-                        <div class="fact-val">"4 Hours is Enough"</div>
-                        <div class="sys-note">System Diagnosis: Lie. Needs 10 hours.</div>
+                     <div class="facts-card">
+                        <h4>Communication</h4>
+                        <div class="fact-val">Witty / Reserved</div>
+                        <div class="sys-note">Mode: Context Dependent. Depth: High.</div>
                     </div>
                     <div class="facts-card">
                         <h4>Dislikes</h4>
@@ -1047,13 +959,28 @@ const apps = [
                 </div>
             </div>
 
-            <div class="facts-footer-note">
-                <span class="sys-obs">Observation</span>
-                <blockquote>
-                    "He is not loud. Not dramatic. <br>
-                    But once he chooses someone, the system never forgets them."
-                </blockquote>
+            <div class="facts-observation-wrap">
+                <div class="observation-header">
+                    <span class="obs-badge">CONFIDENTIAL REPORT</span>
+                    <span class="obs-id">REG_S19_847</span>
+                </div>
+                <div class="observation-box">
+                    <div class="obs-marker"></div>
+                    <div class="obs-body">
+                        <div class="obs-label">Deep Scan Observation</div>
+                        <blockquote>
+                            "He is not loud. Not dramatic. <br>
+                            But once he chooses someone, the system never forgets them."
+                        </blockquote>
+                    </div>
+                </div>
+                <div class="observation-footer">
+                    <span>Generated: 2024.06.20</span>
+                    <span>Auth: Shravii_V-Space</span>
+                </div>
             </div>
+
+            <div style="height: 120px;"></div>
         </div>
     </div>
 `},
@@ -1061,20 +988,26 @@ const apps = [
     // Internal filename: emotionally_dumb_but_lovable.js
     {
         id: 'not-dumb', title: 'Not Dumb', icon: '<img src="assets/icons/app_not_dumb.png" alt="not dumb" style="width: 100%; height: 100%;">', folder: 'system', dock: false, width: 600, height: 700, onOpen: initNotDumb, content: `
-        <div id="not-dumb-container" class="h-full bg-gray-50 text-gray-800 font-mono text-sm relative overflow-hidden flex flex-col">
+        <div id="not-dumb-container" class="h-full not-dumb-glass-bg text-gray-800 font-sans text-sm relative overflow-hidden flex flex-col">
+            <!-- Orbs -->
+            <div class="nd-orb-1"></div>
+            <div class="nd-orb-2"></div>
+
             <!-- Dynamic Content Area -->
-            <div id="not-dumb-content" class="flex-1 p-8 flex flex-col justify-center relative z-10">
+            <div id="not-dumb-content" class="flex-1 p-8 overflow-y-auto custom-scroll relative z-10">
                 <!-- Content injected via JS -->
             </div>
 
             <!-- Global Watermark -->
             <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none select-none">
-                <div class="text-[200px] grayscale rotate-12">🤨</div>
+                <div class="text-[200px] grayscale rotate-12 mix-blend-overlay">🤨</div>
             </div>
 
             <!-- Navigation (Hidden initially) -->
-            <div id="not-dumb-nav" class="p-4 flex justify-end opacity-0 transition duration-500 relative z-20">
-                <button onclick="nextNotDumbSlide()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded text-xs font-bold uppercase tracking-wider transition">Next ➜</button>
+            <div id="not-dumb-nav" class="p-6 flex justify-end opacity-0 transition duration-500 relative z-20">
+                <button onclick="nextNotDumbSlide()" class="px-6 py-2 bg-white/50 hover:bg-white/80 backdrop-blur-md rounded-full text-xs font-bold uppercase tracking-wider transition shadow-sm border border-white/50 text-slate-600 hover:text-slate-800">
+                    Next <span class="ml-1">➜</span>
+                </button>
             </div>
         </div>
     `},
@@ -1268,80 +1201,9 @@ const apps = [
 
 
     /* CLUSTER 3: COMFORT & CALM (Safe Spaces) */
-    {
-        id: 'music-night', title: 'Late Night', icon: '<img src="assets/icons/app_night.png" alt="music" style="width: 100%; height: 100%;">', dock: true, width: 500, height: 400, content: `
-        <div class="h-full bg-slate-900 text-slate-300 flex flex-col items-center justify-center gap-6 relative overflow-hidden group">
-            <!-- Background Glow -->
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-indigo-900/20"></div>
-            <div class="absolute -top-10 -right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl"></div>
-            
-            <div class="text-[10px] tracking-[0.3em] uppercase opacity-40 font-light">Late Night Vibes</div>
-            
-            <div class="relative transition-transform duration-700 hover:scale-105">
-                <div class="absolute inset-0 bg-indigo-500/20 rounded-full blur-xl animate-pulse"></div>
-                <img src="assets/icons/app_night.png" class="w-32 h-32 cursor-pointer transition-all duration-500 hover:rotate-12" onclick="createModal({ title: 'Late Night Mode', desc: 'Playing soft piano...', icon: '🎹' })">
-            </div>
-            
-            <div class="text-xs text-center opacity-60 font-light max-w-[200px]">
-                "Quiet music for loud minds."
-            </div>
-        </div>
-    `},
 
-    {
-        id: 'thank-you', title: 'Thank You', icon: '<img src="assets/icons/app_thankyou.png" alt="thank you" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 700, height: 700, content: `
-        <div class="thank-you-container custom-scroll">
-            <div class="thank-you-header">
-                <div class="ty-icon">✨</div>
-                <div class="ty-title-group">
-                    <div class="ty-subtitle">GRATITUDE JOURNAL</div>
-                    <h2 class="ty-title">Things I'm Grateful For</h2>
-                </div>
-            </div>
 
-            <div class="ty-grid">
-                <div class="ty-card" style="animation-delay: 0.1s">
-                    <div class="ty-card-icon">👂</div>
-                    <div class="ty-card-content">
-                        <h3>For Listening</h3>
-                        <p>Even when I ramble about nonsense or overthink the smallest things. You're always there.</p>
-                    </div>
-                </div>
 
-                <div class="ty-card" style="animation-delay: 0.2s">
-                    <div class="ty-card-icon">😂</div>
-                    <div class="ty-card-content">
-                        <h3>For the Laughs</h3>
-                        <p>The inside jokes, the roasts, and the moments where we just can't stop laughing.</p>
-                    </div>
-                </div>
-
-                <div class="ty-card" style="animation-delay: 0.3s">
-                    <div class="ty-card-icon">⚓</div>
-                    <div class="ty-card-content">
-                        <h3>For Staying</h3>
-                        <p>When things got quiet, weird, or tough. You didn't leave. You stayed.</p>
-                    </div>
-                </div>
-
-                <div class="ty-card" style="animation-delay: 0.4s">
-                    <div class="ty-card-icon">🤍</div>
-                    <div class="ty-card-content">
-                        <h3>For Being You</h3>
-                        <p>Authentic. Kind. And my favorite person to annoy.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="ty-footer">
-                <div class="ty-note">"Some people make the world better just by being in it."</div>
-                <button onclick="Apps.close('thank-you')" class="ty-close-btn">Close Gratitude</button>
-            </div>
-            
-            <!-- Confetti trigger on open -->
-            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onload="if(typeof confetti === 'function') { confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); }" style="display:none;">
-        </div>
-    `},
 
     /* === EASTER EGG APPS === */
     {
@@ -1413,11 +1275,11 @@ const apps = [
 
     {
         id: 'last-thing', title: 'One Last Thing', icon: '<img src="assets/icons/app_rose.png" alt="last thing" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 500, height: 400, content: `
-        <div class="h-full bg-black flex flex-col items-center justify-center text-center p-6 relative overflow-hidden">
+        <div class="h-full bg-black flex flex-col items-center justify-center text-center p-6 relative overflow-y-auto custom-scroll">
              <!-- Cinematic Gradient -->
-             <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800 animate-pulse-slow"></div>
+             <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800 animate-pulse-slow pointer-events-none"></div>
              
-             <div class="relative z-10 animate-fade-in-up">
+             <div class="relative z-10 animate-fade-in-up my-auto">
                 <div class="text-6xl mb-6 last-thing-heart">🖤</div>
                 <h3 class="text-2xl font-serif text-white mb-4 tracking-wide drop-shadow-lg" style="font-family: 'Playfair Display', serif;">You are enough.</h3>
                 <p class="text-sm text-gray-300 leading-relaxed max-w-[220px] mx-auto font-light opacity-80">
@@ -1496,7 +1358,7 @@ const apps = [
 
     {
         id: 'future', title: 'Future You', icon: '<img src="assets/icons/app_future_new.png" alt="future" style="width: 100%; height: 100%;">', dock: false, width: 800, height: 600, content: `
-        <div class="h-full w-full relative bg-black overflow-hidden group">
+        <div class="h-full w-full relative bg-black custom-scroll overflow-y-auto group">
             <!-- Background Image: Train/Night Window Aesthetic -->
             <div class="absolute inset-0 bg-cover bg-center transition-all duration-[2000ms] group-hover:scale-105 group-hover:opacity-40 opacity-70" 
                  style="background-image: url('https://images.unsplash.com/photo-1532978016421-2a0614459f36?q=80&w=1600');">
@@ -1517,14 +1379,10 @@ const apps = [
         </div>
     `},
 
-
-
-
-    ,
     /* === NEW APPS === */
     /* === SOFT STUFF (Inside Folder) === */
     {
-        id: 'inkpot', title: 'The Inkpot', icon: '<img src="assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 500, height: 600, onOpen: initInkpot, content: `
+        id: 'inkpot-new', title: 'The Inkpot', icon: '<img src="assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 500, height: 600, onOpen: initInkpot, content: `
         <div class="inkpot-bg">
             <div id="inkpot-text" class="poem-text"></div>
             <div class="inkpot-quill" onclick="nextPoem()">🖋️</div>
@@ -1584,7 +1442,7 @@ const apps = [
     {
         id: 'personality-quiz', title: 'Who Are You?', icon: '<img src="assets/icons/app_identity_new.png" alt="personality" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 600, height: 700, onOpen: initPersonalityQuiz, content: `
         <div class="quiz-bg">
-            <div id="p-quiz-content" class="h-full flex flex-col items-center justify-center p-8 text-center">
+            <div id="p-quiz-content" class="h-full flex flex-col items-center justify-center p-8 text-center overflow-y-auto custom-scroll">
                 <div class="text-5xl mb-6">🔍</div>
                 <div id="p-quiz-q" class="text-xl font-bold text-gray-800 mb-8">System Check...</div>
                 <div id="p-quiz-opts" class="flex flex-col gap-3 w-full max-w-xs"></div>
@@ -1616,26 +1474,13 @@ const apps = [
 
 
 
-    {
-        id: 'bear', title: 'Masti Mode', icon: '<img src="assets/icons/app_bear.png" alt="bear" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-fun', width: 500, height: 450, onOpen: () => MastiMode.init(), content: `
-        <div class="h-full bg-[#fff0f5] relative overflow-hidden select-none font-sans" id="masti-den">
-            <!-- Background -->
-            <div class="absolute inset-0 bg-gradient-to-b from-pink-50 to-rose-100 opacity-50 pointer-events-none"></div>
-            
-            <!-- Controls -->
-            <div class="absolute bottom-4 left-0 w-full z-20 flex justify-center gap-3">
-                <button onclick="MastiMode.pinch()" class="px-4 py-2 bg-white/80 rounded-full text-sm shadow hover:scale-105 transition border border-pink-200">🤏 Pinch</button>
-                <button onclick="MastiMode.dance()" class="px-4 py-2 bg-white/80 rounded-full text-sm shadow hover:scale-105 transition border border-pink-200">💃 Dance</button>
-                <button onclick="MastiMode.feed()" class="px-4 py-2 bg-white/80 rounded-full text-sm shadow hover:scale-105 transition border border-pink-200">🍪 Feed</button>
-            </div>
-        </div>
-    `},
+
 
     {
         id: 'spotify', title: 'Spotify - Vibe Check', icon: '<img src="assets/icons/app_spotify.png" alt="spotify" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-fun', width: 450, height: 600, content: `
         <div class="h-full bg-gradient-to-b from-[#1DB954] to-black text-white p-6 flex flex-col items-center justify-center relative overflow-hidden">
             <div class="w-48 h-48 bg-gray-800 shadow-2xl mb-6 rounded-md overflow-hidden relative group album-spin">
-                <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDd4bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BRv0TlsHCqDrG/giphy.gif" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                <img src="assets/images/album-cover.jpg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
                 <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/30">
                     <i class="fas fa-play text-4xl"></i>
                 </div>
@@ -1667,8 +1512,8 @@ const apps = [
     /* === VAULT APPS (Inside Folder) === */
     {
         id: 'do-not-open', title: 'Do Not Open', icon: '<img src="assets/icons/app_warning.png" alt="do not open" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 400, height: 300, content: `
-        <div class="h-full flex items-center justify-center bg-red-50 text-red-900 text-center p-6">
-            <div>
+        <div class="h-full flex flex-col items-center justify-center bg-red-50 text-red-900 text-center p-6 overflow-y-auto custom-scroll">
+            <div class="my-auto">
                 <div class="font-bold mb-2">You Opened It.</div>
                 <div class="text-xs">I knew you would. Stubborn. ❤️</div>
             </div>
@@ -1748,17 +1593,7 @@ const apps = [
         onOpen: initLetterReveal
     },
 
-    {
-        id: 'playlist', title: 'Hidden Tracks', icon: '🎶', dock: false, folder: 'app-vault', width: 500, height: 400, content: `
-        <div class="h-full bg-black text-white p-6">
-            <div class="uppercase tracking-widest text-xs opacity-50 mb-4">Secret Collection</div>
-            <ul class="space-y-3 text-sm font-light opacity-80">
-            <li>1. The Silence (Original Mix)</li>
-                <li>2. 12:21 AM (lo-fi)</li>
-                <li>3. That one song we shared</li>
-            </ul>
-        </div>
-    `},
+
 
     {
         id: 'secret-vault', title: 'Secret Vault', icon: '🔐', dock: false, folder: 'app-vault', width: 800, height: 600, onOpen: initSecretVault, content: `
@@ -1771,7 +1606,7 @@ const apps = [
                 <div class="relative w-64">
                     <input type="password" id="vault-pass" class="w-full bg-white/20 border border-white/30 rounded-lg px-4 py-3 text-center text-xl tracking-[0.5em] focus:outline-none focus:border-white/50 transition placeholder-gray-500" placeholder="••••••" maxlength="6">
                 </div>
-                <p id="vault-hint" class="text-xs text-gray-500 hover:text-gray-300 cursor-pointer transition" onclick="createModal({ title: 'Hint', desc: 'The day it all started (dd/mm/yy)', icon: '💡' })">Hint: dd/mm/yy</p>
+                <p id="vault-hint" class="text-xs text-gray-500 hover:text-gray-300 cursor-pointer transition" onclick="createModal({ title: 'Numerical Cipher', desc: 'A score of days, six moons deep, in the year where two dozen secrets we keep.', icon: '🔐' })">Hint: Numerical Rhythm</p>
                 <div id="vault-error" class="text-red-400 text-sm font-bold opacity-0 transition">Access Denied</div>
              </div>
 
@@ -1946,14 +1781,15 @@ const apps = [
                 </p>
             </div>
             <div class="flex justify-center mt-8">
-                <img src="https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif" class="w-32 rounded-lg opacity-80 mix-blend-multiply">
+                <img src="assets/gifs/bear_love.gif" class="w-32 rounded-lg opacity-80 mix-blend-multiply">
             </div>
         </div>
     `},
 
     {
         id: 'about-us', title: 'The Dynamic', icon: '👥', dock: false, width: 800, height: 600, content: `
-        <div class="about-container relative w-full h-full bg-slate-50 overflow-hidden flex flex-col items-center justify-center">
+        <div class="about-container relative w-full h-full bg-slate-50 overflow-y-auto custom-scroll flex flex-col items-center">
+            <div class="min-h-full flex flex-col items-center justify-center py-10 w-full">
             <!-- Background Elements -->
             <div class="absolute inset-0 bg-gradient-to-br from-rose-50/50 via-white to-blue-50/50"></div>
             <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-pink-300/20 rounded-full blur-[100px] animate-pulse"></div>
@@ -2024,61 +1860,245 @@ const apps = [
             <div class="absolute bottom-6 text-center z-10 opacity-60 hover:opacity-100 transition-opacity">
                 <p class="text-xs font-mono text-slate-500">"He stays quiet so she can yap."</p>
             </div>
+            </div>
         </div>
     `},
+
+    /* === NEW APPS ADDED === */
+
+
     {
-        id: 'bear-pet',
-        title: 'Mr. Bear',
-        icon: '🐻',
-        dock: true, // Keep it on dock
-        width: 320,
-        height: 350,
-        content: `
-        <div class="h-full bg-blue-50 flex flex-col items-center justify-center p-4">
-            <div class="relative w-48 h-48 mb-4">
-                <img id="pet-bear-img" src="assets/photos/bear1.png" class="w-full h-full object-contain drop-shadow-xl">
+        id: 'app-anime', title: 'Anime Gallery', icon: '⛩️', dock: false, width: 700, height: 600, content: `
+        <div class="anime-app">
+            <div class="anime-grid custom-scroll">
+                <div class="anime-item" onclick="AnimeApp.playSound()"><img src="assets/gifs/bear_love.gif"></div>
+                <div class="anime-item"><img src="assets/gifs/bear_milk.gif"></div>
+                <div class="anime-item"><img src="assets/gifs/bear_madrid.gif"></div>
+                 <div class="anime-item"><img src="assets/gifs/milk-run.gif"></div>
+                 <div class="anime-item"><img src="assets/gifs/milk_mascot.gif"></div>
+                 <div class="anime-item"><img src="assets/gifs/cute_anime_1.gif"></div>
             </div>
-            
-            <div class="grid grid-cols-2 gap-2 w-full">
-                <button onclick="changeBearMood('dance')" class="p-2 bg-pink-400 text-white rounded-lg hover:bg-pink-500 font-bold text-sm">💃 Dance</button>
-                <button onclick="changeBearMood('party')" class="p-2 bg-purple-400 text-white rounded-lg hover:bg-purple-500 font-bold text-sm">🎉 Party</button>
-                <button onclick="changeBearMood('kick')" class="p-2 bg-red-400 text-white rounded-lg hover:bg-red-500 font-bold text-sm">⚽ Hala Madrid</button>
-                <button onclick="changeBearMood('milk')" class="p-2 bg-blue-400 text-white rounded-lg hover:bg-blue-500 font-bold text-sm">🥛 Feed Milk</button>
+            <div class="anime-controls">
+                <button class="anime-btn sound" onclick="AnimeApp.playSound()">🔊 Nu Nu Nu</button>
+                <button class="anime-btn" onclick="createModal({title:'Nope', desc:'No head shaking allowed! 😤', icon:'🚫'})">No Shake</button>
             </div>
-            
-            <div class="mt-4 text-xs text-gray-500 italic" id="bear-status">"I am listening..."</div>
         </div>
-        
-        <script>
-            function changeBearMood(action) {
-                const img = document.getElementById('pet-bear-img');
-                const status = document.getElementById('bear-status');
-                
-                if(action === 'dance') {
-                    img.src = 'https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif';
-                    status.innerText = "Vibing to 'Too Sweet'...";
-                } else if(action === 'party') {
-                    img.src = 'https://media.tenor.com/N2s4YqCqK90AAAAj/music-dance.gif';
-                    status.innerText = "Celebrating life!";
-                } else if(action === 'kick') {
-                    img.src = 'https://media.tenor.com/2t1p3ydC65AAAAAj/mocha-bear-kick.gif';
-                    status.innerText = "Training for Real Madrid...";
-                    new Audio('assets/audio/siu.mp3').play().catch(() => {}); // Optional
-                } else if(action === 'milk') {
-                    img.src = 'https://media.tenor.com/PFC1L2aEwEIAAAAj/mocha-bear.gif'; 
-                    status.innerText = "Calcium levels restoring...";
-                }
-                
-                // Reset to still image after 5 seconds
-                setTimeout(() => {
-                    img.src = 'assets/photos/bear1.png';
-                    status.innerText = "Waiting for command...";
-                }, 5000);
-            }
-        </script>
-        `
-    }
+    `},
+
+
+    /* === NEWEST APPS === */
+
+    {
+        id: 'app-decision', title: 'Decision Helper', icon: '🎲', dock: false, width: 600, height: 600, content: `
+    <div class="decision-app">
+            <h2 class="text-2xl font-bold text-blue-900 mb-4">What should we do?</h2>
+            <div class="decision-wheel" id="decision-wheel">🤔</div>
+             <div class="w-full max-w-xs">
+                <input type="text" id="decision-q" class="decision-input" placeholder="e.g. Kya khaaun?" value="Kya khaaun?">
+                <button class="decision-btn w-full" onclick="DecisionApp.spin()">Decide for Us</button>
+            </div>
+        </div >
+    `},
+
+    {
+        id: 'app-wifi',
+        title: 'Network Manager',
+        icon: '📶',
+        dock: false,
+        width: 450,
+        height: 550,
+        content: `
+        <div class="wifi-app">
+            <div class="wifi-header">
+                <div>Bangalore_Network_Manager_v2.0</div>
+                <div style="margin-left:auto; color:red;">⚠ Unstable</div>
+            </div>
+            <div class="wifi-list custom-scroll">
+                <div class="wifi-item" onclick="WifiApp.connect('Ota_Hotspot_5G')">
+                    <div class="wifi-signal"></div>
+                    <div>Ota_Hotspot_5G</div>
+                    <div class="wifi-lock">🔒</div>
+                </div>
+                <div class="wifi-item" onclick="WifiApp.connect('Roommate_Pvt')">
+                    <div class="wifi-signal" style="opacity:0.5"></div>
+                    <div>Roommate_Pvt</div>
+                    <div class="wifi-lock">🔒</div>
+                </div>
+                <div class="wifi-item" onclick="WifiApp.connect('Airtel_Slow_AF')">
+                    <div class="wifi-signal" style="opacity:0.2"></div>
+                    <div>Airtel_Slow_AF</div>
+                    <div class="wifi-lock">🔓</div>
+                </div>
+                 <div class="wifi-item" onclick="WifiApp.connect('Harshit_Brain_Cell')">
+                    <div class="wifi-signal" style="opacity:0.1"></div>
+                    <div>Harshit_Brain_Cell</div>
+                    <div class="wifi-lock">❌</div>
+                </div>
+            </div>
+            <div class="wifi-status-bar" id="wifi-status">Status: Scanning for stable connection...</div>
+        </div>
+    `},
+
+
 ];
+
+/* === LAST LOGIC === */
+
+
+
+
+
+
+
+
+
+
+const DecisionApp = {
+    options: ["Subway 🥪", "Pizza 🍕", "Chinese 🍜", "Nothing (Hawa) 🌬️", "Maggi 🍝", "Ice Cream 🍦"],
+    spinning: false,
+    spin() {
+        if (this.spinning) return;
+        this.spinning = true;
+        const wheel = document.getElementById('decision-wheel');
+        const finalDeg = 1080 + Math.floor(Math.random() * 360);
+
+        if (wheel) {
+            wheel.style.transform = "rotate(" + finalDeg + "deg)";
+            wheel.innerText = "🎲";
+        }
+
+        setTimeout(() => {
+            this.spinning = false;
+            if (wheel) {
+                wheel.style.transition = "none";
+                wheel.style.transform = "rotate(0deg)";
+                setTimeout(() => wheel.style.transition = "transform 3s cubic-bezier(0.17, 0.67, 0.83, 0.67)", 50);
+
+                const choice = this.options[Math.floor(Math.random() * this.options.length)];
+                wheel.innerText = choice.split(' ')[1] || '✨';
+                createModal({ title: "Decision Made!", desc: "The universe says: <b>" + choice + "</b>", icon: "✨" });
+            }
+        }, 3000);
+    }
+};
+
+
+
+/* === NEW LOGIC HELPERS === */
+const BanterApp = {
+    bure: 0,
+    achhe: 0,
+    quotes: [
+        "Aap bure ho... (for now 😤)",
+        "Mai kahe sunu? (but I'm listening anyway)",
+        "Stop crying! (okay fine, cry if you need to)",
+        "Liar! (I still believe you though)",
+        "Chup chap so jao. (sweet dreams actually)",
+        "Aapka kahe? (your opinion matters, ugh)",
+        "I'm mad at you! (for like 5 minutes max)",
+        "You're annoying! (in the cutest way)",
+        "Don't talk to me! (but also don't leave)"
+    ],
+    init() {
+        this.bure = parseInt(localStorage.getItem('banter_bure') || '42');
+        this.achhe = parseInt(localStorage.getItem('banter_achhe') || '12');
+        this.updateDisplay();
+    },
+    addBure() {
+        this.bure++;
+        localStorage.setItem('banter_bure', this.bure);
+        this.updateDisplay();
+        this.animateScore('bure-score');
+    },
+    addAchhe() {
+        this.achhe++;
+        localStorage.setItem('banter_achhe', this.achhe);
+        this.updateDisplay();
+        this.animateScore('achhe-score');
+    },
+    updateDisplay() {
+        if (document.getElementById('bure-score')) document.getElementById('bure-score').innerText = this.bure;
+        if (document.getElementById('achhe-score')) document.getElementById('achhe-score').innerText = this.achhe;
+    },
+    animateScore(id) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.style.transform = "scale(1.5)";
+            setTimeout(() => el.style.transform = "scale(1)", 200);
+        }
+    },
+    randomQuote() {
+        const q = this.quotes[Math.floor(Math.random() * this.quotes.length)];
+        const el = document.getElementById('banter-quote');
+        console.log("Q", q);
+        if (el) {
+            el.style.opacity = 0;
+            setTimeout(() => {
+                el.innerText = '"' + q + '"';
+                el.style.opacity = 1;
+            }, 200);
+        }
+    },
+    complain() {
+        const complaints = [
+            "Your complaint has been forwarded to /dev/null 🗑️",
+            "Complaint registered. Status: Ignored ✅",
+            "Harshit says: 'Mai kahe sunu?' 🙄",
+            "Error 404: Care not found 😴",
+            "Complaint noted. Action: None 📝",
+            "Processing... Just kidding, deleted! 🚮",
+            "Your feedback is important to us (not really) 💀",
+            "Complaint saved in 'Never Read' folder 📁",
+            "Harshit's response: 'Aapka kahe?' 🤷",
+            "System busy ignoring complaints... ⏳"
+        ];
+
+        const randomComplaint = complaints[Math.floor(Math.random() * complaints.length)];
+
+        // Update the quote display with complaint response
+        const quoteEl = document.getElementById('banter-quote');
+        if (quoteEl) {
+            quoteEl.style.opacity = 0;
+            quoteEl.style.transform = 'scale(0.9) translateY(10px)';
+            setTimeout(() => {
+                quoteEl.innerText = '"' + randomComplaint + '"';
+                quoteEl.style.opacity = 1;
+                quoteEl.style.transform = 'scale(1) translateY(0)';
+            }, 300);
+        }
+    }
+};
+
+const AnimeApp = {
+    playSound() {
+        if (typeof createModal === 'function')
+            createModal({ title: "Soundboard", desc: "Playing: 'Nu nu nu nu nu!' 🎶", icon: "🔊" });
+        // In a real app, we'd play audio here
+    }
+};
+
+
+
+const VCApp = {
+    join() { createModal({ title: "Connecting...", desc: "Joining General...<br><span style='color:green'>Connected</span>", icon: "🔊" }); },
+    leave() { createModal({ title: "Left Channel", desc: "Disconnected.<br>Reason: 'Gayi hoon mai toh'", icon: "👋" }); },
+    screenShare() { createModal({ title: "Screen Share", desc: "Sharing Screen 1...<br>(Harshit is watching while studying)", icon: "💻" }); }
+};
+
+const RoutineApp = {
+    toggle(btn) {
+        document.querySelectorAll('.priority-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const mode = btn.innerText;
+        if (mode.includes("Study")) createModal({ title: "Mode Switched", desc: "Warning: Harshit might say 'Mujhe padhna hai'.", icon: "📚" });
+        else createModal({ title: "Mode Switched", desc: "Yapping session initialized.", icon: "🗣️" });
+    },
+    check(el) {
+        el.classList.toggle('checked');
+        if (el.classList.contains('checked')) el.innerHTML = "✓";
+        else el.innerHTML = "";
+    }
+};
 
 /* === SETTINGS FUNCTIONS === */
 function showUpdate(el) {
@@ -2810,6 +2830,9 @@ function enterDesktop() {
 
     initDesktop();
 
+    // Play Startup Sound
+    new Audio('assets/audio/startup.mp3').play().catch(e => console.log("Startup sound deferred:", e));
+
     // 5. Letter removed from here (it comes earlier now)
 }
 
@@ -2846,8 +2869,7 @@ function initDesktop() {
 
     setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }); }, 1000);
 
-    // Start Notifications
-    startGhostNotifications();
+
 }
 
 // Global function for Dev Button
@@ -2856,9 +2878,14 @@ window.goToDesktop = enterDesktop;
 
 /* === MASTI MODE LOGIC === */
 const bearGifs = [
-    'https://media.tenor.com/Mvhv-g_gqaYAAAAj/mocha-bear.gif',
-    'https://media.tenor.com/2K1l6X1w0wAAAAAj/milk-and-mocha-bear.gif',
-    'https://media.tenor.com/cyw0G8zF5wAAAAAj/milk-mocha-love.gif'
+    'assets/gifs/bear_madrid.gif',
+    'assets/gifs/bear_milk.gif',
+    'assets/gifs/bear_love.gif',
+    'assets/gifs/milk-run.gif',
+    'assets/gifs/milk_mascot.gif',
+    'assets/gifs/cute_anime_1.gif',
+    'assets/gifs/cute_anime_2.gif',
+    'assets/gifs/cute_anime_3.gif'
 ];
 let mastiActive = false;
 function spawnBears() {
@@ -2877,6 +2904,21 @@ function spawnBears() {
     }
     setTimeout(() => mastiActive = false, 4500);
 }
+
+/* === DESKTOP PET LOGIC === */
+let currentPetIdx = 0;
+function togglePet() {
+    currentPetIdx = (currentPetIdx + 1) % bearGifs.length;
+    const img = document.getElementById('pet-img');
+    if (img) {
+        img.style.transform = "scale(0.8) rotate(-10deg)";
+        setTimeout(() => {
+            img.src = bearGifs[currentPetIdx];
+            img.style.transform = "scale(1) rotate(0deg)";
+        }, 200);
+    }
+}
+window.togglePet = togglePet;
 
 /* === FIRST CONVERSATION LOGIC === */
 /* === FIRST CONVERSATION LOGIC === */
@@ -2912,7 +2954,7 @@ const firstConversation = [
     { user: 'system', text: 'next day...' },
 
     { user: 'shravii', text: ':Wg_peekaboo:  otaku\n— 6/20/24, 11:51 AM' },
-    { user: 'harshit', text: 'you said my name you wanted me here i am\n— 6/20/24, 11:53 AM' },
+    { user: 'harshit', type: 'image', text: 'assets/picswme/you said my name.gif', subtext: '— 6/20/24, 11:53 AM' },
     { user: 'shravii', text: 'I saw u typinn\n— 6/20/24, 11:53 AM' },
     { user: 'harshit', text: 'Ah, but idk what i was typing\n— 6/20/24, 11:54 AM' },
     { user: 'shravii', text: ':what_to_do~1:\n— 6/20/24, 11:54 AM' },
@@ -3099,10 +3141,27 @@ function playFirstConversation(container) {
         const bubble = document.createElement('div');
         bubble.className = `chat-bubble ${isHarshit ? 'chat-right' : 'chat-left'}`;
         bubble.style.whiteSpace = 'pre-wrap';
-        bubble.textContent = msg.text;
+
+        if (msg.type === 'image') {
+            const img = document.createElement('img');
+            img.src = msg.text;
+            img.className = 'chat-bubble-img mx-auto rounded-lg mb-1';
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '250px';
+            bubble.appendChild(img);
+            if (msg.subtext) {
+                const sub = document.createElement('div');
+                sub.className = 'chat-time-stamp opacity-40 text-right';
+                sub.style.fontSize = '9px';
+                sub.textContent = msg.subtext;
+                bubble.appendChild(sub);
+            }
+        } else {
+            bubble.textContent = msg.text;
+        }
 
         // Media Detection
-        if (msg.text.includes('spotify.com')) {
+        if (msg.text && typeof msg.text === 'string' && msg.text.includes('spotify.com')) {
             const preview = document.createElement('div');
             preview.className = 'chat-media-preview';
             preview.style.width = '100%';
@@ -3274,7 +3333,6 @@ const Apps = {
             Persistence.trackOpen(id);
         }
 
-        // Hook for resets - REMOVED PREMATURE CALL
 
         state.appsOpened.add(id);
         const exist = document.getElementById(`win-${id}`);
@@ -3653,10 +3711,6 @@ function createPolaroid(src, caption, container, date = "") {
 }
 
 
-/* === PHASE -1: SYSTEM BOOT (Silence) === */
-/* === PHASE -1: SYSTEM BOOT (Refined) === */
-/* === PHASE 1: SYSTEM BOOT (Green Text) === */
-// Duplicate async runSystemBoot removed. Using window.runSystemBoot at line 2718 instead.
 
 /* === QUIZ LOGIC === */
 let qIdx = 0;
@@ -3895,18 +3949,7 @@ function handlePQuiz(type) {
 
 /* === TERMINAL APP ENHANCEMENTS === */
 
-const firstMeetLog = [
-    "<span class='text-gray-500'>[6/20/24 12:22 AM]</span> <span class='text-green-400 font-bold'>Harshit:</span> Hi",
-    "<span class='text-gray-500'>[6/20/24 12:23 AM]</span> <span class='text-purple-400 font-bold'>Shravii:</span> Helloo",
-    "<span class='text-gray-500'>[6/20/24 12:23 AM]</span> <span class='text-green-400 font-bold'>Harshit:</span> sup",
-    "<span class='text-gray-500'>[6/20/24 12:32 AM]</span> <span class='text-green-400 font-bold'>Harshit:</span> is anyone watching euros?",
-    "<span class='text-gray-500'>[6/20/24 12:33 AM]</span> <span class='text-purple-400 font-bold'>Shravii:</span> Umm euros?",
-    "<span class='text-gray-500'>[6/20/24 12:33 AM]</span> <span class='text-purple-400 font-bold'>Shravii:</span> Where ya from Harry?",
-    "<span class='text-gray-500'>[6/20/24 12:34 AM]</span> <span class='text-green-400 font-bold'>Harshit:</span> India",
-    "<span class='text-gray-500'>[6/20/24 12:35 AM]</span> <span class='text-purple-400 font-bold'>Shravii:</span> :o",
-    "<span class='text-gray-500'>[6/20/24 12:35 AM]</span> <span class='text-green-400 font-bold'>Harshit:</span> <a href='https://open.spotify.com/track/086myS9r57YsLbJpU0TgK9' target='_blank' class='underline hover:text-green-300'>Spotify Link 🎵</a>",
-    "<span class='text-gray-500'>[6/20/24 12:39 AM]</span> <span class='text-purple-400 font-bold'>Shravii:</span> I'll hear and comment"
-];
+
 
 function typeToTerminal(element, text, delay = 20, callback) {
     const line = document.createElement('div');
@@ -3975,6 +4018,7 @@ function handleTerminalAppCommand() {
 
     // Commands that don't need typing effect can return immediately or use simple output
     if (command === 'clear') {
+        new Audio('assets/audio/shred.mp3').play().catch(e => { });
         output.innerHTML = '';
         return;
     }
@@ -3997,8 +4041,8 @@ function handleTerminalAppCommand() {
                 "- whois: Identify the user",
                 "- strength: Analyze core metrics",
                 "- secret: Unlock hidden directory",
-                "- firstmeet: Replay origin connection",
-                "- timeline: Show journey milestones",
+                "- firstmeet: Origin Timestamp",
+                "- chapters: Journey Log",
                 "- clear: Clear screen"
             ], 10, 100, enableInput);
             break;
@@ -4039,27 +4083,16 @@ function handleTerminalAppCommand() {
 
         case 'firstmeet':
             runTerminalSequence(output, [
-                "Initializing memory buffer...",
-                "Locating origin point...",
-                "Timestamp found: 6/20/24 12:21 AM",
-                "Connection status: UNEXPECTED",
-                "",
-                "Replaying messages:"
-            ], 18, 600, () => {
-                setTimeout(() => {
-                    runTerminalSequence(output, firstMeetLog, 25, 800, enableInput);
-                }, 1000);
-            });
+                "June 20, 2024 • 12:21 AM"
+            ], 18, 600, enableInput);
             break;
 
-        case 'timeline':
+        case 'chapters':
             runTerminalSequence(output, [
-                "Boot Sequence:",
-                "• 12:21 AM — Connection Initialized",
-                "• Casual words exchanged",
-                "• Laughter detected",
-                "• Trust slowly compiled",
-                "• Bond exceeded expected parameters"
+                "Journey Log:",
+                "Chapter 1: The Spark",
+                "Chapter 2: The Bridge",
+                "Chapter 3: The Protector"
             ], 20, 400, enableInput);
             break;
 
@@ -4074,6 +4107,21 @@ function handleTerminalAppCommand() {
             output.innerHTML += `<div><span class="term-error">Command not found: ${command}</span></div>`;
             enableInput();
             break;
+    }
+}
+
+/* === SYSTEM ACTIONS === */
+function deleteTarget() {
+    // Play Shred Sound
+    new Audio('assets/audio/shred.mp3').play().catch(e => { });
+
+    // Show a "protective" notification
+    if (typeof createModal === 'function') {
+        createModal({
+            title: "Security Protocol",
+            desc: "These files are protected by the 'Core Memories' encryption. No data was shred, but the security log has been updated. 😉",
+            icon: "🛡️"
+        });
     }
 }
 
@@ -4108,6 +4156,9 @@ function launchDesktop() {
     if (skipBtn) skipBtn.style.display = 'none';
 
     initDesktop();
+
+    // Play Startup Sound
+    new Audio('assets/audio/startup.mp3').play().catch(e => console.log("Startup sound deferred:", e));
 }
 // Dev Tool
 function skipToDesktop() {
@@ -5838,7 +5889,7 @@ function vaultPrevSlide() {
 const VAULT_CONTENT = `
 <div class="folder-window-grid">
     <div class="desktop-icon text-center scale-75 m-1" onclick="Apps.open('do-not-open')"><div class="icon-img">🚫</div><div class="icon-label">Do Not<br />Open</div></div>
-    <div class="desktop-icon text-center scale-75 m-1" onclick="Apps.open('playlist')"><div class="icon-img">🎶</div><div class="icon-label">Hidden<br />Tracks</div></div>
+
     <div class="desktop-icon text-center scale-75 m-1" onclick="Apps.open('secret-vault')"><div class="icon-img">🔐</div><div class="icon-label">Secret Vault</div></div>
     <div class="desktop-icon text-center scale-75 m-1" onclick="Apps.open('voice-box')"><div class="icon-img">🎙️</div><div class="icon-label">VoiceBox</div></div>
     <div class="desktop-icon text-center scale-75 m-1" onclick="Apps.open('readme-letter')"><div class="icon-img">💌</div><div class="icon-label">ReadMe.txt</div></div>
@@ -5862,13 +5913,7 @@ function unlockVault() {
         input.classList.remove('shake-premium');
         input.style.borderColor = '#10b981'; // Green-500
 
-        if (typeof confetti === 'function') {
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
-        }
+
 
         // Play success animation on lock screen
         lockScreen.classList.add('vault-unlocked-anim');
@@ -5921,12 +5966,12 @@ function showVaultHint() {
     const hintExtra = document.getElementById('vault-hint-extra');
 
     if (hintMain) {
-        hintMain.innerText = "It's a date: DDMMYY. The start of everything.";
+        hintMain.innerText = "Cipher: 20... 6... 24. The rhythm of a specific night.";
         hintMain.style.opacity = "1";
         hintMain.classList.add('text-indigo-600');
     }
     if (hintExtra) {
-        hintExtra.innerText = "June 20, 2024 ... but numbers only.";
+        hintExtra.innerText = "Six digits: DDMMYY.";
         hintExtra.style.opacity = "1";
     }
 }
@@ -5992,36 +6037,7 @@ function submitAnswer() {
 }
 window.submitAnswer = submitAnswer;
 
-/* === GHOST NOTIFICATIONS SYSTEM === */
-const ghostMemories = [
-    { text: "System Alert: Bhindi detected in vicinity. Evacuate.", time: 5000 },
-    { text: "Reminder: You promised to sleep > 4 hours.", time: 15000 },
-    { text: "New Message: 'Where ya from Harry?' (June 20, 2024)", time: 30000 },
-    { text: "Critical: Ota's Medicine No. 1 is due.", time: 45000 }, // Fixed time
-    { text: "System Note: Drink water.", time: 60000 }
-];
 
-function startGhostNotifications() {
-    console.log("Starting Ghost Notifications...");
-
-    // 1. Initial Sequence (Relative to Desktop Start)
-    ghostMemories.forEach(memory => {
-        setTimeout(() => {
-            showNotification('V-Space Memory', memory.text);
-        }, memory.time);
-    });
-
-    // 2. Random Loop (Every 2 minutes)
-    setInterval(() => {
-        const randomMem = ghostMemories[Math.floor(Math.random() * ghostMemories.length)];
-        // 30% chance to show a "Live" system status instead
-        if (Math.random() > 0.7) {
-            showNotification('System Update', 'All systems nominal. You are doing great.');
-        } else {
-            showNotification('Memory Echo', randomMem.text);
-        }
-    }, 120000);
-}
 
 function showNotification(title, body) {
     // Create notification element
@@ -6064,7 +6080,8 @@ const truthData = [
     { title: "The Promise", tags: ["emotional"], content: "I tried to push you away.<br>You said: 'You don't have any IRL friends so I'm not leaving DC.'<br>Stubborn. But I needed that." },
     { title: "The Poem", tags: ["birthday"], content: "For my birthday, you wrote a poem.<br>You tried to time it perfectly letter-by-letter for 12:00 AM.<br>Your math failed (ended at 11:59).<br>But it was perfect. ✨" },
     { title: "Mumbai Detective", tags: ["smart"], content: "I said 'Cream building, blue benches'.<br>You found L.R. Tiwari College of Engineering.<br>Stalker? Maybe. <br>Impressed? Yes." },
-    { title: "The 'Dumb' Role", tags: ["funny"], content: "We both claim to be the 'dumb' one.<br>But you solved my code issues while I panicked.<br>So... I win the dumb trophy. 🏆" }
+    { title: "The 'Dumb' Role", tags: ["funny"], content: "We both claim to be the 'dumb' one.<br>But you solved my code issues while I panicked.<br>So... I win the dumb trophy. 🏆" },
+    { title: "Echo Archive", tags: ["system", "void"], content: "Echoes of the past... [Empty for now].<br>Waiting for new signals. 🕸️" }
 ];
 
 function initTruths() {
@@ -6249,155 +6266,197 @@ const notDumbSlides = [
     // 1: OBSERVATIONS
     {
         type: 'html', content: `
-                                                                    <div class="space-y-6 animate-fade-in-up">
-                                                                        <div class="text-[10px] uppercase tracking-widest text-gray-400 mb-6 font-bold">System Observations</div>
-                                                                        <div class="border-l-4 border-gray-300 pl-6 py-3 text-lg italic text-gray-600 font-serif">“Understands everything. Responds late.”</div>
-                                                                        <div class="border-l-4 border-gray-300 pl-6 py-3 text-lg italic text-gray-600 font-serif delay-100">“Overthinks silently. Says ‘nothing’s wrong.’”</div>
-                                                                        <div class="border-l-4 border-gray-300 pl-6 py-3 text-lg italic text-gray-600 font-serif delay-200">“Remembers details. Misses the point.”</div>
-                                                                        <div class="border-l-4 border-gray-300 pl-6 py-3 text-lg italic text-gray-600 font-serif delay-300">“Emotion detected. Action delayed.”</div>
-                                                                        <div class="border-l-4 border-gray-300 pl-6 py-3 text-lg italic text-gray-600 font-serif delay-500">“Stubborn even when correct.”</div>
-                                                                    </div>
+        <div class="space-y-6 animate-fade-in-up">
+            <div class="text-[10px] uppercase tracking-[0.2em] text-slate-400 mb-8 font-bold text-center">System Observations</div>
+            
+            <div class="nd-card p-6 relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-1 h-full bg-blue-400"></div>
+                <div class="text-lg italic text-slate-600 font-serif leading-relaxed">“Understands everything. Responds late.”</div>
+                <div class="absolute -right-4 -bottom-4 text-6xl text-slate-100 font-serif opacity-50 z-0">”</div>
+            </div>
+
+            <div class="nd-card p-6 relative overflow-hidden group delay-100">
+                <div class="absolute top-0 left-0 w-1 h-full bg-purple-400"></div>
+                <div class="text-lg italic text-slate-600 font-serif leading-relaxed">“Overthinks silently. Says ‘nothing’s wrong.’”</div>
+            </div>
+
+            <div class="nd-card p-6 relative overflow-hidden group delay-200">
+                <div class="absolute top-0 left-0 w-1 h-full bg-rose-400"></div>
+                <div class="text-lg italic text-slate-600 font-serif leading-relaxed">“Remembers details. Misses the point.”</div>
+            </div>
+
+            <div class="nd-card p-6 relative overflow-hidden group delay-300">
+                <div class="absolute top-0 left-0 w-1 h-full bg-emerald-400"></div>
+                <div class="text-lg italic text-slate-600 font-serif leading-relaxed">“Stubborn even when correct.”</div>
+            </div>
+        </div>
     `},
 
     // 2: VOICEBOX
     {
         type: 'html', content: `
-                                                                    <div class="flex flex-col items-center justify-center h-full animate-fade-in-up">
-                                                                        <div class="text-[10px] uppercase tracking-widest text-gray-400 mb-8 font-bold">Audio Evidence Found</div>
-                                                                        <div class="relative group cursor-pointer" onclick="playVoiceMemo(2)">
-                                                                            <div class="absolute inset-0 bg-blue-200 rounded-full blur-xl opacity-20 group-hover:opacity-40 transition duration-500 animate-pulse"></div>
-                                                                            <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg transform group-hover:scale-110 transition duration-300 relative z-10 text-white text-3xl">
-                                                                                <i class="fas fa-play pl-2"></i>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="mt-8 text-center space-y-2">
-                                                                            <div class="text-xl font-bold text-gray-800">“Stop acting dumb 🙄”</div>
-                                                                            <div class="text-xs text-gray-400 font-mono">Source: VoiceBox / Yesterday</div>
-                                                                        </div>
-                                                                    </div>
+        <div class="flex flex-col items-center justify-center h-full animate-fade-in-up">
+            <div class="text-[10px] uppercase tracking-[0.2em] text-slate-400 mb-12 font-bold">Audio Evidence Found</div>
+            
+            <div class="relative group cursor-pointer" onclick="playVoiceMemo(2)">
+                <!-- Ripple Effect -->
+                <div class="nd-voice-ripple"></div>
+                <div class="nd-voice-ripple" style="animation-delay: 0.5s"></div>
+                
+                <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-2xl relative z-10 transition duration-300 group-hover:scale-105 border-4 border-slate-50">
+                    <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-inner text-white text-3xl">
+                        <i class="fas fa-play pl-2 drop-shadow-md"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center space-y-3">
+                <div class="text-2xl nd-title font-bold nd-text-gradient">“Stop acting dumb 🙄”</div>
+                <div class="text-xs text-slate-400 font-mono bg-white/50 px-3 py-1 rounded-full border border-slate-200 inline-block">Source: VoiceBox • 2024</div>
+            </div>
+        </div>
     `},
 
     // 3: LOGS
     {
         type: 'html', content: `
-                                                                    <div class="space-y-4 animate-fade-in-up h-full overflow-y-auto custom-scroll pr-2">
-                                                                        <div class="text-[10px] uppercase tracking-widest text-gray-400 mb-4 font-bold">Expand System Logs</div>
+        <div class="space-y-4 animate-fade-in-up h-full overflow-y-auto custom-scroll pr-2 pt-2">
+            <div class="text-[10px] uppercase tracking-[0.2em] text-slate-400 mb-6 font-bold text-center">Decrypted Logs</div>
 
-                                                                        <details class="group bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden" open>
-                                                                            <summary class="flex justify-between items-center p-4 cursor-pointer font-bold text-xs uppercase tracking-wide hover:bg-gray-50 transition list-none">
-                                                                                <span class="flex items-center gap-2">🙄 Pretends Not to Care</span>
-                                                                            </summary>
-                                                                            <div class="p-5 text-xs bg-gray-50/50 border-t border-gray-100">
-                                                                                <div class="grid grid-cols-2 gap-4">
-                                                                                    <div class="text-gray-500">BEHAVIOR:<br><span class="text-gray-800">Acts detached.</span></div>
-                                                                                    <div class="text-red-500">TRUTH:<br><span class="text-gray-800 font-bold">Cares deeply.</span></div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </details>
+            <details class="group nd-card mb-4" open>
+                <summary class="flex justify-between items-center p-5 cursor-pointer font-bold text-xs uppercase tracking-wide text-slate-700 hover:bg-white/50 transition list-none outline-none">
+                    <span class="flex items-center gap-3"><span class="text-lg">🙄</span> Pretends Not to Care</span>
+                    <span class="text-slate-400 group-open:rotate-180 transition">▼</span>
+                </summary>
+                <div class="p-5 text-sm bg-white/30 border-t border-slate-100/50">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-slate-500 text-xs">BEHAVIOR<div class="text-slate-800 font-medium mt-1">Acts detached</div></div>
+                        <div class="text-rose-500 text-xs">TRUTH<div class="text-slate-800 font-medium mt-1">Cares deeply</div></div>
+                    </div>
+                </div>
+            </details>
 
-                                                                        <details class="group bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-                                                                            <summary class="flex justify-between items-center p-4 cursor-pointer font-bold text-xs uppercase tracking-wide hover:bg-gray-50 transition list-none">
-                                                                                <span class="flex items-center gap-2">🧠 Scary Memory</span>
-                                                                            </summary>
-                                                                            <div class="p-5 text-xs bg-gray-50/50 border-t border-gray-100">
-                                                                                <div class="mb-2">Remembers exact words from 2024.</div>
-                                                                                <div class="text-yellow-600 bg-yellow-50 p-2 rounded border border-yellow-100">⚠ Acts clueless when things get real.</div>
-                                                                            </div>
-                                                                        </details>
+            <details class="group nd-card mb-4">
+                <summary class="flex justify-between items-center p-5 cursor-pointer font-bold text-xs uppercase tracking-wide text-slate-700 hover:bg-white/50 transition list-none outline-none">
+                    <span class="flex items-center gap-3"><span class="text-lg">🧠</span> Scary Memory</span>
+                    <span class="text-slate-400 group-open:rotate-180 transition">▼</span>
+                </summary>
+                <div class="p-5 text-sm bg-white/30 border-t border-slate-100/50">
+                    <div class="mb-3 text-slate-600 italic">"Remembers exact words from 2024."</div>
+                    <div class="text-amber-600 bg-amber-50 p-3 rounded border border-amber-100 text-xs font-bold">⚠ Acts clueless when things get real.</div>
+                </div>
+            </details>
 
-                                                                        <details class="group bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-                                                                            <summary class="flex justify-between items-center p-4 cursor-pointer font-bold text-xs uppercase tracking-wide hover:bg-gray-50 transition list-none">
-                                                                                <span class="flex items-center gap-2">🏏 Sports Paradox</span>
-                                                                            </summary>
-                                                                            <div class="p-5 text-xs bg-gray-50/50 border-t border-gray-100">
-                                                                                Talks Football strategies for hours.<br>
-                                                                                    <span class="font-bold text-red-500">Never watched Cricket.</span>
-                                                                            </div>
-                                                                        </details>
-
-                                                                        <details class="group bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-                                                                            <summary class="flex justify-between items-center p-4 cursor-pointer font-bold text-xs uppercase tracking-wide hover:bg-gray-50 transition list-none">
-                                                                                <span class="flex items-center gap-2">🎭 Nicknames</span>
-                                                                            </summary>
-                                                                            <div class="p-5 text-xs bg-gray-50/50 border-t border-gray-100 italic text-gray-600">
-                                                                                Mr. Snow, Mr. Chuha, Rabbit, Mr. Ota...<br>
-                                                                                    Accepts all. Questions none.
-                                                                            </div>
-                                                                        </details>
-                                                                    </div>
+            <details class="group nd-card mb-4">
+                <summary class="flex justify-between items-center p-5 cursor-pointer font-bold text-xs uppercase tracking-wide text-slate-700 hover:bg-white/50 transition list-none outline-none">
+                    <span class="flex items-center gap-3"><span class="text-lg">🏏</span> Sports Paradox</span>
+                    <span class="text-slate-400 group-open:rotate-180 transition">▼</span>
+                </summary>
+                <div class="p-5 text-sm bg-white/30 border-t border-slate-100/50">
+                    <div class="flex items-center justify-between">
+                        <div>Football Knowledge</div>
+                        <div class="font-bold text-blue-600">99%</div>
+                    </div>
+                    <div class="w-full h-1 bg-slate-200 mt-2 mb-4 rounded-full overflow-hidden"><div class="h-full bg-blue-500 w-[99%]"></div></div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div>Cricket Knowledge</div>
+                        <div class="font-bold text-slate-400">0%</div>
+                    </div>
+                    <div class="w-full h-1 bg-slate-200 mt-2 rounded-full overflow-hidden"></div>
+                </div>
+            </details>
+            
+             <details class="group nd-card mb-4">
+                <summary class="flex justify-between items-center p-5 cursor-pointer font-bold text-xs uppercase tracking-wide text-slate-700 hover:bg-white/50 transition list-none outline-none">
+                    <span class="flex items-center gap-3"><span class="text-lg">🎭</span> Aliases</span>
+                    <span class="text-slate-400 group-open:rotate-180 transition">▼</span>
+                </summary>
+                <div class="p-5 text-sm bg-white/30 border-t border-slate-100/50 flex flex-wrap gap-2">
+                    <span class="px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-600">Mr. Snow</span>
+                    <span class="px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-600">Rabbit</span>
+                    <span class="px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-600">Mr. Ota</span>
+                    <span class="px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-600">Mr. Chuha</span>
+                </div>
+            </details>
+        </div>
     `},
 
     // 4: METERS
     {
         type: 'html', content: `
-                                                                    <div class="flex flex-col justify-center h-full animate-fade-in-up space-y-8 px-4">
-                                                                        <div class="text-[10px] uppercase tracking-widest text-gray-400 mb-2 font-bold text-center">Live Analysis</div>
+        <div class="flex flex-col justify-center h-full animate-fade-in-up space-y-10 px-6">
+            <div class="text-[10px] uppercase tracking-[0.2em] text-slate-400 mb-2 font-bold text-center">Live Logic Scan</div>
 
-                                                                        <div>
-                                                                            <div class="flex justify-between text-xs mb-2 font-bold text-gray-700"><span>Logic Efficiency</span> <span>80%</span></div>
-                                                                            <div class="h-4 bg-gray-100 rounded-full overflow-hidden border border-gray-100">
-                                                                                <div class="h-full bg-blue-500 rounded-full shadow-lg transition-all duration-[2s]" style="width: 0%; animation: fillBar 1.5s forwards 0.2s; width: 80%"></div>
-                                                                            </div>
-                                                                        </div>
+            <div>
+                <div class="flex justify-between text-xs mb-3 font-bold text-slate-600 tracking-wide uppercase"><span>Logic Efficiency</span> <span>80%</span></div>
+                <div class="nd-stat-bar">
+                    <div class="nd-stat-fill bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.6)]" style="width: 0%; animation: fillBar 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.2s; max-width: 80%"></div>
+                </div>
+            </div>
 
-                                                                        <div>
-                                                                            <div class="flex justify-between text-xs mb-2 font-bold text-gray-700"><span>Emotional Decisions</span> <span>30%</span></div>
-                                                                            <div class="h-4 bg-gray-100 rounded-full overflow-hidden border border-gray-100">
-                                                                                <div class="h-full bg-red-400 rounded-full shadow-lg transition-all duration-[2s]" style="width: 0%; animation: fillBar 1.5s forwards 0.4s; width: 30%"></div>
-                                                                            </div>
-                                                                        </div>
+            <div>
+                <div class="flex justify-between text-xs mb-3 font-bold text-slate-600 tracking-wide uppercase"><span>Emotional Decisions</span> <span>30%</span></div>
+                <div class="nd-stat-bar">
+                    <div class="nd-stat-fill bg-rose-400 shadow-[0_0_15px_rgba(251,113,133,0.6)]" style="width: 0%; animation: fillBar 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.4s; max-width: 30%"></div>
+                </div>
+            </div>
 
-                                                                        <div>
-                                                                            <div class="flex justify-between text-xs mb-2 font-bold text-gray-700"><span>Stubbornness</span> <span>100%</span></div>
-                                                                            <div class="h-4 bg-gray-100 rounded-full overflow-hidden border border-gray-100">
-                                                                                <div class="h-full bg-gray-800 rounded-full shadow-lg" style="width: 100%"></div>
-                                                                            </div>
-                                                                            <div class="text-[10px] text-gray-400 mt-1 italic text-right">System can do nothing about this.</div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <style> @keyframes fillBar {from {width: 0; } } </style>
+            <div>
+                <div class="flex justify-between text-xs mb-3 font-bold text-slate-600 tracking-wide uppercase"><span>Stubbornness</span> <span class="text-slate-900">∞</span></div>
+                <div class="nd-stat-bar">
+                    <div class="nd-stat-fill bg-slate-800" style="width: 100%"></div>
+                </div>
+                <div class="text-[10px] text-slate-400 mt-2 italic text-right bg-white/50 inline-block float-right px-2 rounded">System cannot override this.</div>
+            </div>
+            
+        </div>
+        <style> @keyframes fillBar {from {width: 0; } } </style>
     `},
 
     // 5: QUOTE
     {
         type: 'html', content: `
-                                                                    <div class="flex flex-col items-center justify-center h-full animate-fade-in-up text-center cursor-help" title="Permission: Admin Shravii">
-                                                                        <div class="font-mono text-[10px] text-gray-300 mb-8 animate-pulse">> Decrypting hidden note...</div>
-                                                                        <div class="font-serif italic text-4xl leading-tight text-gray-800 drop-shadow-md">
-                                                                            “Not dumb.<br>
-                                                                                <span class="opacity-0 animate-fade-in-up" style="animation-delay: 1s; animation-fill-mode: forwards">Just feels deeply</span><br>
-                                                                                    <span class="opacity-0 animate-fade-in-up" style="animation-delay: 2s; animation-fill-mode: forwards">and pretends not to.”</span>
-                                                                                </div>
-                                                                        </div>
+        <div class="flex flex-col items-center justify-center h-full animate-fade-in-up text-center cursor-help select-none" title="Permission: Admin Shravii">
+            <div class="font-mono text-[10px] text-slate-300 mb-10 animate-pulse bg-slate-50 px-3 py-1 rounded-full">> Decrypting hidden note...</div>
+            
+            <div class="nd-title italic text-5xl leading-tight text-slate-800 drop-shadow-sm space-y-2">
+                <div>“Not dumb.</div>
+                <div class="opacity-0 animate-fade-in-up" style="animation-delay: 1s; animation-fill-mode: forwards"><span class="text-blue-500">Just feels deeply</span></div>
+                <div class="opacity-0 animate-fade-in-up" style="animation-delay: 2s; animation-fill-mode: forwards">and pretends not to.”</div>
+            </div>
+        </div>
     `},
 
     // 6: FINAL
     {
         type: 'html', content: `
-                                                                        <div class="flex flex-col items-center justify-center h-full animate-fade-in-up text-center relative z-10">
-                                                                            <div class="w-full max-w-sm p-8 bg-gray-900 text-white rounded-3xl shadow-2xl border border-gray-800 relative overflow-hidden">
-                                                                                <!-- BG Mesh -->
-                                                                                <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#4ade80 1px, transparent 1px); background-size: 20px 20px;"></div>
+        <div class="flex flex-col items-center justify-center h-full animate-fade-in-up text-center relative z-10">
+            <div class="w-full max-w-sm p-10 bg-slate-900 text-white rounded-[2rem] shadow-2xl border border-slate-700 relative overflow-hidden group">
+                <!-- BG Mesh -->
+                <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#4ade80 1px, transparent 1px); background-size: 20px 20px;"></div>
+                <div class="absolute -top-20 -right-20 w-40 h-40 bg-emerald-500/20 rounded-full blur-3xl animate-pulse"></div>
+                <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s"></div>
 
-                                                                                <div class="relative z-10">
-                                                                                    <div class="flex items-center justify-center gap-2 text-green-400 font-mono text-xs mb-8">
-                                                                                        <span class="w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
-                                                                                        OVERRIDE CONFIRMED
-                                                                                    </div>
+                <div class="relative z-10">
+                    <div class="flex items-center justify-center gap-2 text-emerald-400 font-mono text-xs mb-10 bg-emerald-950/50 py-1 px-3 rounded-full mx-auto w-max border border-emerald-900/50">
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>
+                        OVERRIDE CONFIRMED
+                    </div>
 
-                                                                                    <div class="text-2xl font-serif italic text-gray-200 mb-8 leading-relaxed">
-                                                                                        User is not dumb.<br>
-                                                                                            <span class="text-blue-300">Just emotionally soft,</span><br>
-                                                                                                stubborn, and<br>
-                                                                                                    <span class="text-white font-bold border-b border-white/20 pb-1">deeply human.</span>
-                                                                                                </div>
+                    <div class="text-3xl font-serif italic text-slate-200 mb-10 leading-relaxed">
+                        User is not dumb.<br>
+                        <span class="text-blue-300">Just emotionally soft,</span><br>
+                        stubborn, and<br>
+                        <span class="text-white font-bold border-b-2 border-white/20 pb-1 inline-block mt-2">deeply human.</span>
+                    </div>
 
-                                                                                                <button onclick="Apps.close('not-dumb')" class="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-full text-xs font-bold tracking-widest uppercase transition border border-white/10">
-                                                                                                    Close Log
-                                                                                                </button>
-                                                                                            </div>
-                                                                                    </div>
-                                                                                </div>
+                    <button onclick="Apps.close('not-dumb')" class="px-8 py-3 bg-white/10 hover:bg-white/20 rounded-full text-xs font-bold tracking-[0.2em] uppercase transition border border-white/10 text-white shadow-lg hover:shadow-emerald-500/20 hover:scale-105 active:scale-95">
+                        Close Log
+                    </button>
+                </div>
+            </div>
+        </div>
     `}
 ];
 
@@ -6413,21 +6472,47 @@ function initNotDumb() {
     // RENDER STEP 0 (Timed Entry)
     if (container) {
         container.innerHTML = `
-            <div class="flex flex-col justify-center h-full font-mono text-xs space-y-4 select-none">
-                <div class="flex items-center gap-2 text-gray-500">
-                    <span class="text-green-500">➜</span>
-                    <span class="typewriter-text" style="animation: typing 1s steps(20, end);">Opening Not Dumb.app...</span>
+            <div class="flex flex-col justify-center h-full font-mono text-xs space-y-6 select-none relative">
+                <!-- Scan Line -->
+                <div class="absolute top-0 left-0 w-full h-1 bg-blue-400/50 shadow-[0_0_10px_rgba(96,165,250,0.5)] animate-[scan_2s_ease-in-out_infinite]"></div>
+
+                <div class="flex items-center gap-3">
+                    <span class="text-blue-500 animate-spin">✱</span>
+                    <span class="typewriter-text text-slate-600" style="animation: typing 1s steps(20, end);">Initializing Biometric Scan...</span>
                 </div>
-                <div style="opacity: 0; animation: fadeIn 0.5s ease-out 1.5s forwards;">> Intelligence check: <span class="text-green-600 font-bold bg-green-100 px-1 rounded">PASSED</span></div>
-                <div style="opacity: 0; animation: fadeIn 0.5s ease-out 2.5s forwards;">> Decision-making module: <span class="text-red-500 font-bold animate-pulse">Questionable</span></div>
+                
+                <div class="pl-6 space-y-2">
+                    <div style="opacity: 0; animation: slideRight 0.5s ease-out 1s forwards;" class="flex items-center gap-2">
+                        <span class="text-slate-400">> Intelligence:</span> 
+                        <span class="text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">PASSED</span>
+                    </div>
+                    
+                    <div style="opacity: 0; animation: slideRight 0.5s ease-out 2s forwards;" class="flex items-center gap-2">
+                        <span class="text-slate-400">> Heart Rate:</span> 
+                        <span class="text-rose-500 font-bold animate-pulse">ELEVATED</span>
+                    </div>
+                    
+                    <div style="opacity: 0; animation: slideRight 0.5s ease-out 3s forwards;" class="flex items-center gap-2">
+                        <span class="text-slate-400">> Logic Circuits:</span> 
+                        <span class="text-amber-500 font-bold">OVERRIDDEN BY FEELINGS</span>
+                    </div>
+                </div>
+
+                <div style="opacity: 0; animation: fadeIn 1s ease-out 4s forwards;" class="mt-8 text-center text-slate-300 text-[10px] tracking-[0.3em] uppercase">
+                    Analysis Complete
+                </div>
             </div>
+            <style>
+                @keyframes scan { 0% { top: 10%; opacity: 0; } 50% { opacity: 1; } 100% { top: 90%; opacity: 0; } }
+                @keyframes slideRight { from { transform: translateX(-10px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+            </style>
         `;
     }
 
     // Auto-advance after 5 seconds to next slide button
     setTimeout(() => {
         if (nav) nav.style.opacity = '1';
-    }, 4500);
+    }, 5000);
 }
 
 function nextNotDumbSlide() {
@@ -6609,11 +6694,756 @@ function setupAccessibility() {
     observer.observe(document.body, { childList: true, subtree: true });
 }
 
+/* ==========================================
+   NEW THOUGHTFUL APPS (added via update)
+   ========================================== */
+
+
+
+
+/* 2. UNSENT LETTERS */
+function sealLetter() {
+    const paper = document.getElementById('letter-paper');
+    const air = document.getElementById('ai-reply-area');
+    if (!paper.value.trim()) return;
+
+    if (typeof createModal === 'function') createModal({ title: 'Letter Sealed', desc: 'Stored in the archives of time.', icon: '🕯️' });
+
+    // AI Mock Reply
+    setTimeout(() => {
+        air.style.opacity = 1;
+        const replies = [
+            "Harshit: Tu bohot sochti hai. Relax kar.",
+            "Harshit: I'm proud of you, you know that right?",
+            "Harshit: Stop doubting. You are capable.",
+            "Harshit: Suno, sab theek ho jayega."
+        ];
+        document.getElementById('ai-reply-text').innerText = replies[Math.floor(Math.random() * replies.length)];
+    }, 2000);
+}
+
+apps.push({
+    id: 'app-letters', title: 'Unsent Letters', icon: '📜', dock: false, width: 600, height: 700, content: `
+    <div class="letters-app">
+        <textarea id="letter-paper" class="letters-paper custom-scroll" placeholder="Write a letter to the void..."></textarea>
+        
+        <div id="ai-reply-area" class="ai-reply-area">
+            <div class="text-xs font-bold uppercase mb-1 opacity-50">Reflection</div>
+            <div id="ai-reply-text">...</div>
+        </div>
+
+        <div class="letters-controls">
+            <button class="wax-seal-btn" onclick="sealLetter()" title="Seal Letter">SEAL</button>
+        </div>
+    </div>
+`});
+
+
+/* 3. CONSTELLATION (Visual Experience) */
+apps.push({
+    id: 'app-stars', title: 'Constellation', icon: '✨', dock: false, width: 800, height: 600, content: `
+    <div class="stars-app relative h-full bg-[#050505] overflow-hidden flex items-center justify-center">
+        <!-- Reusing Global Star Animations locally -->
+        <div class="absolute inset-0 opacity-80">
+            <div class="stars-small" style="position:absolute; inset:0;"></div>
+            <div class="stars-medium" style="position:absolute; inset:0;"></div>
+        </div>
+        
+        <div class="relative z-10 text-center p-10 animate-fade-in-up">
+            <div class="text-4xl md:text-6xl text-white font-serif mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
+                The Sky is Full of Us.
+            </div>
+            <div class="w-24 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent mx-auto mb-6"></div>
+            <div class="text-slate-300 font-light tracking-wide leading-relaxed max-w-md mx-auto italic">
+                "We don't need lines to connect.<br>We just shine in the same sky."
+            </div>
+            
+            <div class="mt-12 flex justify-center gap-4">
+                 <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                 <div class="w-2 h-2 bg-white rounded-full animate-pulse" style="animation-delay: 0.3s"></div>
+                 <div class="w-2 h-2 bg-white rounded-full animate-pulse" style="animation-delay: 0.6s"></div>
+            </div>
+        </div>
+
+        <!-- Shooting Star Effect -->
+        <div class="absolute top-10 left-[20%] w-[2px] h-[100px] bg-gradient-to-b from-transparent via-white to-transparent transform rotate-45 opacity-0 animate-[shootingStar_4s_infinite_ease-in-out_2s]"></div>
+        <div class="absolute top-40 right-[30%] w-[1px] h-[80px] bg-gradient-to-b from-transparent via-blue-200 to-transparent transform rotate-[-30deg] opacity-0 animate-[shootingStar_6s_infinite_ease-in-out_4s]"></div>
+
+        <style>
+            @keyframes shootingStar {
+                0% { transform: translateY(-100px) rotate(45deg); opacity: 1; }
+                100% { transform: translateY(500px) rotate(45deg); opacity: 0; }
+            }
+        </style>
+    </div>
+`});
+
+
+
+
+
+
+
+
+
+
+/* 6. HARSHIT'S COMPASS */
+window.spinCompass = function () {
+    const n = document.getElementById('c-needle');
+    const r = document.getElementById('c-result');
+    if (!n) return;
+
+    n.style.transform = 'translate(-50%, -50%) rotate(' + (720 + Math.random() * 360) + 'deg)';
+    if (r) r.style.opacity = 0;
+
+    setTimeout(() => {
+        const adv = [
+            "Go study.", "Stop overthinking.", "You're doing fine.", "Drink water.", "Ignore the noise."
+        ];
+        if (r) {
+            r.innerText = adv[Math.floor(Math.random() * adv.length)];
+            r.style.opacity = 1;
+        }
+    }, 3000);
+}
+
+apps.push({
+    id: 'app-compass', title: 'The Compass', icon: '🧭', dock: false, width: 500, height: 500, content: `
+    <div class="compass-app">
+        <div class="compass-container bg-compass-face">
+            <div class="text-[10px] absolute top-2 left-1/2 -translate-x-1/2 font-bold text-gray-400">N</div>
+            <div id="c-needle" class="compass-needle"></div>
+        </div>
+        
+        <input type="text" class="compass-input" placeholder="What's on your mind?">
+        <div id="c-result" class="compass-msg text-indigo-900 mt-4 transition-opacity duration-500"></div>
+        
+        <button onclick="spinCompass()" class="mt-4 px-6 py-2 bg-slate-800 text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-slate-700">Guide Me</button>
+    </div>
+`});
+
+
+/* 7. MIXTAPE OF SOULS */
+apps.push({
+    id: 'app-mixtape', title: 'Soul Mixtape', icon: '📼', dock: false, width: 600, height: 450, content: `
+    <div class="h-full bg-zinc-900 text-white p-6 flex flex-col items-center justify-center">
+        <div class="w-full max-w-sm bg-zinc-800 p-4 rounded-xl border border-zinc-700 shadow-2xl relative">
+            <!-- Cassette Look -->
+            <div class="bg-zinc-900 h-32 rounded mb-4 flex items-center justify-center relative overflow-hidden border border-zinc-700">
+                <div class="absolute inset-0 flex items-center justify-center gap-12">
+                    <div class="w-16 h-16 rounded-full border-4 border-zinc-700 animate-spin-slow"></div>
+                    <div class="w-16 h-16 rounded-full border-4 border-zinc-700 animate-spin-slow"></div>
+                </div>
+                <div class="z-10 bg-white text-black px-2 py-1 text-[10px] font-bold font-mono rotate-[-2deg]">MIX: JUNE 2024</div>
+            </div>
+            
+            <div class="text-center mb-6">
+                <div class="text-xl font-bold text-gray-100">Study Beats & Rain</div>
+                <div class="text-xs text-gray-500 uppercase tracking-widest">Side A</div>
+            </div>
+            
+            <div class="flex justify-center gap-6 text-2xl text-gray-400">
+                <button class="hover:text-white"><i class="fas fa-backward"></i></button>
+                <button class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-110 transition"><i class="fas fa-play"></i></button>
+                <button class="hover:text-white"><i class="fas fa-forward"></i></button>
+            </div>
+        </div>
+        
+        <div class="mt-6 text-center text-xs text-gray-600 font-mono">
+            "Remember that song we listened to?"
+        </div>
+    </div>
+`});
+
+
+/* 8. DAILY BLOOM (Enhanced with High-Quality Images) */
+const dailyBloomData = [
+    { image: 'https://images.unsplash.com/photo-1596073419667-9d77d59f033f?auto=format&fit=crop&w=600&q=80', name: 'Red Rose', message: "Harshit, today is a clean slate. Fill it with your best efforts." },
+    { image: 'https://images.unsplash.com/photo-1597848212624-a19eb35e2651?auto=format&fit=crop&w=600&q=80', name: 'Sunflower', message: "Like this sunflower, always turn your face toward the light, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1572454591674-2739f30d8c40?auto=format&fit=crop&w=600&q=80', name: 'Tulip', message: "Every morning is a fresh start. Make today count, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1588610543265-d069c9b5f096?auto=format&fit=crop&w=600&q=80', name: 'Lotus', message: "Harshit, potential is within you. Bloom with confidence today." },
+    { image: 'https://images.unsplash.com/photo-1568212282298-508b8352b216?auto=format&fit=crop&w=600&q=80', name: 'Hibiscus', message: "Your energy is contagious. Spread positivity today, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=600&q=80', name: 'Cherry Blossom', message: "Life's beauty is in the details. Notice them today, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1606041008023-472dfb5e530f?auto=format&fit=crop&w=600&q=80', name: 'Daisy', message: "Stay simple, stay true. You are enough exactly as you are, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1563241527-3af1629d9705?auto=format&fit=crop&w=600&q=80', name: 'Bouquet', message: "Harshit, you deserve a day as wonderful as you make others feel." },
+    { image: 'https://images.unsplash.com/photo-1555992336-03a23c7b20ee?auto=format&fit=crop&w=600&q=80', name: 'White Lily', message: "Peace begins with a smile. Share yours today, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1566938928-86d405786d5e?auto=format&fit=crop&w=600&q=80', name: 'Purple Orchid', message: "You are unique and rare. Embrace your individuality, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1496062031456-07b8f162a3ea?auto=format&fit=crop&w=600&q=80', name: 'Lavender Field', message: "Find calm in the chaos. You've got this, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1582297883253-902eeb47f2be?auto=format&fit=crop&w=600&q=80', name: 'Yellow Daffodil', message: "New beginnings are beautiful. Step into today with joy, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1563729784474-d77b97d4a833?auto=format&fit=crop&w=600&q=80', name: 'Pink Peony', message: "Harshit, let your kindness be your compass today." },
+    { image: 'https://images.unsplash.com/photo-1600650669868-3e5eccc75094?auto=format&fit=crop&w=600&q=80', name: 'Orange Marigold', message: "The sun is shining for you. Shine back, Harshit!" },
+    { image: 'https://images.unsplash.com/photo-1590518776899-733d3d75c048?auto=format&fit=crop&w=600&q=80', name: 'Wild Bluebells', message: "Gratitude turns what we have into enough. Be grateful today, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1602660146030-a8dc13a47c20?auto=format&fit=crop&w=600&q=80', name: 'White Jasmine', message: "Small steps lead to big changes. Keep going, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1590074251205-d36cb2037953?auto=format&fit=crop&w=600&q=80', name: 'Red Poppy', message: "Your strength is quiet but powerful. Trust it today, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1501570533814-729f21f1fb6c?auto=format&fit=crop&w=600&q=80', name: 'Hydrangea', message: "Harshit, remember that you are loved and appreciated." },
+    { image: 'https://images.unsplash.com/photo-1548690312-e3b97b003ee4?auto=format&fit=crop&w=600&q=80', name: 'Dark Red Rose', message: "Passion fuels purpose. Pursue what you love today, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1524316682772-e42774c05b84?auto=format&fit=crop&w=600&q=80', name: 'Magnolia', message: "Walk with dignity. You are capable of amazing things, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1507290439931-a861b5a38200?auto=format&fit=crop&w=600&q=80', name: 'Anemone', message: "Focus on the beauty of now, Harshit. This moment is your life." },
+    { image: 'https://images.unsplash.com/photo-1508610048659-a06b669e3321?auto=format&fit=crop&w=600&q=80', name: 'Dahlia', message: "Your strength lies in your resilience, Harshit. Keep growing." },
+    { image: 'https://images.unsplash.com/photo-1597166160100-88048227096e?auto=format&fit=crop&w=600&q=80', name: 'Camellia', message: "Gently pursue your dreams today, Harshit. Consistency is key." },
+    { image: 'https://images.unsplash.com/photo-1520564177196-03102026fbb7?auto=format&fit=crop&w=600&q=80', name: 'Iris', message: "Wisdom comes to those who listen. Hear your inner voice, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1518105658639-66c89f81f9b0?auto=format&fit=crop&w=600&q=80', name: 'Protea', message: "You are hardy and capable, Harshit. No challenge is too big." },
+    { image: 'https://images.unsplash.com/photo-1519378304602-2bb61749ec6d?auto=format&fit=crop&w=600&q=80', name: 'Ranunculus', message: "Harshit, you are radiant. Let your inner light shine today." },
+    { image: 'https://images.unsplash.com/photo-1533038590840-1cde6e668a91?auto=format&fit=crop&w=600&q=80', name: 'Forget-Me-Not', message: "Never forget how far you've come, Harshit. Be proud." },
+    { image: 'https://images.unsplash.com/photo-1591833504368-7c8702336338?auto=format&fit=crop&w=600&q=80', name: 'Snapdragon', message: "Speak your truth with grace, Harshit. Your voice matters." },
+    { image: 'https://images.unsplash.com/photo-1502444330042-d1a1ddf9bb5b?auto=format&fit=crop&w=600&q=80', name: 'Morning Glory', message: "A new day brings new opportunities. Seize them, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1589139263156-f61b0ea5a8bc?auto=format&fit=crop&w=600&q=80', name: 'Zinnias', message: "Stay vibrant and full of life, Harshit. The world needs your energy." },
+    { image: 'https://images.unsplash.com/photo-1594911776517-f65582f3478b?auto=format&fit=crop&w=600&q=80', name: 'Carnation', message: "Harshit, you are deeply admired. Believe in your worth today." },
+    { image: 'https://images.unsplash.com/photo-1584381373327-0cf7f9ba5b10?auto=format&fit=crop&w=600&q=80', name: 'Begonia', message: "Harmonize your thoughts with your actions today, Harshit." },
+    { image: 'https://images.unsplash.com/photo-1510443209594-c18ec6222b40?auto=format&fit=crop&w=600&q=80', name: 'Gardenia', message: "Harshit, there is a sweetness in your soul. Let it bloom." },
+    { image: 'https://images.unsplash.com/photo-1595113337452-9694ea4e93fb?auto=format&fit=crop&w=600&q=80', name: 'Azalea', message: "First love yourself, Harshit. Everything else will follow." },
+    { image: 'https://images.unsplash.com/photo-1559823610-2c3552254942?auto=format&fit=crop&w=600&q=80', name: 'Clematis', message: "Aspire to reach new heights today, Harshit. The sky is the limit." },
+    { image: 'https://images.unsplash.com/photo-1591147139174-88062837332f?auto=format&fit=crop&w=600&q=80', name: 'Freesia', message: "Harshit, your trust is your greatest strength. Stay inspired." },
+    { image: 'https://images.unsplash.com/photo-1563241527-4a00cb105267?auto=format&fit=crop&w=600&q=80', name: 'Cornflower', message: "Stay true to your roots, Harshit. They anchor your growth." },
+    { image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80', name: 'Bluebell Macro', message: "Calmness is a superpower, Harshit. Breathe it in deeply." },
+    { image: 'https://images.unsplash.com/photo-1501570533814-729f21f1fb6c?auto=format&fit=crop&w=600&q=80', name: 'Geranium', message: "Harshit, you bring color and warmth to every life you touch." },
+    { image: 'https://images.unsplash.com/photo-1533038590840-1cde6e668a91?auto=format&fit=crop&w=600&q=80', name: 'Gladiolus', message: "Character and integrity define you, Harshit. Shine on." }
+];
+
+apps.push({
+    id: 'app-bloom', title: 'Daily Bloom', icon: '🌼', dock: false, width: 500, height: 600, onOpen: () => {
+        // Calculate Logic: Pick NEW random bloom every time opens
+        const bloom = dailyBloomData[Math.floor(Math.random() * dailyBloomData.length)];
+
+        // Update DOM Elements
+        setTimeout(() => {
+            const imgEl = document.getElementById('bloom-img');
+            const messageEl = document.getElementById('bloom-message');
+
+            if (imgEl) {
+                imgEl.src = bloom.image;
+                imgEl.title = bloom.name;
+
+                // Restart Animation
+                imgEl.style.opacity = '0.5';
+                imgEl.style.transform = 'scale(0.95)';
+
+                // Animate In
+                setTimeout(() => {
+                    imgEl.style.opacity = '1';
+                    imgEl.style.transform = 'scale(1) rotate(0deg)';
+                }, 100);
+            }
+
+            if (messageEl) {
+                messageEl.innerText = `"${bloom.message}"`;
+            }
+        }, 100);
+    }, content: `
+    <div class="bloom-app h-full flex flex-col items-center justify-center bg-gradient-to-b from-rose-50 to-white overflow-hidden relative">
+        <!-- Background Bloom Pattern -->
+        <div class="absolute inset-0 z-0 opacity-10 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/cubes.png');"></div>
+        
+        <!-- Main Flower Image Container -->
+        <div class="relative z-10 w-72 h-72 mb-8 group perspective-[1000px]">
+             <!-- Glow Effect -->
+            <div class="absolute inset-0 bg-rose-300 rounded-2xl blur-3xl opacity-40 group-hover:opacity-70 transition duration-700 animate-pulse"></div>
+            
+            <!-- The Image -->
+            <img id="bloom-img" src="https://images.unsplash.com/photo-1596073419667-9d77d59f033f?auto=format&fit=crop&w=600&q=80" 
+                 class="w-full h-full object-cover rounded-2xl shadow-2xl transform border-4 border-white relative z-10 transition-all duration-1000" 
+                 alt="Daily Bloom"
+                 onerror="this.src='https://placehold.co/600x600/pink/white?text=Flower+Bloom'">
+        </div>
+        
+        <div class="font-serif text-3xl text-rose-900 italic mb-6 relative z-10 text-center px-4 drop-shadow-sm">"Harshit"</div>
+        
+        <div class="relative z-10 p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] border border-rose-100 max-w-sm mx-4 transform hover:-translate-y-1 transition duration-300">
+            <div class="flex items-center justify-between mb-4">
+                <div class="text-[10px] text-rose-400 uppercase tracking-[0.2em] font-bold">Daily Insight</div>
+                <div class="text-[10px] text-slate-300 font-mono">${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+            </div>
+            <div id="bloom-message" class="text-slate-700 font-serif text-lg leading-relaxed text-center italic">
+                "Finding the perfect flower for you..."
+            </div>
+            <div class="mt-6 flex justify-center">
+                <div class="w-12 h-1 bg-rose-200 rounded-full"></div>
+            </div>
+        </div>
+    </div>
+`});
+
+/* ==========================================
+   VISUAL & AUDIO FIXES (Added via Feedback)
+   ========================================== */
+
+/* 1. GLOBAL AUDIO MANAGER (HalaMadrid Fix) */
+window.triggerMadridEffect = function (btn) {
+    if (btn) {
+        btn.innerText = "SIUUUUU! ⚽";
+        btn.classList.add('animate-bounce');
+        setTimeout(() => btn.innerText = "Hala Madrid! 🚀", 2000);
+    }
+
+    // Try finding existing audio first
+    let audio = document.getElementById('madrid-siuuu');
+
+    // If missing (app closed), create temporary
+    if (!audio) {
+        audio = new Audio('https://www.myinstants.com/media/sounds/cristiano-ronaldo-siuuu.mp3');
+    }
+
+    audio.play().catch(e => {
+        console.log("Audio Playback Blocked", e);
+        if (typeof createModal === 'function') createModal({ title: "Audio Error", desc: "Browser blocked autoplay. Interacted first?", icon: "🔇" });
+    });
+
+    // Confetti
+    if (typeof confetti === 'function') {
+        confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+    }
+};
+
+
+/* 2. CUSTOM CONTEXT MENU LOGIC */
+document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+
+    let menu = document.getElementById('ctx-menu');
+    if (!menu) {
+        // Create if missing
+        menu = document.createElement('div');
+        menu.id = 'ctx-menu';
+        menu.className = 'fixed bg-white/90 backdrop-blur border border-gray-200 shadow-xl rounded-lg py-2 w-48 z-[99999] hidden flex-col';
+        menu.innerHTML = `
+            <div class="px-4 py-2 hover:bg-blue-500 hover:text-white cursor-pointer text-xs font-bold" onclick="Apps.open('folder-system')">📂 System Core</div>
+            <div class="px-4 py-2 hover:bg-blue-500 hover:text-white cursor-pointer text-xs font-bold" onclick="location.reload()">🔄 Refresh System</div>
+            <div class="h-px bg-gray-200 my-1"></div>
+            <div class="px-4 py-2 hover:bg-blue-500 hover:text-white cursor-pointer text-xs font-bold " onclick="document.body.requestFullscreen()">🖥️ Fullscreen</div>
+            <div class="px-4 py-2 hover:bg-blue-500 hover:text-white cursor-pointer text-xs font-bold text-red-500" onclick="triggerQuietEnding()">❌ Shutdown</div>
+        `;
+        document.body.appendChild(menu);
+
+        // Close on click anywhere
+        document.addEventListener('click', () => menu.classList.add('hidden'));
+    }
+
+    // Position
+    const x = Math.min(e.clientX, window.innerWidth - 200);
+    const y = Math.min(e.clientY, window.innerHeight - 200);
+
+    menu.style.left = x + 'px';
+    menu.style.top = y + 'px';
+    menu.classList.remove('hidden');
+    menu.classList.add('flex');
+});
+
+
+/* 3. DOCK & TERMINAL VISUAL TWEAKS INJECTION */
+const styleFix = document.createElement('style');
+styleFix.innerHTML = `
+    /* Dock Hit Area Fix */
+    #dock-container { height: 30px !important; transition: height 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important; }
+    #dock-container:hover { height: 115px !important; }
+    
+    /* Terminal Output Contrast Fix */
+    #term-output { color: #e5e7eb !important; font-weight: 500; }
+    .term-prompt { color: #4ade80 !important; font-weight: 700; margin-right: 8px; }
+    .term-error { color: #ef4444 !important; }
+    .term-success { color: #facc15 !important; }
+    
+    /* Context Menu Animation */
+    #ctx-menu { animation: menuPop 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    @keyframes menuPop { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+`;
+document.head.appendChild(styleFix);
+
+
+/* RE-INIT ACCESSIBILITY */
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setupAccessibility);
 } else {
     setupAccessibility();
 }
+
+// Global Exposure
+window.startFactsApp = startFactsApp;
+
+
+/* ==========================================
+   NEW APPS: TIME CAPSULE, PAPER PLANES, JOURNAL
+   ========================================== */
+
+/* ==========================================
+   NEW APPS: TIME CAPSULE, PAPER PLANES, JOURNAL
+   (Discovery Mode)
+   ========================================== */
+
+/* 1. TIME CAPSULE */
+const TimeCapsuleApp = {
+    capsules: [
+        { label: "Open When You're Happy", content: "I love it when you're happy. Keep that smile, it suits you best.", icon: "☀" },
+        { label: "Open When You're Sad", content: "It's okay to have down days. Take a breath. You're stronger than you feel right now.", icon: "🌙" },
+        { label: "Open When You're Bored", content: "Go play Rabbit Runner or annoy me on text. I'm probably waiting for it.", icon: "🎮" },
+        { label: "Open on Jan 30", content: "Happy Birthday Harshit! The world is lucky to have you. ✨", icon: "🎂" }
+    ],
+
+    open(index) {
+        const cap = this.capsules[index];
+        createModal({ title: cap.label, desc: cap.content, icon: cap.icon });
+    },
+
+    render() {
+        const container = document.getElementById('capsule-grid');
+        if (!container) return;
+        container.innerHTML = this.capsules.map((c, i) => `
+            <div class="p-6 bg-slate-800/50 border border-slate-700 rounded-2xl hover:bg-slate-700/50 transition cursor-pointer flex flex-col items-center gap-4 group" onclick="TimeCapsuleApp.open(${i})">
+                <div class="text-4xl group-hover:scale-110 transition-transform">${c.icon}</div>
+                <div class="text-xs font-bold text-slate-300 uppercase tracking-widest text-center">${c.label}</div>
+            </div>
+        `).join('');
+    }
+};
+
+apps.push({
+    id: 'app-capsule', title: 'Time Capsule', icon: '⏳', dock: false, width: 600, height: 500, onOpen: () => TimeCapsuleApp.render(), content: `
+    <div class="h-full bg-[#0f172a] text-white p-8 flex flex-col">
+        <div class="text-center mb-10">
+            <h2 class="text-2xl font-serif font-bold text-indigo-300">Harshit's Time Vault</h2>
+            <p class="text-slate-400 text-sm mt-1">Found memories and future notes.</p>
+        </div>
+        <div id="capsule-grid" class="grid grid-cols-2 gap-6 overflow-y-auto custom-scroll pr-2"></div>
+    </div>
+`});
+
+
+/* 2. PAPER PLANES */
+const PlanesApp = {
+    wishes: [
+        "May your day be as amazing as you are.",
+        "You are doing much better than you think.",
+        "A random smile is coming your way.",
+        "The stars are rooting for you.",
+        "Take a break, you've earned it."
+    ],
+
+    catchPlane() {
+        const sky = document.getElementById('planes-sky');
+        if (!sky) return;
+
+        const plane = document.createElement('div');
+        plane.innerText = '✈️';
+        plane.className = 'absolute text-3xl cursor-pointer transition-all duration-[4s] ease-linear select-none z-10';
+
+        const startY = Math.random() * 70 + 10 + '%';
+        plane.style.top = startY;
+        plane.style.left = '-50px';
+        plane.style.opacity = '0.8';
+
+        sky.appendChild(plane);
+
+        setTimeout(() => {
+            plane.style.left = (sky.offsetWidth + 100) + 'px';
+            plane.style.transform = `translateY(${Math.random() * 100 - 50}px) rotate(10deg)`;
+        }, 100);
+
+        plane.onclick = () => {
+            plane.innerText = '✨';
+            const msg = this.wishes[Math.floor(Math.random() * this.wishes.length)];
+            createModal({ title: "A Plane for You", desc: msg, icon: "🌠" });
+            setTimeout(() => plane.remove(), 500);
+        };
+
+        setTimeout(() => plane.remove(), 4500);
+    },
+
+    init() {
+        if (this.interval) clearInterval(this.interval);
+        this.interval = setInterval(() => this.catchPlane(), 2000);
+    }
+};
+
+apps.push({
+    id: 'app-planes', title: 'Paper Planes', icon: '✈️', dock: false, width: 700, height: 500, onClose: () => clearInterval(PlanesApp.interval), onOpen: () => PlanesApp.init(), content: `
+    <div class="h-full bg-gradient-to-b from-sky-400 via-sky-200 to-indigo-100 relative overflow-hidden flex flex-col items-center justify-end pb-12">
+        <div id="planes-sky" class="absolute inset-0">
+             <!-- Clouds -->
+            <div class="absolute top-10 left-10 text-8xl opacity-40 animate-pulse-slow">☁</div>
+            <div class="absolute top-40 right-20 text-6xl opacity-30 animate-pulse-slow delay-700">☁</div>
+        </div>
+        <div class="relative z-20 bg-white/40 backdrop-blur px-6 py-2 rounded-full border border-white/50 text-sky-900 font-bold text-xs uppercase tracking-widest shadow-xl">Catch a passing wish...</div>
+    </div>
+`});
+
+
+/* 3. SHARED JOURNAL */
+const JournalApp = {
+    chapters: [
+        { title: "Chapter 1: The Beginning", content: "It all started with a simple 'Hi'. Who knew it would lead to a special OS built just for you? Every conversation since then has been a building block for us." },
+        { title: "Chapter 2: The Inside Jokes", content: "From 'Chuha' to 'Ota', we've built a language of our own. These small moments are what make the journey worth it." },
+        { title: "Chapter 3: The Growth", content: "We've faced shifts and changes, but through it all, the care remained. This system isn't just about the past; it's a bridge to what's next." }
+    ],
+    index: 0,
+
+    render() {
+        const title = document.getElementById('journal-title');
+        const text = document.getElementById('journal-text');
+        const pageNum = document.getElementById('journal-page-num');
+        if (!title || !text) return;
+
+        title.innerText = this.chapters[this.index].title;
+        text.innerText = this.chapters[this.index].content;
+        pageNum.innerText = `Page ${this.index + 1} of ${this.chapters.length}`;
+    },
+
+    next() {
+        if (this.index < this.chapters.length - 1) {
+            this.index++;
+            this.render();
+        }
+    },
+
+    prev() {
+        if (this.index > 0) {
+            this.index--;
+            this.render();
+        }
+    }
+};
+
+apps.push({
+    id: 'app-journal', title: 'Our Story', icon: '📚', dock: false, width: 700, height: 600, onOpen: () => JournalApp.render(), content: `
+    <div class="h-full bg-[#fdfaf5] p-10 flex items-center justify-center relative">
+        <div class="w-full max-w-xl h-full bg-white shadow-2xl rounded-sm border-l-[15px] border-amber-900 p-12 flex flex-col justify-between relative overflow-hidden">
+             <!-- Paper Texture -->
+            <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');"></div>
+            
+            <div class="relative z-10">
+                <h2 id="journal-title" class="text-3xl font-serif font-bold text-amber-900 mb-8 italic border-b border-amber-100 pb-4"></h2>
+                <p id="journal-text" class="text-lg text-slate-700 leading-loose font-serif italic first-letter:text-5xl first-letter:mr-2 first-letter:float-left"></p>
+            </div>
+
+            <div class="relative z-10 flex justify-between items-center mt-12 pt-6 border-t border-slate-100">
+                <div class="flex gap-4">
+                    <button onclick="JournalApp.prev()" class="text-xs font-bold text-amber-800 hover:text-amber-600 transition tracking-widest">← PREV</button>
+                    <button onclick="JournalApp.next()" class="text-xs font-bold text-amber-800 hover:text-amber-600 transition tracking-widest">NEXT →</button>
+                </div>
+                <div id="journal-page-num" class="text-[10px] text-slate-400 font-mono tracking-widest uppercase"></div>
+            </div>
+        </div>
+    </div>
+`});
+
+
+/* 4. THANK YOU (GRATITUDE) */
+apps.push({
+    id: 'thank-you',
+    title: 'Gratitude',
+    icon: '✨',
+    dock: false,
+    width: 600,
+    height: 600,
+    content: `
+    <div class="h-full bg-[#020617] text-white flex flex-col items-center justify-center p-12 text-center relative overflow-hidden">
+        <!-- Cinematic Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-indigo-950/50 via-black to-slate-900/50 animate-pulse-slow"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(circle,rgba(99,102,241,0.05)_0%,transparent_70%)] pointer-events-none"></div>
+
+        <div class="relative z-10 space-y-8 max-w-sm">
+            <div class="text-6xl filter drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] animate-bounce-slow">✨</div>
+            <div class="space-y-4">
+                <h3 class="text-3xl font-[Playfair_Display] italic tracking-wide">For Everything.</h3>
+                <div class="h-px w-12 bg-indigo-500/50 mx-auto"></div>
+                <p class="text-slate-400 text-sm leading-relaxed font-light italic">
+                    "Thank you for being the calm in my storm, the logic in my chaos, and the person who stays when things get loud."
+                </p>
+            </div>
+            <div class="pt-6">
+                <div class="text-[9px] uppercase tracking-[0.5em] text-indigo-400/50 font-bold">Deepened Connections v1.9</div>
+            </div>
+        </div>
+    </div>
+`});
+
+/* ==========================================
+   WHEN TIRED APP (Karaoke/Voice Sync)
+   ========================================== */
+const TiredApp = {
+    audio: null,
+    display: null,
+    progressBar: null,
+    progressFill: null,
+    playIcon: null,
+    transcript: [
+        /* === INSTRUCTIONS FOR USER ===
+           1. Upload your audio file to 'assets/audio/tired_voice.mp3' (or update the src in the HTML below).
+           2. Update the timestamps (in seconds) and text below to match your voice note.
+        */
+        { time: 0, text: "Hey..." },
+        { time: 2, text: "I know things feel heavy right now." },
+        { time: 5, text: "Just take a deep breath." },
+        { time: 8, text: "You don't have to carry the world on your shoulders." },
+        { time: 12, text: "It's okay to rest." },
+        { time: 16, text: "You are doing enough." },
+        { time: 20, text: "Sleep tight. Tomorrow is a new day." },
+        { time: 25, text: "I'm here." }
+    ],
+
+    init() {
+        this.audio = document.getElementById('tired-audio');
+        this.display = document.getElementById('tired-display');
+        this.progressBar = document.getElementById('tired-progress-bar');
+        this.progressFill = document.getElementById('tired-progress-fill');
+        this.playIcon = document.getElementById('tired-play-icon');
+
+        if (this.audio) {
+            this.audio.addEventListener('timeupdate', () => this.syncVisuals());
+            this.audio.addEventListener('ended', () => this.reset());
+        }
+    },
+
+    togglePlay() {
+        if (!this.audio) return;
+
+        if (this.audio.paused) {
+            this.audio.play();
+            if (this.playIcon) {
+                this.playIcon.classList.remove('fa-play');
+                this.playIcon.classList.add('fa-pause');
+            }
+            // Visual pulse start
+            const pulse = document.getElementById('tired-bg-pulse');
+            if (pulse) pulse.classList.add('animate-pulse');
+        } else {
+            this.audio.pause();
+            if (this.playIcon) {
+                this.playIcon.classList.remove('fa-pause');
+                this.playIcon.classList.add('fa-play');
+            }
+            const pulse = document.getElementById('tired-bg-pulse');
+            if (pulse) pulse.classList.remove('animate-pulse');
+        }
+    },
+
+    syncVisuals() {
+        if (!this.audio) return;
+        const currentTime = this.audio.currentTime;
+
+        // Update Progress
+        if (this.progressFill) {
+            const pct = (currentTime / this.audio.duration) * 100 || 0;
+            this.progressFill.style.width = pct + '%';
+        }
+
+        // Find active text
+        if (this.display) {
+            const activeSegment = this.transcript.slice().reverse().find(seg => currentTime >= seg.time);
+
+            if (activeSegment) {
+                if (this.display.innerText !== activeSegment.text) {
+                    // Fade out-in effect
+                    this.display.style.opacity = 0;
+                    this.display.style.transform = 'translateY(10px) scale(0.95)';
+
+                    setTimeout(() => {
+                        this.display.innerText = activeSegment.text;
+                        this.display.style.opacity = 1;
+                        this.display.style.transform = 'translateY(0) scale(1)';
+                    }, 300);
+                }
+            } else {
+                // Intro state
+                if (currentTime < 1 && this.display.innerText !== "Press play...") {
+                    // Keep it as is or reset
+                }
+            }
+        }
+    },
+
+    seek(pct) {
+        if (!this.audio) return;
+        const time = (pct / 100) * this.audio.duration;
+        this.audio.currentTime = time;
+    },
+
+    reset() {
+        if (this.playIcon) {
+            this.playIcon.classList.remove('fa-pause');
+            this.playIcon.classList.add('fa-play');
+        }
+        const pulse = document.getElementById('tired-bg-pulse');
+        if (pulse) pulse.classList.remove('animate-pulse');
+
+        if (this.display) {
+            this.display.style.opacity = 0.5;
+            this.display.innerText = "Press play...";
+            this.display.style.transform = 'none';
+        }
+        if (this.progressFill) this.progressFill.style.width = '0%';
+    }
+};
+
+apps.push({
+    id: 'tired',
+    title: 'When Tired',
+    icon: 'assets/icons/app_sleep.png', // Ensure this icon exists or use emoji
+    dock: false,
+    folder: 'folder-feelings',
+    width: 600,
+    height: 500,
+    onOpen: () => {
+        setTimeout(() => TiredApp.init(), 100);
+    },
+    onClose: () => {
+        if (TiredApp.audio) {
+            TiredApp.audio.pause();
+            TiredApp.audio.currentTime = 0;
+            TiredApp.reset();
+        }
+    },
+    content: `
+    <div class="h-full bg-[#0f172a] text-blue-100 flex flex-col relative overflow-hidden font-serif select-none">
+        
+        <!-- Ambient Background -->
+        <div id="tired-bg-pulse" class="absolute inset-0 bg-blue-900/10 blur-[100px] transition-opacity duration-1000"></div>
+        <div class="absolute inset-0 opacity-10" style="background-image: url('https://www.transparenttextures.com/patterns/stardust.png');"></div>
+
+        <!-- Main Display Area -->
+        <div class="relative z-10 flex-1 flex flex-col items-center justify-center p-10 text-center">
+            <div id="tired-display" class="text-2xl md:text-3xl font-light text-blue-50/90 leading-relaxed drop-shadow-lg transition-all duration-700 ease-out opacity-60">
+                Press play...
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="relative z-20 pb-10 px-10 flex flex-col items-center w-full">
+            
+            <!-- Replace 'src' with your actual audio file -->
+            <audio id="tired-audio" src="assets/audio/tired_voice.mp3" preload="metadata"></audio> 
+            
+            <!-- Custom Progress Bar -->
+            <div id="tired-progress-bar" class="w-full max-w-md h-1.5 bg-white/5 rounded-full mb-8 relative cursor-pointer group overflow-hidden" 
+                 onclick="const rect = this.getBoundingClientRect(); const pct = ((event.clientX - rect.left) / rect.width) * 100; TiredApp.seek(pct);">
+                <div id="tired-progress-fill" class="absolute left-0 top-0 h-full bg-blue-300/50 rounded-full shadow-[0_0_10px_rgba(147,197,253,0.5)] transition-all duration-100" style="width: 0%"></div>
+                <div class="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors"></div>
+
+
+            <!-- Play Button -->
+            <button onclick="TiredApp.togglePlay()" class="w-14 h-14 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/10 hover:scale-105 active:scale-95 transition-all duration-300 shadow-2xl group">
+                <i id="tired-play-icon" class="fas fa-play text-lg text-blue-200 group-hover:text-white ml-0.5 transition-colors"></i>
+            </button>
+            
+            <div class="mt-4 text-[10px] text-blue-400/30 uppercase tracking-[0.3em] font-sans">Synced Voice Note</div>
+        </div>
+    </div>
+`});
+
+/* === CURSOR SPARKLES === */
+document.addEventListener('mousemove', (e) => {
+    if (Math.random() < 0.2) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'click-sparkle';
+        sparkle.style.left = e.clientX + 'px';
+        sparkle.style.top = e.clientY + 'px';
+
+        const size = Math.random() * 15 + 5;
+        sparkle.style.width = size + 'px';
+        sparkle.style.height = size + 'px';
+
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 800);
+    }
+});
 
 
 
