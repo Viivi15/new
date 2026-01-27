@@ -1,4 +1,4 @@
-/* === SYSTEM CORE === */
+
 :root {
     --glass-bg: rgba(255, 255, 255, 0.75);
     --glass-border: rgba(255, 255, 255, 0.4);
@@ -15,12 +15,12 @@ body {
     user-select: none;
     cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='8' cy='8' r='4' fill='white' style='filter: drop-shadow(0 0 2px rgba(255,255,255,0.8));'/></svg>") 8 8, auto;
 
-    /* Global Minimalist Scrollbar */
+    
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 }
 
-/* Main Desktop Container */
+
 #desktop {
     width: 100vw;
     height: 100vh;
@@ -31,12 +31,12 @@ body {
     z-index: 10;
 }
 
-/* === BIRTHDAY INTRO BACKGROUND === */
+
 #birthday-intro {
     background: radial-gradient(circle at center, #1a202c 0%, #000 100%);
-    /* Fallback */
+    
     background: linear-gradient(135deg, #2e1065 0%, #000000 100%);
-    /* Deep Purple to Black */
+    
 }
 
 @keyframes fadeIn {
@@ -49,7 +49,7 @@ body {
     }
 }
 
-/* Desktop Grid */
+
 #desktop-grid {
     position: absolute;
     top: 40px;
@@ -64,8 +64,8 @@ body {
     pointer-events: none;
 }
 
-/* === CLICK SPARKLE ANIMATION === */
-/* === MOUSE TRAIL EFFECTS === */
+
+
 .snow-flake {
     position: absolute;
     pointer-events: none;
@@ -158,7 +158,7 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-/* === RESIZE HANDLE === */
+
 .window {
     resize: both;
     overflow: hidden;
@@ -168,9 +168,9 @@ body {
     max-height: 90vh;
 }
 
-/* === PERSONAL APPS STYLING === */
 
-/* 1. Identity Card */
+
+
 .id-card {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     height: 100%;
@@ -231,7 +231,7 @@ body {
     text-transform: uppercase;
 }
 
-/* 2. Timeline (Journey) */
+
 .timeline-container {
     padding: 40px 20px;
     position: relative;
@@ -280,7 +280,7 @@ body {
     line-height: 1.6;
 }
 
-/* 3. Sticky Notes (Favorites) */
+
 .sticky-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -313,7 +313,7 @@ body {
     color: #553c9a;
 }
 
-/* 4. Code Editor */
+
 .code-editor {
     background: #1e1e1e;
     color: #d4d4d4;
@@ -353,7 +353,7 @@ body {
     font-style: italic;
 }
 
-/* 5. Audio Player */
+
 .music-player {
     background: linear-gradient(to bottom right, #2d3748, #1a202c);
     color: white;
@@ -417,12 +417,12 @@ body {
     transform: scale(1.1);
 }
 
-/* 6. Bear GIF Container */
+
 .bear-container {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    /* Chat bubble style */
+    
     padding: 20px;
     height: 100%;
     background: #fff0f3;
@@ -453,7 +453,7 @@ body {
     }
 }
 
-/* Windows */
+
 .window {
     position: absolute;
     background: var(--glass-bg);
@@ -465,7 +465,7 @@ body {
     flex-direction: column;
     min-width: 300px;
     min-height: 200px;
-    /* Smooth transitions for all changing properties */
+    
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
         opacity 0.3s ease,
         width 0.4s cubic-bezier(0.25, 1, 0.5, 1),
@@ -473,9 +473,9 @@ body {
         top 0.4s cubic-bezier(0.25, 1, 0.5, 1),
         left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 
-    /* Entry Animation */
+    
     animation: winOpen 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    /* Slight bounce pop */
+    
     resize: both;
     overflow: hidden;
 }
@@ -491,7 +491,7 @@ body {
     color: #4b3d3b;
 }
 
-/* Animation Classes */
+
 .window.closing {
     transform: scale(0.9) translateY(10px);
     opacity: 0;
@@ -500,7 +500,7 @@ body {
 
 .window.minimized {
     transform: scale(0.1) translateY(500px);
-    /* Sucks into dock area */
+    
     opacity: 0;
     pointer-events: none;
 }
@@ -517,7 +517,7 @@ body {
     }
 }
 
-/* Title Bar */
+
 .title-bar {
     height: 38px;
     background: rgba(255, 255, 255, 0.4);
@@ -555,7 +555,7 @@ body {
     font-weight: 900;
 }
 
-/* Traffic lights hover symbols removed */
+
 .title-bar:hover .traffic-light::before {
     opacity: 0;
 }
@@ -586,7 +586,7 @@ body {
     letter-spacing: -0.01em;
 }
 
-/* Content Area */
+
 .win-content {
     flex: 1;
     overflow: auto;
@@ -594,17 +594,17 @@ body {
     scroll-behavior: smooth;
 }
 
-/* In-Window Grid (Folders) */
+
 .win-content .grid {
     display: grid;
 }
 
-/* Ensure grid works inside */
+
 .win-content .select-none {
     user-select: none;
 }
 
-/* Bear Stickers & Effects */
+
 .crack {
     position: fixed;
     inset: 0;
@@ -615,7 +615,7 @@ body {
     opacity: 0.9;
 }
 
-/* Boot/Entry Animations */
+
 .fade-in-up {
     animation: fadeInUp 1s ease-out forwards;
     opacity: 0;
@@ -629,14 +629,14 @@ body {
     }
 }
 
-/* Dock */
+
 #dock-container {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 15px;
-    /* Trigger zone */
+    
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -644,12 +644,12 @@ body {
     padding-bottom: 20px;
     transition: height 0.3s ease;
     pointer-events: auto;
-    /* Enable hover on the trigger zone */
+    
 }
 
 #dock-container:hover {
     height: 110px;
-    /* Expand to fit dock */
+    
 }
 
 #dock {
@@ -666,16 +666,16 @@ body {
     pointer-events: auto;
     transform-origin: bottom;
     transform: translateY(150%);
-    /* Hidden by default */
+    
     transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 #dock-container:hover #dock {
     transform: translateY(0);
-    /* Reveal on hover */
+    
 }
 
-/* Dock Hint */
+
 #dock-hint {
     position: absolute;
     bottom: 20px;
@@ -763,7 +763,7 @@ body {
     opacity: 1;
 }
 
-/* Chat Bubbles */
+
 .msg-container {
     display: flex;
     flex-direction: column;
@@ -811,7 +811,7 @@ body {
     }
 }
 
-/* Global Minimalist Scrollbar */
+
 * {
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
@@ -836,7 +836,7 @@ body {
     background: rgba(0, 0, 0, 0.2);
 }
 
-/* Dark Mode Scrollbar */
+
 .window.dark ::-webkit-scrollbar-thumb,
 .dark-mode ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.1);
@@ -847,7 +847,7 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Letter Styling Enhanced */
+
 .letter-text {
     font-family: 'Inter', sans-serif;
     line-height: 1.8;
@@ -860,7 +860,7 @@ body {
     font-family: 'Dancing Script', cursive;
     font-size: 34px;
     color: #db2777;
-    /* Pink-600 */
+    
     margin-top: 10px;
     margin-bottom: 20px;
     text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.05);
@@ -883,7 +883,7 @@ body {
     margin: 20px 0;
 }
 
-/* === JOURNEY INTRO === */
+
 #journey-intro {
     background: black;
     color: white;
@@ -905,7 +905,7 @@ body {
     opacity: 0.2;
 }
 
-/* Bear Stickers */
+
 .birthday-screen.active {
     opacity: 1;
     pointer-events: auto;
@@ -931,7 +931,7 @@ body {
     }
 }
 
-/* === PHASE 0: SPACE BACKGROUND (Intro Only) === */
+
 #space-bg {
     background: #000000;
     overflow: hidden;
@@ -982,7 +982,7 @@ body {
     }
 }
 
-/* === STAR STRETCH / WARP EFFECT === */
+
 @keyframes starStretch {
     0% {
         transform: translateZ(0) scale(1) translateY(0);
@@ -1007,12 +1007,12 @@ body {
     animation: starStretch 1.8s cubic-bezier(0.5, 0, 0.5, 1) forwards !important;
 }
 
-/* === DESKTOP THEME (Midnight Sky) === */
+
 #desktop-bg {
     position: fixed;
     inset: 0;
     background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%);
-    /* Midnight Blue to Deep Indigo */
+    
     z-index: 1;
     opacity: 0;
     transition: opacity 2s ease;
@@ -1023,7 +1023,7 @@ body {
     color: rgba(255, 255, 255, 0.9);
 }
 
-/* Updated Glassmorphism for Light Theme */
+
 .glass-panel,
 .window,
 .dock-icon {
@@ -1041,7 +1041,7 @@ body {
 
 
 
-/* === PHASE 1: JOURNEY INTRO === */
+
 #journey-intro {
     background: transparent;
 }
@@ -1059,7 +1059,7 @@ body {
     transform: translateY(0);
 }
 
-/* === PHASE 2: TERMINAL BOOT === */
+
 #terminal-boot {
     font-family: 'Fira Code', 'Courier New', monospace;
     text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
@@ -1077,7 +1077,7 @@ body {
     }
 }
 
-/* === PHASE 3: BIRTHDAY COUNTDOWN === */
+
 #countdown-phase {
     background: #020617;
 }
@@ -1191,7 +1191,7 @@ body {
 }
 
 
-/* Animations */
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -1205,7 +1205,7 @@ body {
 }
 
 
-/* Animations */
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -1222,7 +1222,7 @@ body {
     animation: fadeInUp 1s forwards;
 }
 
-/* Context Menu */
+
 #ctx-menu {
     position: fixed;
     background: rgba(255, 255, 255, 0.95);
@@ -1257,7 +1257,7 @@ body {
     margin: 4px 6px;
 }
 
-/* === MACOS MENU BAR (Spacing Fixes) === */
+
 .macos-menu-bar {
     position: absolute;
     top: 0;
@@ -1268,7 +1268,7 @@ body {
     -webkit-backdrop-filter: blur(12px);
     display: flex;
     flex-direction: row !important;
-    /* FORCE ROW */
+    
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
@@ -1283,7 +1283,7 @@ body {
     display: flex;
     align-items: center;
     gap: 24px;
-    /* Fixed: 24px gap for left items */
+    
     position: relative;
     height: 100%;
 }
@@ -1292,7 +1292,7 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
-    /* Fixed: 20px gap for right items */
+    
     height: 100%;
 }
 
@@ -1313,23 +1313,23 @@ body {
 .menu-item-apple {
     font-size: 16px;
     padding: 0 4px;
-    /* Slightly tighter for the Apple logo */
+    
 }
 
-/* Ensure standard Tailwind utilities don't override our specific flex gaps if we mix them */
+
 .gap-fix-left>*+* {
     margin-left: 24px;
 }
 
-/* === WHEN TIRED MODE === */
-/* === WHEN TIRED MODE (Enhanced) === */
+
+
 .tired-container {
     height: 100%;
-    /* Deep, warm void background */
+    
     background: radial-gradient(circle at center, #23232a 0%, #151518 100%);
     color: #e0e0e0;
     font-family: 'Playfair Display', serif;
-    /* Storybook feel */
+    
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1340,7 +1340,7 @@ body {
     overflow: hidden;
 }
 
-/* Floating Dust Particles Effect */
+
 .tired-container::before {
     content: '';
     position: absolute;
@@ -1371,18 +1371,18 @@ body {
 
 .tired-content {
     max-width: 480px;
-    /* Slightly wider */
+    
     z-index: 10;
 }
 
 .tired-line {
     font-size: 18px;
-    /* Larger text */
+    
     line-height: 1.9;
     margin-bottom: 24px;
     opacity: 0;
     transform: translateY(10px);
-    /* Slide up effect */
+    
     transition: opacity 1.5s ease, transform 1.5s ease;
     font-weight: 400;
     color: rgba(255, 255, 255, 0.9);
@@ -1402,7 +1402,7 @@ body {
     opacity: 0.15;
     animation: pulseHeartOrganic 4s infinite ease-in-out;
     color: #ff8ba7;
-    /* Softer pink/red */
+    
     filter: drop-shadow(0 0 5px rgba(255, 139, 167, 0.4));
 }
 
@@ -1417,7 +1417,7 @@ body {
         opacity: 0.25;
     }
 
-    /* Beat 1 */
+    
     30% {
         transform: scale(1);
         opacity: 0.15;
@@ -1428,7 +1428,7 @@ body {
         opacity: 0.25;
     }
 
-    /* Beat 2 */
+    
     60% {
         transform: scale(1);
         opacity: 0.15;
@@ -1440,7 +1440,7 @@ body {
     }
 }
 
-/* Audio Wrapper */
+
 .tired-audio-wrapper {
     margin-top: 20px;
     margin-bottom: 10px;
@@ -1455,7 +1455,7 @@ body {
     border-radius: 30px;
     cursor: pointer;
     font-family: 'Inter', sans-serif;
-    /* Clean font for UI */
+    
     font-size: 13px;
     letter-spacing: 0.5px;
     transition: all 0.4s ease;
@@ -1553,7 +1553,7 @@ body {
     color: #4b5563;
 }
 
-/* 10. Bubble Wrap (Stress Relief) */
+
 .bubble-wrap-container {
     padding: 20px;
     height: 100%;
@@ -1598,7 +1598,7 @@ body {
     border-radius: 50%;
 }
 
-/* 8. Terminal.sh (Retro CLI) */
+
 .terminal-app {
     background-color: #0c0c0c;
     color: #0f0;
@@ -1654,13 +1654,13 @@ body {
     color: #ffff00;
 }
 
-/* 7. HarshitAI (Personal Assistant) */
+
 .ai-container {
     display: flex;
     flex-direction: column;
     height: 100%;
     background: #0f172a;
-    /* Slate 900 */
+    
     color: #cbd5e1;
     font-family: 'Inter', sans-serif;
 }
@@ -1784,7 +1784,7 @@ body {
     }
 }
 
-/* === NEW: STORYBOOK APP === */
+
 .storybook-container {
     height: 100%;
     background: linear-gradient(to right, #fdfbfb, #ebedee);
@@ -1857,7 +1857,7 @@ body {
     color: #2d3748;
 }
 
-/* === NEW: POLAROID GALLERY === */
+
 .polaroid-gallery {
     height: 100%;
     background: #e2e8f0;
@@ -1934,7 +1934,7 @@ body {
     cursor: grabbing;
 }
 
-/* === BOOT SEQUENCE === */
+
 #boot-sequence {
     transition: opacity 1.5s ease;
 }
@@ -1950,19 +1950,19 @@ body {
     }
 }
 
-/* === BOOT SEQUENCE (Refined) === */
+
 #boot-sequence {
     position: fixed;
     inset: 0;
     background: black;
-    /* Mechanical boot */
+    
     color: #4ade80;
-    /* Green text */
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    /* Align left for terminal feel */
+    
     padding-left: 20%;
     z-index: 50000;
     font-family: 'Fira Code', monospace;
@@ -2007,12 +2007,12 @@ body {
     }
 }
 
-/* === SYSTEM UPDATE SECTION === */
+
 .system-update {
     padding: 20px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont;
     color: #333;
-    /* Ensure text is visible in light mode */
+    
 }
 
 .system-update h2 {
@@ -2047,8 +2047,8 @@ body {
     color: #ddd;
 }
 
-/* === PRESENCE UPDATES === */
-/* 1. System Status */
+
+
 .system-uptime {
     margin-top: 16px;
     font-size: 13px;
@@ -2067,7 +2067,7 @@ body {
     opacity: 0.6;
 }
 
-/* 2. Micro-Story */
+
 .micro-story {
     max-width: 420px;
     margin: auto;
@@ -2093,7 +2093,7 @@ body {
     }
 }
 
-/* 4. Notes App (Empty) */
+
 .notes-window {
     width: 100%;
     height: 100%;
@@ -2104,15 +2104,15 @@ body {
     background: #1e1e1e;
 }
 
-/* === FOLDER WINDOW GRID === */
+
 .folder-window-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, 100px);
-    /* Fixed width columns */
+    
     gap: 10px 10px;
     padding: 20px;
     justify-content: center;
-    /* Center the grid */
+    
 }
 
 .win-icon {
@@ -2120,7 +2120,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    /* Align top */
+    
     cursor: pointer;
     text-align: center;
     padding: 10px 5px;
@@ -2128,7 +2128,7 @@ body {
     transition: all 0.2s;
     color: #333;
     width: 100px;
-    /* Fixed width */
+    
     height: 110px;
 }
 
@@ -2148,7 +2148,7 @@ body {
     font-weight: 500;
     line-height: 1.3;
     background: transparent !important;
-    /* Remove gray box */
+    
     color: inherit !important;
     padding: 0;
     width: 100%;
@@ -2270,7 +2270,7 @@ body {
     border-radius: 0 8px 8px 0;
 }
 
-/* Draggable handle for custom window */
+
 #blueprint-window .dark-card-container {
     cursor: default;
 }
@@ -2283,12 +2283,12 @@ body {
     cursor: grabbing;
 }
 
-/* === NEW APPS STYLES === */
 
-/* 1. The Inkpot (Poetry) */
+
+
 .inkpot-bg {
     background: #fdf6e3;
-    /* Parchmentish */
+    
     color: #433422;
     font-family: 'Dancing Script', cursive;
     height: 100%;
@@ -2321,7 +2321,7 @@ body {
     white-space: pre-line;
 }
 
-/* 2. Radio Harshit */
+
 .radio-ui {
     background: #2c3e50;
     height: 100%;
@@ -2396,7 +2396,7 @@ body {
     color: white;
 }
 
-/* 3. The Path (Adventure) */
+
 .path-game {
     background: #111;
     color: #eee;
@@ -2431,7 +2431,7 @@ body {
 }
 
 
-/* 4. Word Spiral */
+
 .spiral-bg {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     height: 100%;
@@ -2465,7 +2465,7 @@ body {
     transform: scale(1.05);
 }
 
-/* 5. Personality Quiz */
+
 .quiz-bg {
     background: #f8f9fa;
     height: 100%;
@@ -2489,7 +2489,7 @@ body {
     transform: translateX(5px);
 }
 
-/* === WEATHER WIDGET === */
+
 .weather-widget {
     display: flex;
     align-items: center;
@@ -2537,7 +2537,7 @@ body {
     animation: fa-spin 4s infinite linear;
 }
 
-/* ===== First Conversation Chat ===== */
+
 
 .chat-container {
     display: flex;
@@ -2596,7 +2596,7 @@ body {
     }
 }
 
-/* ===== Letter Reveal Animation ===== */
+
 .reveal-hidden {
     opacity: 0;
     transform: translateY(20px);
@@ -2609,7 +2609,7 @@ body {
 }
 
 
-/* ===== Spotify Vibe Check ===== */
+
 .spotify-container {
     background: linear-gradient(to bottom, #1DB954, #000000);
 }
@@ -2628,7 +2628,7 @@ body {
     }
 }
 
-/* Minimalist Scrollbar for Spotify */
+
 .spotify-scroll::-webkit-scrollbar {
     width: 3px;
     height: 3px;
@@ -2647,34 +2647,34 @@ body {
     background: transparent;
 }
 
-/* === OUR JOURNEY ONE APP === */
+
 .journey-section {
     position: relative;
 }
 
-/* Enhancing the Chat look */
+
 .journey-incidents .bg-blue-50 {
     position: relative;
     border-left: 3px solid #60a5fa;
-    /* Blue-400 accent */
+    
 }
 
-/* Enhancing the Note look */
+
 .journey-incidents .bg-white.italic {
     background-image: linear-gradient(#f7f7f7 1px, transparent 1px);
     background-size: 100% 2em;
     line-height: 2em;
 }
 
-/* Smooth Scroll Container */
+
 #journey-scroll {
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
 }
 
-/* ========================================= */
-/* ==== NEW: CUSTOM MODAL SYSTEM (No Alerts) ==== */
-/* ========================================= */
+
+
+
 
 #custom-modal-overlay {
     position: fixed;
@@ -2685,7 +2685,7 @@ body {
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(5px);
     z-index: 20000;
-    /* Highest priority */
+    
     display: none;
     justify-content: center;
     align-items: center;
@@ -2800,9 +2800,9 @@ body {
 }
 
 
-/* ========================================= */
-/* ==== SPOTLIGHT SEARCH STYLES ==== */
-/* ========================================= */
+
+
+
 
 .spotlight-result {
     display: flex;
@@ -2864,7 +2864,7 @@ body {
 }
 
 
-/* Animation Utilities */
+
 @keyframes zoomIn {
     from {
         opacity: 0;
@@ -2908,24 +2908,24 @@ body {
 }
 
 
-/* Fix Clock Blinking/Jitter */
+
 #clock {
     font-variant-numeric: tabular-nums;
     font-feature-settings: 'tnum';
     letter-spacing: 0.5px;
     animation: none !important;
     transition: color 0.2s ease !important;
-    /* Keep hover color, kill others */
+    
     min-width: 140px;
-    /* Ensure space so it doesn't jump */
+    
     display: inline-block;
     text-align: right;
     white-space: nowrap;
 }
 
-/* === CHAT ENHANCEMENTS === */
 
-/* Unique Dark Theme */
+
+
 .chat-dark-mode {
     background-color: #0f172a !important;
     background-image: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)),
@@ -2946,7 +2946,7 @@ body {
     color: white;
 }
 
-/* Typing Indicator */
+
 .typing-bubble {
     display: flex;
     gap: 4px;
@@ -2989,7 +2989,7 @@ body {
     }
 }
 
-/* Reactions */
+
 .chat-bubble {
     position: relative;
     cursor: pointer;
@@ -3029,7 +3029,7 @@ body {
     }
 }
 
-/* Seen Receipts */
+
 .seen-receipt {
     font-size: 10px;
     color: #64748b;
@@ -3039,7 +3039,7 @@ body {
     align-self: flex-end;
 }
 
-/* Status Indicator */
+
 .status-dot {
     width: 8px;
     height: 8px;
@@ -3068,7 +3068,7 @@ body {
     }
 }
 
-/* Media Previews */
+
 .chat-media-preview {
     margin-top: 8px;
     border-radius: 8px;
@@ -3082,7 +3082,7 @@ body {
     display: block;
 }
 
-/* Theme Toggle Button */
+
 .chat-theme-toggle {
     background: rgba(255, 255, 255, 0.1);
     border: none;
@@ -3098,7 +3098,7 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Unique Dark Theme */
+
 .chat-dark-mode {
     background-color: #0f172a !important;
     background-image: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)),
@@ -3106,7 +3106,7 @@ body {
     background-size: cover !important;
     background-position: center !important;
     background-attachment: local !important;
-    /* Key for scrollable background */
+    
 }
 
 .chat-dark-mode .chat-bubble.chat-left {
@@ -3131,7 +3131,7 @@ body {
     backdrop-filter: blur(8px);
 }
 
-/* === MR. SNOW ENHANCEMENTS === */
+
 .mr-snow-view {
     background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
     color: #f1f5f9;
@@ -3244,7 +3244,7 @@ body {
 }
 
 
-/* === JOURNEY MOVIE MODE STYLES === */
+
 .movie-viewport {
     background: radial-gradient(circle at center, #0f172a 0%, #000 100%) !important;
 }
@@ -3335,7 +3335,7 @@ body {
     transition: opacity 1s ease-out;
 }
 
-/* === FACTS.APP PREMIUM STYLES === */
+
 .facts-app {
     height: 100%;
     background: #0a0a0c;
@@ -3345,7 +3345,7 @@ body {
     scroll-behavior: smooth;
 }
 
-/* Entry Screen */
+
 .facts-terminal {
     height: 100%;
     display: flex;
@@ -3398,7 +3398,7 @@ body {
     box-shadow: 0 0 15px rgba(74, 222, 128, 0.4);
 }
 
-/* Main Content Wrapper */
+
 .facts-content {
     display: none;
     padding: 40px 20px;
@@ -3421,7 +3421,7 @@ body {
     }
 }
 
-/* Sections Global */
+
 .facts-section {
     margin-bottom: 80px;
     opacity: 0;
@@ -3442,7 +3442,7 @@ body {
     font-weight: 800;
 }
 
-/* Section 0: Specs List */
+
 .facts-specs-list {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -3473,7 +3473,7 @@ body {
     font-weight: 700;
 }
 
-/* Section 1: Grid Cards */
+
 .facts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -3533,7 +3533,7 @@ body {
     font-family: 'Consolas', monospace;
 }
 
-/* Section 2: Deep Truths */
+
 .facts-truth-list {
     max-width: 600px;
     margin: 0 auto;
@@ -3573,7 +3573,7 @@ body {
     line-height: 1.7;
 }
 
-/* Section 3: Aliases */
+
 .facts-alias-slider {
     display: flex;
     overflow-x: auto;
@@ -3622,7 +3622,7 @@ body {
     line-height: 1.6;
 }
 
-/* Section 4: Timeline */
+
 .facts-timeline {
     position: relative;
     padding-left: 40px;
@@ -3691,8 +3691,8 @@ body {
     border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
-/* Section 5: Footer */
-/* Section 5: Observation Report Card */
+
+
 .facts-observation-wrap {
     margin-top: 100px;
     padding: 0 20px;
@@ -3797,7 +3797,7 @@ body {
     padding-top: 15px;
 }
 
-/* === MADRID DASHBOARD (Premium Sports UI) === */
+
 .madrid-dashboard {
     background: linear-gradient(135deg, #001b44 0%, #004d98 100%);
     color: #fff;
@@ -3890,7 +3890,7 @@ body {
     height: 100%;
     background: #FEBE10;
     width: 0%;
-    /* Animates to 100%+ */
+    
     transition: width 2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -3998,9 +3998,9 @@ body {
     }
 }
 
-/* === ULTRA ENHANCEMENTS (Phase 2) === */
 
-/* 1. UCL Mode */
+
+
 .madrid-dashboard.ucl-mode {
     background: linear-gradient(135deg, #1e1e24 0%, #2a0a3b 100%);
 }
@@ -4026,7 +4026,7 @@ body {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
-/* 2. News Ticker */
+
 .news-ticker-container {
     background: #000;
     overflow: hidden;
@@ -4066,7 +4066,7 @@ body {
     }
 }
 
-/* 3. Toggle Switch */
+
 .theme-toggle {
     cursor: pointer;
     opacity: 0.7;
@@ -4078,13 +4078,13 @@ body {
     opacity: 1;
 }
 
-/* === ABOUT US REFRESH === */
+
 .about-container {
     cursor: default;
     font-family: 'Inter', sans-serif;
 }
 
-/* Persona Cards */
+
 .persona-card {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
@@ -4125,7 +4125,7 @@ body {
     opacity: 1;
 }
 
-/* Icons & text */
+
 .persona-icon-container {
     position: relative;
     margin-bottom: 16px;
@@ -4179,7 +4179,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* Stats */
+
 .persona-stats {
     width: 100%;
     display: flex;
@@ -4217,7 +4217,7 @@ body {
     background: #60a5fa;
 }
 
-/* Connection Link */
+
 .connection-link {
     display: flex;
     flex-direction: column;
@@ -4275,7 +4275,7 @@ body {
     }
 }
 
-/* === INKPOT STYLES === */
+
 .inkpot-wrapper {
     box-shadow: inset 0 0 100px rgba(139, 69, 19, 0.1);
 }
@@ -4299,7 +4299,7 @@ body {
     white-space: pre-wrap;
 }
 
-/* Ink Stains */
+
 .ink-stain {
     position: absolute;
     background: #2c1810;
@@ -4325,7 +4325,7 @@ body {
     opacity: 0.03;
 }
 
-/* Buttons */
+
 .journal-btn {
     width: 40px;
     height: 40px;
@@ -4348,7 +4348,7 @@ body {
     box-shadow: 0 4px 10px rgba(44, 24, 16, 0.2);
 }
 
-/* === ONE LAST THING APP === */
+
 @keyframes heartbeat {
     0% {
         transform: scale(1);
@@ -4393,7 +4393,7 @@ body {
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
-/* === SHRAVII.EXE TAMAGOTCHI STYLES === */
+
 .state-day {
     background: linear-gradient(to bottom, #fdfbf7, #ffffff);
 }
@@ -4412,7 +4412,7 @@ body {
 }
 
 .state-night .shravii-bubble div {
-    /* tail */
+    
     background: #334155;
 }
 
@@ -4436,7 +4436,7 @@ body {
     }
 }
 
-/* === VOICEBOX RETRO STYLES === */
+
 .dictaphone-case {
     background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
     box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
@@ -4468,7 +4468,7 @@ body {
 .mech-btn {
     transition: all 0.1s;
     border-bottom: 4px solid #555;
-    /* Fake 3D depth */
+    
 }
 
 .active-mech-btn {
@@ -4478,7 +4478,7 @@ body {
     background: #d4d4d4 !important;
 }
 
-/* === THANK YOU APP (Polaroid Scrapbook) === */
+
 .thank-you-container {
     height: 100%;
     background: linear-gradient(135deg, #f5e6d3 0%, #d4c5b9 100%);
@@ -4487,7 +4487,7 @@ body {
     font-family: 'Handlee', cursive;
 }
 
-/* Cork Board Texture */
+
 .ty-cork-board {
     height: 100%;
     width: 100%;
@@ -4504,7 +4504,7 @@ body {
     overflow-y: auto;
 }
 
-/* Pinned Header */
+
 .ty-header-pin {
     text-align: center;
     margin-bottom: 30px;
@@ -4547,7 +4547,7 @@ body {
     margin-top: 5px;
 }
 
-/* Polaroid Grid */
+
 .ty-polaroid-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -4589,7 +4589,7 @@ body {
     z-index: 10;
 }
 
-/* Washi Tape */
+
 .ty-tape {
     position: absolute;
     top: -8px;
@@ -4637,7 +4637,7 @@ body {
     font-style: italic;
 }
 
-/* Sticky Note */
+
 .ty-sticky-note {
     background: #fef9c3;
     padding: 20px 25px;
@@ -4671,7 +4671,7 @@ body {
     line-height: 1.6;
 }
 
-/* Close Button */
+
 .ty-close-btn {
     position: absolute;
     top: 15px;
@@ -4724,7 +4724,7 @@ body {
     }
 }
 
-/* === FLASH APP ANIMATIONS === */
+
 @keyframes shake-premium {
 
     0%,
@@ -4819,18 +4819,18 @@ body {
 
 .result-success {
     border: 4px solid #facc15;
-    /* Yellow-400 */
+    
     box-shadow: 0 0 50px rgba(250, 204, 21, 0.5);
     animation: electric-pulse 2s infinite;
 }
 
 .result-fail {
     border: 4px solid #ef4444;
-    /* Red-500 */
+    
     box-shadow: 0 0 50px rgba(239, 68, 68, 0.5);
 }
 
-/* === DEEP TRUTHS APP === */
+
 .truth-card {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -4887,18 +4887,18 @@ body {
     transform: scale(1.1) rotate(5deg);
 }
 
-/* === THROUGH MY EYES (PREMIUM PAPER) === */
+
 .letter-desk {
     background: #3e2723;
-    /* Dark Wood Color */
+    
     background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
-    /* Subtle texture */
+    
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
-    /* Reduced from 40px */
+    
     overflow-y: auto;
     box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
     perspective: 1000px;
@@ -4909,48 +4909,48 @@ body {
     width: 100%;
     max-width: 650px;
     min-height: auto;
-    /* Allow auto height */
-    /* Paper Texture - Adjusted for 1.6em lines */
+    
+    
     background-image:
         linear-gradient(90deg, transparent 39px, rgba(255, 0, 0, 0.05) 40px, transparent 41px),
         linear-gradient(#e5e7eb 1px, transparent 1px);
     background-size: 100% 100%, 100% 1.6em;
-    /* Tighter lines */
+    
     padding: 40px 50px;
-    /* Compact padding */
+    
     box-shadow:
         0 4px 6px -1px rgba(0, 0, 0, 0.1),
         0 2px 4px -1px rgba(0, 0, 0, 0.06),
         0 25px 50px -12px rgba(0, 0, 0, 0.25),
         inset 0 0 60px rgba(160, 116, 62, 0.1);
-    /* Aging effect */
+    
     color: #2c3e50;
     font-family: 'Dancing Script', cursive;
-    /* Fancy handwritten font */
+    
     font-size: 20px;
-    /* Larger for readability */
+    
     line-height: 1.6em;
     transform: rotateX(1deg);
-    /* Slight 3D tilt */
+    
     position: relative;
     margin: 20px 0;
-    /* Reduced scroll margin */
+    
     letter-spacing: 0.5px;
 }
 
-/* Header & Typography */
+
 .letter-header {
     text-align: center;
     margin-bottom: 25px;
-    /* Reduced */
+    
 }
 
 .letter-title {
     font-family: 'Dancing Script', cursive;
     font-size: 3rem;
-    /* Slightly smaller */
+    
     color: #b91c1c;
-    /* Deep Red */
+    
     margin: 0;
     line-height: 1.1;
     transform: rotate(-3deg);
@@ -4973,14 +4973,14 @@ body {
     margin: 15px auto 0;
 }
 
-/* Content Styles */
+
 .letter-sheet h2 {
     font-family: 'Playfair Display', serif;
     font-size: 1.5rem;
     color: #1f2937;
     border-bottom: 3px double #e5e7eb;
     margin-top: 2rem;
-    /* Reduced from 3rem */
+    
     margin-bottom: 0.8rem;
     padding-bottom: 0.3rem;
 }
@@ -4993,7 +4993,7 @@ body {
     letter-spacing: 0.05em;
     color: #6b7280;
     margin-top: 1.5rem;
-    /* Reduced from 2.5rem */
+    
     margin-bottom: 0.4rem;
     display: flex;
     align-items: center;
@@ -5011,9 +5011,9 @@ body {
     background: #fff;
     border: 1px dashed #d1d5db;
     padding: 15px 25px;
-    /* Tighter */
+    
     margin: 20px 0;
-    /* Reduced */
+    
     font-style: italic;
     color: #555;
     font-size: 1.05em;
@@ -5026,7 +5026,7 @@ body {
     content: '"';
     font-family: 'Georgia', serif;
     font-size: 60px;
-    /* Smaller decorative quote */
+    
     color: #e5e7eb;
     position: absolute;
     top: -15px;
@@ -5034,7 +5034,7 @@ body {
     z-index: 0;
 }
 
-/* List Highlighting */
+
 .highlight {
     background: linear-gradient(120deg, rgba(254, 243, 199, 0.8) 0%, rgba(254, 243, 199, 0) 100%);
     padding: 0 4px;
@@ -5043,10 +5043,10 @@ body {
     color: #92400e;
 }
 
-/* Wax Seal decoration at bottom */
+
 .wax-seal {
     width: 70px;
-    /* Smaller */
+    
     height: 70px;
     background: #b91c1c;
     border-radius: 50%;
@@ -5077,7 +5077,7 @@ body {
     font-weight: bold;
 }
 
-/* Reveal State Classes */
+
 .reveal-hidden {
     opacity: 0;
     transform: translateY(10px);
@@ -5089,7 +5089,7 @@ body {
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-/* Typing & Reveal */
+
 .typing-cursor::after {
     content: '|';
     animation: blink 1s step-start infinite;
@@ -5102,7 +5102,7 @@ body {
     }
 }
 
-/* Minimalist Scrollbar for Letter Desk */
+
 .letter-desk::-webkit-scrollbar {
     width: 4px;
     background: transparent;
@@ -5117,7 +5117,7 @@ body {
     background: rgba(139, 69, 19, 0.5);
 }
 
-/* === MOBILE WARNING === */
+
 #mobile-warning {
     display: none;
     position: fixed;
@@ -5172,27 +5172,27 @@ body {
 }
 
 
-/* === FACTS APP (Harshit Facts) === */
+
 .facts-app {
     background: #0d0d0d;
     color: #e0e0e0;
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
     padding: 0;
     height: 100%;
-    /* CHANGED: Main container handles scrolling */
+    
     overflow-y: auto;
     overflow-x: hidden;
     display: block;
 }
 
 .facts-content {
-    /* CHANGED: Removed flex and overflow to allow natural flow in parent */
+    
     padding: 20px;
     padding-top: 10px;
-    /* Reduced top padding */
+    
     opacity: 0;
     animation: fadeIn 1s forwards 0.2s;
-    /* CHANGED: Reduced delay since terminal is gone */
+    
 }
 
 .facts-content.active {
@@ -5205,7 +5205,7 @@ body {
 
 .facts-section:first-child {
     margin-top: 0;
-    /* Ensure first section starts at top */
+    
 }
 
 .facts-section-title {
@@ -5218,7 +5218,7 @@ body {
     padding-bottom: 5px;
 }
 
-/* Identity Layers (Aliases) - Horizontal Scroll */
+
 .facts-alias-slider {
     display: flex;
     gap: 15px;
@@ -5261,7 +5261,7 @@ body {
     line-height: 1.4;
 }
 
-/* Operating Parameters - Grid */
+
 .facts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -5292,11 +5292,11 @@ body {
 .sys-note {
     font-size: 10px;
     color: #4ade80;
-    /* Terminal Green */
+    
     font-style: italic;
 }
 
-/* Footer */
+
 .facts-footer-note {
     margin-top: 40px;
     text-align: center;
@@ -5322,7 +5322,7 @@ body {
     margin: 0;
 }
 
-/* === SYSTEM SETTINGS === */
+
 .settings-container {
     padding: 24px;
     height: 100%;
@@ -5333,7 +5333,7 @@ body {
 .settings-sidebar {
     width: 200px;
     border-right: 1px solid rgba(0, 0, 0, 0.05);
-    /* Soft divider */
+    
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -5378,7 +5378,7 @@ body {
     color: #333;
 }
 
-/* Appearance Toggles */
+
 .appearance-options {
     display: flex;
     gap: 16px;
@@ -5419,7 +5419,7 @@ body {
     box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.3);
 }
 
-/* Accent Colors */
+
 .accent-colors {
     display: flex;
     gap: 10px;
@@ -5442,7 +5442,7 @@ body {
     border-radius: 50%;
 }
 
-/* Wallpaper Grid */
+
 .wallpaper-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -5472,7 +5472,7 @@ body {
     border-color: #007AFF;
 }
 
-/* === MR. BEAR STATES === */
+
 .state-day {
     background: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%);
     border: 4px solid #4ade80;
@@ -5502,7 +5502,7 @@ body {
     }
 }
 
-/* === REVISED ICON FIXES === */
+
 .icon-img {
     width: 48px !important;
     height: 48px !important;
@@ -5523,7 +5523,7 @@ body {
     transform: scale(1.15);
 }
 
-/* === DOCK ICON FIXES === */
+
 .dock-icon,
 #dock .icon-img {
     width: 48px !important;
@@ -5548,40 +5548,40 @@ body {
     transform: scale(1.2) translateY(-10px);
 }
 
-/* === VIVID COLORIZATION (Subtle Tinting) === */
-/* Preserve whites, just tint the midtones */
 
-/* System (Blue) */
+
+
+
 .desktop-icon[onclick*='folder-system'] .icon-img img,
 .dock-icon[onclick*='folder-system'] img {
     filter: sepia(0.3) saturate(3) hue-rotate(180deg) drop-shadow(0 4px 6px rgba(59, 130, 246, 0.5)) !important;
 }
 
-/* Feelings (Pink/Purple) */
+
 .desktop-icon[onclick*='folder-feelings'] .icon-img img,
 .dock-icon[onclick*='folder-feelings'] img {
     filter: sepia(0.3) saturate(3) hue-rotate(280deg) drop-shadow(0 4px 6px rgba(236, 72, 153, 0.5)) !important;
 }
 
-/* Memories (Gold/Warm) */
+
 .desktop-icon[onclick*='memory-gallery'] .icon-img img,
 .dock-icon[onclick*='memory-gallery'] img {
     filter: sepia(0.4) saturate(3) hue-rotate(320deg) drop-shadow(0 4px 6px rgba(245, 158, 11, 0.5)) !important;
 }
 
-/* Fun (Green/Cyan) */
+
 .desktop-icon[onclick*='folder-fun'] .icon-img img,
 .dock-icon[onclick*='folder-fun'] img {
     filter: sepia(0.3) saturate(3) hue-rotate(100deg) drop-shadow(0 4px 6px rgba(16, 185, 129, 0.5)) !important;
 }
 
-/* Vault (Red/Dark) */
+
 .desktop-icon[onclick*='app-vault'] .icon-img img,
 .dock-icon[onclick*='app-vault'] img {
     filter: sepia(0.2) saturate(3) hue-rotate(300deg) drop-shadow(0 4px 6px rgba(239, 68, 68, 0.5)) !important;
 }
 
-/* === BIRTHDAY CAKE & INTERACTION === */
+
 
 .cake-container {
     position: relative;
@@ -5615,7 +5615,7 @@ body {
     bottom: 0;
     height: 60px;
     background: #1e40af;
-    /* Blue-800 */
+    
     border-bottom: 4px solid #172554;
     width: 240px;
 }
@@ -5624,7 +5624,7 @@ body {
     bottom: 60px;
     height: 50px;
     background: #3b82f6;
-    /* Blue-500 */
+    
     border-bottom: 4px solid #1e40af;
     width: 210px;
 }
@@ -5633,7 +5633,7 @@ body {
     bottom: 110px;
     height: 50px;
     background: #60a5fa;
-    /* Blue-400 */
+    
     width: 180px;
 }
 
@@ -5663,8 +5663,8 @@ body {
     pointer-events: none;
 }
 
-/* Candle */
-/* Number Candles */
+
+
 .candles-container {
     position: absolute;
     bottom: 165px;
@@ -5700,12 +5700,12 @@ body {
     z-index: -1;
 }
 
-/* Adjust flame position for numbers */
+
 .candle-num .flame {
     top: -22px;
 }
 
-/* Flame */
+
 .flame {
     position: absolute;
     top: -25px;
@@ -5769,8 +5769,8 @@ body {
     }
 }
 
-/* Smoke Effect (Added via JS usually, but pre-styled here) */
-/* Enhanced Smoke */
+
+
 .smoke {
     position: absolute;
     top: -30px;
@@ -5801,7 +5801,7 @@ body {
     }
 }
 
-/* Typewriter for Birthday Intro */
+
 .birthday-screen p,
 .birthday-screen h1 {
     opacity: 0;
@@ -5863,8 +5863,8 @@ body {
     }
 }
 
-/* Cut Animation */
-/* Cut Animation - 3 Parts */
+
+
 .cake-left-rem {
     clip-path: polygon(0 0, 42% 0, 42% 100%, 0 100%);
     transition: transform 1s ease;
@@ -5881,7 +5881,7 @@ body {
     z-index: 50;
 }
 
-/* Knife Action Animation */
+
 .knife.cutting {
     animation: cutMotion 1s forwards ease-in-out;
 }
@@ -5893,29 +5893,29 @@ body {
 
     15% {
         transform: rotate(-55deg) translate(10px, -20px);
-        /* Anticipation: Lift up & cock back */
+        
     }
 
     40% {
         transform: rotate(-30deg) translate(-30px, 130px);
-        /* Slice Down: Fast & deep, slight angle change */
+        
     }
 
     60% {
         transform: rotate(-30deg) translate(-30px, 135px);
-        /* Hold/Press */
+        
     }
 
     100% {
         transform: rotate(-45deg) translate(60px, 0px);
-        /* Pull out smoothly to the right */
+        
         opacity: 0;
     }
 }
 
 
 
-/* === LETTER OVERLAY === */
+
 #letter-overlay {
     transition: opacity 1s ease-in-out;
 }
@@ -5932,7 +5932,7 @@ body {
     transform: scale(1);
 }
 
-/* === NOTIFICATIONS === */
+
 .ghost-notification {
     position: fixed;
     top: 20px;
@@ -5941,16 +5941,16 @@ body {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     color: #1f2937;
-    /* Gray-800 */
+    
     padding: 16px 20px;
     border-radius: 12px;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.5);
     z-index: 9999;
     max-width: 320px;
     border-left: 4px solid #3b82f6;
-    /* Blue-500 */
+    
 
-    /* Animation */
+    
     transform: translateX(120%);
     animation: slideInRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards,
         slideOutRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards 4.5s;
@@ -5958,7 +5958,7 @@ body {
 
 .ghost-notification.system {
     border-left-color: #ef4444;
-    /* Red for alerts */
+    
 }
 
 @keyframes slideInRight {
@@ -5985,7 +5985,7 @@ body {
     }
 }
 
-/* === SYSTEM BOOT SEQUENCE === */
+
 #boot-sequence {
     position: fixed;
     inset: 0;
@@ -6059,7 +6059,7 @@ body {
     color: #3b82f6;
 }
 
-/* === BANTER APP === */
+
 .banter-app {
     display: flex;
     flex-direction: column;
@@ -6179,7 +6179,7 @@ body {
 
 
 
-/* === ANIME APP === */
+
 .anime-app {
     height: 100%;
     background: #111827;
@@ -6249,7 +6249,7 @@ body {
 
 
 
-/* === ROUTINE APP === */
+
 .routine-app {
     height: 100%;
     background: #f0fdf4;
@@ -6339,7 +6339,7 @@ body {
 
 
 
-/* === DECISION HELPER APP === */
+
 .decision-app {
     height: 100%;
     background: #eff6ff;
@@ -6398,7 +6398,7 @@ body {
 
 
 
-/* === UNSENT LETTERS === */
+
 .letters-app {
     height: 100%;
     background: #fdfbf7;
@@ -6452,7 +6452,7 @@ body {
     margin-top: 20px;
     padding: 20px;
     background: rgba(186, 230, 253, 0.1);
-    /* Light Blue Tint */
+    
     border-left: 4px solid #38bdf8;
     font-style: italic;
     font-size: 16px;
@@ -6461,7 +6461,7 @@ body {
     transition: opacity 1s;
 }
 
-/* === CONSTELLATION OF US (STARS) === */
+
 .stars-app {
     height: 100%;
     background: radial-gradient(circle at center, #1e1b4b 0%, #020617 100%);
@@ -6488,15 +6488,15 @@ body {
 
 
 
-/* === DAILY BLOOM === */
+
 .bloom-app {
-    /* Layout handled by Tailwind classes in JS */
+    
     position: relative;
     overflow: hidden;
 }
 
 .bloom-flower {
-    /* Size handled by Tailwind */
+    
     animation: bloomGrow 2.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
 }
@@ -6517,7 +6517,7 @@ body {
     }
 }
 
-/* === NOT DUMB APP ENHANCEMENTS === */
+
 .not-dumb-glass-bg {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 249, 255, 0.8));
     backdrop-filter: blur(20px);
@@ -6713,7 +6713,7 @@ body {
     animation: shootingStar 6s infinite ease-in-out 4s;
 }
 
-/* === SNOWY ENVIRONMENT === */
+
 #snow-pile {
     height: 70px;
     background: linear-gradient(to top,
@@ -6726,7 +6726,7 @@ body {
     z-index: 2;
 }
 
-/* Extra snowy mounds for texture - more ethereal */
+
 #snow-pile::before,
 #snow-pile::after {
     content: '';
@@ -6777,7 +6777,7 @@ body {
     }
 }
 
-/* Window Snow Cap */
+
 .window::before {
     content: '';
     position: absolute;
@@ -6792,7 +6792,7 @@ body {
     z-index: 1000;
 }
 
-/* Dock Snow */
+
 #dock::before {
     content: '';
     position: absolute;
@@ -6807,7 +6807,7 @@ body {
     box-shadow: 0 0 15px white;
 }
 
-/* === RAIN EFFECTS === */
+
 .rain-drop {
     position: absolute;
     width: 1px;
@@ -6845,11 +6845,9 @@ body {
     }
 }
 
-/* ========================================
-   NOTIFICATION SYSTEM STYLES
-   ======================================== */
 
-/* === NOTIFICATION CONTAINER === */
+
+
 #notification-container {
     position: fixed;
     top: 40px;
@@ -6862,7 +6860,7 @@ body {
     max-width: 400px;
 }
 
-/* === NOTIFICATION TOAST === */
+
 .notification-toast {
     background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
     backdrop-filter: blur(20px);
@@ -6938,7 +6936,7 @@ body {
     }
 }
 
-/* === NOTIFICATION PARTS === */
+
 .notif-icon {
     font-size: 32px;
     flex-shrink: 0;
@@ -7001,7 +6999,7 @@ body {
     transform: rotate(90deg);
 }
 
-/* === INTERACTIVE MODAL OVERLAY === */
+
 .interactive-modal-overlay {
     position: fixed;
     inset: 0;
@@ -7094,9 +7092,9 @@ body {
     flex: 1;
 }
 
-/* === INTERACTIVE CONTENT STYLES === */
 
-/* Hug Animation */
+
+
 .hug-animation {
     text-align: center;
     padding: 40px 20px;
@@ -7151,7 +7149,7 @@ body {
     color: rgba(255, 255, 255, 0.8);
 }
 
-/* File Rename Effect */
+
 .file-rename-effect {
     padding: 30px;
     text-align: center;
@@ -7189,7 +7187,7 @@ body {
     margin: 8px 0;
 }
 
-/* Positivity Wave */
+
 .positivity-wave {
     text-align: center;
     padding: 40px 20px;
@@ -7274,7 +7272,7 @@ body {
     }
 }
 
-/* Water Tracker */
+
 .water-tracker {
     display: flex;
     gap: 30px;
@@ -7317,7 +7315,7 @@ body {
     font-size: 14px;
 }
 
-/* Eye Rest Mode */
+
 .eye-rest-mode {
     text-align: center;
     padding: 30px;
@@ -7342,7 +7340,7 @@ body {
     font-family: 'Fira Code', monospace;
 }
 
-/* Walk Encouragement */
+
 .walk-encouragement {
     padding: 30px;
 }
@@ -7384,7 +7382,7 @@ body {
     color: rgba(255, 255, 255, 0.8);
 }
 
-/* Cleanup Tips */
+
 .cleanup-tips {
     padding: 30px;
 }
@@ -7417,7 +7415,7 @@ body {
     font-size: 13px;
 }
 
-/* Check-in Message */
+
 .checkin-message {
     padding: 30px;
     text-align: center;
@@ -7460,7 +7458,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* Riddle Game */
+
 .riddle-game {
     padding: 30px;
 }
@@ -7508,7 +7506,7 @@ body {
     color: #ef4444;
 }
 
-/* Poem Display */
+
 .poem-display {
     padding: 40px;
     text-align: center;
@@ -7522,7 +7520,7 @@ body {
     font-style: italic;
 }
 
-/* Mouse Game */
+
 .mouse-game {
     padding: 20px;
 }
@@ -7575,7 +7573,7 @@ body {
     color: #60a5fa;
 }
 
-/* Cryptic Message */
+
 .cryptic-message {
     padding: 30px;
     text-align: center;
@@ -7632,7 +7630,7 @@ body {
     }
 }
 
-/* Goodnight Sequence */
+
 .goodnight-sequence {
     padding: 40px;
     text-align: center;
@@ -7723,7 +7721,7 @@ body {
     }
 }
 
-/* Night Care */
+
 .night-care {
     padding: 30px;
     text-align: center;
@@ -7741,7 +7739,7 @@ body {
     gap: 10px;
 }
 
-/* Stretch Guide */
+
 .stretch-guide {
     padding: 30px;
 }
@@ -7766,7 +7764,7 @@ body {
     border-left: 3px solid #a78bfa;
 }
 
-/* === BUTTONS === */
+
 .btn-primary {
     background: linear-gradient(135deg, #60a5fa, #3b82f6);
     color: white;
@@ -7800,7 +7798,7 @@ body {
     border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* === RESPONSIVE === */
+
 @media (max-width: 768px) {
     #notification-container {
         right: 10px;
@@ -7829,7 +7827,7 @@ body {
     }
 }
 
-/* Not Dumb App Styles */
+
 .not-dumb-glass-bg {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 249, 255, 0.9));
     backdrop-filter: blur(20px);
@@ -7881,13 +7879,13 @@ body {
     }
 }
 
-/* === HARSHIT FACTS APP STYLES === */
+
 .facts-app {
     height: 100%;
     background: #0f172a;
-    /* Slate 900 */
+    
     color: #cbd5e1;
-    /* Slate 300 */
+    
     font-family: 'Fira Code', monospace;
     position: relative;
     overflow-x: hidden;
@@ -7909,7 +7907,7 @@ body {
 
 .facts-log-line {
     color: #4ade80;
-    /* Green 400 */
+    
     margin-bottom: 8px;
     opacity: 0;
     animation: typeLog 0.5s forwards;
@@ -8132,7 +8130,7 @@ body {
     color: #64748b;
 }
 
-/* Ensure fadeInUp has from state */
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -8145,7 +8143,7 @@ body {
     }
 }
 
-/* === HALA MADRID APP STYLES === */
+
 .passion-fill {
     transition: width 1s ease-in-out;
 }
@@ -8161,7 +8159,7 @@ body {
 .news-ticker-wrapper {
     display: flex;
     animation: scrollNews 20s linear infinite;
-    /* Ensure content is treated as a continuous stream */
+    
     width: max-content;
 }
 
@@ -8201,14 +8199,14 @@ body {
 
 .graph-bar.active {
     background: #4ade80;
-    /* Green-ish */
+    
 }
 
 .graph-bar.special {
     background: #f472b6;
-    /* Pink-ish */
+    
     max-height: 100%;
-    /* Safety */
+    
 }
 
 .graph-label {
@@ -8239,7 +8237,7 @@ body {
     }
 }
 
-/* === MODERN MADRID APP OVERHAUL === */
+
 .madrid-modern-dash {
     background: radial-gradient(circle at top right, #1e3a8a 0%, #0f172a 40%, #000000 100%);
     color: white;
@@ -8251,7 +8249,7 @@ body {
     position: relative;
 }
 
-/* Background Texture */
+
 .madrid-bg-pattern {
     position: absolute;
     inset: 0;
@@ -8260,7 +8258,7 @@ body {
     pointer-events: none;
 }
 
-/* Header */
+
 .mad-header {
     padding: 20px;
     display: flex;
@@ -8309,7 +8307,7 @@ body {
     box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
 }
 
-/* Content Area */
+
 .mad-content-area {
     flex: 1;
     padding: 20px;
@@ -8318,7 +8316,7 @@ body {
     z-index: 5;
 }
 
-/* Stat Cards */
+
 .mad-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -8358,7 +8356,7 @@ body {
     color: #94a3b8;
 }
 
-/* Priority Section */
+
 .priority-box {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
     border-radius: 20px;
@@ -8418,14 +8416,14 @@ body {
     width: 0%;
 }
 
-/* animated via JS */
+
 .p-fill.her {
     background: #fbbf24;
     width: 0%;
     box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
 }
 
-/* Interactive Quote */
+
 .quote-ticket {
     background: #fff;
     color: #000;
@@ -8447,7 +8445,7 @@ body {
     transform: rotate(0deg) scale(1.02);
 }
 
-/* Match View (Hidden) */
+
 .match-tab-content {
     display: none;
     text-align: center;
@@ -8515,7 +8513,7 @@ body {
         opacity: 1;
     }
 }
-/* Shimmer Effect */
+
 .shimmer-text {
     background: linear-gradient(to right, #4b5563 0%, #ffffff 50%, #4b5563 100%);
     background-size: 200% auto;

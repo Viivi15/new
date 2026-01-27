@@ -4,14 +4,14 @@ function getTimePhase(hours) {
     if (hours >= 6 && hours < 12) return 'morning';
     if (hours >= 12 && hours < 18) return 'afternoon';
     if (hours >= 18 && hours < 24) return 'evening';
-    return 'night'; // 0-6
+    return 'night'; 
 }
 
 function updateSystemBasedOnTime(hours) {
     if (hours === undefined) hours = new Date().getHours();
     const phase = getTimePhase(hours);
     const now = new Date();
-    const releaseDate = new Date(2026, 1, 1); // Feb 1st, 2026
+    const releaseDate = new Date(2026, 1, 1); 
 
     const wIcon = document.getElementById('weather-icon');
     const wText = document.getElementById('weather-text');
@@ -114,7 +114,7 @@ const Persistence = {
         const now = new Date().toLocaleString();
         localStorage.setItem('lastVisitDate', now);
 
-        // Init arrays if missing
+        
         if (!localStorage.getItem('foldersOpened')) localStorage.setItem('foldersOpened', '[]');
         if (!localStorage.getItem('achievementsUnlocked')) localStorage.setItem('achievementsUnlocked', '[]');
 
@@ -310,7 +310,7 @@ const RabbitSquad = {
         el.style.left = x + 'px';
         el.style.top = y + 'px';
 
-        // Interaction
+        
         el.onclick = () => {
             el.classList.add('talking');
             if (type.action) type.action(el);
@@ -319,7 +319,7 @@ const RabbitSquad = {
 
         const rabbit = { el, type, x, y, state: 'idle', moveInt: null };
 
-        // Behavior Loop
+        
         rabbit.moveInt = setInterval(() => this.updateRabbit(rabbit), 2000 + Math.random() * 1000);
 
         field.appendChild(el);
@@ -332,12 +332,12 @@ const RabbitSquad = {
             return;
         }
 
-        // 1. Check for carrots
+        
         const carrot = this.findNearestCarrot(rabbit);
         if (carrot) {
             rabbit.state = 'eating';
             this.moveTo(rabbit, carrot.x, carrot.y);
-            // Eat logic
+            
             if (this.getDistance(rabbit, carrot) < 30) {
                 this.removeCarrot(carrot);
                 rabbit.el.querySelector('.bun-msg').innerText = "Yum! 🥕";
@@ -347,7 +347,7 @@ const RabbitSquad = {
             return;
         }
 
-        // 2. Idle Wandering
+        
         rabbit.state = 'idle';
         const nx = Math.random() * (this.bounds.w - 100) + 20;
         const ny = Math.random() * (this.bounds.h - 150) + 80;
@@ -383,7 +383,7 @@ const RabbitSquad = {
             { id: 'snow', role: 'The Stoic', emoji: '🐰❄️', cls: 'bun-snow', msg: 'Cool as ice.', action: () => { } },
             {
                 id: 'love', role: 'The Lover', emoji: '🐰🎀', cls: 'bun-love', msg: 'You matter! ❤️', action: (e) => {
-                    // Floating Heart logic
+                    
                     const h = mbCreate('div', 'absolute -top-6 left-1/2 -translate-x-1/2 text-xl animate-float-up', '❤️');
                     e.appendChild(h);
                     setTimeout(() => h.remove(), 1000);
@@ -398,7 +398,7 @@ const RabbitSquad = {
         this.rabbits.forEach(r => {
             if (r.type.id === 'madrid') {
                 const inner = r.el.querySelector('.bun-inner');
-                // Temporarily change content
+                
                 const originalHTML = inner.innerHTML;
                 inner.innerHTML = '<div class="text-6xl animate-bounce">⚽🥅</div><div class="bun-msg" style="opacity:1; top:-40px;">SIUUU!</div>';
 
@@ -406,7 +406,7 @@ const RabbitSquad = {
                 if (sfx) sfx.play().catch(e => console.log(e));
 
                 setTimeout(() => {
-                    inner.innerHTML = originalHTML; // Restore
+                    inner.innerHTML = originalHTML; 
                 }, 3000);
             }
         });
@@ -420,7 +420,7 @@ const RabbitSquad = {
         this.rabbits.forEach(r => {
             r.state = 'sleeping';
             clearInterval(r.moveInt);
-            // Visual update handled in next loop or immediate
+            
             r.el.querySelector('.bun-inner').innerHTML = '<div class="text-4xl">🐰💤</div>';
         });
     },
@@ -443,7 +443,7 @@ const RabbitSquad = {
         const carrotData = { x, y, el: carrotEl };
         this.carrots.push(carrotData);
 
-        // Auto remove after 10s if not eaten
+        
         setTimeout(() => this.removeCarrot(carrotData), 10000);
     },
 
@@ -1505,7 +1505,7 @@ const apps = [
             </style>
         </div>
     `},
-    //see me
+    
     {
         id: 'secret-gallery', title: 'The Hidden Corner', icon: '<img src="assets/icons/app_memories_new.png" alt="hidden" style="width: 100%; height: 100%;">', dock: false, width: 900, height: 650, content: `
         <div class="h-full bg-black p-8 relative overflow-hidden">
@@ -1543,7 +1543,7 @@ const apps = [
         </div>
     `},
 
-    //see me
+    
     {
         id: 'inkpot', title: 'The Inkpot', icon: '<img src="assets/icons/app_inkpot.png" alt="inkpot">', dock: false, folder: 'folder-feelings', width: 800, height: 750, onOpen: initInkpot, content: `
         <div class="inkpot-wrapper h-full relative overflow-hidden bg-[#f0e6d2]">
@@ -1574,7 +1574,7 @@ const apps = [
         </div>
     `},
 
-    //see me
+    
     {
         id: 'last-thing', title: 'One Last Thing', icon: '<img src="assets/icons/app_rose.png" alt="last thing" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 500, height: 400, content: `
         <div class="h-full bg-black flex flex-col items-center justify-center text-center p-6 relative overflow-y-auto custom-scroll">
@@ -1597,7 +1597,7 @@ const apps = [
              </div>
         </div>
     `},
-    //see me
+    
     {
         id: 'tired', title: 'When Tired', icon: '<img src="assets/icons/app_sleep.png" alt="tired" style="width: 100%; height: 100%;">', dock: true, width: 600, height: 500, onOpen: initTired, content: `
         <div id="tired-container" class="tired-container">
@@ -1606,7 +1606,7 @@ const apps = [
         </div>
     `},
 
-    //see me
+    
     {
         id: 'app-grown', title: '19.exe', icon: '<img src="assets/icons/app_19.png" alt="19">', dock: true, width: 800, height: 700, content: `
         <div class="h-full bg-gradient-to-br from-slate-50 to-indigo-50/50 p-8 flex flex-col items-center relative overflow-hidden">
@@ -1653,7 +1653,7 @@ const apps = [
             </div>
         </div>
     `},
-    //see me
+    
     {
         id: 'future', title: 'Future You', icon: '<img src="assets/icons/app_future_new.png" alt="future" style="width: 100%; height: 100%;">', dock: false, width: 800, height: 600, content: `
         <div class="h-full w-full relative bg-black custom-scroll overflow-y-auto group">
@@ -1676,7 +1676,7 @@ const apps = [
             </div>
         </div>
     `},
-    //see me
+    
     {
         id: 'inkpot-new', title: 'The Inkpot', icon: '<img src="assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 500, height: 600, onOpen: initInkpot, content: `
         <div class="inkpot-bg">
@@ -2564,7 +2564,7 @@ function setWallpaper(url, el) {
     settingsState.wallpaper = url;
     document.getElementById('desktop').style.backgroundImage = `url('${url}')`;
     document.getElementById('desktop').style.backgroundSize = 'cover';
-    // Hide the light gradient overlay for wallpaper to show
+    
     document.getElementById('desktop-bg').style.opacity = 0;
     document.querySelectorAll('.wallpaper-thumb').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
@@ -2593,9 +2593,9 @@ function toggleControlCenter() {
     event?.stopPropagation();
 }
 
-// Global click handler to close menus
+
 document.addEventListener('click', (e) => {
-    // If click is NOT inside a menu, dropdown, or toggle button
+    
     const isMenuClick = e.target.closest('[id$="-menu"]') || e.target.closest('.menu-item-apple');
     const isCCClick = e.target.closest('#control-center') || e.target.closest('[onclick="toggleControlCenter()"]');
 
@@ -2607,13 +2607,13 @@ document.addEventListener('click', (e) => {
     }
 });
 
-/* === MENU BAR ACTIONS === */
+
 function triggerAction(action) {
-    // Close menus first
+    
     document.querySelectorAll('[id$="-menu"]').forEach(el => el.classList.add('hidden'));
 
     switch (action) {
-        // File
+        
         case 'new-folder':
             const name = prompt("Enter folder name:", "Untitled Folder");
             if (name) {
@@ -2626,10 +2626,10 @@ function triggerAction(action) {
             }
             break;
 
-        // Edit
+        
         case 'select-all':
-            // Simple visual selection of text in active window could be hard, 
-            // so we'll just focus the last opened window or do a visual effect
+            
+            
             const activeId = Array.from(state.appsOpened).pop();
             if (activeId) {
                 const win = document.getElementById(`win-${activeId}`);
@@ -2638,7 +2638,7 @@ function triggerAction(action) {
             }
             break;
 
-        // View
+        
         case 'toggle-fullscreen':
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
@@ -2658,17 +2658,17 @@ function triggerAction(action) {
             document.body.style.zoom = 1;
             break;
 
-        // Go
+        
         case 'go-back':
-            // Visual check only
+            
             break;
 
-        // Window
+        
         case 'min-all':
             state.appsOpened.forEach(id => minimizeApp(id));
             break;
         case 'close-all':
-            // Create a copy array because closeApp modifies the set
+            
             Array.from(state.appsOpened).forEach(id => closeApp(id));
             break;
 
@@ -2678,7 +2678,7 @@ function triggerAction(action) {
     }
 }
 
-/* === AFFIRMATIONS === */
+
 const affirmations = ["You stay kind, even when things get heavy.", "You don’t give up easily.", "You carry storms quietly.", "You are enough, exactly as you are."];
 
 const whys = [
@@ -2733,7 +2733,7 @@ function advanceBond() {
     if (!container) return;
 
     if (bondStep >= bondSequence.length) {
-        // Close quietly
+        
         container.style.opacity = 0;
         setTimeout(() => {
             const win = document.getElementById('win-connection-log');
@@ -2742,8 +2742,8 @@ function advanceBond() {
                 win.style.opacity = 0;
                 win.style.transform = "scale(0.9)";
                 setTimeout(() => win.style.display = "none", 1000);
-                // Reset for next open if desired, or keep closed.
-                // To reset: bondStep = 0;
+                
+                
             }
         }, 1000);
         return;
@@ -2772,19 +2772,19 @@ function advanceBond() {
     }, 1000);
 }
 
-/* === DEV UTILS === */
 
-/* === PHASE 0: COUNTDOWN GATEKEEPER (FIRST) === */
-/* Starts immediately on load */
+
+
+
 function startCountdownGatekeeper() {
     const cdScreen = document.getElementById('countdown-phase');
     const cdDisplay = document.getElementById('countdown-display');
     const cdSub = document.getElementById('countdown-sub');
     const cdProgress = document.getElementById('countdown-progress');
 
-    // === DATE-BASED PHASE CONTROL ===
+    
     const now = new Date();
-    // Bypasses intro phases from Jan 31, 2026 until the next birthday in 2027
+    
     const skipStart = new Date(2026, 0, 31, 0, 0, 0);
     const nextBirthday = new Date(2027, 0, 30, 0, 0, 0);
 
@@ -2796,12 +2796,12 @@ function startCountdownGatekeeper() {
 
     if (cdScreen) cdScreen.style.display = 'flex';
 
-    // Target: Jan 30, 2026 00:00:00
+    
     const targetDate = new Date(2026, 0, 30, 0, 0, 0).getTime();
-    const startDate = new Date(2026, 0, 1, 0, 0, 0).getTime(); // Start of month for progress visual
+    const startDate = new Date(2026, 0, 1, 0, 0, 0).getTime(); 
     const totalDuration = targetDate - startDate;
 
-    window.goToDesktop = skipToDesktop; // Map the new button action
+    window.goToDesktop = skipToDesktop; 
 
     const phrases = [
         "Curating the memories...",
@@ -2819,14 +2819,14 @@ function startCountdownGatekeeper() {
         const now = new Date().getTime();
         const distance = targetDate - now;
 
-        // Update Progress Bar
+        
         if (cdProgress) {
             const elapsed = now - startDate;
             const percentage = Math.min(Math.max((elapsed / totalDuration) * 100, 0), 100);
             cdProgress.style.width = percentage + "%";
         }
 
-        // Update Subtext randomly/sequentially
+        
         if (cdSub && Math.random() < 0.05) {
             cdSub.innerText = phrases[Math.floor(Math.random() * phrases.length)];
         }
@@ -2860,16 +2860,16 @@ function startCountdownGatekeeper() {
 
 
 
-// Skip Countdown Logic
+
 window.skipCountdown = function () {
     state.countdownFinished = true;
-    startCountdownGatekeeper = null; // Kill loop logic if needed, but interval checks display
+    startCountdownGatekeeper = null; 
     const cd = document.getElementById('countdown-phase');
     if (cd) cd.style.display = 'none';
     playBirthdaySequence();
 };
 
-// Test 12:21 AM Easter Egg
+
 window.test1221EasterEgg = function () {
     createModal({
         title: "12:21 AM — June 20, 2024",
@@ -2879,27 +2879,27 @@ window.test1221EasterEgg = function () {
 };
 
 
-/* === PHASE 2: JOURNEY SEQUENCE === */
-function playJourneyIntro() {
-    if (document.getElementById('desktop').style.display === 'block') return; // If skipped
 
-    // Hide Countdown explicitly
+function playJourneyIntro() {
+    if (document.getElementById('desktop').style.display === 'block') return; 
+
+    
     const cd = document.getElementById('countdown-phase');
     if (cd) { cd.style.display = 'none'; }
 
     const intro = document.getElementById('journey-intro');
     intro.style.display = 'flex';
     const screens = document.querySelectorAll('.journey-screen');
-    const timings = [{ t: 5000 }, { t: 5500 }, { t: 8000 }, { t: 6000 }, { t: 6000 }]; // Normal timing
+    const timings = [{ t: 5000 }, { t: 5500 }, { t: 8000 }, { t: 6000 }, { t: 6000 }]; 
     let current = 0;
 
     function showNext() {
         if (document.getElementById('desktop').style.display === 'block') return;
 
-        // FADE OUT PREVIOUS COMPLETELY BEFORE NEXT
+        
         if (current > 0) {
             screens[current - 1].classList.remove('active');
-            // Wait 1.5s for fade out to finish (based on CSS transition)
+            
             setTimeout(() => {
                 if (document.getElementById('desktop').style.display === 'block') return;
                 startNextScreen();
@@ -2923,7 +2923,7 @@ function playJourneyIntro() {
             const subs = screen.querySelectorAll('.journey-sub');
             subs.forEach((sub, i) => setTimeout(() => sub.classList.add('active'), 500 + (i * 1500)));
 
-            // Set timer for the next transition
+            
             setTimeout(showNext, timings[current].t);
             current++;
         }
@@ -2933,7 +2933,7 @@ function playJourneyIntro() {
 
 
 
-/* === PHASE 2.5: BIRTHDAY SEQUENCE === */
+
 let birthdaySlideIndex = 0;
 let birthdaySlides = [];
 
@@ -2942,7 +2942,7 @@ function playBirthdaySequence() {
     if (document.getElementById('desktop').style.display === 'block') return;
     state.birthdaySequenceStarted = true;
 
-    // Hide Countdown
+    
     const cd = document.getElementById('countdown-phase');
     if (cd) {
         cd.style.opacity = 0;
@@ -2953,25 +2953,25 @@ function playBirthdaySequence() {
     if (intro) {
         intro.classList.remove('hidden');
         intro.style.display = 'flex';
-        intro.style.zIndex = '99999'; // Ensure top
+        intro.style.zIndex = '99999'; 
         intro.style.opacity = '1';
 
-        // Initialize Slides
+        
         birthdaySlides = document.querySelectorAll('.birthday-screen');
         birthdaySlideIndex = 0;
 
-        // Reset all
+        
         birthdaySlides.forEach(s => {
             s.style.opacity = '0';
             s.classList.remove('active');
-            s.style.display = 'none'; // Ensure hidden layout-wise
+            s.style.display = 'none'; 
         });
 
-        // Start
+        
         showBirthdaySlide(0);
     } else {
         console.error("Birthday Intro Element Not Found!");
-        // Failover
+        
         playJourneyIntro();
     }
 }
@@ -2979,7 +2979,7 @@ function playBirthdaySequence() {
 function showBirthdaySlide(index) {
     if (document.getElementById('desktop').style.display === 'block') return;
 
-    // Hide previous
+    
     if (index > 0 && birthdaySlides[index - 1]) {
         birthdaySlides[index - 1].classList.remove('active');
         birthdaySlides[index - 1].style.opacity = 0;
@@ -2993,7 +2993,7 @@ function showBirthdaySlide(index) {
         return;
     }
 
-    // Clear any previous paragraph reveal timeouts
+    
     if (window.paraTimeouts) {
         window.paraTimeouts.forEach(t => clearTimeout(t));
     }
@@ -3001,41 +3001,41 @@ function showBirthdaySlide(index) {
 
     const currentSlide = birthdaySlides[index];
     currentSlide.style.display = 'flex';
-    // Small delay to allow display flex to apply before opacity transition
+    
     setTimeout(() => {
         currentSlide.classList.add('active');
         currentSlide.style.opacity = 1;
 
-        // Reveal paragraphs and headings sequentially
+        
         const elements = currentSlide.querySelectorAll('p, h1');
         elements.forEach((el, i) => {
-            // Reset state in case it was already revealed
+            
             el.classList.remove('revealed');
             const t = setTimeout(() => {
                 el.classList.add('revealed');
-            }, 500 + (i * 1200)); // 0.5s initial delay, 1.2s between elements
+            }, 500 + (i * 1200)); 
             window.paraTimeouts.push(t);
         });
     }, 100);
 
     birthdaySlideIndex = index;
 
-    // Logic for auto-advance vs interactive wait
-    // Slide 0: "Happy Birthday" -> Auto
-    // Slide 1: "Another year..." -> Auto
-    // Slide 2: "Make a wish" (Candle) -> INTERACTIVE (Wait for click)
-    // Slide 3: "Cut Cake" -> INTERACTIVE (Wait for click)
+    
+    
+    
+    
+    
 
     if (index === 0) setTimeout(() => showBirthdaySlide(1), 4000);
     else if (index === 1) setTimeout(() => showBirthdaySlide(2), 5000);
-    // Index 2 & 3 wait for user interaction manually triggering next step
+    
 }
 
-// Global exposure for interactions
+
 window.showBirthdaySlide = showBirthdaySlide;
 
-/* INTERACTIONS */
-/* INTERACTIONS */
+
+
 window.blowCandle = function () {
     const flames = document.querySelectorAll('.candles-container .flame');
     const msg = document.getElementById('wish-msg');
@@ -3046,10 +3046,10 @@ window.blowCandle = function () {
             flame.classList.add('blown');
             anyBlown = true;
 
-            // Add smoke logic
+            
             const smoke = document.createElement('div');
             smoke.className = 'smoke';
-            // Position smoke exactly where the flame was
+            
             if (flame.parentElement) {
                 flame.parentElement.appendChild(smoke);
             }
@@ -3062,7 +3062,7 @@ window.blowCandle = function () {
             msg.style.opacity = '1';
         }
 
-        // Wait then move to Cut Cake (Index 3)
+        
         setTimeout(() => {
             showBirthdaySlide(3);
         }, 3000);
@@ -3078,17 +3078,17 @@ window.cutCake = function () {
         knife.classList.add('cutting');
     }
 
-    // Wait for knife to "hit" the cake (approx 300ms)
+    
     setTimeout(() => {
-        // Confetti
+        
         if (typeof confetti === 'function') {
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
 
         if (cakeWhole) {
-            // Step 1: Replace content with the three parts (Left, Slice, Right)
-            // Note: The structure inside each part is identical to the whole cake
-            // We reuse the styling, just apply different clip-paths via classes
+            
+            
+            
             const innerCake = `
                  <div class="cake-frosting"></div>
                  <div class="cake-layer top-layer"></div>
@@ -3109,18 +3109,18 @@ window.cutCake = function () {
             <div class="plate"></div>
         `;
 
-            // Step 2: Trigger the slice extraction
+            
             requestAnimationFrame(() => {
                 const slice = document.getElementById('cake-slice');
                 const left = document.getElementById('cake-left');
                 const right = document.getElementById('cake-right');
 
                 if (slice) {
-                    // Move the slice forward (down) and scale up slightly
+                    
                     slice.style.transform = 'translateY(100px) scale(1.1)';
                 }
-                if (left) left.style.transform = 'translateX(-10px)'; // Make room
-                if (right) right.style.transform = 'translateX(10px)'; // Make room
+                if (left) left.style.transform = 'translateX(-10px)'; 
+                if (right) right.style.transform = 'translateX(10px)'; 
             });
 
             if (instruction) instruction.innerText = "Here is a piece for you! 🍰";
@@ -3129,7 +3129,7 @@ window.cutCake = function () {
                 showLetterOverlay();
             }, 3500);
         }
-    }, 400); // Trigger cut right when knife is down
+    }, 400); 
 };
 
 function finishBirthdaySequence() {
@@ -3148,9 +3148,9 @@ function finishBirthdaySequence() {
 }
 
 
-/* === PHASE 3: DESKTOP === */
-/* === PHASE 2.8: SYSTEM BOOT === */
-/* === PHASE 2.8: SYSTEM BOOT === */
+
+
+
 window.runSystemBoot = function () {
     const boot = document.getElementById('boot-sequence');
     const intro = document.getElementById('journey-intro');
@@ -3176,9 +3176,9 @@ window.runSystemBoot = function () {
 };
 
 
-/* === PHASE 3: DESKTOP === */
+
 function enterDesktop() {
-    // 1. Hide any remaining intro elements
+    
     const cd = document.getElementById('countdown-phase');
     if (cd) cd.style.display = 'none';
 
@@ -3188,11 +3188,11 @@ function enterDesktop() {
     const boot = document.getElementById('boot-sequence');
     if (boot) boot.style.display = 'none';
 
-    // 2. Fade OUT Space Background with Warp
+    
     const space = document.getElementById('space-bg');
     if (space) {
         space.classList.add('space-warp');
-        // Delayed opacity fade to let the stretch effect play out
+        
         setTimeout(() => {
             space.style.opacity = 0;
         }, 800);
@@ -3201,15 +3201,15 @@ function enterDesktop() {
         }, 2000);
     }
 
-    // 3. Fade IN Light Desktop Background
+    
     const desktopBg = document.getElementById('desktop-bg');
     if (desktopBg) { desktopBg.style.display = 'block'; desktopBg.style.opacity = 1; }
 
-    // 4. Show and Fade IN Desktop Content
+    
     const desk = document.getElementById('desktop');
     desk.style.display = 'block';
 
-    // Using simple opacity transition
+    
     desk.style.opacity = 0;
     requestAnimationFrame(() => {
         desk.style.transition = "opacity 2.5s ease";
@@ -3218,20 +3218,20 @@ function enterDesktop() {
 
     initDesktop();
 
-    // Play Startup Sound
+    
     new Audio('assets/audio/startup.mp3').play().catch(e => console.log("Startup sound deferred:", e));
 
-    // 5. Letter removed from here (it comes earlier now)
+    
 }
 
-/* === DESKTOP UTILS === */
+
 let zIndex = 100;
 function initDesktop() {
     const grid = document.getElementById('desktop-grid');
     const dock = document.getElementById('dock');
     grid.innerHTML = ''; dock.innerHTML = '';
     apps.forEach(app => {
-        // Desktop Icons: All apps (except hidden/folder contents)
+        
         if (app.id !== 'hidden-unlock' && !app.folder) {
             const icon = document.createElement('div');
             icon.className = 'desktop-icon group';
@@ -3248,7 +3248,7 @@ function initDesktop() {
         }
     });
 
-    // Blueprint Icon (Manual Add)
+    
     const bpIcon = document.createElement('div');
     bpIcon.className = 'desktop-icon group';
     bpIcon.innerHTML = `<div class="icon-img text-3xl mb-2 transition duration-500"><img src="assets/icons/app_blueprint.png" alt="blueprint" style="width: 100%; height: 100%;"></div><div class="icon-label text-white px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm shadow-black/50 drop-shadow-md">Blueprint.bp</div>`;
@@ -3260,11 +3260,11 @@ function initDesktop() {
 
 }
 
-// Global function for Dev Button
+
 window.skipToDesktop = enterDesktop;
 window.goToDesktop = enterDesktop;
 
-/* === MASTI MODE LOGIC === */
+
 const bearGifs = [
     'assets/gifs/bear_madrid.gif',
     'assets/gifs/bear_milk.gif',
@@ -3293,7 +3293,7 @@ function spawnBears() {
     setTimeout(() => mastiActive = false, 4500);
 }
 
-/* === DESKTOP PET LOGIC === */
+
 let currentPetIdx = 0;
 function togglePet() {
     currentPetIdx = (currentPetIdx + 1) % bearGifs.length;
@@ -3308,8 +3308,8 @@ function togglePet() {
 }
 window.togglePet = togglePet;
 
-/* === FIRST CONVERSATION LOGIC === */
-/* === FIRST CONVERSATION LOGIC === */
+
+
 const firstConversation = [
     { user: 'system', text: 'connection first meet— 6/20/24, 12:21 AM' },
 
@@ -3455,7 +3455,7 @@ function playFirstConversation(container) {
     convoIndex = 0;
     container.innerHTML = '';
 
-    // Create typing indicator element
+    
     const typingIndicator = document.createElement('div');
     typingIndicator.className = 'typing-bubble hidden';
     typingIndicator.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
@@ -3464,7 +3464,7 @@ function playFirstConversation(container) {
         if (convoIndex >= firstConversation.length) return;
 
         const msg = firstConversation[convoIndex];
-        let delay = 1000; // Base delay
+        let delay = 1000; 
 
         if (msg.user === 'system') {
             const systemDiv = document.createElement('div');
@@ -3487,7 +3487,7 @@ function playFirstConversation(container) {
             setTimeout(nextMessage, 2500);
             return;
         } else {
-            // Typing simulation for Shravii
+            
             if (msg.user === 'shravii') {
                 container.appendChild(typingIndicator);
                 typingIndicator.classList.remove('hidden');
@@ -3508,7 +3508,7 @@ function playFirstConversation(container) {
         const isHarshit = msg.user === 'harshit';
         const wrapper = document.createElement('div');
         wrapper.className = `flex flex-col mb-4 ${isHarshit ? 'items-end' : 'items-start'} group`;
-        // Name + Status
+        
         const nameRow = document.createElement('div');
         nameRow.className = 'flex items-center gap-1 mb-1 px-1';
 
@@ -3525,7 +3525,7 @@ function playFirstConversation(container) {
             nameRow.appendChild(status);
         }
 
-        // Bubble
+        
         const bubble = document.createElement('div');
         bubble.className = `chat-bubble ${isHarshit ? 'chat-right' : 'chat-left'}`;
         bubble.style.whiteSpace = 'pre-wrap';
@@ -3548,7 +3548,7 @@ function playFirstConversation(container) {
             bubble.textContent = msg.text;
         }
 
-        // Media Detection
+        
         if (msg.text && typeof msg.text === 'string' && msg.text.includes('spotify.com')) {
             const preview = document.createElement('div');
             preview.className = 'chat-media-preview';
@@ -3557,7 +3557,7 @@ function playFirstConversation(container) {
             bubble.appendChild(preview);
         }
 
-        // Click to Heart Reaction
+        
         bubble.onclick = () => {
             const existing = bubble.querySelector('.chat-reaction');
             if (existing) {
@@ -3573,12 +3573,12 @@ function playFirstConversation(container) {
         wrapper.appendChild(nameRow);
         wrapper.appendChild(bubble);
 
-        // Read Receipt for Shravii's messages (viewed by Harshit)
+        
         if (!isHarshit) {
             const seen = document.createElement('div');
             seen.className = 'seen-receipt';
 
-            // Find Harshit's reply time
+            
             let replyTime = '';
             for (let i = convoIndex + 1; i < firstConversation.length; i++) {
                 if (firstConversation[i].user === 'harshit') {
@@ -3590,7 +3590,7 @@ function playFirstConversation(container) {
                 }
             }
 
-            // Fallback to current message's time if no reply found
+            
             if (!replyTime) {
                 const match = msg.text.match(/(\d{1,2}:\d{2}\s?[AP]M)/i);
                 if (match) replyTime = match[1];
@@ -3613,32 +3613,32 @@ function playFirstConversation(container) {
     nextMessage();
 }
 
-/* === LETTER REVEAL LOGIC === */
-/* === LETTER REVEAL LOGIC (ENHANCED) === */
+
+
 function initLetterReveal() {
     const container = document.getElementById('letter-content');
     if (!container) return;
 
-    // Reset styles for replayability
+    
     const children = Array.from(container.children);
     children.forEach(c => {
         c.style.opacity = '0';
         c.style.transform = 'translateY(20px)';
         c.style.transition = 'opacity 1s ease, transform 1s ease';
-        c.style.display = 'none'; // Hide from flow initially
+        c.style.display = 'none'; 
     });
 
     let idx = 0;
     function processNext() {
         if (idx >= children.length) {
-            // Add a subtle footer or end effect if needed
+            
             return;
         }
 
         const child = children[idx];
-        child.style.display = 'block'; // Put back in flow
+        child.style.display = 'block'; 
 
-        // Force reflow
+        
         void child.offsetWidth;
 
         const isHeading = ['H1', 'H2', 'H3'].includes(child.tagName);
@@ -3655,7 +3655,7 @@ function initLetterReveal() {
                 if (i < originalText.length) {
                     child.innerText += originalText.charAt(i);
                     i++;
-                    container.scrollTop = container.scrollHeight; // Auto scroll
+                    container.scrollTop = container.scrollHeight; 
                     setTimeout(type, 50);
                 } else {
                     child.classList.remove('typing-cursor');
@@ -3665,25 +3665,25 @@ function initLetterReveal() {
             }
             type();
         } else {
-            // Content Fade
+            
             child.style.opacity = '1';
             child.style.transform = 'translateY(0)';
             container.scrollTop = container.scrollHeight;
 
-            // Calculate reading time
+            
             const chars = child.innerText.length;
-            const readingTime = Math.max(1000, chars * 25); // 25ms per char
+            const readingTime = Math.max(1000, chars * 25); 
 
             idx++;
             setTimeout(processNext, readingTime);
         }
     }
 
-    // Initial delay
+    
     setTimeout(processNext, 500);
 }
 
-/* === SPOTIFY LOGIC === */
+
 let isSpotifyPlaying = false;
 function toggleSpotify() {
     const audio = document.getElementById('spotify-audio');
@@ -3713,10 +3713,10 @@ const Apps = {
             return;
         }
 
-        // Dynamic Menu Bar Name
+        
         setAppName(app.title);
 
-        // Track Persistence
+        
         if (typeof Persistence !== 'undefined') {
             Persistence.trackOpen(id);
         }
@@ -3724,8 +3724,8 @@ const Apps = {
         state.appsOpened.add(id);
         const exist = document.getElementById(`win-${id}`);
         if (exist) {
-            // Restore if minimized or hidden
-            if (app.onOpen) app.onOpen(); // Call here if restoring (optional, but consistent with 'open')
+            
+            if (app.onOpen) app.onOpen(); 
             exist.style.display = 'flex';
             exist.classList.remove('minimized', 'closing');
 
@@ -3749,17 +3749,17 @@ const Apps = {
 
         let contentHTML = app.content || '';
 
-        // Handle URL (Iframe)
+        
         if (app.url) {
             contentHTML = `<iframe src="${app.url}" class="w-full h-full border-0 bg-white"></iframe>`;
         }
 
-        // Handle Folders - GRID VIEW UPDATE
+        
         if (app.role === 'folder' && app.children) {
-            /* Legacy fallback if needed, but 'content' property on apps usually handles this now */
+            
         }
 
-        // Use pre-defined content logic from apps array (which includes the grid layout for folders)
+        
 
         win.innerHTML = `<div class="title-bar" onmousedown="startDrag(event, '${win.id}')">
             <div class="traffic-lights">
@@ -3783,8 +3783,8 @@ const Apps = {
 function closeApp(id) {
     const win = document.getElementById(`win-${id}`);
     if (win) {
-        win.classList.add('closing'); // Trigger CSS Animation
-        setTimeout(() => win.remove(), 400); // Wait for animation (0.4s)
+        win.classList.add('closing'); 
+        setTimeout(() => win.remove(), 400); 
     }
     const dot = document.getElementById(`dot-${id}`);
     if (dot) dot.parentElement.classList.remove('active');
@@ -3812,24 +3812,24 @@ function triggerQuietEnding() {
 function minimizeApp(id) {
     const win = document.getElementById(`win-${id}`);
     if (win) {
-        win.classList.add('minimized'); // Trigger CSS Animation
-        // Don't set display:none immediately, let it sit there invisible or handle via listener if prefered
-        // But for dock restoration to work simpler, we keep it in DOM but hidden
-        // const dot is active, so user clicks dock to restore
+        win.classList.add('minimized'); 
+        
+        
+        
     }
 }
 
 function maximizeApp(id) {
     const win = document.getElementById(`win-${id}`);
 
-    // Smooth transition handles width/height change
+    
     if (win.getAttribute('data-maximized') === 'true') {
         win.style.width = win.getAttribute('data-prev-w');
         win.style.height = win.getAttribute('data-prev-h');
         win.style.left = win.getAttribute('data-prev-l');
         win.style.top = win.getAttribute('data-prev-t');
         win.removeAttribute('data-maximized');
-        win.style.borderRadius = "14px"; // Restore rounded corners
+        win.style.borderRadius = "14px"; 
     } else {
         win.setAttribute('data-prev-w', win.style.width);
         win.setAttribute('data-prev-h', win.style.height);
@@ -3837,21 +3837,21 @@ function maximizeApp(id) {
         win.setAttribute('data-prev-t', win.style.top);
 
         win.style.width = '100vw';
-        win.style.height = 'calc(100vh - 32px)'; // Minus menu bar
+        win.style.height = 'calc(100vh - 32px)'; 
         win.style.left = '0';
         win.style.top = '32px';
-        win.style.borderRadius = "0px"; // Square corners when full
+        win.style.borderRadius = "0px"; 
         win.setAttribute('data-maximized', 'true');
     }
 }
-/* === DYNAMIC APP NAME LOGIC === */
+
 function setAppName(name) {
     const el = document.getElementById('menubar-app-name');
     if (el) el.innerText = name;
 }
 
-/* Wrappers for Close/Minimize to reset name */
-// We use a safe check to avoid infinite recursion if re-evaluated
+
+
 if (typeof _origClose === 'undefined') {
     var _origClose = closeApp;
     closeApp = function (id) {
@@ -3868,7 +3868,7 @@ if (typeof _origMin === 'undefined') {
     };
 }
 
-/* Helpers */
+
 function showAffirmation(i) { const el = document.getElementById('aff-text'); if (el) { el.style.opacity = 0; setTimeout(() => { el.innerText = `"${affirmations[i]}"`; el.style.opacity = 1; }, 300); } }
 function playMusic(m) {
     createModal({ title: 'Now Playing', desc: `Playing ${m} 🎵`, icon: '🎧' });
@@ -3876,12 +3876,12 @@ function playMusic(m) {
 }
 function checkUnlock() { if (state.countdownFinished && state.appsOpened.size >= 5) { document.getElementById('lock-msg').style.display = 'none'; document.getElementById('unlock-msg').classList.remove('hidden'); } }
 
-/* Drag with Focus Logic */
+
 let dragItem = null, offX = 0, offY = 0;
 function startDrag(e, id) {
     if (e.target.closest('.traffic-lights') || e.target.closest('.dark-close-btn')) return;
 
-    // Focus App Name
+    
     const appId = id.replace('win-', '');
     const app = apps.find(a => a.id === appId);
     if (app) setAppName(app.title);
@@ -3896,22 +3896,16 @@ function startDrag(e, id) {
 function doDrag(e) { if (!dragItem) return; dragItem.style.left = (e.clientX - offX) + 'px'; dragItem.style.top = (e.clientY - offY) + 'px'; }
 function stopDrag() { document.removeEventListener('mousemove', doDrag); document.removeEventListener('mouseup', stopDrag); dragItem = null; }
 
-
-
-
-
-
-/* === TERMINAL LOGIC === */
 function handleTerminalCommand() {
     const input = document.getElementById('term-input');
     const output = document.getElementById('term-output');
     const cmd = input.value.trim();
     if (!cmd) return;
 
-    // Echo command
+    
     output.innerHTML += `<div > <span class="term-prompt">root@harshit:~$</span> ${cmd}</div> `;
 
-    // Process Command
+    
     let response = '';
     const args = cmd.split(' ');
     const command = args[0].toLowerCase();
@@ -3959,14 +3953,14 @@ function handleTerminalCommand() {
             break;
         case 'cake':
             response = `🎂 Initiating Cake Protocol...<br>Happy 19th Birthday Harshit! 🎉`;
-            // Trigger confetti if possible
+            
             if (typeof confetti === 'function') confetti();
             break;
         case 'date':
             response = `Critical Date: June 20, 2024 (Origin)`;
             break;
-        case 'carry': // EASTER EGG
-            // 7. Hidden Message
+        case 'carry': 
+            
             const egg = document.createElement('div');
             egg.className = 'fixed inset-0 z-[60000] flex items-center justify-center pointer-events-none text-2xl font-light text-white tracking-widest bg-black/80 fade-in-out';
             egg.innerText = "You never had to be strong alone.";
@@ -3977,7 +3971,7 @@ function handleTerminalCommand() {
         case 'clear':
             output.innerHTML = '';
             input.value = '';
-            return; // Return early
+            return; 
         case 'sleep':
             triggerQuietEnding();
             return;
@@ -3990,17 +3984,16 @@ function handleTerminalCommand() {
 
     if (response) output.innerHTML += `<div>${response}</div>`;
 
-    // Scroll and reset
+    
     input.value = '';
     output.scrollTop = output.scrollHeight;
 }
 
 
 
-/* === BUBBLE WRAP LOGIC === */
 function initBubbleWrap() {
     const container = document.getElementById('bubble-container');
-    if (container.children.length > 0) return; // Already generated
+    if (container.children.length > 0) return; 
 
     for (let i = 0; i < 48; i++) {
         const b = document.createElement('div');
@@ -4008,8 +4001,8 @@ function initBubbleWrap() {
         b.onclick = function () {
             if (!this.classList.contains('popped')) {
                 this.classList.add('popped');
-                // Play pop sound if audio file exists
-                // new Audio('assets/pop.mp3').play().catch(() => { });
+                
+                
             }
         };
         container.appendChild(b);
@@ -4017,18 +4010,18 @@ function initBubbleWrap() {
 }
 
 
-/* === POLAROID GALLERY LOGIC === */
-/* === POLAROID GALLERY LOGIC === */
+
+
 function initGallery() {
     const container = document.getElementById('gallery-container');
     if (!container) return;
 
-    // Clear and check if already populated by this session
+    
     if (container.dataset.loaded === 'true') return;
     container.innerHTML = '';
     container.dataset.loaded = 'true';
 
-    // Add Upload Button
+    
     const uploadBtn = document.createElement('div');
     uploadBtn.className = 'polaroid-card upload-card';
     uploadBtn.innerHTML = `
@@ -4066,7 +4059,7 @@ function createPolaroid(src, caption, container, date = "") {
         ${date ? `<div class="date text-[8px] opacity-30 mt-1">${date}</div>` : ''}
     `;
 
-    // Random Scatter
+    
     const randomRot = Math.random() * 16 - 8;
     const randomTop = Math.random() * (container.clientHeight - 300);
     const maxLeft = container.clientWidth - 200;
@@ -4076,7 +4069,7 @@ function createPolaroid(src, caption, container, date = "") {
     card.style.top = `${Math.max(20, randomTop)}px`;
     card.style.left = `${Math.max(20, randomLeft)}px`;
 
-    // Draggable Logic
+    
     card.onmousedown = function (e) {
         if (e.target.tagName === 'INPUT') return;
         card.style.zIndex = ++zIndex;
@@ -4102,75 +4095,6 @@ function createPolaroid(src, caption, container, date = "") {
 }
 
 
-
-/* === QUIZ LOGIC === */
-let qIdx = 0;
-const quizData = [
-    { q: "What is the one vegetable I absolutely hate?", a: ["bhindi", "okra", "lady finger", "ladyfinger"] },
-    { q: "What date did we first talk? (Month Day)", a: ["june 20", "20 june", "20th june", "jun 20"] },
-    { q: "What is my 'Winter' nickname?", a: ["snow", "mr. snow", "mr snow", "husky"] },
-    { q: "Who is the Drama Queen of this OS?", a: ["shravii", "shravani", "you", "author"] }
-];
-
-function startQuiz() {
-    qIdx = 0;
-    setTimeout(updateQuizUI, 100);
-}
-
-function updateQuizUI() {
-    const text = document.getElementById('q-text');
-    const inp = document.getElementById('q-input');
-    const feed = document.getElementById('q-feedback');
-    if (!text) return;
-
-    text.innerText = quizData[qIdx].q;
-    inp.value = '';
-    feed.innerText = '';
-    feed.className = "text-xs mt-4 h-4 font-bold tracking-wide transition-colors";
-    inp.focus();
-}
-
-function submitAnswer() {
-    const inp = document.getElementById('q-input');
-    const feed = document.getElementById('q-feedback');
-    if (!inp) return;
-
-    if (qIdx >= quizData.length) return;
-
-    const val = inp.value.trim().toLowerCase();
-    if (!val) return;
-
-    const correct = quizData[qIdx].a.some(ans => val.includes(ans));
-
-    if (correct) {
-        feed.innerText = "Accepted.";
-        feed.className = "text-xs mt-4 h-4 font-bold tracking-wide text-green-500";
-        setTimeout(() => {
-            qIdx++;
-            if (qIdx < quizData.length) {
-                updateQuizUI();
-            } else {
-                document.getElementById('quiz-container').innerHTML = `
-                    <div class="scale-up-center">
-                        <div class="text-6xl mb-4">🏆</div>
-                        <div class="text-2xl font-bold text-gray-800">Verified Best Friend.</div>
-                        <p class="text-sm text-gray-600 mt-4 leading-relaxed">You know me better than I thought.<br>System Access: UNLIMITED.</p>
-                        <div class="mt-8 p-4 bg-gray-50 rounded-xl border border-gray-100 text-xs text-gray-400">
-                             ID: THE_CHOSEN_ONE<br>Status: Permanent
-                        </div>
-                    </div>
-                `;
-            }
-        }, 800);
-    } else {
-        feed.innerText = "Access Denied. Try again.";
-        feed.className = "text-xs mt-4 h-4 font-bold tracking-wide text-red-500";
-        inp.classList.add('shake');
-        setTimeout(() => inp.classList.remove('shake'), 500);
-    }
-}
-
-/* === BLUEPRINT LOGIC === */
 function openBlueprint() {
     const win = document.getElementById('blueprint-window');
     if (!win) return;
@@ -4180,15 +4104,15 @@ function openBlueprint() {
 
     const body = win.querySelector('.dark-body');
     if (body) {
-        // Save original if not already saved
+        
         if (!body.dataset.original) {
             body.dataset.original = body.innerHTML;
         }
 
-        // Clear and type
+        
         body.innerHTML = body.dataset.original;
 
-        // Start typing effect
+        
         runSmartTypewriter(body);
     }
 }
@@ -4206,12 +4130,12 @@ function runSmartTypewriter(element, speed = 15) {
     const nodes = [];
 
     function walk(node) {
-        if (node.nodeType === 3) { // Text node
+        if (node.nodeType === 3) { 
             nodes.push({
                 node: node,
                 text: node.textContent
             });
-            node.textContent = ""; // Clear immediately
+            node.textContent = ""; 
         } else {
             for (let child of node.childNodes) {
                 walk(child);
@@ -4244,7 +4168,7 @@ function runSmartTypewriter(element, speed = 15) {
 
 
 
-/* === RADIO LOGIC === */
+
 function initRadio() {
     const el = document.getElementById('radio-screen');
     if (el) el.innerText = "WAITING FOR SIGNAL...";
@@ -4265,7 +4189,7 @@ function playRadio(mood) {
     }, 500);
 }
 
-/* === PATH LOGIC === */
+
 const pathStory = {
     start: {
         text: "You stand at a crossroad. It's late.",
@@ -4317,7 +4241,7 @@ function renderPath(id) {
     con.innerHTML = html;
 }
 
-/* === WORD SPIRAL LOGIC === */
+
 const spiralWords = {
     "Growth": ["Pain", "Change", "Better", "You"],
     "Pain": ["Temporary", "Necessary", "Stronger", "Growth"],
@@ -4331,7 +4255,7 @@ const spiralWords = {
     "Good": ["Food", "Sleep", "Friends", "Better"],
     "New": ["Day", "Start", "Chance", "Change"],
     "Future": ["Blind", "Bright", "Yours", "Change"],
-    // Default fallback
+    
     "DEFAULT": ["Growth", "You", "Better", "Change"]
 };
 function initWordSpiral() {
@@ -4342,7 +4266,7 @@ function renderSpiral(word) {
     const opts = document.getElementById('spiral-opts');
     if (!main) return;
 
-    // Animation reset
+    
     main.style.opacity = 0;
     setTimeout(() => {
         main.innerText = word;
@@ -4355,7 +4279,7 @@ function renderSpiral(word) {
     ).join('');
 }
 
-/* === PERSONALITY QUIZ LOGIC === */
+
 const pQuizData = [
     {
         q: "It's 2 AM. What is Harshit usually doing?",
@@ -4397,7 +4321,7 @@ function renderPQuiz() {
     if (!qEl) return;
 
     if (pQuizIdx >= pQuizData.length) {
-        // Result
+        
         const winner = Object.keys(pScores).reduce((a, b) => pScores[a] > pScores[b] ? a : b);
         let msg = "";
         if (winner === "Builder") msg = "You are The Architect.\nYou build strong things. You protect.";
@@ -4422,28 +4346,28 @@ function handlePQuiz(type) {
     renderPQuiz();
 }
 
-/* === TERMINAL APP ENHANCEMENTS === */
+
 
 
 
 function typeToTerminal(element, text, delay = 20, callback) {
     const line = document.createElement('div');
-    line.className = 'term-line mb-1'; // Check if we need to add styling for this
+    line.className = 'term-line mb-1'; 
     element.appendChild(line);
     element.scrollTop = element.scrollHeight;
 
-    // Check if text contains HTML tags
+    
     if (text.includes('<')) {
-        // For HTML content, we can't easily do character-by-character without breaking tags
-        // So we'll fade it in or type it differently. 
-        // Simple approach: Insert HTML immediately but hidden, then reveal? 
-        // Or just set innerHTML since we want the colors.
+        
+        
+        
+        
         line.innerHTML = text;
-        // Optional: Add a fade-in class if wanted, but standard terminal is instant or typed.
-        // Let's stick to instant appearance for HTML lines to preserve formatting safety
+        
+        
         if (callback) setTimeout(callback, delay * 5);
     } else {
-        // Plain text typing
+        
         let i = 0;
         const interval = setInterval(() => {
             line.textContent += text[i];
@@ -4474,7 +4398,7 @@ function runTerminalSequence(element, lines, speed = 20, gap = 500, onComplete) 
     nextLine();
 }
 
-/* === TERMINAL APP LOGIC === */
+
 function handleTerminalAppCommand() {
     const input = document.getElementById('term-input-app');
     const output = document.getElementById('term-output-app');
@@ -4483,22 +4407,22 @@ function handleTerminalAppCommand() {
     const cmd = input.value.trim();
     if (!cmd) return;
 
-    // Echo command
+    
     output.innerHTML += `<div><span class="term-prompt">root@harshit:~$</span> ${cmd}</div>`;
     input.value = '';
     output.scrollTop = output.scrollHeight;
 
-    // Process
+    
     const command = cmd.toLowerCase().split(' ')[0];
 
-    // Commands that don't need typing effect can return immediately or use simple output
+    
     if (command === 'clear') {
         new Audio('assets/audio/shred.mp3').play().catch(e => { });
         output.innerHTML = '';
         return;
     }
 
-    // Disable input during cinematic sequences
+    
     input.disabled = true;
     input.placeholder = "Processing...";
 
@@ -4585,12 +4509,12 @@ function handleTerminalAppCommand() {
     }
 }
 
-/* === SYSTEM ACTIONS === */
+
 function deleteTarget() {
-    // Play Shred Sound
+    
     new Audio('assets/audio/shred.mp3').play().catch(e => { });
 
-    // Show a "protective" notification
+    
     if (typeof createModal === 'function') {
         createModal({
             title: "Security Protocol",
@@ -4601,41 +4525,41 @@ function deleteTarget() {
 }
 
 
-// Launch Desktop
+
 function launchDesktop() {
-    // 1. Hide Terminal & Space (if active)
+    
     const term = document.getElementById('terminal-boot');
     if (term) term.style.display = 'none';
 
-    // 2. Fade OUT Space Background
+    
     const space = document.getElementById('space-bg');
     if (space) space.style.opacity = 0;
 
-    // 3. Fade IN Light Desktop Background
+    
     const desktopBg = document.getElementById('desktop-bg');
     if (desktopBg) { desktopBg.style.display = 'block'; requestAnimationFrame(() => desktopBg.style.opacity = 1); }
 
-    // 4. Show and Fade IN Desktop Content
+    
     const desk = document.getElementById('desktop');
     desk.style.display = 'block';
 
-    // Using simple opacity transition
+    
     desk.style.opacity = 0;
     requestAnimationFrame(() => {
         desk.style.transition = "opacity 2.5s ease";
         desk.style.opacity = 1;
     });
 
-    // 5. Hide Dev Skip Button
+    
     const skipBtn = document.getElementById('dev-skip-btn');
     if (skipBtn) skipBtn.style.display = 'none';
 
     initDesktop();
 
-    // Play Startup Sound
+    
     new Audio('assets/audio/startup.mp3').play().catch(e => console.log("Startup sound deferred:", e));
 }
-// Dev Tool
+
 function skipToDesktop() {
     const phases = ['boot-sequence', 'countdown-phase', 'journey-intro', 'terminal-boot'];
     phases.forEach(p => {
@@ -4643,14 +4567,14 @@ function skipToDesktop() {
         if (el) el.style.display = 'none';
     });
 
-    // Force set state
+    
     state.countdownFinished = true;
 
-    // Launch Desktop
+    
     launchDesktop();
 }
 
-/* === RABBIT RUNNER LOGIC === */
+
 let rrActive = false;
 let rrScore = 0;
 let rrLoopIdx;
@@ -4659,7 +4583,7 @@ let rrVelocity = 0;
 let rrGravity = 0.6;
 let rrJumpStrength = -10;
 let rrPlatforms = [];
-let rrItems = []; // {type: 'sub'|'bhindi', x, y}
+let rrItems = []; 
 const rrSpeed = 3;
 
 function initRabbitGame() {
@@ -4671,14 +4595,14 @@ function initRabbitGame() {
 function startRabbitGame() {
     rrActive = true;
     rrScore = 0;
-    rrPlayerY = 300; // Start mid-air
+    rrPlayerY = 300; 
     rrVelocity = 0;
     rrPlatforms = [];
     rrItems = [];
     document.getElementById('rr-start-screen').style.display = 'none';
     document.getElementById('rr-score').innerText = 'Score: 0';
 
-    // Spawn initial platform
+    
     spawnPlatform(50, 400, 200);
     spawnPlatform(300, 350, 150);
     spawnPlatform(550, 300, 150);
@@ -4686,7 +4610,7 @@ function startRabbitGame() {
     if (rrLoopIdx) cancelAnimationFrame(rrLoopIdx);
     rrGameLoop();
 
-    // Controls
+    
     document.getElementById('rr-container').onmousedown = jumpRabbit;
     document.addEventListener('keydown', (e) => { if (e.code === 'Space') jumpRabbit(); });
 }
@@ -4701,9 +4625,9 @@ function spawnPlatform(x, y, w) {
     const txt = msgs[Math.floor(Math.random() * msgs.length)];
     rrPlatforms.push({ x, y, w, text: txt, passed: false });
 
-    // Spawn item? 40% chance
+    
     if (Math.random() > 0.6) {
-        const type = Math.random() > 0.3 ? 'sub' : 'bhindi'; // 70% Sub, 30% Bhindi
+        const type = Math.random() > 0.3 ? 'sub' : 'bhindi'; 
         rrItems.push({ type, x: x + w / 2 - 15, y: y - 40, collected: false });
     }
 }
@@ -4711,11 +4635,11 @@ function spawnPlatform(x, y, w) {
 function rrGameLoop() {
     if (!rrActive) return;
 
-    // Update Player
+    
     rrVelocity += rrGravity;
     rrPlayerY += rrVelocity;
 
-    // Floor Collision (Game Over)
+    
     if (rrPlayerY > 480) {
         gameOverRabbit("You fell into the void!");
         return;
@@ -4727,23 +4651,23 @@ function rrGameLoop() {
         playerEl.style.transform = `rotate(${rrVelocity * 2}deg)`;
     }
 
-    // Update Platforms
+    
     const world = document.getElementById('rr-world');
-    world.innerHTML = ''; // Clear & Redraw (Naive but functional for simple DOM game)
+    world.innerHTML = ''; 
 
-    // --- RENDER & LOGIC LOOP ---
-    // 1. New Platform Spawning
+    
+    
     const lastPlat = rrPlatforms[rrPlatforms.length - 1];
     if (lastPlat && lastPlat.x < 600) {
         const newY = Math.max(150, Math.min(400, lastPlat.y + (Math.random() * 200 - 100)));
         spawnPlatform(800 + Math.random() * 100, newY, 120 + Math.random() * 80);
     }
 
-    // 2. Platforms Logic
+    
     rrPlatforms.forEach((p, i) => {
         p.x -= rrSpeed;
 
-        // Render
+        
         if (p.x + p.w > 0 && p.x < 800) {
             const div = document.createElement('div');
             div.className = 'absolute bg-white border-2 border-gray-200 rounded-2xl flex items-center justify-center text-xs font-bold text-gray-500 shadow-sm';
@@ -4755,8 +4679,8 @@ function rrGameLoop() {
             world.appendChild(div);
         }
 
-        // Collision: Rabbit landing on Platform
-        // Rabbit is ~40x40 at x=50
+        
+        
         if (rrVelocity > 0 &&
             rrPlayerY + 40 >= p.y &&
             rrPlayerY + 40 <= p.y + 20 &&
@@ -4764,18 +4688,18 @@ function rrGameLoop() {
             50 < p.x + p.w) {
             rrVelocity = 0;
             rrPlayerY = p.y - 40;
-            // Jump Auto check? No, manual jump only
+            
         }
 
-        // Cleanup
+        
         if (p.x + p.w < -100) rrPlatforms.splice(i, 1);
     });
 
-    // 3. Items Logic
+    
     rrItems.forEach((item, i) => {
         item.x -= rrSpeed;
 
-        // Render
+        
         if (!item.collected && item.x > 0 && item.x < 800) {
             const el = document.createElement('div');
             el.className = 'absolute text-2xl animate-bounce';
@@ -4784,8 +4708,8 @@ function rrGameLoop() {
             el.style.top = item.y + 'px';
             world.appendChild(el);
 
-            // Collision with Player
-            // Dist check
+            
+            
             const dx = (50 + 20) - (item.x + 15);
             const dy = (rrPlayerY + 20) - (item.y + 15);
             if (Math.sqrt(dx * dx + dy * dy) < 40) {
@@ -4817,17 +4741,17 @@ function gameOverRabbit(reason) {
     `;
 }
 
-/* === SECRET VAULT LOGIC === */
+
 let vaultIdx = 0;
 const vaultPhotos = [
-    "https://images.unsplash.com/photo-1518176258769-f227c798150e?q=80&w=2670", // Stars
-    "https://images.unsplash.com/photo-1549488497-758969f91a51?q=80&w=2670", // Us?
-    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=2689", // Friends
-    "https://images.unsplash.com/photo-1504297050568-910d24c426d3?q=80&w=1287" // Coffee
+    "https://images.unsplash.com/photo-1518176258769-f227c798150e?q=80&w=2670", 
+    "https://images.unsplash.com/photo-1549488497-758969f91a51?q=80&w=2670", 
+    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=2689", 
+    "https://images.unsplash.com/photo-1504297050568-910d24c426d3?q=80&w=1287" 
 ];
 
 function initSecretVault() {
-    // Reset State
+    
     document.getElementById('vault-lock').style.display = 'flex';
     document.getElementById('vault-lock').style.opacity = '1';
     document.getElementById('vault-pass').value = '';
@@ -4835,10 +4759,10 @@ function initSecretVault() {
     document.getElementById('vault-content').style.display = 'none';
     document.getElementById('vault-content').style.opacity = '0';
 
-    // Auto-focus input
+    
     setTimeout(() => document.getElementById('vault-pass').focus(), 500);
 
-    // Bind Enter Key
+    
     const inp = document.getElementById('vault-pass');
     inp.onkeyup = (e) => {
         if (inp.value.length === 6) checkVaultPassword();
@@ -4851,23 +4775,23 @@ function checkVaultPassword() {
     const err = document.getElementById('vault-error');
 
     if (inp.value === '200624') {
-        // SUCCESS
+        
         inp.blur();
         document.getElementById('vault-lock').style.opacity = '0';
         setTimeout(() => {
             document.getElementById('vault-lock').style.display = 'none';
             document.getElementById('vault-content').style.display = 'block';
 
-            // Render Slide
+            
             renderVaultSlide();
 
-            // Fade In
+            
             requestAnimationFrame(() => {
                 document.getElementById('vault-content').style.opacity = '1';
             });
         }, 500);
     } else {
-        // FAIL
+        
         err.style.opacity = '1';
         inp.classList.add('shake');
         setTimeout(() => inp.classList.remove('shake'), 500);
@@ -4900,18 +4824,18 @@ function vaultPrevSlide() {
     renderVaultSlide();
 }
 
-/* === CRAVINGS APP LOGIC === */
+
 function orderCravings() {
     const btn = document.getElementById('cravings-btn');
     const content = document.getElementById('cravings-content');
     if (!btn || !content) return;
 
-    // Animate Button
+    
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
     btn.classList.add('opacity-75', 'cursor-not-allowed');
 
     setTimeout(() => {
-        // Swap Content to "Intercepted" Message
+        
         content.innerHTML = `
             <div class="h-full flex flex-col items-center justify-center p-8 text-center animate-fade-in select-none">
                  <div class="text-6xl mb-6 transform hover:scale-110 transition duration-500">🚫🚚</div>
@@ -4931,9 +4855,9 @@ function orderCravings() {
 
 
 
-/* === APP VAULT FOLDER LOGIC === */
+
 function initAppVault() {
-    // Reset Lock Screen
+    
     const lock = document.getElementById('vault-lock-screen');
     const pass = document.getElementById('vault-passcode');
     const badge = document.getElementById('vault-badge');
@@ -4954,7 +4878,7 @@ function initAppVault() {
     if (pass) {
         pass.value = '';
         pass.classList.remove('shake-premium', 'border-red-500');
-        pass.style.borderColor = '#e5e7eb'; // Gray-200 default
+        pass.style.borderColor = '#e5e7eb'; 
     }
     if (badge) {
         badge.innerText = 'System Secure';
@@ -4970,7 +4894,7 @@ function initAppVault() {
 
     state.vaultUnlockAttempts = 0;
 
-    // Auto-focus
+    
     setTimeout(() => { if (pass) pass.focus(); }, 200);
 }
 
@@ -4984,16 +4908,16 @@ function unlockVault() {
 
     if (!input) return;
 
-    // Passcode: 200624
+    
     if (input.value === '200624') {
-        // Success
+        
         input.classList.remove('shake-premium');
-        input.style.borderColor = '#10b981'; // Green-500
+        input.style.borderColor = '#10b981'; 
 
-        // Play success animation on lock screen
+        
         lockScreen.classList.add('vault-unlocked-anim');
 
-        // Reveal content
+        
         setTimeout(() => {
             lockScreen.style.display = 'none';
             if (grid) {
@@ -5004,16 +4928,16 @@ function unlockVault() {
         }, 800);
 
     } else {
-        // Fail
+        
         state.vaultUnlockAttempts = (state.vaultUnlockAttempts || 0) + 1;
 
-        // Update Badge
+        
         if (badge) {
             badge.innerText = `Attempts: ${state.vaultUnlockAttempts}`;
             badge.style.color = state.vaultUnlockAttempts > 3 ? '#ef4444' : '#94a3b8';
         }
 
-        // Shake & Error
+        
         if (errorMsg) {
             errorMsg.innerText = state.vaultUnlockAttempts > 3 ? "SYSTEM LOCKED: Incorrect Format" : "Access Denied";
             errorMsg.style.opacity = '1';
@@ -5021,7 +4945,7 @@ function unlockVault() {
         input.classList.add('shake-premium');
         input.style.borderColor = '#ef4444';
 
-        // Hint progression
+        
         if (state.vaultUnlockAttempts >= 1 && hintMain) {
             hintMain.innerText = "Hint: A score of days, six moons deep, in the year where two dozen secrets we keep.";
             hintMain.style.opacity = "1";
@@ -5045,7 +4969,7 @@ window.initPersonalityQuiz = initPersonalityQuiz;
 window.renderSpiral = renderSpiral;
 window.initWordSpiral = initWordSpiral;
 
-// Global Exports
+
 window.renderPath = renderPath;
 window.startPathGame = startPathGame;
 window.playRadio = playRadio;
@@ -5057,8 +4981,8 @@ window.spawnBears = spawnBears;
 window.playFirstConversation = playFirstConversation;
 window.initLetterReveal = initLetterReveal;
 
-/* === JOURNEY LOGIC === */
-/* === AUTOMATED MOVIE SEQUENCER === */
+
+
 let movieTimer = null;
 let currentMovieIndex = 0;
 let movieItems = [];
@@ -5067,7 +4991,7 @@ function renderJourney() {
     const container = document.getElementById('journey-container');
     if (!container) return;
 
-    // Reset and Flatten
+    
     currentMovieIndex = 0;
     movieItems = [];
     journeyData.forEach(ch => {
@@ -5118,8 +5042,8 @@ function playNextMovieScene() {
     const frame = document.createElement('div');
     frame.className = 'movie-frame opacity-0 transition-opacity duration-1000 flex flex-col items-center justify-center text-center w-full h-full p-12';
 
-    // Automatic Timing Logic (Base delay)
-    let displayDuration = 3000; // default 3s
+    
+    let displayDuration = 3000; 
 
     if (item.type === 'title') {
         frame.innerHTML = `
@@ -5136,7 +5060,7 @@ function playNextMovieScene() {
                 <div id="typewriter-id" class="text-2xl font-medium text-white/90"></div>
             </div>
         `;
-        // Timing depends on text length
+        
         displayDuration = 2000 + (item.text.length * 60);
     } else if (item.type === 'scene') {
         frame.innerHTML = `
@@ -5166,7 +5090,7 @@ function playNextMovieScene() {
 
     screen.appendChild(frame);
 
-    // Fade In
+    
     requestAnimationFrame(() => {
         frame.classList.remove('opacity-0');
         if (item.type === 'title') {
@@ -5178,7 +5102,7 @@ function playNextMovieScene() {
         if (item.type === 'recipe') {
             setTimeout(() => {
                 frame.querySelectorAll('.step-reveal').forEach(el => el.classList.remove('opacity-0', 'translate-x-4'));
-                // Use a different reveal for recipe
+                
                 frame.querySelectorAll('.step-reveal').forEach(el => {
                     el.style.transition = 'opacity 1s, transform 1s';
                     el.style.opacity = '1';
@@ -5187,7 +5111,7 @@ function playNextMovieScene() {
         }
     });
 
-    // Auto Advance
+    
     movieTimer = setTimeout(() => {
         frame.classList.add('opacity-0');
         setTimeout(() => {
@@ -5223,20 +5147,20 @@ function showTheEnd() {
     `;
 }
 
-// START HERE
-window.Apps = Apps; // Global exposure
+
+window.Apps = Apps; 
 window.onload = function () {
     startCountdownGatekeeper();
     initHappyMenuBar();
 };
 
-/* ========================================= */
-/* ==== ENHANCED MENU BAR LOGIC ==== */
-/* ========================================= */
 
 
 
-// 2. Battery
+
+
+
+
 function initBattery() {
     const icon = document.getElementById('battery-icon');
     const level = document.getElementById('battery-level');
@@ -5259,12 +5183,12 @@ function initBattery() {
             battery.addEventListener('chargingchange', updateBattery);
         });
     } else {
-        // Fallback for non-supported browsers
+        
         if (level) level.innerText = '100% (External Power)';
     }
 }
 
-// 3. Wi-Fi
+
 function initNetworkStatus() {
     const icon = document.getElementById('wifi-icon');
     const update = () => {
@@ -5273,14 +5197,14 @@ function initNetworkStatus() {
             icon.className = isOnline ? 'fas fa-wifi text-[14px]' : 'fas fa-wifi text-[14px] text-red-500 opacity-50';
             icon.parentElement.title = isOnline ? 'Wi-Fi: Connected (Strong)' : 'Wi-Fi: Disconnected';
         }
-        // setSystemStatus(isOnline ? 'Online' : 'Offline', 0); // Function not defined, commented out
+        
     };
     window.addEventListener('online', update);
     window.addEventListener('offline', update);
     update();
 }
 
-// 4. Spotlight
+
 function toggleSpotlight() {
     const overlay = document.getElementById('spotlight-overlay');
     const input = document.getElementById('spotlight-input');
@@ -5302,7 +5226,7 @@ function toggleSpotlight() {
         overlay.classList.add('hidden');
     }
 }
-// Spotlight Input Listener
+
 document.getElementById('spotlight-input')?.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase();
     const resultsContainer = document.getElementById('spotlight-results');
@@ -5314,7 +5238,7 @@ document.getElementById('spotlight-input')?.addEventListener('input', (e) => {
         return;
     }
 
-    // Filter Apps
+    
     const matches = apps.filter(app => app.title.toLowerCase().includes(query));
 
     const html = matches.map(app =>
@@ -5333,7 +5257,7 @@ document.getElementById('spotlight-input')?.addEventListener('input', (e) => {
     }
 });
 
-// 5. Brightness
+
 document.getElementById('brightness-slider')?.addEventListener('input', (e) => {
     const val = e.target.value;
     const opacity = (100 - val) / 100;
@@ -5341,26 +5265,26 @@ document.getElementById('brightness-slider')?.addEventListener('input', (e) => {
     if (dimmer) dimmer.style.opacity = opacity;
 });
 
-// 6. Weather
-// 6. Weather
+
+
 function initWeather() {
     updateSystemBasedOnTime();
 }
 
 
 
-/* ========================================= */
-/* ==== SYSTEM ACTIONS (The Thoughtful Part) ==== */
-/* ========================================= */
+
+
+
 const System = {
     about: () => {
-        // Create a dedicated floating window
+        
         const id = 'sys-about-win';
-        if (document.getElementById(id)) return; // Already open
+        if (document.getElementById(id)) return; 
 
         const win = document.createElement('div');
         win.id = id;
-        const safeTop = Math.max(40, (window.innerHeight - 300) / 2); // approx height
+        const safeTop = Math.max(40, (window.innerHeight - 300) / 2); 
         win.className = 'window bg-[#ECECEC] rounded-xl shadow-2xl z-[5000] overflow-hidden flex flex-col font-sans animate-zoom-in';
         win.style.position = 'absolute';
         win.style.width = '320px';
@@ -5394,7 +5318,7 @@ const System = {
     },
 
     settings: () => {
-        // Toggle Control Center as a simple settings panel
+        
         toggleControlCenter();
     },
 
@@ -5426,15 +5350,15 @@ const System = {
     }
 };
 
-window.System = System; // Expose
-
-/* ========================================= */
-/* ==== TOP BAR ENHANCEMENTS ==== */
-/* ========================================= */
+window.System = System; 
 
 
-// Calendar Logic
-let calendarDate = new Date(); // Global state for navigation
+
+
+
+
+
+let calendarDate = new Date(); 
 let calendarClickCount = 0;
 let calendarClickTimer = null;
 
@@ -5444,16 +5368,16 @@ function changeMonth(offset) {
 }
 
 function toggleCalendar() {
-    // EASTER EGG: Multiple Clicks
+    
     calendarClickCount++;
     if (calendarClickTimer) clearTimeout(calendarClickTimer);
     calendarClickTimer = setTimeout(() => {
         calendarClickCount = 0;
-    }, 1000); // 1.5s to click
+    }, 1000); 
 
     if (calendarClickCount >= 7) {
         Apps.open('secret-gallery');
-        // Reset
+        
         calendarClickCount = 0;
         return;
     }
@@ -5463,7 +5387,7 @@ function toggleCalendar() {
 
     if (cal.classList.contains('hidden')) {
         cal.classList.remove('hidden');
-        calendarDate = new Date(); // Reset to today on open
+        calendarDate = new Date(); 
         renderCalendar();
     } else {
         cal.classList.add('hidden');
@@ -5472,7 +5396,7 @@ function toggleCalendar() {
 
 function renderCalendar() {
     const viewDate = calendarDate;
-    const today = new Date(); // Actual Today
+    const today = new Date(); 
 
     const monthEl = document.getElementById('cal-month');
     const yearEl = document.getElementById('cal-year');
@@ -5483,18 +5407,18 @@ function renderCalendar() {
 
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-    // Set Header
+    
     if (monthEl) monthEl.innerText = monthNames[viewDate.getMonth()];
     if (yearEl) yearEl.innerText = viewDate.getFullYear();
 
-    // Define Events
+    
     const specialDates = [
-        { d: 30, m: 0, title: "Harshit Birthday 🎂" }, // Jan 30
-        { d: 15, m: 8, title: "Shravii's Birthday 🎉" }, // Sep 15
-        { d: 20, m: -1, title: "The First Meet ❤️" }   // Monthly
+        { d: 30, m: 0, title: "Harshit Birthday 🎂" }, 
+        { d: 15, m: 8, title: "Shravii's Birthday 🎉" }, 
+        { d: 20, m: -1, title: "The First Meet ❤️" }   
     ];
 
-    // Calculate Days for ViewDate
+    
     const year = viewDate.getFullYear();
     const month = viewDate.getMonth();
     const firstDay = new Date(year, month, 1).getDay();
@@ -5502,33 +5426,33 @@ function renderCalendar() {
 
     daysEl.innerHTML = '';
 
-    // Empty slots
+    
     for (let i = 0; i < firstDay; i++) {
         daysEl.innerHTML += `<div></div>`;
     }
 
     let activeEventText = "No events selected.";
 
-    // Days
+    
     for (let d = 1; d <= daysInMonth; d++) {
-        // Is this day TODAY (Absolute)?
+        
         const isToday = (d === today.getDate() && month === today.getMonth() && year === today.getFullYear());
 
-        // Does this day have an EVENT?
+        
         const evt = specialDates.find(e => e.d === d && (e.m === -1 || e.m === month));
 
-        // Update footer if today is visible
+        
         if (isToday) activeEventText = evt ? evt.title : "No events today.";
 
-        // Visuals
+        
         let dayClass = "aspect-square flex flex-col items-center justify-center rounded-full relative ";
         if (isToday) dayClass += "bg-red-500 text-white shadow-lg font-bold";
         else dayClass += "hover:bg-white/10 cursor-pointer text-gray-300 transition-colors";
 
-        // Event Dot
+        
         const dotHtml = evt ? `<div class="w-1 h-1 rounded-full ${isToday ? 'bg-white' : 'bg-blue-400'} absolute bottom-1"></div>` : '';
 
-        // Click Action
+        
         const clickAction = evt ? `document.querySelector('#mini-calendar .text-blue-300').innerText = '${evt.title.replace("'", "\\'")}'` : `document.querySelector('#mini-calendar .text-blue-300').innerText = 'No events on this day.'`;
 
         daysEl.innerHTML += `
@@ -5542,20 +5466,20 @@ function renderCalendar() {
     if (footerEl) footerEl.innerText = activeEventText;
 }
 
-// Initialize Everything
+
 let clockInterval;
 function initHappyMenuBar() {
     initBattery();
     initNetworkStatus();
     initWeather();
 
-    // Clear existing interval if any
+    
     if (clockInterval) clearInterval(clockInterval);
     clockInterval = setInterval(updateClock, 1000);
 
     updateClock();
 
-    // Close calendar on outside click
+    
     document.addEventListener('click', (e) => {
         const cal = document.getElementById('mini-calendar');
         const clock = document.getElementById('clock');
@@ -5565,7 +5489,7 @@ function initHappyMenuBar() {
     });
 }
 
-/* === FACTS APP INTERACTIVE LOGIC === */
+
 function startFactsApp() {
     const term = document.getElementById('facts-terminal');
     const main = document.getElementById('facts-main-content');
@@ -5574,10 +5498,10 @@ function startFactsApp() {
     term.classList.add('hidden');
     main.classList.add('active');
 
-    // Fix: Ensure we start at the top
+    
     main.scrollTop = 0;
 
-    // Auto-reveal sections with a slight delay
+    
     const sections = main.querySelectorAll('.facts-section');
     sections.forEach((sec, i) => {
         setTimeout(() => {
@@ -5587,21 +5511,15 @@ function startFactsApp() {
 }
 
 
-
-
-
-
-
-// Helper to switch tabs in Modern Madrid App
 function switchMadTab(tabBtn, tabId) {
-    // 1. Reset all tabs
+    
     const allTabs = document.querySelectorAll('.mad-tab');
     allTabs.forEach(t => t.classList.remove('active'));
 
-    // 2. Set active tab
+    
     tabBtn.classList.add('active');
 
-    // 3. Toggle Content
+    
     const dash = document.getElementById('tab-dash');
     const match = document.getElementById('tab-match');
 
@@ -5613,10 +5531,10 @@ function switchMadTab(tabBtn, tabId) {
         match.style.display = 'block';
     }
 }
-window.switchMadTab = switchMadTab; // Expose global
+window.switchMadTab = switchMadTab; 
 
 function triggerMadridEffect(btn) {
-    // Add pulsing effect to the clicked element ticket
+    
     const originalTransform = btn.style.transform;
     btn.style.transform = "scale(0.95)";
     setTimeout(() => {
@@ -5626,7 +5544,7 @@ function triggerMadridEffect(btn) {
     const balls = ['⚽', '⚽️', '🧤', '🏆', '👑', '🤍'];
     const rect = btn.getBoundingClientRect();
 
-    // Create particles
+    
     for (let i = 0; i < 30; i++) {
         const p = document.createElement('div');
         p.className = 'ball-particle';
@@ -5640,14 +5558,14 @@ function triggerMadridEffect(btn) {
         p.style.left = `${rect.left + rect.width / 2}px`;
         p.style.top = `${rect.top}px`;
 
-        // Randomize size
+        
         p.style.fontSize = Math.random() > 0.5 ? '24px' : '16px';
 
         document.body.appendChild(p);
         setTimeout(() => p.remove(), 1500);
     }
 
-    // Audio
+    
     const audio = document.getElementById('madrid-siuuu');
     if (audio) {
         audio.volume = 0.6;
@@ -5672,13 +5590,13 @@ function toggleUCLMode() {
     const tier = document.getElementById('madrid-tier');
 
     if (dash.classList.contains('ucl-mode')) {
-        // Switch to La Liga
+        
         dash.classList.remove('ucl-mode');
         headText.innerText = "HALAMADRID DASHBOARD";
         logo.innerText = "⚽";
         tier.innerText = "Ultra Tier";
     } else {
-        // Switch to UCL
+        
         dash.classList.add('ucl-mode');
         headText.innerText = "CHAMPIONS LEAGUE MODE";
         logo.innerText = "🏆";
@@ -5824,7 +5742,7 @@ function createModal({ title, desc, icon }) {
 }
 window.createModal = createModal;
 
-/* === WHEN TIRED LOGIC === */
+
 const tiredMessages = [
     {
         audio: 'assets/tired_1.mp3',
@@ -5934,11 +5852,11 @@ function initTired() {
 
     container.innerHTML = '';
 
-    // Pick random message
+    
     const data = tiredMessages[Math.floor(Math.random() * tiredMessages.length)];
     const lines = data.text.split('\n');
 
-    // 1. Create Audio Player (Hidden initially)
+    
     const audioWrapper = document.createElement('div');
     audioWrapper.className = 'tired-audio-wrapper opacity-0 transition duration-1000';
     audioWrapper.innerHTML = `
@@ -5950,7 +5868,7 @@ function initTired() {
     `;
     container.appendChild(audioWrapper);
 
-    // 2. Play Lines
+    
     let delay = 800;
 
     lines.forEach(line => {
@@ -5972,13 +5890,13 @@ function initTired() {
         }
     });
 
-    // Reveal Audio Button after text starts
+    
     setTimeout(() => {
         audioWrapper.classList.remove('opacity-0');
     }, 1500);
 }
 
-// Helper to toggle audio
+
 function toggleTiredAudio() {
     const audio = document.getElementById('tired-audio-player');
     const icon = document.getElementById('tired-play-icon');
@@ -5994,7 +5912,7 @@ function toggleTiredAudio() {
         icon.classList.remove('animate-pulse');
     }
 
-    // Reset on end
+    
     audio.onended = () => {
         icon.innerText = "🎙️";
         icon.classList.remove('animate-pulse');
@@ -6004,7 +5922,7 @@ window.toggleTiredAudio = toggleTiredAudio;
 window.initTired = initTired;
 
 
-/* === INKPOT LOGIC === */
+
 const inkEntries = [
     `Some words are better left written in ink than spoken aloud.`,
     `Sometimes I wonder if you know how much impact you have. Providing a safe space isn't easy, but you make it look effortless.`,
@@ -6013,7 +5931,7 @@ const inkEntries = [
 let currentInkIndex = 0;
 
 function initInkpot() {
-    // Slight delay to ensure DOM is ready if animation plays
+    
     setTimeout(() => {
         showInkEntry(currentInkIndex);
     }, 100);
@@ -6023,13 +5941,13 @@ function showInkEntry(index) {
     const el = document.getElementById('journal-entry');
     if (!el) return;
 
-    // Fade out
+    
     el.style.opacity = 0;
     el.style.transform = 'translateY(5px)';
 
     setTimeout(() => {
         el.textContent = inkEntries[index] || '';
-        // Fade in
+        
         el.style.opacity = 1;
         el.style.transform = 'translateY(0)';
     }, 300);
@@ -6058,9 +5976,9 @@ function newInkEntry() {
     }
 }
 
-/* === SHRAVII.EXE LOGIC === */
+
 const shraviiQuotes = [
-    // === CARE & HEALTH ===
+    
     "Did you drink water today? Hydrate or diedrate! 💧",
     "Posture check! Sit up straight, you banana! 🍌",
     "Have you eaten? And no, coffee doesn't count as a meal. 🍱",
@@ -6072,7 +5990,7 @@ const shraviiQuotes = [
     "Is your room dark? Turn on a light! 💡",
     "Don't forget to blink! 👁️",
 
-    // === ENCOURAGEMENT ===
+    
     "I'm so proud of you. Just existing is hard sometimes. ❤️",
     "You are doing better than you think. Trust me. 🌟",
     "I believe in you. Even when you don't. ✨",
@@ -6084,7 +6002,7 @@ const shraviiQuotes = [
     "Sending you a virtual hug. Squeeze! 🫂",
     "You make the world brighter just by being in it. ☀️",
 
-    // === WORK & FOCUS ===
+    
     "Focus mode: ON. You can do this! 🎯",
     "One task at a time. Multitasking is a myth! 🐢",
     "I saw that bug you fixed. Nice one. 🐛",
@@ -6096,7 +6014,7 @@ const shraviiQuotes = [
     "Remember why you started. (To rule the world? Maybe.) 🌍",
     "Small steps still move you forward. 👣",
 
-    // === PLAYFUL / TEASING ===
+    
     "I saw that typo. It's okay, I won't tell. 🤫",
     " Why are you awake? Go to sleeeeeep! 🛌",
     "Are you really going to open that file again? 📂",
@@ -6108,14 +6026,14 @@ const shraviiQuotes = [
     "Can we watch a movie later? 🎬",
     "You're my favorite human. Don't tell the others. 🤫",
 
-    // === LATE NIGHT ===
+    
     "The world is asleep. You should be too. 🌙",
     "Nothing good happens after 2 AM. Go to bed! 🕑",
     "Your brain needs sleep to store all this genius. 🧠",
     "The code will still be there in the morning. 🌅",
     "Sleep is the best debugger. 🐞",
 
-    // === RANDOM LOVE ===
+    
     "Just a reminder: You are loved. ❤️",
     "I'm glad you're here. 🏠",
     "You matter. A lot. 🌈",
@@ -6130,7 +6048,7 @@ const shraviiQuotes = [
 
 function initShravii() {
     updateShraviiState();
-    // Update every minute (optional, but good for time changes)
+    
     if (!window.shraviiInterval) {
         window.shraviiInterval = setInterval(updateShraviiState, 60000);
     }
@@ -6154,56 +6072,56 @@ function updateShraviiState() {
     const hour = new Date().getHours();
     let statusText = "ONLINE";
     let stateClass = "state-day";
-    let avatarUrl = "https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif"; // Default
+    let avatarUrl = "https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif"; 
 
-    // 1. Determine State
+    
     if (hour >= 0 && hour < 7) {
-        // Night / Sleep
+        
         statusText = "SLEEP MODE 💤";
         stateClass = "state-night";
-        ledEl.style.background = "#60a5fa"; // Blue breath
-        avatarUrl = "https://media.tenor.com/PFC1L2aEwEIAAAAj/mocha-bear.gif"; // Sleeping bear
+        ledEl.style.background = "#60a5fa"; 
+        avatarUrl = "https://media.tenor.com/PFC1L2aEwEIAAAAj/mocha-bear.gif"; 
 
-        // Specific night quotes overrides
+        
         if (Math.random() > 0.5) {
             quoteEl.textContent = "Zzz... (I'm charging... you should too...)";
             return;
         }
 
     } else if (hour >= 7 && hour < 18) {
-        // Work / Day
+        
         statusText = "MONITORING 🛡️";
         stateClass = "state-day";
-        ledEl.style.background = "#4ade80"; // Green
-        avatarUrl = "https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif"; // Happy bear
+        ledEl.style.background = "#4ade80"; 
+        avatarUrl = "https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif"; 
 
     } else {
-        // Evening / Chaos
+        
         statusText = "CHAOS HOURS 😈";
         stateClass = "state-party";
-        ledEl.style.background = "#f472b6"; // Pink
-        avatarUrl = "https://media.tenor.com/N2s4YqCqK90AAAAj/music-dance.gif"; // Dancing bear
+        ledEl.style.background = "#f472b6"; 
+        avatarUrl = "https://media.tenor.com/N2s4YqCqK90AAAAj/music-dance.gif"; 
     }
 
-    // 2. Set Random Quote
-    // Use a random index based on date + math random to keep it fresh
+    
+    
     const rIndex = Math.floor(Math.random() * shraviiQuotes.length);
     quoteEl.textContent = shraviiQuotes[rIndex];
 
-    // 3. Update UI
+    
     statusEl.textContent = statusText;
     updateChibiImage(avatarUrl);
 
-    // Update container theme
+    
     container.className = `h-full flex flex-col p-6 transition-colors duration-1000 ${stateClass}`;
 }
 
-// Helper to manually refresh quote on click
+
 function refreshShravii() {
     const quoteEl = document.getElementById('shravii-quote');
     const rIndex = Math.floor(Math.random() * shraviiQuotes.length);
 
-    // Add animation
+    
     quoteEl.style.opacity = 0;
     setTimeout(() => {
         quoteEl.textContent = shraviiQuotes[rIndex];
@@ -6211,13 +6129,13 @@ function refreshShravii() {
     }, 200);
 }
 
-/* === VOICEBOX LOGIC === */
+
 let vbInterval;
 let vbIsPlaying = false;
 let vbIsRecording = false;
 
 function initVoiceBox() {
-    // Reset state on open
+    
     vbIsPlaying = false;
     vbIsRecording = false;
     stopVBMotion();
@@ -6227,18 +6145,18 @@ function initVoiceBox() {
 function toggleVBPlay() {
     const playBtn = document.getElementById('vb-play-btn');
     if (vbIsPlaying) {
-        // Stop
+        
         vbIsPlaying = false;
         stopVBMotion();
         playBtn.classList.remove('active-mech-btn');
         updateVBStatus('STOPPED');
     } else {
-        // Play
+        
         vbIsPlaying = true;
         vbIsRecording = false;
         startVBMotion();
         playBtn.classList.add('active-mech-btn');
-        // Unpress record if active
+        
         document.getElementById('vb-rec-btn').classList.remove('active-mech-btn');
         updateVBStatus('PLAYING ▶');
     }
@@ -6247,34 +6165,34 @@ function toggleVBPlay() {
 function toggleVBRecord() {
     const recBtn = document.getElementById('vb-rec-btn');
     if (vbIsRecording) {
-        // Stop Rec
+        
         vbIsRecording = false;
         stopVBMotion();
         recBtn.classList.remove('active-mech-btn');
         updateVBStatus('SAVED');
     } else {
-        // Start Rec
+        
         vbIsRecording = true;
         vbIsPlaying = false;
         startVBMotion();
         recBtn.classList.add('active-mech-btn');
-        // Unpress play if active
+        
         document.getElementById('vb-play-btn').classList.remove('active-mech-btn');
         updateVBStatus('REC ●');
     }
 }
 
 function startVBMotion() {
-    // Spin reels
+    
     const reels = document.querySelectorAll('.vb-reel');
     reels.forEach(r => r.classList.add('spinning'));
 
-    // Wiggle Needle
+    
     const needle = document.getElementById('vb-needle');
     if (needle) {
         if (vbInterval) clearInterval(vbInterval);
         vbInterval = setInterval(() => {
-            // Random bounce between -45deg and +45deg
+            
             const deg = Math.floor(Math.random() * 60) - 30;
             needle.style.transform = `translateX(-50%) rotate(${deg}deg)`;
         }, 100);
@@ -6282,11 +6200,11 @@ function startVBMotion() {
 }
 
 function stopVBMotion() {
-    // Stop spin
+    
     const reels = document.querySelectorAll('.vb-reel');
     reels.forEach(r => r.classList.remove('spinning'));
 
-    // Stop needle
+    
     const needle = document.getElementById('vb-needle');
     if (needle) needle.style.transform = `translateX(-50%) rotate(-45deg)`;
     if (vbInterval) clearInterval(vbInterval);
@@ -6297,7 +6215,7 @@ function updateVBStatus(text) {
     if (el) el.textContent = text;
 }
 
-/* === FLASH APP LOGIC (Moved to Global) === */
+
 window.FlashApp = {
     startTime: 0,
     waiting: false,
@@ -6334,12 +6252,12 @@ window.FlashApp = {
         document.getElementById('flash-instruction').innerText = "WAIT...";
         document.getElementById('flash-instruction').className = "text-4xl font-black italic text-red-200 tracking-tighter animate-pulse";
 
-        // Reset fake state styling
+        
         if (this.fakeTimeout) clearTimeout(this.fakeTimeout);
     },
 
     triggerSignalOrFake: function () {
-        // 30% chance of fake out
+        
         if (Math.random() < 0.35) {
             this.triggerFake();
         } else {
@@ -6349,14 +6267,14 @@ window.FlashApp = {
 
     triggerFake: function () {
         this.isFake = true;
-        // Play Buzz
+        
         const audioFail = document.getElementById('sfx-fail');
         if (audioFail) { audioFail.currentTime = 0; audioFail.volume = 0.3; audioFail.play().catch(e => { }); }
 
         const bg = document.getElementById('flash-game-bg');
         const txt = document.getElementById('flash-instruction');
 
-        // Randomly Blue or Yellow
+        
         const types = [
             { cls: 'bg-blue-600', msg: 'WAIT FOR IT...', textCls: 'text-blue-200' },
             { cls: 'bg-yellow-500', msg: 'NOT YET!', textCls: 'text-yellow-900' }
@@ -6367,10 +6285,10 @@ window.FlashApp = {
         txt.innerText = type.msg;
         txt.className = `text-5xl font-black italic ${type.textCls} tracking-tighter animate-bounce`;
 
-        // Resume real signal after delay
+        
         this.fakeTimeout = setTimeout(() => {
             if (this.waiting) {
-                this.resetGameScreen(); // Reset visual briefy
+                this.resetGameScreen(); 
                 setTimeout(() => this.triggerRealSignal(), 500 + Math.random() * 1000);
             }
         }, 800);
@@ -6390,7 +6308,7 @@ window.FlashApp = {
     },
 
     handleTap: function () {
-        // 1. Tapped on Fake Signal
+        
         if (this.waiting && this.isFake) {
             clearTimeout(this.timeout);
             if (this.fakeTimeout) clearTimeout(this.fakeTimeout);
@@ -6403,7 +6321,7 @@ window.FlashApp = {
             return;
         }
 
-        // 2. Tapped Too Early (Red Screen)
+        
         if (this.waiting) {
             clearTimeout(this.timeout);
             if (this.fakeTimeout) clearTimeout(this.fakeTimeout);
@@ -6417,7 +6335,7 @@ window.FlashApp = {
             return;
         }
 
-        // 3. Success (Green Screen)
+        
         const time = Date.now() - this.startTime;
         document.getElementById('sfx-success').play().catch(e => { });
         this.showResult(time);
@@ -6433,8 +6351,8 @@ window.FlashApp = {
         const rankDisplay = document.getElementById('flash-rank-display');
         const newRecordDisplay = document.getElementById('flash-new-record');
 
-        newRecordDisplay.classList.add('hidden'); // Reset
-        resScreen.className = "absolute inset-0 flex flex-col items-center justify-center z-30 bg-black/90 p-8 text-center"; // Reset classes
+        newRecordDisplay.classList.add('hidden'); 
+        resScreen.className = "absolute inset-0 flex flex-col items-center justify-center z-30 bg-black/90 p-8 text-center"; 
 
         if (ms === null) {
             timeDisplay.innerText = "FAIL";
@@ -6447,7 +6365,7 @@ window.FlashApp = {
             timeDisplay.classList.remove('text-red-500');
             timeDisplay.classList.add('text-yellow-400');
 
-            // Check High Score
+            
             if (!this.personalBest || ms < this.personalBest) {
                 this.personalBest = ms;
                 localStorage.setItem('harshit_flash_pb', ms);
@@ -6472,14 +6390,14 @@ window.FlashApp = {
         document.getElementById('flash-result').classList.remove('flex');
         document.getElementById('flash-intro').classList.remove('hidden');
 
-        // Update PB on intro
+        
         if (this.personalBest) {
             document.getElementById('flash-pb-intro').innerText = "PERSONAL BEST: " + this.personalBest + "ms";
         }
     }
 };
 
-/* === SECRET VAULT LOGIC === */
+
 const vaultSlides = [
     {
         type: 'text', title: 'The Beginning', content: 'June 20, 2024. 12:21 AM.<br>The timestamp that started it all.'
@@ -6497,11 +6415,11 @@ function initSecretVault() {
     const input = document.getElementById('vault-pass');
     if (!input) return;
 
-    // Clear previous state
+    
     input.value = '';
-    state.vaultUnlockAttempts = 0; // Reset attempts on open
+    state.vaultUnlockAttempts = 0; 
 
-    // Explicit visibility reset
+    
     document.getElementById('vault-lock').style.display = 'flex';
     document.getElementById('vault-lock').style.opacity = '1';
 
@@ -6510,7 +6428,7 @@ function initSecretVault() {
 
     document.getElementById('vault-error').style.opacity = '0';
 
-    // Auto-check listener
+    
     input.onkeyup = (e) => {
         if (input.value.length === 6) {
             checkVaultPass(input.value);
@@ -6520,16 +6438,16 @@ function initSecretVault() {
 
 function checkVaultPass(code) {
     if (code === '200624') {
-        // Unlock
+        
         document.getElementById('vault-lock').style.opacity = '0';
         setTimeout(() => {
-            document.getElementById('vault-lock').style.display = 'none'; // Hide lock
+            document.getElementById('vault-lock').style.display = 'none'; 
 
             const content = document.getElementById('vault-content');
-            content.style.display = 'block'; // Show content
+            content.style.display = 'block'; 
             content.classList.remove('hidden');
 
-            // Trigger Fade In
+            
             requestAnimationFrame(() => {
                 content.classList.remove('opacity-0');
                 content.classList.add('opacity-100');
@@ -6538,9 +6456,9 @@ function checkVaultPass(code) {
             loadVaultContent();
         }, 500);
     } else {
-        // Error
+        
         const err = document.getElementById('vault-error');
-        err.style.opacity = '1';  // Show error message
+        err.style.opacity = '1';  
         const inp = document.getElementById('vault-pass');
         inp.classList.add('shake');
         setTimeout(() => inp.classList.remove('shake'), 500);
@@ -6584,13 +6502,13 @@ function vaultPrevSlide() {
     currentVaultSlide = (currentVaultSlide - 1 + vaultSlides.length) % vaultSlides.length;
     renderVaultSlide(currentVaultSlide);
 }
-/* === VAULT SECURITY === */
+
 
 
 
 
 function showNotification(title, body) {
-    // Create notification element
+    
     const notif = document.createElement('div');
     notif.className = 'ghost-notification';
     if (title.includes('Alert') || title.includes('Critical')) {
@@ -6604,26 +6522,14 @@ function showNotification(title, body) {
 
     document.body.appendChild(notif);
 
-    // Auto-remove after animation (0.5s in + 4s wait + 0.5s out = 5s total)
-    // Animation timing matches CSS
+    
+    
     setTimeout(() => {
         notif.remove();
     }, 5500);
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-/* === TRUTH ARCHIVES LOGIC === */
 const truthData = [
     { title: "First Meet", tags: ["start"], content: "June 20, 2024. 12:21 AM.<br>You asked 'is anyone watching euros?'.<br>I asked 'Where ya from Harry?'.<br>And so it began." },
     { title: "Mr. Chuha", tags: ["funny", "names"], content: "You told me your front teeth used to slightly protrude.<br>I called you 'Mr. Chuha'.<br>You didn't get mad. You owned it. 🐭" },
@@ -6651,7 +6557,7 @@ function initTruths() {
     <div class="text-sm text-green-400/80 leading-relaxed font-light line-clamp-2 transition-all duration-300">${t.content}</div>
 `;
 
-        // Expand on click logic
+        
         div.onclick = function () {
             const contentDiv = this.querySelector('div:last-child');
             if (contentDiv.classList.contains('line-clamp-2')) {
@@ -6672,7 +6578,7 @@ function filterTruths() {
     const filter = input.value.toLowerCase();
     const grid = document.getElementById('truth-grid');
 
-    // Simple filter recreation
+    
     grid.innerHTML = '';
 
     truthData.forEach(t => {
@@ -6694,7 +6600,7 @@ window.initTruths = initTruths;
 window.filterTruths = filterTruths;
 
 
-/* === MAP OF US LOGIC === */
+
 function initMap() {
     const mapContainer = document.getElementById('map-markers');
     if (!mapContainer) return;
@@ -6715,7 +6621,7 @@ function initMap() {
         marker.style.top = loc.y + '%';
         marker.title = loc.name;
 
-        // Tooltip
+        
         const tip = document.createElement('div');
         tip.className = 'absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-white/90 backdrop-blur px-2 py-1 text-xs font-bold text-slate-700 rounded shadow-sm whitespace-nowrap opacity-0 pointer-events-none transition-opacity duration-300';
         tip.innerText = loc.desc;
@@ -6723,7 +6629,7 @@ function initMap() {
         marker.onmouseenter = () => tip.style.opacity = 1;
         marker.onmouseleave = () => tip.style.opacity = 0;
 
-        marker.appendChild(tip); // Append tip to marker so it moves with it
+        marker.appendChild(tip); 
         mapContainer.appendChild(marker);
     });
 }
@@ -6731,7 +6637,7 @@ window.initMap = initMap;
 
 
 
-/* === INKPOT APP LOGIC === */
+
 const poems = [
     {
         title: "Friendship Blooms",
@@ -6774,7 +6680,7 @@ function initInkpot() {
 function nextPoem() {
     currentPoemIndex = (currentPoemIndex + 1) % poems.length;
 
-    // Animate out
+    
     const textEl = document.getElementById('inkpot-text');
     if (textEl) {
         textEl.style.opacity = 0;
@@ -6799,7 +6705,7 @@ function renderPoem() {
                                                                     </div>
                                                                     `;
 
-    // Animate in
+    
     textEl.style.opacity = 1;
     textEl.style.transform = 'translateY(0)';
 }
@@ -6807,13 +6713,13 @@ window.initInkpot = initInkpot;
 window.nextPoem = nextPoem;
 
 
-// === NOT DUMB APP LOGIC ===
+
 let notDumbStep = 0;
 const notDumbSlides = [
-    // 0: ENTRY (Handled by init)
+    
     { type: 'entry' },
 
-    // 1: OBSERVATIONS
+    
     {
         type: 'html', content: `
         <div class="space-y-6 animate-fade-in-up">
@@ -6842,7 +6748,7 @@ const notDumbSlides = [
         </div>
     `},
 
-    // 2: VOICEBOX
+    
     {
         type: 'html', content: `
         <div class="flex flex-col items-center justify-center h-full animate-fade-in-up">
@@ -6867,7 +6773,7 @@ const notDumbSlides = [
         </div>
     `},
 
-    // 3: LOGS
+    
     {
         type: 'html', content: `
         <div class="space-y-4 animate-fade-in-up h-full overflow-y-auto custom-scroll pr-2 pt-2">
@@ -6932,7 +6838,7 @@ const notDumbSlides = [
         </div>
     `},
 
-    // 4: METERS
+    
     {
         type: 'html', content: `
         <div class="flex flex-col justify-center h-full animate-fade-in-up space-y-10 px-6">
@@ -6964,7 +6870,7 @@ const notDumbSlides = [
         <style> @keyframes fillBar {from {width: 0; } } </style>
     `},
 
-    // 5: QUOTE
+    
     {
         type: 'html', content: `
         <div class="flex flex-col items-center justify-center h-full animate-fade-in-up text-center cursor-help select-none" title="Permission: Admin Shravii">
@@ -6978,7 +6884,7 @@ const notDumbSlides = [
         </div>
     `},
 
-    // 6: FINAL
+    
     {
         type: 'html', content: `
         <div class="flex flex-col items-center justify-center h-full animate-fade-in-up text-center relative z-10">
@@ -7015,11 +6921,11 @@ function initNotDumb() {
     const container = document.getElementById('not-dumb-content');
     const nav = document.getElementById('not-dumb-nav');
 
-    // RESET
+    
     if (container) container.innerHTML = '';
     if (nav) nav.style.opacity = '0';
 
-    // RENDER STEP 0 (Timed Entry)
+    
     if (container) {
         container.innerHTML = `
             <div class="flex flex-col justify-center h-full font-mono text-xs space-y-6 select-none relative">
@@ -7059,7 +6965,7 @@ function initNotDumb() {
         `;
     }
 
-    // Auto-advance after 5 seconds to next slide button
+    
     setTimeout(() => {
         if (nav) nav.style.opacity = '1';
     }, 5000);
@@ -7071,7 +6977,7 @@ function nextNotDumbSlide() {
     const nav = document.getElementById('not-dumb-nav');
 
     if (notDumbStep >= notDumbSlides.length) {
-        // End of slides
+        
         Apps.close('not-dumb');
         return;
     }
@@ -7079,7 +6985,7 @@ function nextNotDumbSlide() {
     const slide = notDumbSlides[notDumbStep];
 
     if (slide.type === 'html' && container) {
-        // Fade out slightly
+        
         container.style.opacity = '0';
         container.style.transform = 'translateY(10px) scale(0.98)';
 
@@ -7091,31 +6997,31 @@ function nextNotDumbSlide() {
         }, 200);
     }
 
-    // Hide nav on final slide
+    
     if (notDumbStep === notDumbSlides.length - 1 && nav) {
         nav.style.opacity = '0';
         nav.style.pointerEvents = 'none';
     }
 }
 
-// Export
 
-// Export
+
+
 window.initNotDumb = initNotDumb;
 window.nextNotDumbSlide = nextNotDumbSlide;
 
-/* === BIRTHDAY SEQUENCER === */
 
 
 
-// Duplicate finishBirthdaySequence removed from here as it is now at line 2699
-
-// Initial Letter Overlay (Custom)
 
 
-// Initial Letter Overlay (Custom) -> Now Part of Birthday Sequence
+
+
+
+
+
 window.showLetterOverlay = function () {
-    // Hide Birthday Intro if visible
+    
     const intro = document.getElementById('birthday-intro');
     if (intro) {
         intro.style.transition = 'opacity 1s';
@@ -7123,12 +7029,12 @@ window.showLetterOverlay = function () {
         setTimeout(() => intro.style.display = 'none', 1000);
     }
 
-    // Show Letter
+    
     const letter = document.getElementById('letter-overlay');
     if (letter) {
         letter.classList.remove('hidden');
         void letter.offsetWidth;
-        letter.style.display = 'flex'; // Ensure flex
+        letter.style.display = 'flex'; 
         setTimeout(() => {
             letter.classList.add('visible');
             letter.style.opacity = '1';
@@ -7146,15 +7052,15 @@ window.closeLetter = function () {
             letter.classList.add('hidden');
             letter.style.display = 'none';
 
-            // CHAIN: Letter Closed -> Journey Sequence
+            
             finishBirthdaySequence();
         }, 1000);
     }
 };
 
-/* === ACCESSIBILITY ENHANCEMENTS === */
+
 function setupAccessibility() {
-    // 1. Initial Tab Indexing for already present elements
+    
     const interactiveSelectors = [
         '.dock-icon',
         '.desktop-icon',
@@ -7181,9 +7087,9 @@ function setupAccessibility() {
 
     document.querySelectorAll(interactiveSelectors.join(',')).forEach(makeFocusable);
 
-    // 2. Global Shortcuts
+    
     document.addEventListener('keydown', (e) => {
-        // ESC -> Close things
+        
         if (e.key === 'Escape') {
             const spotlight = document.getElementById('spotlight-overlay');
             if (spotlight && !spotlight.classList.contains('hidden')) {
@@ -7224,7 +7130,7 @@ function setupAccessibility() {
         }
     });
 
-    // 3. Observer for new elements
+    
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             if (mutation.addedNodes.length) {
@@ -7244,14 +7150,12 @@ function setupAccessibility() {
     observer.observe(document.body, { childList: true, subtree: true });
 }
 
-/* ==========================================
-   NEW THOUGHTFUL APPS (added via update)
-   ========================================== */
 
 
 
 
-/* 2. UNSENT LETTERS */
+
+
 function sealLetter() {
     const paper = document.getElementById('letter-paper');
     const air = document.getElementById('ai-reply-area');
@@ -7259,7 +7163,7 @@ function sealLetter() {
 
     if (typeof createModal === 'function') createModal({ title: 'Letter Sealed', desc: 'Stored in the archives of time.', icon: '🕯️' });
 
-    // AI Mock Reply
+    
     setTimeout(() => {
         air.style.opacity = 1;
         const replies = [
@@ -7289,7 +7193,7 @@ apps.push({
 `});
 
 
-/* 3. CONSTELLATION (Visual Experience) */
+
 apps.push({
     id: 'app-stars', title: 'Constellation', icon: '<img src="assets/icons/app_stars_new.png" alt="stars" style="width: 100%; height: 100%;">', dock: true, width: 800, height: 600, onOpen: () => ConstellationApp.init(), content: `
     <div class="stars-app relative h-full bg-[#050505] overflow-hidden flex flex-col items-center justify-center cursor-crosshair">
@@ -7340,7 +7244,7 @@ apps.push({
 
 
 
-/* 6. HARSHIT'S COMPASS */
+
 window.spinCompass = function () {
     const n = document.getElementById('c-needle');
     const r = document.getElementById('c-result');
@@ -7376,7 +7280,7 @@ apps.push({
 `});
 
 
-/* 7. MIXTAPE OF SOULS */
+
 apps.push({
     id: 'app-mixtape', title: 'Soul Mixtape', icon: '<img src="assets/icons/app_mixtape_new.png" alt="mixtape" style="width: 100%; height: 100%;">', dock: false, width: 600, height: 450, content: `
     <div class="h-full bg-zinc-900 text-white p-6 flex flex-col items-center justify-center">
@@ -7409,7 +7313,7 @@ apps.push({
 `});
 
 
-/* 8. DAILY BLOOM (Enhanced with High-Quality Images) */
+
 const dailyBloomData = [
     { image: 'assets/images/flower_rose.jpg', name: 'Red Rose', message: "Harshit, today is a clean slate. Fill it with your best efforts." },
     { image: 'assets/images/flower_sunflower.jpg', name: 'Sunflower', message: "Like this sunflower, always turn your face toward the light, Harshit." },
@@ -7431,10 +7335,10 @@ const dailyBloomData = [
 
 apps.push({
     id: 'app-bloom', title: 'Daily Bloom', icon: '<img src="assets/icons/app_bloom_new.png" alt="bloom" style="width: 100%; height: 100%;">', dock: false, width: 500, height: 600, onOpen: () => {
-        // Calculate Logic: Pick NEW random bloom every time opens
+        
         const bloom = dailyBloomData[Math.floor(Math.random() * dailyBloomData.length)];
 
-        // Update DOM Elements
+        
         setTimeout(() => {
             const imgEl = document.getElementById('bloom-img');
             const messageEl = document.getElementById('bloom-message');
@@ -7443,11 +7347,11 @@ apps.push({
                 imgEl.src = bloom.image;
                 imgEl.title = bloom.name;
 
-                // Restart Animation
+                
                 imgEl.style.opacity = '0.5';
                 imgEl.style.transform = 'scale(0.95)';
 
-                // Animate In
+                
                 setTimeout(() => {
                     imgEl.style.opacity = '1';
                     imgEl.style.transform = 'scale(1) rotate(0deg)';
@@ -7493,11 +7397,9 @@ apps.push({
     </div>
 `});
 
-/* ==========================================
-   VISUAL & AUDIO FIXES (Added via Feedback)
-   ========================================== */
 
-/* 1. GLOBAL AUDIO MANAGER (HalaMadrid Fix) */
+
+
 window.triggerMadridEffect = function (btn) {
     if (btn) {
         btn.innerText = "SIUUUUU! ⚽";
@@ -7505,10 +7407,10 @@ window.triggerMadridEffect = function (btn) {
         setTimeout(() => btn.innerText = "Hala Madrid! 🚀", 2000);
     }
 
-    // Try finding existing audio first
+    
     let audio = document.getElementById('madrid-siuuu');
 
-    // If missing (app closed), create temporary
+    
     if (!audio) {
         audio = new Audio('https://www.myinstants.com/media/sounds/cristiano-ronaldo-siuuu.mp3');
     }
@@ -7518,20 +7420,20 @@ window.triggerMadridEffect = function (btn) {
         if (typeof createModal === 'function') createModal({ title: "Audio Error", desc: "Browser blocked autoplay. Interacted first?", icon: "🔇" });
     });
 
-    // Confetti
+    
     if (typeof confetti === 'function') {
         confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
     }
 };
 
 
-/* 2. CUSTOM CONTEXT MENU LOGIC */
+
 document.addEventListener('contextmenu', function (e) {
     e.preventDefault();
 
     let menu = document.getElementById('ctx-menu');
     if (!menu) {
-        // Create if missing
+        
         menu = document.createElement('div');
         menu.id = 'ctx-menu';
         menu.className = 'fixed bg-white/90 backdrop-blur border border-gray-200 shadow-xl rounded-lg py-2 w-48 z-[99999] hidden flex-col';
@@ -7544,11 +7446,11 @@ document.addEventListener('contextmenu', function (e) {
         `;
         document.body.appendChild(menu);
 
-        // Close on click anywhere
+        
         document.addEventListener('click', () => menu.classList.add('hidden'));
     }
 
-    // Position
+    
     const x = Math.min(e.clientX, window.innerWidth - 200);
     const y = Math.min(e.clientY, window.innerHeight - 200);
 
@@ -7559,47 +7461,42 @@ document.addEventListener('contextmenu', function (e) {
 });
 
 
-/* 3. DOCK & TERMINAL VISUAL TWEAKS INJECTION */
+
 const styleFix = document.createElement('style');
 styleFix.innerHTML = `
-    /* Dock Hit Area Fix */
+    
     #dock-container { height: 30px !important; transition: height 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important; }
     #dock-container:hover { height: 115px !important; }
     
-    /* Terminal Output Contrast Fix */
+    
     #term-output { color: #e5e7eb !important; font-weight: 500; }
     .term-prompt { color: #4ade80 !important; font-weight: 700; margin-right: 8px; }
     .term-error { color: #ef4444 !important; }
     .term-success { color: #facc15 !important; }
     
-    /* Context Menu Animation */
+    
     #ctx-menu { animation: menuPop 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
     @keyframes menuPop { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 `;
 document.head.appendChild(styleFix);
 
 
-/* RE-INIT ACCESSIBILITY */
+
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setupAccessibility);
 } else {
     setupAccessibility();
 }
 
-// Global Exposure
+
 window.startFactsApp = startFactsApp;
 
 
-/* ==========================================
-   NEW APPS: TIME CAPSULE, PAPER PLANES, JOURNAL
-   ========================================== */
 
-/* ==========================================
-   NEW APPS: TIME CAPSULE, PAPER PLANES, JOURNAL
-   (Discovery Mode)
-   ========================================== */
 
-/* 1. TIME CAPSULE */
+
+
+
 const TimeCapsuleApp = {
     capsules: [
         { label: "Open When You're Happy", content: "I love it when you're happy. Keep that smile, it suits you best.", icon: "☀" },
@@ -7637,7 +7534,7 @@ apps.push({
 `});
 
 
-/* 2. PAPER PLANES */
+
 const PlanesApp = {
     wishes: [
         "May your day be as amazing as you are.",
@@ -7696,7 +7593,7 @@ apps.push({
 `});
 
 
-/* 3. SHARED JOURNAL */
+
 const JournalApp = {
     chapters: [
         { title: "Chapter 1: The Beginning", content: "It all started with a simple 'Hi'. Who knew it would lead to a special OS built just for you? Every conversation since then has been a building block for us." },
@@ -7755,7 +7652,7 @@ apps.push({
 `});
 
 
-/* 4. THANK YOU (GRATITUDE) */
+
 apps.push({
     id: 'thank-you',
     title: 'Gratitude',
@@ -7785,9 +7682,7 @@ apps.push({
     </div>
 `});
 
-/* ==========================================
-   WHEN TIRED APP (Karaoke/Voice Sync)
-   ========================================== */
+
 const TiredApp = {
     audio: null,
     display: null,
@@ -7795,10 +7690,7 @@ const TiredApp = {
     progressFill: null,
     playIcon: null,
     transcript: [
-        /* === INSTRUCTIONS FOR USER ===
-           1. Upload your audio file to 'assets/audio/tired_voice.mp3' (or update the src in the HTML below).
-           2. Update the timestamps (in seconds) and text below to match your voice note.
-        */
+        
         { time: 0, text: "Hey..." },
         { time: 2, text: "I know things feel heavy right now." },
         { time: 5, text: "Just take a deep breath." },
@@ -7831,7 +7723,7 @@ const TiredApp = {
                 this.playIcon.classList.remove('fa-play');
                 this.playIcon.classList.add('fa-pause');
             }
-            // Visual pulse start
+            
             const pulse = document.getElementById('tired-bg-pulse');
             if (pulse) pulse.classList.add('animate-pulse');
         } else {
@@ -7849,19 +7741,19 @@ const TiredApp = {
         if (!this.audio) return;
         const currentTime = this.audio.currentTime;
 
-        // Update Progress
+        
         if (this.progressFill) {
             const pct = (currentTime / this.audio.duration) * 100 || 0;
             this.progressFill.style.width = pct + '%';
         }
 
-        // Find active text
+        
         if (this.display) {
             const activeSegment = this.transcript.slice().reverse().find(seg => currentTime >= seg.time);
 
             if (activeSegment) {
                 if (this.display.innerText !== activeSegment.text) {
-                    // Fade out-in effect
+                    
                     this.display.style.opacity = 0;
                     this.display.style.transform = 'translateY(10px) scale(0.95)';
 
@@ -7872,9 +7764,9 @@ const TiredApp = {
                     }, 300);
                 }
             } else {
-                // Intro state
+                
                 if (currentTime < 1 && this.display.innerText !== "Press play...") {
-                    // Keep it as is or reset
+                    
                 }
             }
         }
@@ -7957,7 +7849,7 @@ apps.push({
         </div>
     </div>
 `});
-//see me
+
 const ConstellationApp = {
     messages: [
         "Remember you are loved even when it's quiet.",
@@ -8110,9 +8002,9 @@ const WeatherEngine = {
         this.rainContainer = document.getElementById('bg-rain-container');
         if (!this.snowContainer || !this.rainContainer) return;
 
-        // Atmospheric cycles
-        setInterval(() => this.createFlake(), 200); // Snow (Him)
-        setInterval(() => this.createRaindrop(), 120); // Rain (Me)
+        
+        setInterval(() => this.createFlake(), 200); 
+        setInterval(() => this.createRaindrop(), 120); 
 
         document.addEventListener('mousemove', (e) => {
             this.targetWindX = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -8138,7 +8030,7 @@ const WeatherEngine = {
             x: parseFloat(flake.style.left),
             y: -10,
             speedX: (Math.random() - 0.5) * 0.1,
-            speedY: 100 / (duration * 60) // Per frame
+            speedY: 100 / (duration * 60) 
         });
 
         setTimeout(() => {
@@ -8169,7 +8061,7 @@ const WeatherEngine = {
     },
 
     checkCollisions() {
-        // Heartfelt Connection: When rain finds snow
+        
         for (let i = 0; i < this.flakes.length; i++) {
             const f = this.flakes[i];
             for (let j = 0; j < this.drops.length; j++) {
@@ -8202,7 +8094,7 @@ const WeatherEngine = {
         this.windX += (this.targetWindX - this.windX) * 0.05;
 
         this.flakes.forEach(f => {
-            f.y += f.speedY; // Track Y for collision
+            f.y += f.speedY; 
             f.x += f.speedX + (this.windX * 0.1);
             f.el.style.left = f.x + '%';
         });
@@ -8228,21 +8120,21 @@ const WeatherEngine = {
 window.addEventListener('load', () => WeatherEngine.init());
 
 
-/* === CURSOR TRAIL (SNOW) === */
+
 
 document.addEventListener('mousemove', (e) => {
-    // Increase frequency slightly for smooth trail
+    
     if (Math.random() < 0.25) {
         const flake = document.createElement('div');
 
-        // Randomly pick between common snowflake shapes
+        
         const icons = ['❄', '❅', '❆', '•'];
         const isDot = Math.random() < 0.3;
 
         flake.className = 'snow-flake';
         flake.innerText = isDot ? '•' : icons[Math.floor(Math.random() * icons.length)];
 
-        // Set random drift and rotation for the animation
+        
         const drift = (Math.random() - 0.5) * 200 + 'px';
         const rot = (Math.random() - 0.5) * 720 + 'deg';
         flake.style.setProperty('--drift', drift);
@@ -8251,28 +8143,22 @@ document.addEventListener('mousemove', (e) => {
         flake.style.left = e.clientX + 'px';
         flake.style.top = e.clientY + 'px';
 
-        // Scale variation
+        
         const scale = Math.random() * 0.5 + 0.5;
         flake.style.transform = `scale(${scale})`;
 
         document.body.appendChild(flake);
 
-        // Match timeout with CSS animation duration (2.5s)
+        
         setTimeout(() => flake.remove(), 2500);
     }
 });
 
 
 
-/**
- * ========================================
- * NOTIFICATION SYSTEM FOR V-SPACE
- * ========================================
- * A loving notification system with time-based,
- * interactive, and care-filled messages
- */
 
-// === CONFIGURATION ===
+
+
 const NotificationConfig = {
     enabled: true,
     seenNotifications: new Set(),
@@ -8282,9 +8168,9 @@ const NotificationConfig = {
     last1221Check: null
 };
 
-// === NOTIFICATION DATABASE ===
+
 const NotificationDatabase = {
-    // Affirmations (show randomly)
+    
     affirmations: [
         {
             id: 'virtual-hug',
@@ -8309,7 +8195,7 @@ const NotificationDatabase = {
         }
     ],
 
-    // Time-based care reminders (minutes from session start)
+    
     careReminders: [
         {
             id: 'hydration-2min',
@@ -8361,7 +8247,7 @@ const NotificationDatabase = {
         }
     ],
 
-    // Fun notifications (random triggers)
+    
     funNotifications: [
         {
             id: 'riddle-4min',
@@ -8404,7 +8290,7 @@ const NotificationDatabase = {
         }
     ],
 
-    // Inside jokes & special moments
+    
     insideJokes: [
         {
             id: 'hmmm-detected',
@@ -8443,7 +8329,7 @@ const NotificationDatabase = {
         }
     ],
 
-    // Time-specific greetings
+    
     timeGreetings: {
         morning: {
             id: 'morning-greeting',
@@ -8521,7 +8407,7 @@ const NotificationDatabase = {
     ]
 };
 
-// === NOTIFICATION TRACKER ===
+
 const NotificationTracker = {
     shown: new Set(),
     lastTimeBased: 0,
@@ -8529,20 +8415,20 @@ const NotificationTracker = {
     lastFunNotif: 0
 };
 
-// === CORE NOTIFICATION ENGINE ===
+
 function initNotificationSystem() {
     console.log('%c[Notification System] ðŸ’Œ Initializing...', 'color: #ec4899; font-weight: bold;');
 
-    // Check for 12:21 AM every minute
+    
     setInterval(check1221EasterEgg, 60000);
 
-    // Start time-based notification checker
-    setInterval(checkTimeBasedNotifications, 60000); // Check every minute
+    
+    setInterval(checkTimeBasedNotifications, 60000); 
 
-    // Random care messages every 10-20 minutes
+    
     const randomCareInterval = () => {
-        const min = 10 * 60 * 1000; // 10 minutes
-        const max = 20 * 60 * 1000; // 20 minutes
+        const min = 10 * 60 * 1000; 
+        const max = 20 * 60 * 1000; 
         return Math.random() * (max - min) + min;
     };
 
@@ -8605,7 +8491,7 @@ function show1221Notification() {
 }
 
 function checkTimeBasedNotifications() {
-    const sessionTime = Math.floor((new Date() - NotificationConfig.sessionStartTime) / 60000); // Minutes
+    const sessionTime = Math.floor((new Date() - NotificationConfig.sessionStartTime) / 60000); 
 
     NotificationDatabase.careReminders.forEach(reminder => {
         if (sessionTime >= reminder.minutes && !NotificationTracker.shown.has(reminder.id)) {
@@ -8624,10 +8510,10 @@ function checkTimeBasedNotifications() {
 
 function showRandomCareMessage() {
     const now = Date.now();
-    if (now - NotificationTracker.lastCareMessage < 5 * 60 * 1000) return; // Don't spam
+    if (now - NotificationTracker.lastCareMessage < 5 * 60 * 1000) return; 
 
     const messages = NotificationDatabase.careMessages.filter(m => !NotificationTracker.shown.has(m.id));
-    if (messages.length === 0) NotificationTracker.shown.clear(); // Reset if all shown
+    if (messages.length === 0) NotificationTracker.shown.clear(); 
 
     const message = messages[Math.floor(Math.random() * messages.length)] || NotificationDatabase.careMessages[0];
     NotificationTracker.lastCareMessage = now;
@@ -8638,7 +8524,7 @@ function showRandomFunNotification() {
     const now = Date.now();
     if (now - NotificationTracker.lastFunNotif < 10 * 60 * 1000) return;
 
-    const funs = NotificationDatabase.funNotifications.filter(f => !f.minutes); // Get non-time-based
+    const funs = NotificationDatabase.funNotifications.filter(f => !f.minutes); 
     const fun = funs[Math.floor(Math.random() * funs.length)];
 
     if (fun) {
@@ -8696,7 +8582,7 @@ function displayNotification(notification, isSpecial = false) {
     });
 }
 
-// === NOTIFICATION ACTIONS (Interactive Windows) ===
+
 function showHugAnimation() {
     const modal = createInteractiveModal({
         title: '🤗 Virtual Hug',
@@ -9198,7 +9084,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const desktop = document.getElementById('desktop');
         if (desktop && window.getComputedStyle(desktop).display !== 'none') {
             clearInterval(checkDesktop);
-            setTimeout(initNotificationSystem, 3000); // Start 3 seconds after desktop loads
+            setTimeout(initNotificationSystem, 3000); 
         }
     }, 500);
 });
@@ -9379,7 +9265,7 @@ function openBlueprint() {
         win.style.zIndex = ++zIndex;
         if (overlay) {
             overlay.style.opacity = '0.3';
-            overlay.style.pointerEvents = 'auto'; // Block clicks behind
+            overlay.style.pointerEvents = 'auto'; 
         }
     }
 }
@@ -9527,7 +9413,7 @@ const FlashApp = {
             if (this.sfx.success) this.sfx.success.play();
         }
 
-        // Persist
+        
         if (typeof userStats !== 'undefined') {
             userStats.trophies = this.state.trophies;
             if (typeof Persistence !== 'undefined' && Persistence.save) {
@@ -9595,7 +9481,7 @@ const FlashApp = {
                 player.grounded = true;
             }
 
-            ctx.fillStyle = '#fbbf24'; // Yellow
+            ctx.fillStyle = '#fbbf24'; 
             ctx.shadowColor = '#f59e0b';
             ctx.shadowBlur = 20;
             ctx.fillRect(player.x, player.y, player.w, player.h);
@@ -9771,7 +9657,7 @@ const FlashApp = {
 
             const txt = document.getElementById('reaction-text');
             if (txt) txt.innerText = "TOO SOON!";
-            this.state.score = 0; // Fail
+            this.state.score = 0; 
             setTimeout(() => this.stopGame(), 1000);
         } else if (this.reactionState === 'go') {
          
