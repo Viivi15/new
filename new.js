@@ -280,6 +280,7 @@ const state = { appsOpened: new Set(), countdownFinished: false, vaultUnlockAtte
 const RabbitSquad = {
     rabbits: [],
     bounds: { w: 600, h: 500 },
+    carrots: [],
 
     init() {
         const den = document.getElementById('rabbit-den');
@@ -295,7 +296,13 @@ const RabbitSquad = {
 
         const el = document.createElement('div');
         el.className = 'bun-item ' + type.cls;
-        el.innerHTML = '<div class="text-4xl dropdown-shadow-md">' + type.emoji + '</div><div class="bun-msg">' + type.msg + '</div>';
+        el.innerHTML = `
+            <div class="bun-inner relative group">
+                <div class="text-5xl drop-shadow-lg transform transition-transform duration-300 group-hover:-translate-y-2">${type.emoji}</div>
+                <div class="bun-badge absolute -bottom-2 left-1/2 -translate-x-1/2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">${type.role}</div>
+                <div class="bun-msg">${type.msg}</div>
+            </div>
+        `;
 
         const x = Math.random() * (this.bounds.w - 100) + 20;
         const y = Math.random() * (this.bounds.h - 150) + 80;
@@ -303,45 +310,83 @@ const RabbitSquad = {
         el.style.left = x + 'px';
         el.style.top = y + 'px';
 
+        // Interaction
         el.onclick = () => {
             el.classList.add('talking');
             if (type.action) type.action(el);
-            setTimeout(() => el.classList.remove('talking'), 2000);
+            setTimeout(() => el.classList.remove('talking'), 2500);
         };
 
-        const speed = Math.random() * 2000 + 2000;
-        const moveInt = setInterval(() => {
-            const nx = Math.random() * (this.bounds.w - 100) + 20;
-            const ny = Math.random() * (this.bounds.h - 150) + 80;
-            el.style.left = nx + 'px';
-            el.style.top = ny + 'px';
-        }, speed);
+        const rabbit = { el, type, x, y, state: 'idle', moveInt: null };
+
+        // Behavior Loop
+        rabbit.moveInt = setInterval(() => this.updateRabbit(rabbit), 2000 + Math.random() * 1000);
 
         field.appendChild(el);
-        this.rabbits.push({ el, type, moveInt });
+        this.rabbits.push(rabbit);
+    },
+
+    updateRabbit(rabbit) {
+        if (rabbit.state === 'sleeping') {
+            rabbit.el.querySelector('.bun-inner').innerHTML = `<div class="text-5xl hue-rotate-15">💤</div>`;
+            return;
+        }
+
+        // 1. Check for carrots
+        const carrot = this.findNearestCarrot(rabbit);
+        if (carrot) {
+            rabbit.state = 'eating';
+            this.moveTo(rabbit, carrot.x, carrot.y);
+            // Eat logic
+            if (this.getDistance(rabbit, carrot) < 30) {
+                this.removeCarrot(carrot);
+                rabbit.el.querySelector('.bun-msg').innerText = "Yum! 🥕";
+                rabbit.el.classList.add('talking');
+                setTimeout(() => rabbit.el.classList.remove('talking'), 1500);
+            }
+            return;
+        }
+
+        // 2. Idle Wandering
+        rabbit.state = 'idle';
+        const nx = Math.random() * (this.bounds.w - 100) + 20;
+        const ny = Math.random() * (this.bounds.h - 150) + 80;
+        this.moveTo(rabbit, nx, ny);
+    },
+
+    moveTo(rabbit, x, y) {
+        rabbit.el.style.transition = 'all 2s ease-in-out';
+        rabbit.el.style.left = x + 'px';
+        rabbit.el.style.top = y + 'px';
+        rabbit.x = x;
+        rabbit.y = y;
+    },
+
+    findNearestCarrot(rabbit) {
+        if (this.carrots.length === 0) return null;
+        return this.carrots.sort((a, b) => this.getDistance(rabbit, a) - this.getDistance(rabbit, b))[0];
+    },
+
+    getDistance(r1, r2) {
+        return Math.sqrt(Math.pow(r1.x - r2.x, 2) + Math.pow(r1.y - r2.y, 2));
     },
 
     assemble() {
         this.clear();
         const types = [
             {
-                id: 'madrid', emoji: '🐰⚽', cls: 'bun-madrid', msg: 'Hala Madrid!', action: (e) => {
+                id: 'madrid', role: 'The Fanatic', emoji: '🐰⚽', cls: 'bun-madrid', msg: 'Hala Madrid!', action: (e) => {
                     if (typeof confetti === 'function') confetti({ particleCount: 20, spread: 30, origin: { x: e.getBoundingClientRect().left / window.innerWidth, y: e.getBoundingClientRect().top / window.innerHeight } });
                 }
             },
-            { id: 'cozy', emoji: '🐰🧥', cls: 'bun-cozy', msg: 'So comfy...', action: () => { } },
-            { id: 'snow', emoji: '🐰❄️', cls: 'bun-snow', msg: 'Stay cool.', action: () => { } },
+            { id: 'cozy', role: 'The Softie', emoji: '🐰🧥', cls: 'bun-cozy', msg: 'I need a hoodie...', action: () => { } },
+            { id: 'snow', role: 'The Stoic', emoji: '🐰❄️', cls: 'bun-snow', msg: 'Cool as ice.', action: () => { } },
             {
-                id: 'love', emoji: '🐰🎀', cls: 'bun-love', msg: 'You are loved!', action: (e) => {
-                    const heart = document.createElement('div');
-                    heart.innerHTML = '❤️';
-                    heart.style.position = 'absolute';
-                    heart.style.left = '50%';
-                    heart.style.top = '-20px';
-                    heart.style.fontSize = '20px';
-                    heart.style.animation = 'floatUp 1s forwards';
-                    e.appendChild(heart);
-                    setTimeout(() => heart.remove(), 1000);
+                id: 'love', role: 'The Lover', emoji: '🐰🎀', cls: 'bun-love', msg: 'You matter! ❤️', action: (e) => {
+                    // Floating Heart logic
+                    const h = mbCreate('div', 'absolute -top-6 left-1/2 -translate-x-1/2 text-xl animate-float-up', '❤️');
+                    e.appendChild(h);
+                    setTimeout(() => h.remove(), 1000);
                 }
             }
         ];
@@ -352,25 +397,62 @@ const RabbitSquad = {
     celebrate() {
         this.rabbits.forEach(r => {
             if (r.type.id === 'madrid') {
-                r.el.innerHTML = '<div class="text-5xl dropdown-shadow-md">⚽🥅</div><div class="bun-msg">SIUUU!</div>';
-                r.el.classList.add('talking');
+                const inner = r.el.querySelector('.bun-inner');
+                // Temporarily change content
+                const originalHTML = inner.innerHTML;
+                inner.innerHTML = '<div class="text-6xl animate-bounce">⚽🥅</div><div class="bun-msg" style="opacity:1; top:-40px;">SIUUU!</div>';
 
                 const sfx = document.getElementById('madrid-siuuu');
                 if (sfx) sfx.play().catch(e => console.log(e));
 
                 setTimeout(() => {
-                    r.el.innerHTML = '<div class="text-4xl dropdown-shadow-md">🐰⚽</div><div class="bun-msg">Hala Madrid!</div>';
-                    r.el.classList.remove('talking');
+                    inner.innerHTML = originalHTML; // Restore
                 }, 3000);
             }
         });
     },
 
+    stop() {
+        this.rabbits.forEach(r => clearInterval(r.moveInt));
+    },
+
     napTime() {
         this.rabbits.forEach(r => {
+            r.state = 'sleeping';
             clearInterval(r.moveInt);
-            r.el.innerHTML = '<div class="text-4xl dropdown-shadow-md">🐰💤</div>';
+            // Visual update handled in next loop or immediate
+            r.el.querySelector('.bun-inner').innerHTML = '<div class="text-4xl">🐰💤</div>';
         });
+    },
+
+    feed() {
+        const field = document.getElementById('rabbit-field');
+        if (!field) return;
+
+        const x = Math.random() * (this.bounds.w - 100) + 50;
+        const y = Math.random() * (this.bounds.h - 100) + 50;
+
+        const carrotEl = document.createElement('div');
+        carrotEl.innerHTML = '🥕';
+        carrotEl.className = 'absolute text-2xl drop-shadow-md animate-bounce';
+        carrotEl.style.left = x + 'px';
+        carrotEl.style.top = y + 'px';
+
+        field.appendChild(carrotEl);
+
+        const carrotData = { x, y, el: carrotEl };
+        this.carrots.push(carrotData);
+
+        // Auto remove after 10s if not eaten
+        setTimeout(() => this.removeCarrot(carrotData), 10000);
+    },
+
+    removeCarrot(c) {
+        const idx = this.carrots.indexOf(c);
+        if (idx > -1) {
+            this.carrots.splice(idx, 1);
+            if (c.el && c.el.parentNode) c.el.remove();
+        }
     },
 
     clear() {
@@ -378,8 +460,16 @@ const RabbitSquad = {
         if (field) field.innerHTML = '';
         this.rabbits.forEach(r => clearInterval(r.moveInt));
         this.rabbits = [];
+        this.carrots = [];
     }
 };
+
+function mbCreate(tag, cls, html) {
+    const d = document.createElement(tag);
+    if (cls) d.className = cls;
+    if (html) d.innerHTML = html;
+    return d;
+}
 
 
 function initMrSnowApp() {
@@ -1105,92 +1195,120 @@ const apps = [
     `},
 
     {
-        id: 'madrid', title: 'HalaMadrid.exe', icon: '<img src="assets/icons/app_madrid.png" alt="madrid" style="width: 100%; height: 100%;">', dock: false, width: 600, height: 700, content: `
-        <div class="madrid-dashboard custom-scroll" id="madrid-dash">
-            <div class="madrid-header">
-                <div class="madrid-title">
-                    <span id="madrid-logo-icon">⚽</span> <span id="madrid-head-text">HALAMADRID DASHBOARD</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <div class="theme-toggle" onclick="toggleUCLMode()" title="Toggle UCL Mode">🏆</div>
-                    <div class="madrid-status" id="madrid-tier">Ultra Tier</div>
-                </div>
-            </div>
+        id: 'madrid', title: 'HalaMadrid.exe', icon: '<img src="assets/icons/app_madrid.png" alt="madrid" style="width: 100%; height: 100%;">', dock: false, width: 680, height: 750, content: `
+        <div class="madrid-modern-dash font-sans" id="madrid-dash">
+            <!-- BG Texture -->
+            <div class="madrid-bg-pattern"></div>
             
-            <div class="madrid-scroll-area">
-                <div class="madrid-grid">
-                    <div class="madrid-card">
-                        <div class="card-label">Passion Level</div>
-                        <div class="card-value">110%</div>
-                        <div class="passion-meter">
-                            <div id="passion-fill" class="passion-fill"></div>
-                        </div>
-                    </div>
-                    <div class="madrid-card">
-                        <div class="card-label">Status</div>
-                        <div class="card-value">No Ceiling</div>
-                    </div>
+            <div class="mad-header">
+                <div class="mad-logo cursor-pointer hover:opacity-80 transition" onclick="showMadridInfo()" title="What is this?">
+                    <span class="text-3xl">👑</span> RMA_SYSTEM
                 </div>
-
-                <div class="loyalty-section">
-                    <div class="loyalty-title">System Analysis: Priority Check</div>
-                    <div class="graph-container">
-                        <div class="graph-bar active" style="height: 100%;">
-                            <div class="graph-label">Football</div>
-                        </div>
-                        <div class="graph-bar special" style="height: 110%;">
-                            <div class="graph-label">Talking to Her</div>
-                        </div>
-                    </div>
-                    <div class="no-regrets-badge">
-                        CONCLUSION: NO REGRETS. ✨
-                    </div>
-                </div>
-
-                <div class="mt-8 space-y-3">
-                    <div class="text-[10px] text-white/30 uppercase tracking-widest font-bold">Memory Trophies</div>
-                    <div class="p-3 bg-white/5 border border-white/10 rounded-lg flex items-center gap-3">
-                        <span class="text-xl">🏆</span>
-                        <div>
-                            <div class="text-xs font-bold">The Missed Match Award</div>
-                            <div class="text-[10px] opacity-60">"Because talking to you was the bigger win."</div>
-                        </div>
-                    </div>
-                    <div class="p-3 bg-white/5 border border-white/10 rounded-lg flex items-center gap-3">
-                        <span class="text-xl">⭐</span>
-                        <div>
-                            <div class="text-xs font-bold">Top Scorer</div>
-                            <div class="text-[10px] opacity-60">Number of times you made him smile today.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="hala-btn" onclick="triggerMadridEffect(this)">Hala Madrid! 🚀</button>
-            </div>
-
-            <!-- NEWS TICKER -->
-            <div class="news-ticker-container">
-                <div class="news-ticker-wrapper">
-                    <div class="news-item">🚨 BREAKING: Harshit misses 89th minute goal to reply to a text.</div>
-                    <div class="news-item">⚽ UPDATE: "Siuuu" logic module improved by 200%.</div>
-                    <div class="news-item">⚠️ WARNING: Sleep schedule transfer listed for 2:00 AM conversations.</div>
-                    <div class="news-item">🏆 OFFICIAL: "Mr. Snow" alias renewed for another season.</div>
+                <div class="mad-tabs">
+                    <div class="mad-tab active" onclick="switchMadTab(this, 'dash')">DASHBOARD</div>
+                    <div class="mad-tab" onclick="switchMadTab(this, 'match')">MATCH CENTER</div>
                 </div>
             </div>
 
+            <!-- Tab 1: Dashboard -->
+            <div id="tab-dash" class="mad-content-area custom-scroll">
+                
+                <div class="mad-grid">
+                    <div class="mad-stat-card">
+                        <div class="mad-stat-val">100%</div>
+                        <div class="mad-stat-label">Royalty Level</div>
+                    </div>
+                    <div class="mad-stat-card">
+                        <div class="mad-stat-val">∞</div>
+                        <div class="mad-stat-label">Passion Metric</div>
+                    </div>
+                </div>
+
+                <!-- Priority Bars -->
+                <div class="priority-box">
+                    <div class="priority-header">
+                         <span><i class="fas fa-chart-bar mr-2"></i>Live Priorities</span>
+                         <span>STATUS: BALANCED</span>
+                    </div>
+                    <div class="priority-bars">
+                        <div class="p-bar-group">
+                            <div class="p-icon">⚽</div>
+                            <div class="p-track"><div class="p-fill football" id="bar-football"></div></div>
+                        </div>
+                        <div class="p-bar-group">
+                             <div class="p-icon">❤️</div>
+                             <div class="p-track"><div class="p-fill her" id="bar-her"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Quote Ticket -->
+                <div class="quote-ticket" onclick="triggerMadridEffect(this)">
+                    <div class="text-3xl">🎟️</div>
+                    <div class="flex-1">
+                        <div class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">ADMIT ONE: SANTIAGO BERNABÉU</div>
+                        <div class="text-sm font-bold text-blue-900 leading-tight">
+                            "I don't need a Ballon d'Or to know I'm winning at life."
+                        </div>
+                    </div>
+                    <div class="text-xs font-mono text-gray-400 rotate-90 origin-center whitespace-nowrap">SEAT: 19</div>
+                </div>
+
+                <div class="mt-8 text-center">
+                     <div class="text-[10px] text-white/30 uppercase tracking-widest mb-2">System Notification</div>
+                     <div class="text-sm text-yellow-500 font-medium animate-pulse">
+                        New Transfer Rumor: You → My Heart (Confirmed)
+                     </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Match Center -->
+            <div id="tab-match" class="mad-content-area custom-scroll match-tab-content">
+                <div class="score-board">
+                    <div class="team">
+                        <div class="team-logo">🧔🏻</div>
+                        <div class="team-name">HARSHIT FC</div>
+                    </div>
+                    <div class="score">3 - 0</div>
+                     <div class="team">
+                        <div class="team-logo">🌏</div>
+                        <div class="team-name">THE WORLD</div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center mb-6">
+                    <div class="live-badge">LIVE MATCH</div>
+                </div>
+
+                <div class="space-y-4">
+                     <div class="p-3 bg-white/5 rounded border-l-2 border-green-500 text-xs text-gray-300">
+                        <span class="text-green-400 font-bold">90+4'</span> GOAL! A perfect reply sent. The crowd goes wild.
+                     </div>
+                     <div class="p-3 bg-white/5 rounded border-l-2 border-yellow-500 text-xs text-gray-300">
+                        <span class="text-yellow-400 font-bold">88'</span> Yellow Card for being too cute.
+                     </div>
+                     <div class="p-3 bg-white/5 rounded border-l-2 border-blue-500 text-xs text-gray-300">
+                        <span class="text-blue-400 font-bold">HT</span> Tactical change: Swapped "Sleep" for "Talks".
+                     </div>
+                </div>
+            </div>
+
+            <!-- Sound -->
             <audio id="madrid-siuuu" src="https://www.myinstants.com/media/sounds/cristiano-ronaldo-siuuu.mp3"></audio>
         </div>
     `,
         onOpen() {
             setTimeout(() => {
-                const fill = document.getElementById('passion-fill');
-                if (fill) fill.style.width = '100%';
+                const f = document.getElementById('bar-football');
+                const h = document.getElementById('bar-her');
+                if (f) f.style.width = '85%';
+                if (h) h.style.width = '100%';
             }, 500);
         }
     },
 
     {
-        id: 'flash', title: 'Fastest Alive', icon: '<img src="assets/icons/app_speed.png" alt="flash" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 800, height: 600, content: `
+        id: 'flash', title: 'Fastest Alive', icon: '<img src="assets/icons/app_speed.png" alt="flash" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 900, height: 700, onOpen: () => FlashApp.init(), content: `
         <style>
             @keyframes lightning-flash {
                 0%, 100% { opacity: 0; }
@@ -1210,83 +1328,184 @@ const apps = [
                 background: url('assets/gifs/lightning.gif') center/cover;
                 mix-blend-mode: screen;
                 opacity: 0.3;
+                pointer-events: none;
+            }
+            .flash-menu-btn {
+                background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(255,255,255,0.1);
+                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+                position: relative;
+                overflow: hidden;
+            }
+            .flash-menu-btn::before {
+                content: '';
+                position: absolute;
+                top: 0; left: 0; w: 100%; h: 100%;
+                background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+                transform: translateX(-100%);
+                transition: 0.5s;
+            }
+            .flash-menu-btn:hover::before {
+                transform: translateX(100%);
+            }
+            .flash-menu-btn:hover {
+                background: rgba(255,215,0,0.1);
+                border-color: rgba(255,215,0,0.6);
+                transform: translateY(-5px) scale(1.02);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.5);
             }
         </style>
         <div id="flash-app-container" class="h-full w-full speed-background relative overflow-hidden font-sans text-white select-none">
             <!-- Lightning Overlay -->
-            <div class="absolute inset-0 lightning-overlay pointer-events-none"></div>
+            <div class="absolute inset-0 lightning-overlay"></div>
             
-            <!-- Audio Elements -->
-            <audio id="sfx-hover" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio> <!-- Electric Buzz -->
-            <audio id="sfx-wait" src="https://assets.mixkit.co/active_storage/sfx/212/212-preview.mp3" loop></audio> <!-- Heartbeat/Tension -->
-            <audio id="sfx-signal" src="https://assets.mixkit.co/active_storage/sfx/1130/1130-preview.mp3"></audio> <!-- Thunder -->
-            <audio id="sfx-success" src="https://assets.mixkit.co/active_storage/sfx/2044/2044-preview.mp3"></audio> <!-- Whoosh -->
-            <audio id="sfx-fail" src="https://assets.mixkit.co/active_storage/sfx/947/947-preview.mp3"></audio> <!-- Error Buzz -->
+            <!-- Menu -->
+            <div id="flash-menu" class="absolute inset-0 flex flex-col items-center justify-center z-10 p-8 space-y-8 transition-opacity duration-500">
+                <div class="text-center">
+                    <h1 class="text-6xl font-black italic uppercase tracking-tighter text-yellow-400 drop-shadow-[0_0_25px_rgba(255,200,0,0.6)]" style="font-family: 'Inter', sans-serif; -webkit-text-stroke: 2px #b45309;">Speed Force</h1>
+                    <p class="text-yellow-200/60 font-mono tracking-[0.5em] text-xs mt-2 uppercase">Harshit Edition</p>
+                </div>
 
-            <!-- INTRO SCREEN -->
-            <div id="flash-intro" class="absolute inset-0 flex flex-col items-center justify-center z-10 p-8 text-center">
-                <h1 class="text-4xl font-black italic tracking-tighter mb-2 drop-shadow-[0_0_10px_rgba(251,191,36,0.8)] uppercase">Speed Force</h1>
-                <p class="text-yellow-200 mb-8 font-mono text-xs tracking-widest">STATUS: CONNECTED</p>
-                
-                <button onclick="FlashApp.startRun()" onmouseenter="FlashApp.playHover()" class="px-8 py-3 bg-yellow-400 text-red-900 font-black text-xl italic uppercase tracking-wider skew-x-[-10deg] hover:scale-110 hover:bg-white hover:text-red-600 transition-all duration-200 shadow-[0_0_20px_rgba(251,191,36,0.6)] border-2 border-red-600">
-                    RUN
-                </button>
-                <div id="flash-pb-intro" class="mt-4 text-[10px] text-white/50 font-mono tracking-widest">PERSONAL BEST: --ms</div>
-            </div>
+                <div class="flex gap-6 mt-4">
+                    <div class="text-center px-6 py-3 bg-black/40 rounded-xl border border-white/10 backdrop-blur-md">
+                        <div class="text-[10px] text-gray-400 uppercase tracking-wider">Total XP</div>
+                        <div class="text-2xl font-bold text-blue-400" id="flash-total-xp">0</div>
+                    </div>
+                    <div class="text-center px-6 py-3 bg-black/40 rounded-xl border border-white/10 backdrop-blur-md">
+                         <div class="text-[10px] text-gray-400 uppercase tracking-wider">Trophies</div>
+                        <div class="text-2xl font-bold text-yellow-400" id="flash-total-trophies">0</div>
+                    </div>
+                </div>
 
-            <!-- GAME SCREEN -->
-            <div id="flash-game" class="absolute inset-0 hidden z-20 cursor-pointer" onclick="FlashApp.handleTap()">
-                <div id="flash-game-bg" class="absolute inset-0 bg-black/80 flex flex-col items-center justify-center transition-colors duration-0">
-                    <div id="flash-instruction" class="text-2xl font-bold uppercase tracking-widest animate-pulse">Wait for Signal...</div>
-                    <div class="text-xs text-white/50 mt-4 font-mono">Tap instantly when screen turns GREEN</div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl mt-4">
+                    <!-- Mode 1 -->
+                    <button onclick="FlashApp.startMode('runner')" class="flash-menu-btn p-8 rounded-2xl flex flex-col items-center gap-4 group">
+                         <div class="text-5xl group-hover:scale-110 transition duration-300 filter drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]">🏃‍♂️</div>
+                         <div>
+                            <div class="text-xl font-bold italic uppercase text-white group-hover:text-blue-300">Memory Runner</div>
+                            <div class="text-[10px] text-gray-400 mt-1">Dodge obstacles, collect moments</div>
+                         </div>
+                    </button>
+                     <!-- Mode 2 -->
+                    <button onclick="FlashApp.startMode('madrid')" class="flash-menu-btn p-8 rounded-2xl flex flex-col items-center gap-4 group">
+                         <div class="text-5xl group-hover:scale-110 transition duration-300 filter drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">⚽</div>
+                         <div>
+                            <div class="text-xl font-bold italic uppercase text-white group-hover:text-blue-300">Hala Madrid</div>
+                            <div class="text-[10px] text-gray-400 mt-1">Tap the goals, ignore distractions</div>
+                         </div>
+                    </button>
+                    <!-- Mode 3 -->
+                    <button onclick="FlashApp.startMode('reaction')" class="flash-menu-btn p-8 rounded-2xl flex flex-col items-center gap-4 group">
+                         <div class="text-5xl group-hover:scale-110 transition duration-300 filter drop-shadow-[0_0_10px_rgba(234,179,8,0.5)]">⚡</div>
+                         <div>
+                            <div class="text-xl font-bold italic uppercase text-white group-hover:text-yellow-300">Quick Click</div>
+                            <div class="text-[10px] text-gray-400 mt-1">Test your pure reaction speed</div>
+                         </div>
+                    </button>
                 </div>
             </div>
 
-            <!-- RESULT SCREEN -->
-            <div id="flash-result" class="absolute inset-0 hidden flex-col items-center justify-center z-30 bg-black/90 p-8 text-center">
-                <div class="text-gray-400 text-sm font-mono mb-2">REACTION TIME</div>
-                <div id="flash-time-display" class="text-6xl font-black text-yellow-400 italic mb-4">0ms</div>
-                <div id="flash-rank-display" class="text-xl text-white font-serif mb-4 text-red-400">rank</div>
-                <div id="flash-new-record" class="hidden text-xs font-bold bg-yellow-400 text-black px-2 py-1 rounded mb-6 animate-bounce">🏆 NEW PERSONAL RECORD!</div>
-                
-                <button onclick="FlashApp.reset()" onmouseenter="FlashApp.playHover()" class="px-6 py-2 border border-white/20 hover:bg-white/10 text-white rounded uppercase tracking-widest text-xs transition">Try Again</button>
+            <!-- Runner Game -->
+            <div id="flash-runner" class="absolute inset-0 hidden z-20">
+                <canvas id="runner-canvas" class="w-full h-full block bg-black/20"></canvas>
+                <div class="absolute top-6 left-6 text-2xl font-black italic text-yellow-400 drop-shadow-md">XP: <span id="runner-xp">0</span></div>
+                <div class="absolute bottom-6 w-full text-center text-white/40 text-xs font-mono">ARROWS to Move • UP to Jump</div>
+                <button onclick="FlashApp.stopGame()" class="absolute top-6 right-6 px-4 py-2 bg-red-600/20 text-red-400 text-xs border border-red-500/50 rounded hover:bg-red-600/40 transition">EXIT</button>
             </div>
+
+            <!-- Madrid Game -->
+            <div id="flash-madrid" class="absolute inset-0 hidden z-20 overflow-hidden cursor-crosshair">
+                 <div id="madrid-game-area" class="absolute inset-0"></div>
+                 <div class="absolute top-6 left-6 text-2xl font-black italic text-blue-400 drop-shadow-md">SCORE: <span id="madrid-score">0</span></div>
+                 <div class="absolute bottom-10 w-full text-center text-white/50 animate-pulse text-lg font-bold">Tap ONLY the Real Madrid stuff!</div>
+                 <button onclick="FlashApp.stopGame()" class="absolute top-6 right-6 px-4 py-2 bg-red-600/20 text-red-400 text-xs border border-red-500/50 rounded hover:bg-red-600/40 transition">EXIT</button>
+            </div>
+
+            <!-- Reaction Game -->
+            <div id="flash-reaction" class="absolute inset-0 hidden z-20 flex-col items-center justify-center cursor-pointer select-none" onclick="FlashApp.handleReactionTap()">
+                <div id="reaction-bg" class="absolute inset-0 transition-colors duration-200 bg-red-900/50"></div>
+                <div class="relative z-10 text-center pointer-events-none">
+                     <div id="reaction-icon" class="text-8xl mb-6 filter drop-shadow-lg transition-transform duration-100">⚠️</div>
+                     <h2 id="reaction-text" class="text-5xl font-black uppercase text-white tracking-widest drop-shadow-xl">Wait...</h2>
+                     <p id="reaction-sub" class="text-white/60 mt-4 font-mono">Tap as soon as it turns GREEN</p>
+                </div>
+                 <button onclick="FlashApp.stopGame()" class="absolute top-6 right-6 px-4 py-2 bg-white/10 text-white/60 text-xs border border-white/20 rounded hover:bg-white/20 transition z-30 pointer-events-auto">EXIT</button>
+            </div>
+            
+            <!-- Result Overlay -->
+            <div id="flash-result" class="absolute inset-0 bg-black/95 z-50 flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300">
+                 <h2 class="text-2xl font-bold text-gray-400 mb-2 uppercase tracking-widest">Session Complete</h2>
+                 <div class="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-yellow-400 to-orange-500 italic mb-4" id="flash-result-val">0</div>
+                 <div id="flash-reward-msg" class="text-blue-300 text-lg mb-10 font-medium h-8"></div>
+                 <button onclick="FlashApp.showMenu()" class="px-10 py-3 bg-white text-black font-black uppercase tracking-widest hover:scale-105 transition hover:bg-blue-50 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.4)]">Continue</button>
+            </div>
+
         </div>
-    `},
+    `,
+    },
 
     {
         id: 'rabbit', title: 'The Rabbit Squad', icon: '<img src="assets/icons/app_rabbit_new.png" alt="rabbit" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 700, height: 600, onOpen: () => RabbitSquad.init(), content: `
-        <div class="h-full bg-[#f0fdf4] relative overflow-hidden select-none font-sans" id="rabbit-den">
-            <!-- Background: Soft Field -->
-            <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#f0fdf4] to-[#dcfce7]"></div>
+        <div class="h-full bg-[#f0fdf4] relative overflow-hidden select-none font-sans flex flex-col" id="rabbit-den">
+            <!-- Background: Soft Field with Depth -->
+            <div class="absolute inset-0 z-0 bg-gradient-to-b from-sky-100 via-green-50 to-emerald-100"></div>
+             <!-- Decorative Clouds -->
+             <div class="absolute top-10 left-10 text-6xl opacity-40 blur-sm animate-pulse">☁️</div>
+             <div class="absolute top-20 right-20 text-4xl opacity-30 blur-sm">☁️</div>
+
+             <!-- Header Info -->
+             <div class="relative z-20 pt-4 px-6 flex justify-between items-start">
+                 <div>
+                    <h2 class="text-lg font-bold text-emerald-800 tracking-wide">The Burrow</h2>
+                    <p class="text-[10px] text-emerald-600 uppercase tracking-widest font-bold opacity-70">Harshit's Emotional Support Unit</p>
+                 </div>
+                 <div class="bg-white/40 px-3 py-1 rounded-full text-xs font-mono text-emerald-700">Status: Active</div>
+             </div>
             
             <!-- Controls -->
-            <div class="absolute top-4 left-0 w-full z-20 flex justify-center gap-2">
-                <button onclick="RabbitSquad.assemble()" class="px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full text-xs font-bold text-green-700 shadow-sm hover:scale-105 transition border border-green-200">Assemble</button>
-                <button onclick="RabbitSquad.celebrate()" class="px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full text-xs font-bold text-blue-700 shadow-sm hover:scale-105 transition border border-blue-200">Goal! ⚽</button>
-                <button onclick="RabbitSquad.napTime()" class="px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full text-xs font-bold text-indigo-700 shadow-sm hover:scale-105 transition border border-indigo-200">Nap Time 💤</button>
+            <div class="absolute bottom-6 left-0 w-full z-20 flex justify-center gap-3">
+                <button onclick="RabbitSquad.stop()" class="group relative px-4 py-2 bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/40 hover:scale-105 transition active:scale-95">
+                    <span class="text-xl">🛑</span>
+                    <span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">Freeze</span>
+                </button>
+                 <button onclick="RabbitSquad.assemble()" class="group relative px-4 py-2 bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/40 hover:scale-105 transition active:scale-95">
+                    <span class="text-xl">📢</span>
+                    <span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">Assembly</span>
+                </button>
+                <button onclick="RabbitSquad.feed()" class="group relative px-8 py-2 bg-orange-400/90 text-white backdrop-blur-md rounded-2xl shadow-lg shadow-orange-300/30 border border-orange-300 hover:scale-105 hover:bg-orange-500 transition active:scale-95 animate-pulse-slow">
+                    <span class="font-bold tracking-wider text-sm flex items-center gap-2">🥕 FEED</span>
+                </button>
+                <button onclick="RabbitSquad.celebrate()" class="group relative px-4 py-2 bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/40 hover:scale-105 transition active:scale-95">
+                    <span class="text-xl">⚽</span>
+                    <span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">Goal</span>
+                </button>
+                 <button onclick="RabbitSquad.napTime()" class="group relative px-4 py-2 bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/40 hover:scale-105 transition active:scale-95">
+                    <span class="text-xl">💤</span>
+                     <span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">Sleep</span>
+                </button>
             </div>
 
             <!-- Rabbits Container -->
-            <div id="rabbit-field" class="absolute inset-0 z-10 pointer-events-none">
+            <div id="rabbit-field" class="absolute inset-x-0 bottom-[80px] top-[80px] z-10 pointer-events-none">
                 <!-- Rabbits injected here -->
             </div>
             
             <style>
-                .bun-item { position: absolute; cursor: pointer; transition: all 1.5s ease-in-out; pointer-events: auto; display: flex; flex-direction: column; items-center: center; }
-                .bun-item:hover { transform: scale(1.1); transition: transform 0.2s; }
-                .bun-msg { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); background: white; padding: 4px 8px; border-radius: 8px; font-size: 11px; font-weight: bold; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1); color: #374151; }
-                .bun-item:hover .bun-msg, .bun-item.talking .bun-msg { opacity: 1; top: -35px; }
+                .bun-item { position: absolute; cursor: pointer; transition: all 1s ease-in-out; pointer-events: auto; z-index: 10; }
+                .bun-msg { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); background: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; opacity: 0; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color: #374151; border: 1px solid #f3f4f6; }
+                .bun-msg::after { content:''; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg); width: 8px; height: 8px; background: white; border-bottom: 1px solid #f3f4f6; border-right: 1px solid #f3f4f6; }
+                .bun-item:hover .bun-msg, .bun-item.talking .bun-msg { opacity: 1; top: -50px; transform: translateX(-50%) scale(1.1); }
                 
-                .bun-madrid { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)); }
-                .bun-snow { filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.5)); }
-                .bun-love { filter: drop-shadow(0 0 5px rgba(255, 192, 203, 0.8)); }
-                
-                @keyframes floatUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-20px); } }
+                .bun-madrid { filter: drop-shadow(0 4px 0 rgba(234, 179, 8, 0.2)); }
+                .bun-snow { filter: drop-shadow(0 4px 0 rgba(6, 182, 212, 0.2)); }
+                .bun-love { filter: drop-shadow(0 4px 0 rgba(244, 63, 94, 0.2)); }
+                .bun-cozy { filter: drop-shadow(0 4px 0 rgba(100, 100, 100, 0.2)); }
+
+                @keyframes floatUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-40px) scale(1.5); } }
             </style>
         </div>
     `},
-
+    //see me
     {
         id: 'secret-gallery', title: 'The Hidden Corner', icon: '<img src="assets/icons/app_memories_new.png" alt="hidden" style="width: 100%; height: 100%;">', dock: false, width: 900, height: 650, content: `
         <div class="h-full bg-black p-8 relative overflow-hidden">
@@ -1324,6 +1543,7 @@ const apps = [
         </div>
     `},
 
+    //see me
     {
         id: 'inkpot', title: 'The Inkpot', icon: '<img src="assets/icons/app_inkpot.png" alt="inkpot">', dock: false, folder: 'folder-feelings', width: 800, height: 750, onOpen: initInkpot, content: `
         <div class="inkpot-wrapper h-full relative overflow-hidden bg-[#f0e6d2]">
@@ -1354,6 +1574,7 @@ const apps = [
         </div>
     `},
 
+    //see me
     {
         id: 'last-thing', title: 'One Last Thing', icon: '<img src="assets/icons/app_rose.png" alt="last thing" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 500, height: 400, content: `
         <div class="h-full bg-black flex flex-col items-center justify-center text-center p-6 relative overflow-y-auto custom-scroll">
@@ -1376,7 +1597,7 @@ const apps = [
              </div>
         </div>
     `},
-
+    //see me
     {
         id: 'tired', title: 'When Tired', icon: '<img src="assets/icons/app_sleep.png" alt="tired" style="width: 100%; height: 100%;">', dock: true, width: 600, height: 500, onOpen: initTired, content: `
         <div id="tired-container" class="tired-container">
@@ -1385,6 +1606,7 @@ const apps = [
         </div>
     `},
 
+    //see me
     {
         id: 'app-grown', title: '19.exe', icon: '<img src="assets/icons/app_19.png" alt="19">', dock: true, width: 800, height: 700, content: `
         <div class="h-full bg-gradient-to-br from-slate-50 to-indigo-50/50 p-8 flex flex-col items-center relative overflow-hidden">
@@ -1431,7 +1653,7 @@ const apps = [
             </div>
         </div>
     `},
-
+    //see me
     {
         id: 'future', title: 'Future You', icon: '<img src="assets/icons/app_future_new.png" alt="future" style="width: 100%; height: 100%;">', dock: false, width: 800, height: 600, content: `
         <div class="h-full w-full relative bg-black custom-scroll overflow-y-auto group">
@@ -1454,7 +1676,7 @@ const apps = [
             </div>
         </div>
     `},
-
+    //see me
     {
         id: 'inkpot-new', title: 'The Inkpot', icon: '<img src="assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 500, height: 600, onOpen: initInkpot, content: `
         <div class="inkpot-bg">
@@ -5370,42 +5592,78 @@ function startFactsApp() {
 
 
 
+// Helper to switch tabs in Modern Madrid App
+function switchMadTab(tabBtn, tabId) {
+    // 1. Reset all tabs
+    const allTabs = document.querySelectorAll('.mad-tab');
+    allTabs.forEach(t => t.classList.remove('active'));
+
+    // 2. Set active tab
+    tabBtn.classList.add('active');
+
+    // 3. Toggle Content
+    const dash = document.getElementById('tab-dash');
+    const match = document.getElementById('tab-match');
+
+    if (tabId === 'dash') {
+        dash.style.display = 'block';
+        match.style.display = 'none';
+    } else {
+        dash.style.display = 'none';
+        match.style.display = 'block';
+    }
+}
+window.switchMadTab = switchMadTab; // Expose global
+
 function triggerMadridEffect(btn) {
-    const balls = ['⚽', '⚽️', '🧤', '🏆'];
+    // Add pulsing effect to the clicked element ticket
+    const originalTransform = btn.style.transform;
+    btn.style.transform = "scale(0.95)";
+    setTimeout(() => {
+        btn.style.transform = originalTransform || "";
+    }, 150);
+
+    const balls = ['⚽', '⚽️', '🧤', '🏆', '👑', '🤍'];
     const rect = btn.getBoundingClientRect();
 
     // Create particles
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 30; i++) {
         const p = document.createElement('div');
         p.className = 'ball-particle';
         p.innerText = balls[Math.floor(Math.random() * balls.length)];
 
-        const tx = (Math.random() - 0.5) * 400;
-        const ty = (Math.random() - 1) * 400;
+        const tx = (Math.random() - 0.5) * 600;
+        const ty = (Math.random() - 1) * 600;
 
         p.style.setProperty('--tx', `${tx}px`);
         p.style.setProperty('--ty', `${ty}px`);
         p.style.left = `${rect.left + rect.width / 2}px`;
         p.style.top = `${rect.top}px`;
 
+        // Randomize size
+        p.style.fontSize = Math.random() > 0.5 ? '24px' : '16px';
+
         document.body.appendChild(p);
-        setTimeout(() => p.remove(), 1000);
+        setTimeout(() => p.remove(), 1500);
     }
 
     // Audio
     const audio = document.getElementById('madrid-siuuu');
     if (audio) {
-        audio.volume = 0.5;
+        audio.volume = 0.6;
         audio.currentTime = 0;
         audio.play().catch(e => console.log("Audio play blocked", e));
     }
-
-    // Feedback
-    btn.innerText = "SIUUUU!!! ⚽";
-    setTimeout(() => {
-        btn.innerText = "Hala Madrid! 🚀";
-    }, 2000);
 }
+
+function showMadridInfo() {
+    createModal({
+        title: "RMA System 👑",
+        icon: "⚽",
+        desc: "This is your fan dashboard. It tracks your loyalty to Real Madrid... and ensures you don't love football MORE than your partner (mostly). Includes live match stats and a dedicated 'Siuuu' button for emergencies."
+    });
+}
+window.showMadridInfo = showMadridInfo;
 
 function toggleUCLMode() {
     const dash = document.getElementById('madrid-dash');
@@ -7648,7 +7906,7 @@ const TiredApp = {
 apps.push({
     id: 'tired',
     title: 'When Tired',
-    icon: 'assets/icons/app_sleep.png', // Ensure this icon exists or use emoji
+    icon: 'assets/icons/app_sleep.png', 
     dock: false,
     folder: 'folder-feelings',
     width: 600,
@@ -7699,7 +7957,7 @@ apps.push({
         </div>
     </div>
 `});
-
+//see me
 const ConstellationApp = {
     messages: [
         "Remember you are loved even when it's quiet.",
@@ -8217,7 +8475,6 @@ const NotificationDatabase = {
         }
     },
 
-    // Care messages (show periodically)
     careMessages: [
         {
             id: 'water-check',
@@ -8229,7 +8486,7 @@ const NotificationDatabase = {
         {
             id: 'smile-reminder',
             title: '😊 Emotion Module',
-            body: 'Hey... smile a little. Just for me.',
+            body: 'smile smile 😊',
             emoji: '💛',
             action: () => showSmileEncouragement()
         },
@@ -8298,7 +8555,6 @@ function initNotificationSystem() {
 
     scheduleNextCareMessage();
 
-    // Random fun notification every 15-30 minutes
     const randomFunInterval = () => {
         const min = 15 * 60 * 1000;
         const max = 30 * 60 * 1000;
@@ -8317,7 +8573,6 @@ function initNotificationSystem() {
     console.log('%c[Notification System] âœ… Ready to care for you', 'color: #10b981; font-weight: bold;');
 }
 
-// === 12:21 AM EASTER EGG ===
 function check1221EasterEgg() {
     const now = new Date();
     const hours = now.getHours();
@@ -8346,14 +8601,12 @@ function show1221Notification() {
         }
     };
 
-    displayNotification(notification, true); // Special = true for this one
+    displayNotification(notification, true); 
 }
 
-// === TIME-BASED NOTIFICATIONS ===
 function checkTimeBasedNotifications() {
     const sessionTime = Math.floor((new Date() - NotificationConfig.sessionStartTime) / 60000); // Minutes
 
-    // Check care reminders
     NotificationDatabase.careReminders.forEach(reminder => {
         if (sessionTime >= reminder.minutes && !NotificationTracker.shown.has(reminder.id)) {
             NotificationTracker.shown.add(reminder.id);
@@ -8361,7 +8614,6 @@ function checkTimeBasedNotifications() {
         }
     });
 
-    // Check fun notifications
     NotificationDatabase.funNotifications.forEach(fun => {
         if (fun.minutes && sessionTime >= fun.minutes && !NotificationTracker.shown.has(fun.id)) {
             NotificationTracker.shown.add(fun.id);
@@ -8370,7 +8622,6 @@ function checkTimeBasedNotifications() {
     });
 }
 
-// === RANDOM MESSAGE SELECTORS ===
 function showRandomCareMessage() {
     const now = Date.now();
     if (now - NotificationTracker.lastCareMessage < 5 * 60 * 1000) return; // Don't spam
@@ -8396,9 +8647,7 @@ function showRandomFunNotification() {
     }
 }
 
-// === DISPLAY NOTIFICATION (Main Function) ===
 function displayNotification(notification, isSpecial = false) {
-    // Create notification element
     const notifEl = document.createElement('div');
     notifEl.className = `notification-toast ${isSpecial ? 'special' : ''}`;
     notifEl.innerHTML = `
@@ -8410,7 +8659,6 @@ function displayNotification(notification, isSpecial = false) {
         <div class="notif-close" onclick="this.parentElement.classList.add('dismissed')">×</div>
     `;
 
-    // Add click handler
     notifEl.onclick = (e) => {
         if (e.target.classList.contains('notif-close')) return;
         notifEl.classList.add('clicked');
@@ -8422,7 +8670,6 @@ function displayNotification(notification, isSpecial = false) {
         }, 300);
     };
 
-    // Add to DOM
     let container = document.getElementById('notification-container');
     if (!container) {
         container = document.createElement('div');
@@ -8432,10 +8679,8 @@ function displayNotification(notification, isSpecial = false) {
 
     container.appendChild(notifEl);
 
-    // Animate in
     setTimeout(() => notifEl.classList.add('show'), 10);
 
-    // Auto-dismiss after 10 seconds (unless special)
     if (!isSpecial) {
         setTimeout(() => {
             if (!notifEl.classList.contains('dismissed')) {
@@ -8444,7 +8689,6 @@ function displayNotification(notification, isSpecial = false) {
         }, 10000);
     }
 
-    // Remove from DOM after animation
     notifEl.addEventListener('transitionend', (e) => {
         if (e.propertyName === 'opacity' && notifEl.classList.contains('dismissed')) {
             setTimeout(() => notifEl.remove(), 300);
@@ -8660,11 +8904,11 @@ function checkRiddleAnswer() {
     const result = document.getElementById('riddle-result');
 
     if (answer.includes('needle') || answer.includes('storm') || answer.includes('potato')) {
-        result.innerHTML = 'âœ… Correct! Smart cookie! ðŸª';
+        result.innerHTML = '✔… Correct! Smart cookie! 🍪';
         result.className = 'riddle-result correct';
         fireConfetti();
     } else {
-        result.innerHTML = 'ðŸ¤” Try again! (Hint: Think sewing... or weather... or vegetables!)';
+        result.innerHTML = '🤔 Try again! (Hint: Think sewing... or weather... or vegetables!)';
         result.className = 'riddle-result incorrect';
     }
 }
@@ -8680,15 +8924,15 @@ function showMoreJokes() {
 
     const joke = jokes[Math.floor(Math.random() * jokes.length)];
     createModal({
-        title: 'ðŸ˜„ Dad Joke Activated',
+        title: '😄„ Dad Joke Activated',
         desc: joke,
-        icon: 'ðŸ¤“'
+        icon: '🤓'
     });
 }
 
 function showFullPoem() {
     createInteractiveModal({
-        title: 'ðŸ“œ Poem For You',
+        title: '📜 Poem For You',
         content: `
             <div class="poem-display">
                 <div class="poem-text">
@@ -8700,7 +8944,7 @@ function showFullPoem() {
                     You matter here,<br>
                     In this digital space,<br>
                     Where care is coded<br>
-                    In every place. âœ¨
+                    In every place. ✨
                 </div>
             </div>
         `
@@ -8775,7 +9019,6 @@ function revealCrypticMessage() {
     }
 }
 
-// Additional care functions
 function showThinkingBubble() {
     createModal({
         title: '🤔 Thinking...',
@@ -8817,7 +9060,7 @@ function showCuteArchives() {
 function showDreamWish() {
     createModal({
         title: '✨ Dream Wish',
-        desc: 'Acche acche sapne dekh. (Have the sweetest dreams.) May tonight bring you peace and rest. 🌟',
+        desc: 'Acche acche sapne dekhh (Have the sweetest dreams.) May tonight bring you peace and rest. 🌟',
         icon: '🌙'
     });
 }
@@ -8915,7 +9158,6 @@ function showCareMessage() {
     });
 }
 
-// === HELPER: INTERACTIVE MODAL ===
 function createInteractiveModal({ title, content, onOpen }) {
     const overlay = document.createElement('div');
     overlay.className = 'interactive-modal-overlay';
@@ -8933,18 +9175,15 @@ function createInteractiveModal({ title, content, onOpen }) {
 
     document.body.appendChild(overlay);
 
-    // Click outside to close
     overlay.onclick = (e) => {
         if (e.target === overlay) overlay.remove();
     };
 
-    // Trigger onOpen callback if provided
     if (onOpen) setTimeout(onOpen, 100);
 
     return overlay;
 }
 
-// === HELPER: CONFETTI ===
 function fireConfetti() {
     if (typeof confetti === 'function') {
         confetti({
@@ -8954,10 +9193,7 @@ function fireConfetti() {
         });
     }
 }
-
-// === INITIALIZE ON DESKTOP LOAD ===
 document.addEventListener('DOMContentLoaded', () => {
-    // Wait for desktop to be visible before starting notifications
     const checkDesktop = setInterval(() => {
         const desktop = document.getElementById('desktop');
         if (desktop && window.getComputedStyle(desktop).display !== 'none') {
@@ -8969,17 +9205,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 console.log('%c[Notification System]  Loaded and ready', 'color: #ec4899; font-weight: bold;');
 
-/* === CONTEXT MENU LOGIC === */
 document.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     const menu = document.getElementById('ctx-menu');
     if (!menu) return;
 
-    // Position
     let x = e.clientX;
     let y = e.clientY;
 
-    // Boundary check
     if (x + 200 > window.innerWidth) x -= 200;
     if (y + 300 > window.innerHeight) y -= 300;
 
@@ -8997,7 +9230,6 @@ document.addEventListener('click', (e) => {
     }
 });
 
-/* === HELPER: CLOSE MODAL === */
 window.closeModal = function (id) {
     const el = document.getElementById(id);
     if (el) {
@@ -9006,7 +9238,6 @@ window.closeModal = function (id) {
     }
 };
 
-/* === NOT DUMB APP LOGIC === */
 let notDumbIdx = 0;
 const notDumbData = [
     {
@@ -9079,7 +9310,6 @@ function renderNotDumbSlide() {
 
     if (!content) return;
 
-    // Animate out previous content if any (simple clear for now)
     content.innerHTML = `
         <div class="flex flex-col h-full justify-center animate-fade-in-up">
             <div class="mb-4">
@@ -9093,12 +9323,10 @@ function renderNotDumbSlide() {
         </div>
     `;
 
-    // Update button text
     if (navBtn) {
         navBtn.innerHTML = `${data.btn} <span class="ml-1">➜</span>`;
     }
 
-    // Show nav
     if (nav) {
         setTimeout(() => nav.style.opacity = '1', 500);
     }
@@ -9113,20 +9341,18 @@ function nextNotDumbSlide() {
     }
 }
 
-/* === HARSHIT FACTS APP LOGIC === */
 function startFactsApp() {
     const term = document.getElementById('facts-terminal');
     const content = document.getElementById('facts-main-content');
 
     if (term && content) {
-        // Fade out terminal
+   
         term.style.opacity = '0';
 
         setTimeout(() => {
             term.style.display = 'none';
             content.style.display = 'block';
 
-            // Force reflow
             void content.offsetWidth;
 
             content.classList.add('active');
@@ -9134,24 +9360,22 @@ function startFactsApp() {
     }
 }
 
-
-/* === DEEP TRUTHS LOGIC === */
 window.toggleTruth = function (card) {
-    // Close others
+    
     document.querySelectorAll('.truth-card.active').forEach(c => {
         if (c !== card) c.classList.remove('active');
     });
     card.classList.toggle('active');
 };
 
-/* === BLUEPRINT LOGIC === */
+
 function openBlueprint() {
     const win = document.getElementById('blueprint-window');
     const overlay = document.getElementById('brightness-dimmer');
     if (win) {
         win.style.display = 'block';
         setTimeout(() => win.classList.add('active'), 50);
-        // Bring to front
+       
         win.style.zIndex = ++zIndex;
         if (overlay) {
             overlay.style.opacity = '0.3';
@@ -9172,3 +9396,389 @@ function closeBlueprint() {
         }
     }
 }
+
+const FlashApp = {
+    state: {
+        mode: null,
+        active: false,
+        score: 0,
+        xp: 0,
+        trophies: (typeof userStats !== 'undefined' ? userStats.trophies : 0) || 0,
+        startTime: 0,
+        gameLoop: null
+    },
+
+    sfx: {
+        hover: null,
+        wait: null,
+        signal: null,
+        success: null,
+        fail: null
+    },
+
+    init() {
+        this.sfx.hover = document.getElementById('sfx-hover');
+        this.sfx.wait = document.getElementById('sfx-wait');
+        this.sfx.signal = document.getElementById('sfx-signal');
+        this.sfx.success = document.getElementById('sfx-success');
+        this.sfx.fail = document.getElementById('sfx-fail');
+
+        this.updateMenuStats();
+        this.showMenu();
+    },
+
+    playHover() {
+        if (this.sfx.hover) {
+            this.sfx.hover.currentTime = 0;
+            this.sfx.hover.volume = 0.2;
+            this.sfx.hover.play().catch(() => { });
+        }
+    },
+
+    showMenu() {
+        this.stopGameLoop();
+        const menu = document.getElementById('flash-menu');
+        const runner = document.getElementById('flash-runner');
+        const madrid = document.getElementById('flash-madrid');
+        const reaction = document.getElementById('flash-reaction');
+        const result = document.getElementById('flash-result');
+
+        if (menu) menu.style.display = 'flex';
+        if (runner) runner.style.display = 'none';
+        if (madrid) madrid.style.display = 'none';
+        if (reaction) reaction.style.display = 'none';
+        if (result) {
+            result.style.display = 'none';
+            result.style.opacity = '0';
+        }
+
+        this.updateMenuStats();
+    },
+
+    updateMenuStats() {
+        const xpEl = document.getElementById('flash-total-xp');
+        const trophEl = document.getElementById('flash-total-trophies');
+        if (xpEl) xpEl.innerText = this.state.xp;
+        if (trophEl) trophEl.innerText = this.state.trophies;
+    },
+
+    startMode(mode) {
+        this.playHover();
+        this.state.mode = mode;
+        this.state.active = true;
+        this.state.score = 0;
+        const menu = document.getElementById('flash-menu');
+        if (menu) menu.style.display = 'none';
+
+        if (mode === 'runner') this.initRunner();
+        if (mode === 'madrid') this.initMadrid();
+        if (mode === 'reaction') this.initReaction();
+    },
+
+    stopGame() {
+        this.state.active = false;
+        this.stopGameLoop();
+
+        const resOverlay = document.getElementById('flash-result');
+        const resVal = document.getElementById('flash-result-val');
+        const resMsg = document.getElementById('flash-reward-msg');
+
+        if (resOverlay) {
+            resOverlay.style.display = 'flex';
+            setTimeout(() => resOverlay.style.opacity = '1', 10);
+        }
+
+        let finalScore = this.state.score;
+        let trophyEarned = false;
+
+        if (this.state.mode === 'reaction') {
+            if (resVal) resVal.innerText = finalScore + 'ms';
+            if (finalScore < 250 && finalScore > 0) {
+                if (resMsg) resMsg.innerText = "⚡ GOD SPEED! New Trophy Unlocked!";
+                this.state.trophies++;
+                trophyEarned = true;
+            } else if (finalScore < 400 && finalScore > 0) {
+                if (resMsg) resMsg.innerText = "Fast... but can be faster.";
+            } else {
+                if (resMsg) resMsg.innerText = "Were you sleeping? 😴";
+            }
+        } else {
+            if (resVal) resVal.innerText = finalScore;
+          
+            const earnedXP = Math.floor(finalScore / 10);
+            this.state.xp += earnedXP;
+
+            if (finalScore > 1000) {
+                if (resMsg) resMsg.innerText = "🏆 LEGENDARY RUN! Trophy Unlocked!";
+                this.state.trophies++;
+                trophyEarned = true;
+            } else {
+                if (resMsg) resMsg.innerText = `You earned ${earnedXP} XP!`;
+            }
+        }
+
+        if (trophyEarned && typeof confetti === 'function') {
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#FFD700', '#FFA500']
+            });
+            if (this.sfx.success) this.sfx.success.play();
+        }
+
+        // Persist
+        if (typeof userStats !== 'undefined') {
+            userStats.trophies = this.state.trophies;
+            if (typeof Persistence !== 'undefined' && Persistence.save) {
+                Persistence.save(userStats);
+            }
+        }
+    },
+
+    stopGameLoop() {
+        if (this.state.gameLoop) cancelAnimationFrame(this.state.gameLoop);
+        if (this.state.madridInterval) clearInterval(this.state.madridInterval);
+        if (this.state.reactionTimeout) clearTimeout(this.state.reactionTimeout);
+    },
+
+    initRunner() {
+        const container = document.getElementById('flash-runner');
+        if (container) container.style.display = 'block';
+        const canvas = document.getElementById('runner-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = container.clientWidth;
+        canvas.height = container.clientHeight;
+
+        const player = { x: 50, y: canvas.height - 100, w: 40, h: 40, dy: 0, jumpStrength: 15, grounded: true };
+        const obstacles = [];
+        const gravity = 0.8;
+        const groundHeight = 60;
+        let speed = 5;
+        let frame = 0;
+
+        const handleInput = (e) => {
+            if (!this.state.active) return;
+            if ((e.code === 'Space' || e.code === 'ArrowUp') && player.grounded) {
+                player.dy = -player.jumpStrength;
+                player.grounded = false;
+            }
+        };
+        window.addEventListener('keydown', handleInput);
+
+        const types = [
+            { text: "💤", type: 'bad' },
+            { text: "⚠️", type: 'bad' },
+            { text: "☕", type: 'good' },
+            { text: "⚡", type: 'good' }
+        ];
+
+        const loop = () => {
+            if (!this.state.active) {
+                window.removeEventListener('keydown', handleInput);
+                return;
+            }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#444';
+            ctx.fillRect(0, canvas.height - groundHeight, canvas.width, groundHeight);
+
+            player.dy += gravity;
+            player.y += player.dy;
+
+            if (player.y + player.h > canvas.height - groundHeight) {
+                player.y = canvas.height - groundHeight - player.h;
+                player.dy = 0;
+                player.grounded = true;
+            }
+
+            ctx.fillStyle = '#fbbf24'; // Yellow
+            ctx.shadowColor = '#f59e0b';
+            ctx.shadowBlur = 20;
+            ctx.fillRect(player.x, player.y, player.w, player.h);
+            ctx.shadowBlur = 0;
+
+            if (frame % 100 === 0) {
+                const item = types[Math.floor(Math.random() * types.length)];
+                obstacles.push({
+                    x: canvas.width,
+                    y: canvas.height - groundHeight - 40,
+                    w: 40,
+                    h: 40,
+                    ...item
+                });
+                speed += 0.1;
+            }
+
+            for (let i = obstacles.length - 1; i >= 0; i--) {
+                let obs = obstacles[i];
+                obs.x -= speed;
+
+                ctx.font = '30px Arial';
+                ctx.fillText(obs.text, obs.x + 5, obs.y + 30);
+
+                if (
+                    player.x < obs.x + obs.w &&
+                    player.x + player.w > obs.x &&
+                    player.y < obs.y + obs.h &&
+                    player.y + player.h > obs.y
+                ) {
+                    if (obs.type === 'bad') {
+                      
+                        if (this.sfx.fail) this.sfx.fail.play().catch(() => { });
+                        this.stopGame();
+                        return;
+                    } else {
+                        
+                        if (this.sfx.success) {
+                            const s = this.sfx.success.cloneNode();
+                            s.volume = 0.3;
+                            s.play().catch(() => { });
+                        }
+                        this.state.score += 50;
+                        const xp = document.getElementById('runner-xp');
+                        if (xp) xp.innerText = this.state.score;
+                        obstacles.splice(i, 1);
+                    }
+                }
+
+                if (obs.x + obs.w < 0) obstacles.splice(i, 1);
+            }
+
+            this.state.score++;
+            const xpOverall = document.getElementById('runner-xp');
+            if (xpOverall) xpOverall.innerText = this.state.score;
+
+            frame++;
+            this.state.gameLoop = requestAnimationFrame(loop);
+        };
+
+        loop();
+    },
+
+  
+    initMadrid() {
+        const container = document.getElementById('flash-madrid');
+        if (container) container.style.display = 'block';
+        const gameArea = document.getElementById('madrid-game-area');
+        if (gameArea) gameArea.innerHTML = '';
+        const sc = document.getElementById('madrid-score');
+        if (sc) sc.innerText = '0';
+
+        const targets = ['⚽', '🏆', '👟', '🥅']; 
+                const distractions = ['🐍', '🟥', '❌', '💤']; 
+
+        this.state.madridInterval = setInterval(() => {
+            if (!this.state.active) return;
+            if (!gameArea) return;
+
+            const el = document.createElement('div');
+            const isTarget = Math.random() > 0.4; 
+                        const content = isTarget ? targets[Math.floor(Math.random() * targets.length)] : distractions[Math.floor(Math.random() * distractions.length)];
+
+            el.innerText = content;
+            el.style.position = 'absolute';
+            el.style.left = Math.random() * 90 + '%';
+            el.style.top = Math.random() * 80 + 10 + '%';
+            el.style.fontSize = Math.random() * 30 + 30 + 'px';
+            el.style.cursor = 'pointer';
+            el.style.userSelect = 'none';
+            el.style.transition = 'transform 0.2s';
+
+            el.animate([{ transform: 'scale(0)' }, { transform: 'scale(1)' }], { duration: 300, easing: 'ease-out' });
+
+            el.onclick = (e) => {
+                e.stopPropagation();
+                if (isTarget) {
+                    this.state.score += 100;
+                    const scNow = document.getElementById('madrid-score');
+                    if (scNow) scNow.innerText = this.state.score;
+                    if (this.sfx.hover) this.sfx.hover.play().catch(() => { });
+
+                    el.style.transform = 'scale(1.5)';
+                    el.style.opacity = '0';
+                    setTimeout(() => el.remove(), 200);
+                } else {
+                    if (this.sfx.fail) this.sfx.fail.play().catch(() => { });
+                    this.stopGame();
+                }
+            };
+
+            gameArea.appendChild(el);
+
+           
+            setTimeout(() => {
+                if (el.parentNode) {
+                    el.style.opacity = '0';
+                    setTimeout(() => el.remove(), 500);
+                }
+            }, 2000);
+
+        }, 600);
+    },
+
+ 
+    initReaction() {
+        const container = document.getElementById('flash-reaction');
+        const bg = document.getElementById('reaction-bg');
+        const icon = document.getElementById('reaction-icon');
+        const text = document.getElementById('reaction-text');
+        const sub = document.getElementById('reaction-sub');
+
+        if (container) container.style.display = 'flex';
+
+       
+        if (bg) bg.className = 'absolute inset-0 transition-colors duration-200 bg-red-900/50';
+        if (icon) icon.innerText = '⚠️';
+        if (text) text.innerText = 'WAIT...';
+        if (sub) sub.innerText = 'Do not click yet.';
+        this.reactionState = 'waiting';
+
+        if (this.sfx.wait) this.sfx.wait.play().catch(() => { });
+
+        
+        const delay = Math.random() * 4000 + 2000;
+
+        this.state.reactionTimeout = setTimeout(() => {
+            if (!this.state.active) return;
+
+            
+            this.reactionState = 'go';
+            this.state.startTime = Date.now();
+
+            if (bg) bg.className = 'absolute inset-0 transition-colors duration-0 bg-green-600';
+            if (icon) icon.innerText = '⚡';
+            if (text) text.innerText = 'CLICK!';
+            if (sub) sub.innerText = 'GO GO GO!';
+
+            if (this.sfx.wait) this.sfx.wait.pause();
+            if (this.sfx.signal) this.sfx.signal.play().catch(() => { });
+
+        }, delay);
+    },
+
+    handleReactionTap() {
+        if (!this.state.active || this.state.mode !== 'reaction') return;
+
+        if (this.reactionState === 'waiting') {
+           
+            if (this.sfx.fail) this.sfx.fail.play().catch(() => { });
+            if (this.sfx.wait) this.sfx.wait.pause();
+            clearTimeout(this.state.reactionTimeout);
+
+            const txt = document.getElementById('reaction-text');
+            if (txt) txt.innerText = "TOO SOON!";
+            this.state.score = 0; // Fail
+            setTimeout(() => this.stopGame(), 1000);
+        } else if (this.reactionState === 'go') {
+         
+            const reactionTime = Date.now() - this.state.startTime;
+            this.state.score = reactionTime;
+            if (this.sfx.success) this.sfx.success.play().catch(() => { });
+            this.stopGame();
+        }
+    }
+};
