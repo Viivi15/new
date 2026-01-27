@@ -9143,3 +9143,32 @@ window.toggleTruth = function (card) {
     });
     card.classList.toggle('active');
 };
+
+/* === BLUEPRINT LOGIC === */
+function openBlueprint() {
+    const win = document.getElementById('blueprint-window');
+    const overlay = document.getElementById('brightness-dimmer');
+    if (win) {
+        win.style.display = 'block';
+        setTimeout(() => win.classList.add('active'), 50);
+        // Bring to front
+        win.style.zIndex = ++zIndex;
+        if (overlay) {
+            overlay.style.opacity = '0.3';
+            overlay.style.pointerEvents = 'auto'; // Block clicks behind
+        }
+    }
+}
+
+function closeBlueprint() {
+    const win = document.getElementById('blueprint-window');
+    const overlay = document.getElementById('brightness-dimmer');
+    if (win) {
+        win.classList.remove('active');
+        setTimeout(() => win.style.display = 'none', 500);
+        if (overlay) {
+            overlay.style.opacity = '0';
+            overlay.style.pointerEvents = 'none';
+        }
+    }
+}
