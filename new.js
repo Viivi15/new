@@ -53,8 +53,8 @@ function updateSystemBasedOnTime(hours) {
             if (now >= releaseDate) {
                 let msg = "";
                 switch (phase) {
-                    case 'morning': msg = "Good morning! ☀️"; break;
-                    case 'afternoon': msg = "Happy afternoon! 🌤️"; break;
+                    case 'morning': msg = "Good morninnn Harshit!! ☀️"; break;
+                    case 'afternoon': msg = "Happy afternoon!😊 "; break;
                     case 'evening': msg = "Happy evening! 🌙"; break;
                     case 'night': msg = "You're up late! 🌃"; break;
                 }
@@ -97,19 +97,13 @@ function updateClock() {
         if (clock) {
             clock.textContent = str;
         }
-
-
-
         updateSystemBasedOnTime(rawHours);
-
     } catch (e) { }
 }
-
 if (!window.clockInterval) {
     window.clockInterval = setInterval(updateClock, 1000);
 }
 updateClock();
-
 const Persistence = {
     init() {
         let visits = parseInt(localStorage.getItem('visitCount') || '0');
@@ -162,77 +156,121 @@ const userStats = Persistence.init();
 const settingsState = {
     theme: 'light',
     accent: '#007AFF',
-    wallpaper: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=2069' // Default Husky
+    wallpaper: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=2069'
 };
 
 const wallpapers = [
-    { thumb: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=200', full: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=2069' }, // Dog
-    { thumb: 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?q=80&w=200', full: 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?q=80&w=2069' }, // Space
-    { thumb: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=200', full: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=2069' }, // Nature
-    { thumb: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=200', full: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2069' }, // Mountains
-    { thumb: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=200', full: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=2069' }, // Colors
-    { thumb: 'assets/images/album-cover.jpg', full: 'assets/images/album-cover.jpg' } // Custom Album Cover
+    { thumb: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=200', full: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=2069' },
+    { thumb: 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?q=80&w=200', full: 'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?q=80&w=2069' },
+    { thumb: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=200', full: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=2069' },
+    { thumb: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=200', full: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2069' },
+    { thumb: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=200', full: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=2069' },
+    { thumb: 'assets/images/album-cover.jpg', full: 'assets/images/album-cover.jpg' }
 ];
 
 const journeyData = [
     {
         chapter: 1,
-        title: "The First Spark",
-        subtitle: "Online Platform, Euros, and 12:21 AM",
+        title: "The Beginning",
+        subtitle: "12:21 AM",
         color: "#3b82f6",
         items: [
-            { type: 'title', text: "Chapter 1: The First Spark" },
-            { type: 'chat', speaker: 'System', text: "Connection Established: June 20, 2024 • 12:21 AM" },
-            { type: 'scene', text: "It was a pleasant meeting. You talked about Euros and football tournaments. I found out you'd never watched cricket in your life!" },
-            { type: 'chat', speaker: 'Harshit', text: "The night is just getting started... (and then the brain tumor story 💀)" },
-            { type: 'scene', text: "Next day: You woke up at 11, pinged a 'hated' girl by mistake, and shared some... choice words. 😂" }
+            { type: "title", text: "Chapter 1: The Beginning" },
+            { type: "chat", speaker: "System", text: "Connection Established — June 20, 2024 • 12:21 AM" },
+            { type: "scene", text: "We met late at night without knowing it would turn into anything. The conversation was random, easy, and it kept going longer than expected." },
+            { type: "scene", text: "Nothing felt forced. It was just comfortable from the very start." }
         ]
     },
     {
         chapter: 2,
-        title: "Building the Bridge",
-        subtitle: "From Strangers to Admin Buddies",
+        title: "Building Trust",
+        subtitle: "Showing Up",
         color: "#a855f7",
         items: [
-            { type: 'title', text: "Chapter 2: Building the Bridge" },
-            { type: 'scene', text: "Haryana, Sirsa. You got along with Kuro and we vibed with music. Playing Atlas while counting was fun!" },
-            { type: 'chat', speaker: 'Shravii', text: "Aapne server ke growth me... sabme help kari <:cutu_twi_watching_cutu_queen_vi:1250504172323995739>" },
-            { type: 'scene', text: "The first promise: Not to delete or hide things. I gave you Admin so you wouldn't get banned. Trust was building." }
+            { type: "title", text: "Chapter 2: Building Trust" },
+            { type: "scene", text: "Over time, you stayed involved and helped wherever you could. You didn’t disappear after the first few days, and that mattered." },
+            { type: "scene", text: "Trust didn’t come all at once. It built slowly, through consistency and effort." },
+            { type: "chat", speaker: "Shravii", text: "Aapne server ke growth me sabme help kari." }
         ]
     },
     {
         chapter: 3,
-        title: "The Protector",
-        subtitle: "Fighting Battles, Real & Digital",
+        title: "Feeling Protected",
+        subtitle: "When It Counted",
         color: "#22c55e",
         items: [
-            { type: 'title', text: "Chapter 3: The Protector" },
-            { type: 'scene', text: "Mikey said something to me... I was overthinking, and you actually came and fought with him. It touched my heart. ❤️" },
-            { type: 'chat', speaker: 'Harshit', text: "Good morning! (Sent at 3 AM so you'd see it when you wake up) ☀️" },
-            { type: 'scene', text: "July 6: Your diagnosis for my self-doubt. 'You don't have to tell people what they want to hear.' It stayed with me." }
+            { type: "title", text: "Chapter 3: Feeling Protected" },
+            { type: "scene", text: "There was a moment when I was overthinking and feeling small. You noticed, and you stepped in without being asked." },
+            { type: "scene", text: "You didn’t make it dramatic. You just stood up for me, and that changed how safe I felt with you." },
+            { type: "chat", speaker: "Harshit", text: "You don’t have to tell people what they want to hear." }
         ]
     },
     {
         chapter: 4,
-        title: "Comfort & Rules",
-        subtitle: "Becoming Comfy",
+        title: "Comfort",
+        subtitle: "Becoming Normal",
         color: "#f59e0b",
         items: [
-            { type: 'title', text: "Chapter 4: Becoming Comfy" },
-            { type: 'chat', speaker: 'Ota Rules', text: "Rule 1: Always listen to Ota. Rule 2: Don't hide anything from Ota. (Medicine for the soul) 💊" },
-            { type: 'recipe', title: "Ota's Egg Fried Rice", items: ["1. Add oil to kadhai", "2. Garlic and onion vgera", "3. Add eggs", "4. Rice + Masale", "5. Spring onion + Chilli", "6. Eat! 🍳"] }
+            { type: "title", text: "Chapter 4: Comfort" },
+            { type: "scene", text: "Talking to you slowly became a habit. Not something I had to think about — just something that felt natural." },
+            { type: "scene", text: "We didn’t need to pretend or explain ourselves. Comfort wasn’t occasional anymore, it became normal." },
+            { type: "chat", speaker: "Ota Rules", text: "Don’t hide anything. Just stay real." }
         ]
     },
     {
         chapter: 5,
-        title: "11:59 AM",
-        subtitle: "The Birthday Math",
+        title: "Pride",
+        subtitle: "Seeing You Grow",
         color: "#3b82f6",
         items: [
-            { type: 'title', text: "Chapter 5: 11:59 AM" },
-            { type: 'scene', text: "You tried to send 'Happy Birthday' letter-by-letter to end at 12:00... but your math failed and it ended at 11:59! 🎈" },
-            { type: 'poem', text: "Happiest Birthday Vi, so bright,\nMay success and dreams take endless flight.\nWith each sunrise, may you find anew,\nThe joy and wonders waiting for you." },
-            { type: 'chat', speaker: 'Harshit', text: "Thankyou sm aapki vajah s hi me online platform chalata hu and khush hota hu. ❤️" }
+            { type: "title", text: "Chapter 5: Pride" },
+            { type: "scene", text: "Your birthday wasn’t just about the date. It was about seeing how much you’ve grown and how seriously you carry your responsibilities." },
+            { type: "scene", text: "I wasn’t just wishing you well. I was genuinely proud of the person you’ve become." },
+            { type: "chat", speaker: "Harshit", text: "Thank you… aapki vajah se hi main ye sab kar paata hoon aur khush rehta hoon." }
+        ]
+    },
+    {
+        chapter: 6,
+        title: "Late-Night Talks",
+        subtitle: "When the World Was Quiet",
+        color: "#0ea5e9",
+        items: [
+            { type: "title", text: "Chapter 6: Late-Night Talks" },
+            { type: "scene", text: "Most of our real conversations happened when everything else was quiet. Late nights turned into long talks without any rush." },
+            { type: "scene", text: "Some nights were light, some were heavy — but we stayed, even when it was easier to leave." }
+        ]
+    },
+    {
+        chapter: 7,
+        title: "Growing Together",
+        subtitle: "Side by Side",
+        color: "#8b5cf6",
+        items: [
+            { type: "title", text: "Chapter 7: Growing Together" },
+            { type: "scene", text: "We both changed over time. Different responsibilities, different pressures — but we kept understanding each other." },
+            { type: "scene", text: "It wasn’t about moving at the same speed. It was about not leaving each other behind." }
+        ]
+    },
+    {
+        chapter: 8,
+        title: "Fights & Fixing Things",
+        subtitle: "Not Walking Away",
+        color: "#ef4444",
+        items: [
+            { type: "title", text: "Chapter 8: Fights & Fixing Things" },
+            { type: "scene", text: "We didn’t always agree. There were misunderstandings and moments where things felt messy." },
+            { type: "scene", text: "What mattered was that we talked, fixed things, and chose not to walk away." }
+        ]
+    },
+    {
+        chapter: 9,
+        title: "Still Here",
+        subtitle: "After Everything",
+        color: "#22c55e",
+        items: [
+            { type: "title", text: "Chapter 9: Still Here" },
+            { type: "scene", text: "After everything — the changes, the late nights, the misunderstandings — we’re still here." },
+            { type: "scene", text: "That, by itself, means more than anything else." }
         ]
     }
 ];
@@ -394,7 +432,6 @@ function initMrSnowApp() {
             p.x += Math.sin(p.d) * 0.3;
             p.d += 0.01;
 
-            // Mouse Interaction: Drift away from cursor
             const dx = p.x - mouse.x;
             const dy = p.y - mouse.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
@@ -442,14 +479,16 @@ function initMrSnowApp() {
 }
 
 const mrSnowQuotes = [
-    "You stay kind, even when things get heavy.",
-    "The world is loud, but your peace is real.",
-    "Quiet strength is still strength.",
-    "Soft when trusted, calm on the surface.",
-    "You carry storms quietly, and that's okay.",
-    "You are the best kind of chaos.",
-    "Mr. Snow is chilling, and you should too."
+    "You don’t say much, but you notice everything.",
+    "You overthink, but you still show up.",
+    "You don’t always know what to say, but you try.",
+    "You mess up sometimes, and you don’t run from it.",
+    "You get confused, but you don’t fake clarity.",
+    "You care in your own way, even when it’s messy.",
+    "You’re not consistent every day, but you’re sincere.",
+    "You don’t have everything figured out  and that’s okay."
 ];
+
 
 function mrSnowComfort() {
     const el = document.getElementById('comfort-msg');
@@ -748,11 +787,11 @@ const apps = [
                         <div class="truth-icon text-3xl filter drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]">💎</div>
                         <div class="truth-header">
                             <div class="font-bold text-white text-lg">Honesty</div>
-                            <div class="text-[10px] text-blue-300 uppercase tracking-widest">Status: Rare</div>
+                            <div class="text-[10px] text-blue-300 uppercase tracking-widest">Status: Non-Negotiable</div>
                         </div>
                     </div>
                     <div class="truth-details">
-                        <p>You don't entertain lies. You try to understand. You stand for clarity and truth, even when it's uncomfortable. That is rare.</p>
+                        <p>You don’t bend your values for convenience. If something feels wrong, you won’t pretend otherwise. Your honesty is quiet and steady — rooted in self-respect, even when it makes things harder.</p>
                     </div>
                 </div>
                 
@@ -762,11 +801,12 @@ const apps = [
                         <div class="truth-icon text-3xl filter drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]">🛡️</div>
                         <div class="truth-header">
                             <div class="font-bold text-white text-lg">Quiet Protection</div>
-                            <div class="text-[10px] text-emerald-300 uppercase tracking-widest">Type: Passive-Active</div>
+                            <div class="text-[10px] text-emerald-300 uppercase tracking-widest">Type: Always Watching</div>
                         </div>
                     </div>
                      <div class="truth-details">
-                        <p>You handle me well, like a kid. You make me feel special, like a queen. You are always there to rescue me from thoughts that overcome me.</p>
+                        <p>You protect without announcing it. You notice shifts in mood, pauses in words, the weight between lines. You step in gently — not to control, but to make sure things don’t fall apart.</p>
+                        <p style="margin-top: 10px; color: #a7f3d0; font-style: italic; opacity: 0.9;">"You handle me well, like a kid. You make me feel special, like a queen. You are always there to rescue me from thoughts that overcome me."</p>
                     </div>
                 </div>
 
@@ -776,11 +816,11 @@ const apps = [
                         <div class="truth-icon text-3xl filter drop-shadow-[0_0_10px_rgba(249,115,22,0.5)]">🔥</div>
                         <div class="truth-header">
                             <div class="font-bold text-white text-lg">Persistence</div>
-                            <div class="text-[10px] text-orange-300 uppercase tracking-widest">Energy: Infinite</div>
+                            <div class="text-[10px] text-orange-300 uppercase tracking-widest">Energy: Engineered Endurance</div>
                         </div>
                     </div>
                      <div class="truth-details">
-                        <p>You have every reason to stop, to rest, to give up. But you don't. You keep moving, fueled by an inner fire that refuses to be extinguished.</p>
+                        <p>You keep moving even when you’re exhausted. Even when no one’s watching. Your strength isn’t loud motivation — it’s discipline, showing up again and again, refusing to quit on yourself.</p>
                     </div>
                 </div>
 
@@ -790,25 +830,26 @@ const apps = [
                         <div class="truth-icon text-3xl filter drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]">🧠</div>
                         <div class="truth-header">
                             <div class="font-bold text-white text-lg">Memory</div>
-                            <div class="text-[10px] text-purple-300 uppercase tracking-widest">Accuracy: High</div>
+                            <div class="text-[10px] text-purple-300 uppercase tracking-widest">Accuracy: Emotional + Logical</div>
                         </div>
                     </div>
                      <div class="truth-details">
-                        <p>You remember the small things. The passing comments, the hidden meanings, the dates. It shows how deeply you pay attention to the world.</p>
+                        <p>You remember details others dismiss — dates, phrases, patterns. Not to impress, but because when something matters to you, it stays stored permanently.</p>
+                         <p style="margin-top: 10px; color: #e9d5ff; font-style: italic; opacity: 0.9;">"You remember the small things. The passing comments, the hidden meanings, the dates. It shows how deeply you pay attention."</p>
                     </div>
                 </div>
                 
-                 <!-- Card 5: Empathy (New) -->
+                 <!-- Card 5: Soft Core -->
                 <div class="truth-card group" onclick="toggleTruth(this)">
                      <div class="flex items-center gap-4 mb-2">
                         <div class="truth-icon text-3xl filter drop-shadow-[0_0_10px_rgba(244,63,94,0.5)]">💓</div>
                         <div class="truth-header">
-                            <div class="font-bold text-white text-lg">Flowing Heart</div>
-                            <div class="text-[10px] text-rose-300 uppercase tracking-widest">State: Hidden/Active</div>
+                            <div class="font-bold text-white text-lg">Soft Core</div>
+                            <div class="text-[10px] text-rose-300 uppercase tracking-widest">State: Protected</div>
                         </div>
                     </div>
                      <div class="truth-details">
-                        <p>Behind the logic and the rules, there is a heart that feels everything intensely. You care so much, it sometimes overflows.</p>
+                        <p>You feel deeply, even if you don’t expose it easily. Your heart is careful — not cold. When you care, it’s intense, loyal, and lasting, even when you don’t say it out loud.</p>
                     </div>
                 </div>
 
@@ -818,11 +859,11 @@ const apps = [
                         <div class="truth-icon text-3xl">🎧</div>
                         <div class="truth-header">
                             <div class="font-bold text-white text-lg">The Listener</div>
-                            <div class="text-[10px] text-purple-300 uppercase">Input: Music</div>
+                            <div class="text-[10px] text-purple-300 uppercase">Input: Emotion</div>
                         </div>
                     </div>
                      <div class="truth-details">
-                        <p>Music isn't just entertainment for you—it's emotional regulation. You use it to process feelings you don't verbalize.</p>
+                        <p>Music isn’t background noise for you. It’s how you process what words can’t hold — how you steady yourself, understand yourself, and sometimes say what you never will.</p>
                     </div>
                 </div>
             </div>
@@ -835,15 +876,6 @@ const apps = [
                  <div class="text-xs text-slate-400 tracking-widest uppercase opacity-70 animate-pulse">Access Granted</div>
             </div>
         </div>
-    <script>
-        function toggleTruth(card) {
-            // Close others
-            document.querySelectorAll('.truth-card.active').forEach(c => {
-                if (c !== card) c.classList.remove('active');
-            });
-        card.classList.toggle('active');
-            }
-    </script>
     `},
 
     {
@@ -868,6 +900,17 @@ const apps = [
                     <div class="spec-item"><span class="spec-label">CORE_KERNEL</span><span class="spec-val">COMPASSION_OS_v2.0</span></div>
                     <div class="spec-item"><span class="spec-label">SYSTEM_UPTIME</span><span class="spec-val">ACTIVE_2004_PRESENT</span></div>
                     <div class="spec-item"><span class="spec-label">LOGIC_MODE</span><span class="spec-val">INDUCTIVE / WITTY</span></div>
+                </div>
+            </div>
+
+            <div class="facts-section" style="animation: fadeInUp 0.5s ease-out 0.2s backwards;">
+                <div class="facts-section-title">BEHAVIORAL PATTERNS (AUTO-LOGGED) 📊</div>
+                <div class="facts-specs-list">
+                    <div class="spec-item"><span class="spec-label">STRESS_RESPONSE</span><span class="spec-val">Withdraws → Reset → Returns Stronger</span></div>
+                    <div class="spec-item"><span class="spec-label">CARE_EXPRESSION</span><span class="spec-val">Actions > Words</span></div>
+                    <div class="spec-item"><span class="spec-label">TRUST_PROTOCOL</span><span class="spec-val">Slow Handshake → Permanent Access</span></div>
+                    <div class="spec-item"><span class="spec-label">ATTACHMENT_STYLE</span><span class="spec-val">Quiet Loyalty (Memory: Permanent)</span></div>
+                    <div class="spec-item"><span class="spec-label">DEFAULT_STATE</span><span class="spec-val">Calm (Background Processing: Overthinking)</span></div>
                 </div>
             </div>
 
@@ -897,6 +940,16 @@ const apps = [
                 </div>
             </div>
 
+            <div class="facts-section" style="animation: fadeInUp 0.5s ease-out 0.4s backwards;">
+                <div class="facts-section-title">EMOTIONAL SECURITY LAYER 🔐</div>
+                <div class="facts-specs-list">
+                    <div class="spec-item"><span class="spec-label">FIREWALL_STATUS</span><span class="spec-val">Active (Selective Access Only)</span></div>
+                    <div class="spec-item"><span class="spec-label">DEFENSE_MECH</span><span class="spec-val">Humor + Silence</span></div>
+                    <div class="spec-item"><span class="spec-label">VULNERABILITY</span><span class="spec-val">Restricted (Requires: Safety Protocol)</span></div>
+                    <div class="spec-item"><span class="spec-label">OVERRIDE_KEY</span><span class="spec-val">Feeling Understood</span></div>
+                </div>
+            </div>
+
             <div class="facts-section">
                 <div class="facts-section-title">OPERATING PARAMETERS 🧬</div>
                 <div class="facts-grid">
@@ -923,6 +976,62 @@ const apps = [
                 </div>
             </div>
 
+            <!-- SYSTEM UPDATE HISTORY -->
+            <div class="facts-section" style="animation: fadeInUp 0.5s ease-out 0.6s backwards;">
+                <div class="facts-section-title">SYSTEM UPDATE HISTORY 🧩</div>
+                <div class="facts-specs-list">
+                     <div class="spec-item"><span class="spec-label">v16.0</span><span class="spec-val">Patch: Learned silence is not weakness.</span></div>
+                     <div class="spec-item"><span class="spec-label">v17.2</span><span class="spec-val">Update: Improved emotional filtering.</span></div>
+                     <div class="spec-item"><span class="spec-label">v18.5</span><span class="spec-val">Upgrade: Strengthened self-respect protocols.</span></div>
+                     <div class="spec-item"><span class="spec-label">v19.0</span><span class="spec-val">Current State: Stable. Aware. Selectively Open.</span></div>
+                </div>
+            </div>
+
+            <!-- BOND REGISTRY -->
+            <div class="facts-section" style="animation: fadeInUp 0.5s ease-out 0.7s backwards;">
+                <div class="facts-section-title">BOND REGISTRY 🌐</div>
+                <div class="facts-grid">
+                     <div class="facts-card" style="width: 100%;">
+                        <h4>Primary Connection</h4>
+                        <div class="fact-val">Est. 2024.06.20 — 12:21 AM</div>
+                        <div class="sys-note">Retention Status: Permanent. Sync Frequency: Daily.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CORE STRENGTH METRICS -->
+            <div class="facts-section" style="animation: fadeInUp 0.5s ease-out 0.8s backwards;">
+                <div class="facts-section-title">CORE STRENGTH METRICS ⚙️</div>
+                <div class="facts-specs-list">
+                    <div class="spec-item"><span class="spec-label">ENDURANCE</span><span class="spec-val">██████████ [HIGH]</span></div>
+                    <div class="spec-item"><span class="spec-label">PATIENCE</span><span class="spec-val">██████████ [EXTREME]</span></div>
+                    <div class="spec-item"><span class="spec-label">EGO_NOISE</span><span class="spec-val">█░░░░░░░░░ [MINIMAL]</span></div>
+                    <div class="spec-item"><span class="spec-label">CONSISTENCY</span><span class="spec-val">█████████░ [RARE BUILD]</span></div>
+                </div>
+            </div>
+
+            <!-- UNLISTED CAPABILITIES -->
+            <div class="facts-section" style="animation: fadeInUp 0.5s ease-out 0.9s backwards;">
+                <div class="facts-section-title">UNLISTED CAPABILITIES 🕶️</div>
+                <div class="facts-alias-slider">
+                     <div class="facts-alias-card">
+                        <div class="facts-alias-icon">📡</div>
+                        <h3>Silent Care</h3>
+                        <p>Can care deeply without announcing it.</p>
+                    </div>
+                    <div class="facts-alias-card">
+                        <div class="facts-alias-icon">🐘</div>
+                        <h3>Deep Memory</h3>
+                        <p>Remembers small details. Everything stays.</p>
+                    </div>
+                    <div class="facts-alias-card">
+                        <div class="facts-alias-icon">🛡️</div>
+                        <h3>Quiet Guard</h3>
+                        <p>Protects what matters, quietly.</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="facts-observation-wrap">
                 <div class="observation-header">
                     <span class="obs-badge">CONFIDENTIAL REPORT</span>
@@ -941,6 +1050,26 @@ const apps = [
                 <div class="observation-footer">
                     <span>Generated: 2024.06.20</span>
                     <span>Auth: Shravii_V-Space</span>
+                </div>
+            </div>
+
+            <div class="facts-observation-wrap" style="margin-top: 20px;">
+                <div class="observation-header">
+                    <span class="obs-badge">DEVELOPER NOTE</span>
+                </div>
+                <div class="observation-box">
+                    <div class="obs-marker"></div>
+                    <div class="obs-body">
+                        <div class="obs-label">System Message</div>
+                        <blockquote style="font-style: italic; opacity: 0.8;">
+                            "This system does not seek attention.<br>
+                            It seeks meaning.<br>
+                            And once it finds it, it stays."
+                        </blockquote>
+                    </div>
+                </div>
+                <div class="observation-footer">
+                    <span>— Shravii_V-Space</span>
                 </div>
             </div>
 
@@ -3370,7 +3499,6 @@ const Apps = {
             Persistence.trackOpen(id);
         }
 
-
         state.appsOpened.add(id);
         const exist = document.getElementById(`win-${id}`);
         if (exist) {
@@ -3423,6 +3551,10 @@ const Apps = {
         document.getElementById('desktop').appendChild(win);
         if (app.onOpen) app.onOpen();
         const dot = document.getElementById(`dot-${id}`); if (dot) dot.parentElement.classList.add('active');
+    },
+
+    close: (id) => {
+        closeApp(id);
     }
 };
 
@@ -8874,3 +9006,140 @@ window.closeModal = function (id) {
     }
 };
 
+/* === NOT DUMB APP LOGIC === */
+let notDumbIdx = 0;
+const notDumbData = [
+    {
+        title: "Before You Judge This App",
+        text: `This section exists purely because<br>intelligence and dumb moments<br>somehow coexist in you.<br><br>And I’ve seen <i>both</i>.`,
+        btn: "Proceed at your own risk",
+        emoji: "🤨"
+    },
+    {
+        title: "Certified Dum Dum Moment #1",
+        text: `The confidence with which you say<br>the wrong thing sometimes<br>deserves its own award.<br><br>No hesitation.<br>No doubt.<br>Just vibes.`,
+        btn: "I do not...",
+        emoji: "🏆"
+    },
+    {
+        title: "Thinking Too Much ≠ Thinking Smart",
+        text: `You will overthink a joke,<br>re-read a message ten times,<br>and still miss the obvious part.<br><br>Brain running at full speed,<br>destination: nowhere.`,
+        btn: "Okay that's personal",
+        emoji: "🧠"
+    },
+    {
+        title: "Selective Hearing Detected",
+        text: `You listen carefully,<br>nod seriously,<br>and then ask the one question<br>I literally just answered.<br><br>Iconic behaviour.`,
+        btn: "I was listening!",
+        emoji: "👂"
+    },
+    {
+        title: "Emotionally Dumb (Sometimes)",
+        text: `You don’t always realise<br>how much you matter<br>or how deeply you affect people.<br><br>This is not lack of brains.<br>This is lack of self-awareness.`,
+        btn: "...",
+        emoji: "🥺"
+    },
+    {
+        title: "Engineer Brain.exe Stopped Working",
+        text: `Can solve complex problems.<br>Can debug systems.<br><br>Still gets confused<br>by the simplest human situation.<br><br>Priorities.`,
+        btn: "Logic error",
+        emoji: "💻"
+    },
+    {
+        title: "Important Clarification",
+        text: `When I call you dumb,<br>it doesn’t mean incapable.<br><br>It means<br><i>comfortably imperfect,</i><br><i>human,</i><br><i>and safe with me.</i>`,
+        btn: "Oh.",
+        emoji: "🤍"
+    },
+    {
+        title: "Final Verdict",
+        text: `You’re not dumb.<br><br>You just have moments<br>that make me laugh,<br>shake my head,<br>and like you more than before.`,
+        btn: "Close before my ego increases",
+        emoji: "❤️"
+    }
+];
+
+function initNotDumb() {
+    notDumbIdx = 0;
+    const content = document.getElementById('not-dumb-content');
+    const nav = document.getElementById('not-dumb-nav');
+
+    if (content) {
+        content.innerHTML = '';
+        if (nav) nav.style.opacity = '0';
+        renderNotDumbSlide();
+    }
+}
+
+function renderNotDumbSlide() {
+    const data = notDumbData[notDumbIdx];
+    const content = document.getElementById('not-dumb-content');
+    const nav = document.getElementById('not-dumb-nav');
+    const navBtn = nav ? nav.querySelector('button') : null;
+
+    if (!content) return;
+
+    // Animate out previous content if any (simple clear for now)
+    content.innerHTML = `
+        <div class="flex flex-col h-full justify-center animate-fade-in-up">
+            <div class="mb-4">
+                <div class="text-6xl mb-4 filter drop-shadow-md transform transition hover:scale-110 duration-300 inline-block">${data.emoji}</div>
+                <h2 class="text-2xl font-bold text-slate-700 leading-tight mb-2 font-serif">${data.title}</h2>
+                <div class="w-16 h-1 bg-indigo-300 rounded-full mb-6"></div>
+            </div>
+            <div class="text-lg text-slate-600 font-medium leading-relaxed">
+                ${data.text}
+            </div>
+        </div>
+    `;
+
+    // Update button text
+    if (navBtn) {
+        navBtn.innerHTML = `${data.btn} <span class="ml-1">➜</span>`;
+    }
+
+    // Show nav
+    if (nav) {
+        setTimeout(() => nav.style.opacity = '1', 500);
+    }
+}
+
+function nextNotDumbSlide() {
+    if (notDumbIdx < notDumbData.length - 1) {
+        notDumbIdx++;
+        renderNotDumbSlide();
+    } else {
+        Apps.close('not-dumb');
+    }
+}
+
+/* === HARSHIT FACTS APP LOGIC === */
+function startFactsApp() {
+    const term = document.getElementById('facts-terminal');
+    const content = document.getElementById('facts-main-content');
+
+    if (term && content) {
+        // Fade out terminal
+        term.style.opacity = '0';
+
+        setTimeout(() => {
+            term.style.display = 'none';
+            content.style.display = 'block';
+
+            // Force reflow
+            void content.offsetWidth;
+
+            content.classList.add('active');
+        }, 500);
+    }
+}
+
+
+/* === DEEP TRUTHS LOGIC === */
+window.toggleTruth = function (card) {
+    // Close others
+    document.querySelectorAll('.truth-card.active').forEach(c => {
+        if (c !== card) c.classList.remove('active');
+    });
+    card.classList.toggle('active');
+};
