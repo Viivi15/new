@@ -375,11 +375,6 @@ const RabbitSquad = {
     assemble() {
         this.clear();
         const types = [
-            {
-                id: 'madrid', role: 'The Fanatic', emoji: '🐰⚽', cls: 'bun-madrid', msg: 'Hala Madrid!', action: (e) => {
-                    if (typeof confetti === 'function') confetti({ particleCount: 20, spread: 30, origin: { x: e.getBoundingClientRect().left / window.innerWidth, y: e.getBoundingClientRect().top / window.innerHeight } });
-                }
-            },
             { id: 'cozy', role: 'The Softie', emoji: '🐰🧥', cls: 'bun-cozy', msg: 'I need a hoodie...', action: () => { } },
             { id: 'snow', role: 'The Stoic', emoji: '🐰❄️', cls: 'bun-snow', msg: 'Cool as ice.', action: () => { } },
             {
@@ -397,19 +392,6 @@ const RabbitSquad = {
 
     celebrate() {
         this.rabbits.forEach(r => {
-            if (r.type.id === 'madrid') {
-                const inner = r.el.querySelector('.bun-inner');
-
-                const originalHTML = inner.innerHTML;
-                inner.innerHTML = '<div class="text-6xl animate-bounce">⚽🥅</div><div class="bun-msg" style="opacity:1; top:-40px;">SIUUU!</div>';
-
-                const sfx = document.getElementById('madrid-siuuu');
-                if (sfx) sfx.play().catch(e => console.log(e));
-
-                setTimeout(() => {
-                    inner.innerHTML = originalHTML;
-                }, 3000);
-            }
         });
     },
 
@@ -619,6 +601,7 @@ function mrSnowFlurry() {
 }
 
 const apps = [
+
     {
         id: 'folder-system', title: 'System Core', icon: '<img src="assets/icons/folder_system.png" alt="folder" style="filter: sepia(1) saturate(3) hue-rotate(200deg);">', dock: false, width: 800, height: 600, content: `
         <div class="h-full bg-gradient-to-b from-gray-50 to-white p-6 overflow-y-auto custom-scroll">
@@ -647,10 +630,6 @@ const apps = [
                     <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_not_dumb.png" alt="not dumb" style="width: 100%; height: 100%;"></div>
                     <div class="icon-label group-hover:text-pink-600 transition-colors">Not Dumb</div>
                 </div>
-                <div class="win-icon group" onclick="Apps.open('madrid')">
-                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_madrid.png" alt="madrid" style="width: 100%; height: 100%;"></div>
-                    <div class="icon-label group-hover:text-indigo-700 transition-colors">HalaMadrid.exe</div>
-                </div>
                 <div class="win-icon group" onclick="Apps.open('app-grown')">
                     <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_19.png" alt="19" style="filter: sepia(1) saturate(3) hue-rotate(270deg);"></div>
                     <div class="icon-label group-hover:text-purple-600 transition-colors">19.exe</div>
@@ -669,16 +648,13 @@ const apps = [
     {
         id: 'folder-feelings', title: 'Soft Stuff', icon: '<img src="assets/icons/folder_feelings.png" alt="feelings" style="filter: sepia(0.3) saturate(1.2) hue-rotate(-10deg); width: 100%; height: 100%;">', dock: false, width: 800, height: 600, content: `
         <div class="folder-window-grid">
-            <div class="win-icon group" onclick="Apps.open('app-letters')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_letters_new.png" alt="letters" style="width: 100%; height: 100%;"></div><div class="icon-label">Letters</div></div>
             <div class="win-icon group" onclick="Apps.open('app-mixtape')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_mixtape_new.png" alt="mixtape" style="width: 100%; height: 100%;"></div><div class="icon-label">Mixtape</div></div>
             <div class="win-icon group" onclick="Apps.open('app-bloom')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_bloom_new.png" alt="bloom" style="width: 100%; height: 100%;"></div><div class="icon-label">Daily Bloom</div></div>
             <div class="win-icon" onclick="Apps.open('why-matter')"><div class="icon-img"><img src="assets/icons/app_matter.png" alt="why matter" style="width: 100%; height: 100%;"></div><div class="icon-label">Why You Matter</div></div>
             <div class="win-icon" onclick="Apps.open('tired')"><div class="icon-img"><img src="assets/icons/app_sleep.png" alt="tired" style="width: 100%; height: 100%;"></div><div class="icon-label">When Tired</div></div>
-            <div class="win-icon" onclick="Apps.open('future')"><div class="icon-img"><img src="assets/icons/app_future_new.png" alt="future" style="width: 100%; height: 100%;"></div><div class="icon-label">Future You</div></div>
             <div class="win-icon" onclick="Apps.open('thank-you')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_gratitude_new.png" alt="gratitude" style="width: 100%; height: 100%;"></div><div class="icon-label">Gratitude</div></div>
             <div class="win-icon" onclick="Apps.open('inkpot-new')"><div class="icon-img"><img src="assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;"></div><div class="icon-label">The Inkpot</div></div>
             <div class="win-icon" onclick="Apps.open('app-capsule')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_capsule_new.png" alt="capsule" style="width: 100%; height: 100%;"></div><div class="icon-label">Time Capsule</div></div>
-            <div class="win-icon" onclick="Apps.open('app-planes')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_planes.png" alt="planes" style="width: 100%; height: 100%;"></div><div class="icon-label">Paper Planes</div></div>
             <div class="win-icon" onclick="Apps.open('app-journal')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_journal_new.png" alt="journal" style="width: 100%; height: 100%;"></div><div class="icon-label">Our Story</div></div>
             <div class="win-icon" onclick="Apps.open('last-thing')"><div class="icon-img"><img src="assets/icons/app_rose.png" alt="last thing" style="width: 100%; height: 100%;"></div><div class="icon-label">One Last Thing</div></div>
             <div class="win-icon" onclick="Apps.open('admire')"><div class="icon-img"><img src="assets/icons/app_truth_new.png" alt="truth" style="width: 100%; height: 100%;"></div><div class="icon-label">Deep Truths</div></div>
@@ -696,14 +672,10 @@ const apps = [
             <div class="win-icon" onclick="Apps.open('the-path')"><div class="icon-img"><img src="assets/icons/app_path.png" alt="path" style="width: 100%; height: 100%;"></div><div class="icon-label">The Path</div></div>
             <div class="win-icon" onclick="Apps.open('personality-quiz')"><div class="icon-img"><img src="assets/icons/app_us_quiz.png" alt="quiz" style="width: 100%; height: 100%;"></div><div class="icon-label">Who Are You?</div></div>
              <div class="win-icon" onclick="Apps.open('radio-harshit')"><div class="icon-img"><img src="assets/icons/app_radio.png" alt="radio" style="filter: sepia(1) saturate(3) hue-rotate(300deg);"></div><div class="icon-label">Radio<br>Harshit</div></div>
-
-            <div class="win-icon" onclick="Apps.open('spotify')"><div class="icon-img"><img src="assets/icons/app_spotify.png" alt="spotify" style="filter: sepia(1) saturate(5) hue-rotate(100deg);"></div><div class="icon-label">Vibe Check</div></div>
-
-            <div class="win-icon" onclick="Apps.open('app-anime')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_anime_new.png" alt="anime" style="width: 100%; height: 100%;"></div><div class="icon-label">Anime<br>Gallery</div></div>
+                <div class="win-icon" onclick="Apps.open('spotify')"><div class="icon-img"><img src="assets/icons/app_spotify.png" alt="spotify" style="filter: sepia(1) saturate(5) hue-rotate(100deg);"></div><div class="icon-label">Vibe Check</div></div>
 
 
             <div class="win-icon" onclick="Apps.open('app-decision')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_decision_new.png" alt="decision" style="width: 100%; height: 100%;"></div><div class="icon-label">Decision<br>Helper</div></div>
-            <div class="win-icon" onclick="Apps.open('app-wifi')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_wifi.png" alt="wifi" style="width: 100%; height: 100%;"></div><div class="icon-label">Bangalore<br>Network</div></div>
             <div class="win-icon" onclick="Apps.open('frequency-3015')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_radio.png" alt="frequency" style="width: 100%; height: 100%;"></div><div class="icon-label">Frequency<br>3015.exe</div></div>
         </div>
     `},
@@ -1034,33 +1006,7 @@ const apps = [
                     <div class="spec-item"><span class="spec-label">VULNERABILITY</span><span class="spec-val">Restricted (Requires: Safety Protocol)</span></div>
                     <div class="spec-item"><span class="spec-label">OVERRIDE_KEY</span><span class="spec-val">Feeling Understood</span></div>
                 </div>
-            </div>
-
-            <div class="facts-section">
-                <div class="facts-section-title">OPERATING PARAMETERS 🧬</div>
-                <div class="facts-grid">
-                    <div class="facts-card">
-                        <h4>Fuel Source</h4>
-                        <div class="fact-val">Sub Sandwiches 🥪</div>
-                        <div class="sys-note">Efficiency: High. Texture: Specific.</div>
-                    </div>
-                    <div class="facts-card">
-                        <h4>System Threat</h4>
-                        <div class="fact-val">Bhindi (Okra) 🤢</div>
-                        <div class="sys-note" style="color: #ef4444;">CRITICAL ERROR. DO NOT SERVE.</div>
-                    </div>
-                     <div class="facts-card">
-                        <h4>Communication</h4>
-                        <div class="fact-val">Witty / Reserved</div>
-                        <div class="sys-note">Mode: Context Dependent. Depth: High.</div>
-                    </div>
-                    <div class="facts-card">
-                        <h4>Dislikes</h4>
-                        <div class="fact-val">Rice & Dry Fruits</div>
-                        <div class="sys-note">Preference: Simple, no-nonsense comfort.</div>
-                    </div>
-                </div>
-            </div>
+            </div>          
 
             <!-- SYSTEM UPDATE HISTORY -->
             <div class="facts-section" style="animation: fadeInUp 0.5s ease-out 0.6s backwards;">
@@ -1190,118 +1136,6 @@ const apps = [
         </div>
     `},
 
-    {
-        id: 'madrid', title: 'HalaMadrid.exe', icon: '<img src="assets/icons/app_madrid.png" alt="madrid" style="width: 100%; height: 100%;">', dock: false, width: 680, height: 750, content: `
-        <div class="madrid-modern-dash font-sans" id="madrid-dash">
-            <!-- BG Texture -->
-            <div class="madrid-bg-pattern"></div>
-            
-            <div class="mad-header">
-                <div class="mad-logo cursor-pointer hover:opacity-80 transition" onclick="showMadridInfo()" title="What is this?">
-                    <span class="text-3xl">👑</span> RMA_SYSTEM
-                </div>
-                <div class="mad-tabs">
-                    <div class="mad-tab active" onclick="switchMadTab(this, 'dash')">DASHBOARD</div>
-                    <div class="mad-tab" onclick="switchMadTab(this, 'match')">MATCH CENTER</div>
-                </div>
-            </div>
-
-            <!-- Tab 1: Dashboard -->
-            <div id="tab-dash" class="mad-content-area custom-scroll">
-                
-                <div class="mad-grid">
-                    <div class="mad-stat-card">
-                        <div class="mad-stat-val">100%</div>
-                        <div class="mad-stat-label">Royalty Level</div>
-                    </div>
-                    <div class="mad-stat-card">
-                        <div class="mad-stat-val">∞</div>
-                        <div class="mad-stat-label">Passion Metric</div>
-                    </div>
-                </div>
-
-                <!-- Priority Bars -->
-                <div class="priority-box">
-                    <div class="priority-header">
-                         <span><i class="fas fa-chart-bar mr-2"></i>Live Priorities</span>
-                         <span>STATUS: BALANCED</span>
-                    </div>
-                    <div class="priority-bars">
-                        <div class="p-bar-group">
-                            <div class="p-icon">⚽</div>
-                            <div class="p-track"><div class="p-fill football" id="bar-football"></div></div>
-                        </div>
-                        <div class="p-bar-group">
-                             <div class="p-icon">❤️</div>
-                             <div class="p-track"><div class="p-fill her" id="bar-her"></div></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Interactive Quote Ticket -->
-                <div class="quote-ticket" onclick="triggerMadridEffect(this)">
-                    <div class="text-3xl">🎟️</div>
-                    <div class="flex-1">
-                        <div class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">ADMIT ONE: SANTIAGO BERNABÉU</div>
-                        <div class="text-sm font-bold text-blue-900 leading-tight">
-                            "I don't need a Ballon d'Or to know I'm winning at life."
-                        </div>
-                    </div>
-                    <div class="text-xs font-mono text-gray-400 rotate-90 origin-center whitespace-nowrap">SEAT: 19</div>
-                </div>
-
-                <div class="mt-8 text-center">
-                     <div class="text-[10px] text-white/30 uppercase tracking-widest mb-2">System Notification</div>
-                     <div class="text-sm text-yellow-500 font-medium animate-pulse">
-                        New Transfer Rumor: You → My Heart (Confirmed)
-                     </div>
-                </div>
-            </div>
-
-            <!-- Tab 2: Match Center -->
-            <div id="tab-match" class="mad-content-area custom-scroll match-tab-content">
-                <div class="score-board">
-                    <div class="team">
-                        <div class="team-logo">🧔🏻</div>
-                        <div class="team-name">HARSHIT FC</div>
-                    </div>
-                    <div class="score">3 - 0</div>
-                     <div class="team">
-                        <div class="team-logo">🌏</div>
-                        <div class="team-name">THE WORLD</div>
-                    </div>
-                </div>
-
-                <div class="flex justify-center mb-6">
-                    <div class="live-badge">LIVE MATCH</div>
-                </div>
-
-                <div class="space-y-4">
-                     <div class="p-3 bg-white/5 rounded border-l-2 border-green-500 text-xs text-gray-300">
-                        <span class="text-green-400 font-bold">90+4'</span> GOAL! A perfect reply sent. The crowd goes wild.
-                     </div>
-                     <div class="p-3 bg-white/5 rounded border-l-2 border-yellow-500 text-xs text-gray-300">
-                        <span class="text-yellow-400 font-bold">88'</span> Yellow Card for being too cute.
-                     </div>
-                     <div class="p-3 bg-white/5 rounded border-l-2 border-blue-500 text-xs text-gray-300">
-                        <span class="text-blue-400 font-bold">HT</span> Tactical change: Swapped "Sleep" for "Talks".
-                     </div>
-                </div>
-            </div>
-
-            <!-- Sound -->
-            <audio id="madrid-siuuu" src="https://www.myinstants.com/media/sounds/cristiano-ronaldo-siuuu.mp3"></audio>
-        </div>
-    `,
-        onOpen() {
-            setTimeout(() => {
-                const f = document.getElementById('bar-football');
-                const h = document.getElementById('bar-her');
-                if (f) f.style.width = '85%';
-                if (h) h.style.width = '100%';
-            }, 500);
-        }
-    },
 
     {
         id: 'flash', title: 'Fastest Alive', icon: '<img src="assets/icons/app_speed.png" alt="flash" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 900, height: 700, onOpen: () => FlashApp.init(), onClose: () => FlashApp.stopGameLoop(), content: `
@@ -1382,14 +1216,6 @@ const apps = [
                             <div class="text-[10px] text-gray-400 mt-1">Dodge obstacles, collect moments</div>
                          </div>
                     </button>
-                     <!-- Mode 2 -->
-                    <button onclick="FlashApp.startMode('madrid')" class="flash-menu-btn p-8 rounded-2xl flex flex-col items-center gap-4 group">
-                         <div class="text-5xl group-hover:scale-110 transition duration-300 filter drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">⚽</div>
-                         <div>
-                            <div class="text-xl font-bold italic uppercase text-white group-hover:text-blue-300">Hala Madrid</div>
-                            <div class="text-[10px] text-gray-400 mt-1">Tap the goals, ignore distractions</div>
-                         </div>
-                    </button>
                     <!-- Mode 3 -->
                     <button onclick="FlashApp.startMode('reaction')" class="flash-menu-btn p-8 rounded-2xl flex flex-col items-center gap-4 group">
                          <div class="text-5xl group-hover:scale-110 transition duration-300 filter drop-shadow-[0_0_10px_rgba(234,179,8,0.5)]">⚡</div>
@@ -1409,13 +1235,6 @@ const apps = [
                 <button onclick="FlashApp.stopGame()" class="absolute top-6 right-6 px-4 py-2 bg-red-600/20 text-red-400 text-xs border border-red-500/50 rounded hover:bg-red-600/40 transition">EXIT</button>
             </div>
 
-            <!-- Madrid Game -->
-            <div id="flash-madrid" class="absolute inset-0 hidden z-20 overflow-hidden cursor-crosshair">
-                 <div id="madrid-game-area" class="absolute inset-0"></div>
-                 <div class="absolute top-6 left-6 text-2xl font-black italic text-blue-400 drop-shadow-md">SCORE: <span id="madrid-score">0</span></div>
-                 <div class="absolute bottom-10 w-full text-center text-white/50 animate-pulse text-lg font-bold">Tap ONLY the Real Madrid stuff!</div>
-                 <button onclick="FlashApp.stopGame()" class="absolute top-6 right-6 px-4 py-2 bg-red-600/20 text-red-400 text-xs border border-red-500/50 rounded hover:bg-red-600/40 transition">EXIT</button>
-            </div>
 
             <!-- Reaction Game -->
             <div id="flash-reaction" class="absolute inset-0 hidden z-20 flex-col items-center justify-center cursor-pointer select-none" onclick="FlashApp.handleReactionTap()">
@@ -1650,28 +1469,6 @@ const apps = [
         </div>
     `},
 
-    {
-        id: 'future', title: 'Future You', icon: '<img src="assets/icons/app_future_new.png" alt="future" style="width: 100%; height: 100%;">', dock: false, width: 800, height: 600, content: `
-        <div class="h-full w-full relative bg-black custom-scroll overflow-y-auto group">
-            <!-- Background Image: Train/Night Window Aesthetic -->
-            <div class="absolute inset-0 bg-cover bg-center transition-all duration-[2000ms] group-hover:scale-105 group-hover:opacity-40 opacity-70" 
-                 style="background-image: url('https://images.unsplash.com/photo-1532978016421-2a0614459f36?q=80&w=1600');">
-                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20"></div>
-            </div>
-            
-            <!-- Hover Quote (Option C) -->
-            <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                 <div class="text-white/90 font-serif text-2xl tracking-widest opacity-0 transform translate-y-8 transition-all duration-1000 group-hover:opacity-100 group-hover:translate-y-0 text-center drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)]">
-                    "You didn't stop walking."
-                 </div>
-            </div>
-
-            <!-- Static subtle hint (Option A) -->
-             <div class="absolute bottom-8 right-8 text-white/40 text-[10px] uppercase tracking-[0.4em] font-light mix-blend-overlay opacity-60 group-hover:opacity-0 transition-opacity duration-700">
-                Still becoming
-            </div>
-        </div>
-    `},
 
     {
         id: 'inkpot-new', title: 'The Inkpot', icon: '<img src="assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 500, height: 600, onOpen: initInkpot, content: `
@@ -1778,6 +1575,7 @@ const apps = [
             </audio>
         </div>
     `},
+
     {
         id: 'do-not-open', title: 'Do Not Open', icon: '<img src="assets/icons/app_warning.png" alt="do not open" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 400, height: 300, content: `
         <div class="h-full flex flex-col items-center justify-center bg-red-50 text-red-900 text-center p-6 overflow-y-auto custom-scroll">
@@ -1824,7 +1622,6 @@ const apps = [
                 <h3>The Many Names of You</h3>
                 <ul class="list-disc list-inside ml-5 mb-4 space-y-2">
                     <li><span class="highlight">Mr. Snow ❄️</span>: Calm, distant on the outside, but emotionally deep inside.</li>
-                    <li><span class="highlight">Mr. Chuha 🐭</span>: Soft, cute, and unintentionally endearing.</li>
                     <li><span class="highlight">Mr. Ota</span>: Playful, teasing, inside-joke energy.</li>
                     <li><span class="highlight">Rabbit 🐰</span>: Gentle, alert, emotionally sensitive.</li>
                 </ul>
@@ -2099,24 +1896,6 @@ const apps = [
     `},
 
     {
-        id: 'app-anime', title: 'Anime Gallery', icon: '<img src="assets/icons/app_anime_new.png" alt="anime" style="width: 100%; height: 100%;">', dock: false, width: 700, height: 600, content: `
-        <div class="anime-app">
-            <div class="anime-grid custom-scroll">
-                <div class="anime-item" onclick="AnimeApp.playSound()"><img src="assets/gifs/bear_love.gif"></div>
-                <div class="anime-item"><img src="assets/gifs/bear_milk.gif"></div>
-                <div class="anime-item"><img src="assets/gifs/bear_madrid.gif"></div>
-                 <div class="anime-item"><img src="assets/gifs/milk-run.gif"></div>
-                 <div class="anime-item"><img src="assets/gifs/milk_mascot.gif"></div>
-                 <div class="anime-item"><img src="assets/gifs/cute_anime_1.gif"></div>
-            </div>
-            <div class="anime-controls">
-                <button class="anime-btn sound" onclick="AnimeApp.playSound()">🔊 Nu Nu Nu</button>
-                <button class="anime-btn" onclick="createModal({title:'Nope', desc:'No head shaking allowed! 😤', icon:'🚫'})">No Shake</button>
-            </div>
-        </div>
-    `},
-
-    {
         id: 'app-decision', title: 'Decision Helper', icon: '<img src="assets/icons/app_decision_new.png" alt="decision" style="width: 100%; height: 100%;">', dock: false, width: 600, height: 600, content: `
     <div class="decision-app">
             <h2 class="text-2xl font-bold text-blue-900 mb-4">What should we do?</h2>
@@ -2128,44 +1907,6 @@ const apps = [
         </div >
     `},
 
-    {
-        id: 'app-wifi',
-        title: 'Network Manager',
-        icon: '<img src="assets/icons/app_wifi.png" alt="wifi" style="width: 100%; height: 100%;">',
-        dock: false,
-        width: 450,
-        height: 550,
-        content: `
-        <div class="wifi-app">
-            <div class="wifi-header">
-                <div>Bangalore_Network_Manager_v2.0</div>
-                <div style="margin-left:auto; color:red;">⚠ Unstable</div>
-            </div>
-            <div class="wifi-list custom-scroll">
-                <div class="wifi-item" onclick="WifiApp.connect('Ota_Hotspot_5G')">
-                    <div class="wifi-signal"></div>
-                    <div>Ota_Hotspot_5G</div>
-                    <div class="wifi-lock">🔒</div>
-                </div>
-                <div class="wifi-item" onclick="WifiApp.connect('Roommate_Pvt')">
-                    <div class="wifi-signal" style="opacity:0.5"></div>
-                    <div>Roommate_Pvt</div>
-                    <div class="wifi-lock">🔒</div>
-                </div>
-                <div class="wifi-item" onclick="WifiApp.connect('Airtel_Slow_AF')">
-                    <div class="wifi-signal" style="opacity:0.2"></div>
-                    <div>Airtel_Slow_AF</div>
-                    <div class="wifi-lock">🔓</div>
-                </div>
-                 <div class="wifi-item" onclick="WifiApp.connect('Harshit_Brain_Cell')">
-                    <div class="wifi-signal" style="opacity:0.1"></div>
-                    <div>Harshit_Brain_Cell</div>
-                    <div class="wifi-lock">❌</div>
-                </div>
-            </div>
-            <div class="wifi-status-bar" id="wifi-status">Status: Scanning for stable connection...</div>
-        </div>
-    `},
 
     {
         id: 'frequency-3015',
@@ -2331,7 +2072,47 @@ const apps = [
         </div>
     `},
 
+    {
+        id: 'app-blueprint', title: 'The Blueprint', icon: '<img src="assets/icons/app_blueprint.png" alt="blueprint" style="width: 100%; height: 100%;">', dock: true, width: 800, height: 650,
+        content: `
+        <div class="h-full custom-scroll p-10 select-text blueprint-container">
+            <div class="dark-header">
+                <h2>The Blueprint</h2>
+                <div class="dark-line"></div>
+            </div>
+            <!-- Interactive Editor Area -->
+            <div id="blueprint-editor" class="dark-body outline-none" contenteditable="true" spellcheck="false" oninput="saveBlueprint()">
+                <p><strong>Subject: Why this world looks the way it does</strong></p>
+                <br>
+                <p>I thought about making this loud. Or flashy.<br> But then I thought about you.</p>
+                <p>This isn't about spectacle.<br> It's about a place that feels like <strong>Us</strong>.</p>
+                <hr class="dark-divider">
+                <p>Small moments.<br>Honesty.<br>Comfort.</p>
+                <p class="dark-quote"><em>"Because you don’t need spectacle to feel something real."</em></p>
+            </div>
+        </div>
+        `,
+        onOpen: () => {
+            const win = document.getElementById('win-app-blueprint');
+            if (win) {
+                const editor = win.querySelector('#blueprint-editor');
+                if (editor) {
+                    const saved = localStorage.getItem('harshit_os_blueprint');
+                    if (saved) {
+                        editor.innerHTML = saved; // Load existing work
+                    } else {
+                        // First-time reveal
+                        if (!editor.dataset.original) editor.dataset.original = editor.innerHTML;
+                        editor.innerHTML = '';
+                        runSmartTypewriter(editor, editor.dataset.original, 30);
+                    }
+                }
+            }
+        }
+    },
+
 ];
+
 
 const CapsuleApp = {
     data: {
@@ -2660,12 +2441,6 @@ const BanterApp = {
             }, 200);
         }
     },
-};
-const AnimeApp = {
-    playSound() {
-        if (typeof createModal === 'function')
-            createModal({ title: "Soundboard", desc: "Playing: 'Nu nu nu nu nu!' 🎶", icon: "🔊" });
-    }
 };
 const VCApp = {
     join() { createModal({ title: "Connecting...", desc: "Joining General...<br><span style='color:green'>Connected</span>", icon: "🔊" }); },
@@ -3522,12 +3297,7 @@ function initDesktop() {
     });
 
 
-    const bpIcon = document.createElement('div');
-    bpIcon.className = 'desktop-icon group';
-    bpIcon.innerHTML = `<div class="icon-img text-3xl mb-2 transition duration-500"><img src="assets/icons/app_blueprint.png" alt="blueprint" style="width: 100%; height: 100%;"></div><div class="icon-label text-white px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm shadow-black/50 drop-shadow-md">Blueprint.bp</div>`;
-    bpIcon.onclick = openBlueprint;
-    grid.appendChild(bpIcon);
-
+    // Redundant manual bpIcon creation removed - now handled via apps array
     setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }); }, 1000);
 
 
@@ -3539,7 +3309,6 @@ window.goToDesktop = enterDesktop;
 
 
 const bearGifs = [
-    'assets/gifs/bear_madrid.gif',
     'assets/gifs/bear_milk.gif',
     'assets/gifs/bear_love.gif',
     'assets/gifs/milk-run.gif',
@@ -3973,7 +3742,7 @@ function toggleSpotify() {
     isSpotifyPlaying = !isSpotifyPlaying;
 }
 
-const Apps = {
+window.Apps = {
     open: (id) => {
         const app = apps.find(a => a && a.id === id);
         if (!app) {
@@ -4011,7 +3780,7 @@ const Apps = {
         }
 
         const win = document.createElement('div');
-        win.className = `window ${app.dark ? 'dark' : ''}`;
+        win.className = `window ${app.dark ? 'dark' : ''} ${app.fancy ? 'fancy' : ''}`;
         win.id = `win-${id}`;
         win.style.width = (app.width || 800) + 'px';
         win.style.height = (app.height || 600) + 'px';
@@ -4036,13 +3805,13 @@ const Apps = {
 
         win.innerHTML = `<div class="title-bar" onmousedown="startDrag(event, '${win.id}')">
             <div class="traffic-lights">
-                <div class="traffic-light close" onclick="closeApp('${id}')"></div>
-                <div class="traffic-light minimize" onclick="minimizeApp('${id}')"></div>
-                <div class="traffic-light maximize" onclick="maximizeApp('${id}')"></div>
+                <div class="traffic-light close" onmousedown="event.stopPropagation(); closeApp('${id}')"></div>
+                <div class="traffic-light minimize" onmousedown="event.stopPropagation(); minimizeApp('${id}')"></div>
+                <div class="traffic-light maximize" onmousedown="event.stopPropagation(); maximizeApp('${id}')"></div>
             </div>
             <div class="text-xs text-center w-full absolute pt-1 pointer-events-none opacity-50 font-medium">${app.title}</div>
         </div>
-        <div class="win-content custom-scroll" style="height: calc(100% - 30px);">${contentHTML}</div>`;
+        <div class="win-content custom-scroll" style="height: calc(100% - 38px);">${contentHTML}</div>`;
         document.getElementById('desktop').appendChild(win);
         if (app.onOpen) app.onOpen();
         const dot = document.getElementById(`dot-${id}`); if (dot) dot.parentElement.classList.add('active');
@@ -4052,6 +3821,12 @@ const Apps = {
         closeApp(id);
     }
 };
+
+window.closeApp = closeApp;
+window.minimizeApp = minimizeApp;
+window.maximizeApp = maximizeApp;
+
+
 
 function closeApp(id) {
     const app = apps.find(a => a && a.id === id);
@@ -4155,7 +3930,7 @@ function checkUnlock() { if (state.countdownFinished && state.appsOpened.size >=
 
 let dragItem = null, offX = 0, offY = 0;
 function startDrag(e, id) {
-    if (e.target.closest('.traffic-lights') || e.target.closest('.dark-close-btn')) return;
+    if (e.target.closest('.traffic-lights') || e.target.closest('.dark-close-btn') || e.target.closest('.mac-controls')) return;
 
 
     const appId = id.replace('win-', '');
@@ -4371,78 +4146,11 @@ function createPolaroid(src, caption, container, date = "") {
 }
 
 
-function openBlueprint() {
-    const win = document.getElementById('blueprint-window');
-    if (!win) return;
-
-    win.style.display = 'flex';
-    win.style.zIndex = ++zIndex;
-
-    const body = win.querySelector('.dark-body');
-    if (body) {
-
-        if (!body.dataset.original) {
-            body.dataset.original = body.innerHTML;
-        }
-
-
-        body.innerHTML = body.dataset.original;
-
-
-        runSmartTypewriter(body);
-    }
-}
-
-function closeBlueprint() {
-    document.getElementById('blueprint-window').style.display = 'none';
-}
 
 function closeWindow(id) {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
 }
-
-function runSmartTypewriter(element, speed = 15) {
-    const nodes = [];
-
-    function walk(node) {
-        if (node.nodeType === 3) {
-            nodes.push({
-                node: node,
-                text: node.textContent
-            });
-            node.textContent = "";
-        } else {
-            for (let child of node.childNodes) {
-                walk(child);
-            }
-        }
-    }
-
-    walk(element);
-
-    let nodeIndex = 0;
-    let charIndex = 0;
-
-    function type() {
-        if (nodeIndex < nodes.length) {
-            const item = nodes[nodeIndex];
-            if (charIndex < item.text.length) {
-                item.node.textContent += item.text[charIndex];
-                charIndex++;
-                setTimeout(type, speed);
-            } else {
-                nodeIndex++;
-                charIndex = 0;
-                type();
-            }
-        }
-    }
-
-    type();
-}
-
-
 
 
 function initRadio() {
@@ -4717,7 +4425,6 @@ function handleTerminalAppCommand() {
                 "- strength: Analyze core metrics",
                 "- secret: Unlock hidden directory",
                 "- firstmeet: Origin Timestamp",
-                "- chapters: Journey Log",
                 "- clear: Clear screen"
             ], 10, 100, enableInput);
             break;
@@ -4762,14 +4469,6 @@ function handleTerminalAppCommand() {
             ], 18, 600, enableInput);
             break;
 
-        case 'chapters':
-            runTerminalSequence(output, [
-                "Journey Log:",
-                "Chapter 1: The Spark",
-                "Chapter 2: The Bridge",
-                "Chapter 3: The Protector"
-            ], 20, 400, enableInput);
-            break;
 
         case 'sudo':
             runTerminalSequence(output, [
@@ -5799,98 +5498,6 @@ function startFactsApp() {
 }
 
 
-function switchMadTab(tabBtn, tabId) {
-
-    const allTabs = document.querySelectorAll('.mad-tab');
-    allTabs.forEach(t => t.classList.remove('active'));
-
-
-    tabBtn.classList.add('active');
-
-
-    const dash = document.getElementById('tab-dash');
-    const match = document.getElementById('tab-match');
-
-    if (tabId === 'dash') {
-        dash.style.display = 'block';
-        match.style.display = 'none';
-    } else {
-        dash.style.display = 'none';
-        match.style.display = 'block';
-    }
-}
-window.switchMadTab = switchMadTab;
-
-function triggerMadridEffect(btn) {
-
-    const originalTransform = btn.style.transform;
-    btn.style.transform = "scale(0.95)";
-    setTimeout(() => {
-        btn.style.transform = originalTransform || "";
-    }, 150);
-
-    const balls = ['⚽', '⚽️', '🧤', '🏆', '👑', '🤍'];
-    const rect = btn.getBoundingClientRect();
-
-
-    for (let i = 0; i < 30; i++) {
-        const p = document.createElement('div');
-        p.className = 'ball-particle';
-        p.innerText = balls[Math.floor(Math.random() * balls.length)];
-
-        const tx = (Math.random() - 0.5) * 600;
-        const ty = (Math.random() - 1) * 600;
-
-        p.style.setProperty('--tx', `${tx}px`);
-        p.style.setProperty('--ty', `${ty}px`);
-        p.style.left = `${rect.left + rect.width / 2}px`;
-        p.style.top = `${rect.top}px`;
-
-
-        p.style.fontSize = Math.random() > 0.5 ? '24px' : '16px';
-
-        document.body.appendChild(p);
-        setTimeout(() => p.remove(), 1500);
-    }
-
-
-    const audio = document.getElementById('madrid-siuuu');
-    if (audio) {
-        audio.volume = 0.6;
-        audio.currentTime = 0;
-        audio.play().catch(e => console.log("Audio play blocked", e));
-    }
-}
-
-function showMadridInfo() {
-    createModal({
-        title: "RMA System 👑",
-        icon: "⚽",
-        desc: "This is your fan dashboard. It tracks your loyalty to Real Madrid... and ensures you don't love football MORE than your partner (mostly). Includes live match stats and a dedicated 'Siuuu' button for emergencies."
-    });
-}
-window.showMadridInfo = showMadridInfo;
-
-function toggleUCLMode() {
-    const dash = document.getElementById('madrid-dash');
-    const headText = document.getElementById('madrid-head-text');
-    const logo = document.getElementById('madrid-logo-icon');
-    const tier = document.getElementById('madrid-tier');
-
-    if (dash.classList.contains('ucl-mode')) {
-
-        dash.classList.remove('ucl-mode');
-        headText.innerText = "HALAMADRID DASHBOARD";
-        logo.innerText = "⚽";
-        tier.innerText = "Ultra Tier";
-    } else {
-
-        dash.classList.add('ucl-mode');
-        headText.innerText = "CHAMPIONS LEAGUE MODE";
-        logo.innerText = "🏆";
-        tier.innerText = "15 KINGS";
-    }
-}
 
 function createModal({ title, desc, icon }) {
     const modal = document.createElement('div');
@@ -7119,7 +6726,6 @@ const notDumbSlides = [
                     <span class="px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-600">Mr. Snow</span>
                     <span class="px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-600">Rabbit</span>
                     <span class="px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-600">Mr. Ota</span>
-                    <span class="px-2 py-1 bg-white border border-slate-200 rounded text-xs text-slate-600">Mr. Chuha</span>
                 </div>
             </details>
         </div>
@@ -7347,13 +6953,6 @@ window.closeLetter = function () {
 
 /* --- Gifts Phase Logic --- */
 const giftsData = [
-    {
-        id: 'earpods',
-        title: 'Earpods',
-        emoji: '🎧',
-        img: 'assets/images/gift_earpods.jpg',
-        quote: "“For music, silence, late nights, and when you need to tune the world out.”"
-    },
     {
         id: 'keychain',
         title: 'Keychain',
@@ -7602,41 +7201,7 @@ function setupAccessibility() {
 
 
 
-function sealLetter() {
-    const paper = document.getElementById('letter-paper');
-    const air = document.getElementById('ai-reply-area');
-    if (!paper.value.trim()) return;
 
-    if (typeof createModal === 'function') createModal({ title: 'Letter Sealed', desc: 'Stored in the archives of time.', icon: '🕯️' });
-
-
-    setTimeout(() => {
-        air.style.opacity = 1;
-        const replies = [
-            "Harshit: Tu bohot sochti hai. Relax kar.",
-            "Harshit: I'm proud of you, you know that right?",
-            "Harshit: Stop doubting. You are capable.",
-            "Harshit: Suno, sab theek ho jayega."
-        ];
-        document.getElementById('ai-reply-text').innerText = replies[Math.floor(Math.random() * replies.length)];
-    }, 2000);
-}
-
-apps.push({
-    id: 'app-letters', title: 'Unsent Letters', icon: '<img src="assets/icons/app_letters_new.png" alt="letters" style="width: 100%; height: 100%;">', dock: true, width: 600, height: 700, content: `
-    <div class="letters-app">
-        <textarea id="letter-paper" class="letters-paper custom-scroll" placeholder="Write a letter to the void..."></textarea>
-        
-        <div id="ai-reply-area" class="ai-reply-area">
-            <div class="text-xs font-bold uppercase mb-1 opacity-50">Reflection</div>
-            <div id="ai-reply-text">...</div>
-        </div>
-
-        <div class="letters-controls">
-            <button class="wax-seal-btn" onclick="sealLetter()" title="Seal Letter">SEAL</button>
-        </div>
-    </div>
-`});
 
 
 
@@ -7981,69 +7546,13 @@ apps.push({
 
 
 
-const PlanesApp = {
-    wishes: [
-        "May your day be as amazing as you are.",
-        "You are doing much better than you think.",
-        "A random smile is coming your way.",
-        "The stars are rooting for you.",
-        "Take a break, you've earned it."
-    ],
-
-    catchPlane() {
-        const sky = document.getElementById('planes-sky');
-        if (!sky) return;
-
-        const plane = document.createElement('div');
-        plane.innerText = '✈️';
-        plane.className = 'absolute text-3xl cursor-pointer transition-all duration-[4s] ease-linear select-none z-10';
-
-        const startY = Math.random() * 70 + 10 + '%';
-        plane.style.top = startY;
-        plane.style.left = '-50px';
-        plane.style.opacity = '0.8';
-
-        sky.appendChild(plane);
-
-        setTimeout(() => {
-            plane.style.left = (sky.offsetWidth + 100) + 'px';
-            plane.style.transform = `translateY(${Math.random() * 100 - 50}px) rotate(10deg)`;
-        }, 100);
-
-        plane.onclick = () => {
-            plane.innerText = '✨';
-            const msg = this.wishes[Math.floor(Math.random() * this.wishes.length)];
-            createModal({ title: "A Plane for You", desc: msg, icon: "🌠" });
-            setTimeout(() => plane.remove(), 500);
-        };
-
-        setTimeout(() => plane.remove(), 4500);
-    },
-
-    init() {
-        if (this.interval) clearInterval(this.interval);
-        this.interval = setInterval(() => this.catchPlane(), 2000);
-    }
-};
-
-apps.push({
-    id: 'app-planes', title: 'Paper Planes', icon: '<img src="assets/icons/app_planes.png" alt="planes" style="width: 100%; height: 100%;">', dock: false, width: 700, height: 500, onClose: () => clearInterval(PlanesApp.interval), onOpen: () => PlanesApp.init(), content: `
-    <div class="h-full bg-gradient-to-b from-sky-400 via-sky-200 to-indigo-100 relative overflow-hidden flex flex-col items-center justify-end pb-12">
-        <div id="planes-sky" class="absolute inset-0">
-             <!-- Clouds -->
-            <div class="absolute top-10 left-10 text-8xl opacity-40 animate-pulse-slow">☁</div>
-            <div class="absolute top-40 right-20 text-6xl opacity-30 animate-pulse-slow delay-700">☁</div>
-        </div>
-        <div class="relative z-20 bg-white/40 backdrop-blur px-6 py-2 rounded-full border border-white/50 text-sky-900 font-bold text-xs uppercase tracking-widest shadow-xl">Catch a passing wish...</div>
-    </div>
-`});
 
 
 
 const JournalApp = {
     chapters: [
         { title: "Chapter 1: The Beginning", content: "It all started with a simple 'Hi'. Who knew it would lead to a special OS built just for you? Every conversation since then has been a building block for us." },
-        { title: "Chapter 2: The Inside Jokes", content: "From 'Chuha' to 'Ota', we've built a language of our own. These small moments are what make the journey worth it." },
+        { title: "Chapter 2: To knowning", content: "From '' to 'Ota', we've built a language of our own. These small moments are what make the journey worth it." },
         { title: "Chapter 3: The Growth", content: "We've faced shifts and changes, but through it all, the care remained. This system isn't just about the past; it's a bridge to what's next." }
     ],
     index: 0,
@@ -9702,33 +9211,7 @@ window.toggleTruth = function (card) {
 };
 
 
-function openBlueprint() {
-    const win = document.getElementById('blueprint-window');
-    const overlay = document.getElementById('brightness-dimmer');
-    if (win) {
-        win.style.display = 'block';
-        setTimeout(() => win.classList.add('active'), 50);
 
-        win.style.zIndex = ++zIndex;
-        if (overlay) {
-            overlay.style.opacity = '0.3';
-            overlay.style.pointerEvents = 'auto';
-        }
-    }
-}
-
-function closeBlueprint() {
-    const win = document.getElementById('blueprint-window');
-    const overlay = document.getElementById('brightness-dimmer');
-    if (win) {
-        win.classList.remove('active');
-        setTimeout(() => win.style.display = 'none', 500);
-        if (overlay) {
-            overlay.style.opacity = '0';
-            overlay.style.pointerEvents = 'none';
-        }
-    }
-}
 
 const FlashApp = {
     state: {
@@ -9772,13 +9255,11 @@ const FlashApp = {
         this.stopGameLoop();
         const menu = document.getElementById('flash-menu');
         const runner = document.getElementById('flash-runner');
-        const madrid = document.getElementById('flash-madrid');
         const reaction = document.getElementById('flash-reaction');
         const result = document.getElementById('flash-result');
 
         if (menu) menu.style.display = 'flex';
         if (runner) runner.style.display = 'none';
-        if (madrid) madrid.style.display = 'none';
         if (reaction) reaction.style.display = 'none';
         if (result) {
             result.style.display = 'none';
@@ -9804,7 +9285,6 @@ const FlashApp = {
         if (menu) menu.style.display = 'none';
 
         if (mode === 'runner') this.initRunner();
-        if (mode === 'madrid') this.initMadrid();
         if (mode === 'reaction') this.initReaction();
     },
 
@@ -9871,7 +9351,6 @@ const FlashApp = {
 
     stopGameLoop() {
         if (this.state.gameLoop) cancelAnimationFrame(this.state.gameLoop);
-        if (this.state.madridInterval) clearInterval(this.state.madridInterval);
         if (this.state.reactionTimeout) clearTimeout(this.state.reactionTimeout);
     },
 
@@ -9993,65 +9472,6 @@ const FlashApp = {
     },
 
 
-    initMadrid() {
-        const container = document.getElementById('flash-madrid');
-        if (container) container.style.display = 'block';
-        const gameArea = document.getElementById('madrid-game-area');
-        if (gameArea) gameArea.innerHTML = '';
-        const sc = document.getElementById('madrid-score');
-        if (sc) sc.innerText = '0';
-
-        const targets = ['⚽', '🏆', '👟', '🥅'];
-        const distractions = ['🐍', '🟥', '❌', '💤'];
-
-        this.state.madridInterval = setInterval(() => {
-            if (!this.state.active) return;
-            if (!gameArea) return;
-
-            const el = document.createElement('div');
-            const isTarget = Math.random() > 0.4;
-            const content = isTarget ? targets[Math.floor(Math.random() * targets.length)] : distractions[Math.floor(Math.random() * distractions.length)];
-
-            el.innerText = content;
-            el.style.position = 'absolute';
-            el.style.left = Math.random() * 90 + '%';
-            el.style.top = Math.random() * 80 + 10 + '%';
-            el.style.fontSize = Math.random() * 30 + 30 + 'px';
-            el.style.cursor = 'pointer';
-            el.style.userSelect = 'none';
-            el.style.transition = 'transform 0.2s';
-
-            el.animate([{ transform: 'scale(0)' }, { transform: 'scale(1)' }], { duration: 300, easing: 'ease-out' });
-
-            el.onclick = (e) => {
-                e.stopPropagation();
-                if (isTarget) {
-                    this.state.score += 100;
-                    const scNow = document.getElementById('madrid-score');
-                    if (scNow) scNow.innerText = this.state.score;
-                    if (this.sfx.hover) this.sfx.hover.play().catch(() => { });
-
-                    el.style.transform = 'scale(1.5)';
-                    el.style.opacity = '0';
-                    setTimeout(() => el.remove(), 200);
-                } else {
-                    if (this.sfx.fail) this.sfx.fail.play().catch(() => { });
-                    this.stopGame();
-                }
-            };
-
-            gameArea.appendChild(el);
-
-
-            setTimeout(() => {
-                if (el.parentNode) {
-                    el.style.opacity = '0';
-                    setTimeout(() => el.remove(), 500);
-                }
-            }, 2000);
-
-        }, 600);
-    },
 
 
     initReaction() {
@@ -10294,3 +9714,56 @@ function start2027BirthdaySurprise(immediate = false) {
         setTimeout(fireConfetti, 4000);
     }
 }
+
+
+/* --- Blueprint App Logic --- */
+window.saveBlueprint = function () {
+    const editor = document.getElementById('blueprint-editor');
+    if (editor) {
+        localStorage.setItem('harshit_os_blueprint', editor.innerHTML);
+    }
+};
+
+window.runSmartTypewriter = function (target, html, speed) {
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+
+    function typeRecursive(sourceNode, targetNode, callback) {
+        const children = Array.from(sourceNode.childNodes);
+        let i = 0;
+
+        function nextChild() {
+            if (i < children.length) {
+                const child = children[i];
+                if (child.nodeType === Node.TEXT_NODE) {
+                    let charIdx = 0;
+                    function typeChar() {
+                        if (charIdx < child.textContent.length) {
+                            targetNode.appendChild(document.createTextNode(child.textContent.charAt(charIdx)));
+                            charIdx++;
+                            setTimeout(typeChar, speed);
+                        } else {
+                            i++;
+                            nextChild();
+                        }
+                    }
+                    typeChar();
+                } else {
+                    const newElement = document.createElement(child.tagName);
+                    Array.from(child.attributes).forEach(attr => newElement.setAttribute(attr.name, attr.value));
+                    targetNode.appendChild(newElement);
+                    typeRecursive(child, newElement, () => {
+                        i++;
+                        nextChild();
+                    });
+                }
+            } else if (callback) {
+                callback();
+            }
+        }
+        nextChild();
+    }
+
+    target.innerHTML = '';
+    typeRecursive(temp, target);
+};

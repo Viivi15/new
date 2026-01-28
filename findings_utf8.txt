@@ -1,0 +1,248 @@
+﻿3:function getTimePhase(hours) {
+10:function updateSystemBasedOnTime(hours) {
+73:                    if (typeof createModal === 'function') {
+86:function updateClock() {
+380:                    if (typeof confetti === 'function') confetti({ particleCount: 20, spread: 30, origin: { x: e.getBoundingClientRect().left / window.innerWidth, y: e.getBoundingClientRect().top / window.innerHeight } });
+468:function mbCreate(tag, cls, html) {
+476:function initMrSnowApp() {
+486:    function resize() {
+491:    function createParticles() {
+505:    function draw() {
+519:    function update() {
+543:    function animate() {
+584:function mrSnowComfort() {
+593:function mrSnowFlurry() {
+594:    if (typeof confetti === 'function') {
+598:        (function frame() {
+2653:        if (typeof createModal === 'function')
+2678:function showUpdate(el) {
+2703:    function typePatch() {
+2713:function resetSettingsView(el) {
+2738:function renderSettings() {
+2749:function setTheme(mode, el) {
+2762:function setAccent(color, el) {
+2769:function setWallpaper(url, el) {
+2779:function toggleMenu(menuId) {
+2793:function toggleControlCenter() {
+2817:function triggerAction(action) {
+2901:function nextWhy() {
+2922:function resetBond() {
+2937:function advanceBond() {
+2985:function startCountdownGatekeeper() {
+3074:window.skipCountdown = function () {
+3076:    startCountdownGatekeeper = null;
+3083:window.test1221EasterEgg = function () {
+3093:function playJourneyIntro() {
+3106:    function showNext() {
+3121:        function startNextScreen() {
+3150:function playBirthdaySequence() {
+3189:function showBirthdaySlide(index) {
+3249:window.blowIndividualCandle = function (flame) {
+3279:window.blowCandle = function () {
+3285:window.cutCake = function () {
+3297:        if (typeof confetti === 'function') {
+3348:function finishBirthdaySequence() {
+3369:window.runSystemBoot = function () {
+3398:window.attemptLogin = function () {
+3435:function enterDesktop() {
+3508:function initDesktop() {
+3558:function spawnBears() {
+3577:function togglePet() {
+3723:function toggleChatTheme() {
+3733:function playFirstConversation(container) {
+3742:    function nextMessage() {
+3786:    function renderUserMessage(msg) {
+3897:function initLetterReveal() {
+3911:    function processNext() {
+3933:            function type() {
+3967:function toggleSpotify() {
+3987:            if (typeof createModal === 'function') {
+4062:function closeApp(id) {
+4080:function triggerQuietEnding() {
+4094:function minimizeApp(id) {
+4104:function maximizeApp(id) {
+4130:function setAppName(name) {
+4139:    closeApp = function (id) {
+4147:    minimizeApp = function (id) {
+4154:function showAffirmation(i) { const el = document.getElementById('aff-text'); if (el) { el.style.opacity = 0; setTimeout(() => { el.innerText = `"${affirmations[i]}"`; el.style.opacity = 1; }, 300); } }
+4155:function playMusic(m) {
+4159:function checkUnlock() { if (state.countdownFinished && state.appsOpened.size >= 5) { document.getElementById('lock-msg').style.display = 'none'; document.getElementById('unlock-msg').classList.remove('hidden'); } }
+4163:function startDrag(e, id) {
+4178:function doDrag(e) { if (!dragItem) return; dragItem.style.left = (e.clientX - offX) + 'px'; dragItem.style.top = (e.clientY - offY) + 'px'; }
+4179:function stopDrag() { document.removeEventListener('mousemove', doDrag); document.removeEventListener('mouseup', stopDrag); dragItem = null; }
+4181:function handleTerminalCommand() {
+4239:            if (typeof confetti === 'function') confetti();
+4276:function initBubbleWrap() {
+4283:        b.onclick = function () {
+4297:function initGallery() {
+4333:function createPolaroid(src, caption, container, date = "") {
+4355:    card.onmousedown = function (e) {
+4361:        function move(ev) {
+4368:        function stop() {
+4380:function openBlueprint() {
+4402:function closeBlueprint() {
+4406:function closeWindow(id) {
+4411:function runSmartTypewriter(element, speed = 15) {
+4414:    function walk(node) {
+4433:    function type() {
+4454:function initRadio() {
+4458:function playRadio(mood) {
+4509:function startPathGame() {
+4513:function renderPath(id) {
+4543:function initWordSpiral() {
+4546:function renderSpiral(word) {
+4594:function initPersonalityQuiz() {
+4600:function renderPQuiz() {
+4625:function handlePQuiz(type) {
+4635:function typeToTerminal(element, text, delay = 20, callback) {
+4666:function runTerminalSequence(element, lines, speed = 20, gap = 500, onComplete) {
+4669:    function nextLine() {
+4684:function handleTerminalAppCommand() {
+4795:function deleteTarget() {
+4800:    if (typeof createModal === 'function') {
+4811:function launchDesktop() {
+4845:function skipToDesktop() {
+4871:function initRabbitGame() {
+4877:function startRabbitGame() {
+4900:function jumpRabbit() {
+4905:function spawnPlatform(x, y, w) {
+4917:function rrGameLoop() {
+5014:function gameOverRabbit(reason) {
+5035:function initSecretVault() {
+5055:function checkVaultPassword() {
+5084:function renderVaultSlide() {
+5099:function vaultNextSlide() {
+5104:function vaultPrevSlide() {
+5110:function orderCravings() {
+5141:function initAppVault() {
+5183:function unlockVault() {
+5272:function renderJourney() {
+5302:function startAutomatedMovie() {
+5312:function playNextMovieScene() {
+5406:function runTypewriterMovie(id, text) {
+5410:    function type() {
+5420:function showTheEnd() {
+5434:window.onload = function () {
+5435:    startCountdownGatekeeper();
+5446:function initBattery() {
+5474:function initNetworkStatus() {
+5490:function toggleSpotlight() {
+5552:function initWeather() {
+5611:        sleepOverlay.onclick = function () {
+5647:function changeMonth(offset) {
+5652:function toggleCalendar() {
+5679:function renderCalendar() {
+5753:function initHappyMenuBar() {
+5775:function startFactsApp() {
+5796:function switchMadTab(tabBtn, tabId) {
+5818:function triggerMadridEffect(btn) {
+5859:function showMadridInfo() {
+5868:function toggleUCLMode() {
+5889:function createModal({ title, desc, icon }) {
+6131:function initTired() {
+6182:function toggleTiredAudio() {
+6215:function initInkpot() {
+6222:function showInkEntry(index) {
+6238:function nextInkEntry() {
+6245:function prevInkEntry() {
+6252:function newInkEntry() {
+6331:function initShravii() {
+6339:function updateChibiImage(url) {
+6346:function updateShraviiState() {
+6402:function refreshShravii() {
+6419:function initVoiceBox() {
+6427:function toggleVBPlay() {
+6447:function toggleVBRecord() {
+6467:function startVBMotion() {
+6484:function stopVBMotion() {
+6495:function updateVBStatus(text) {
+6509:    playHover: function () {
+6514:    startRun: function () {
+6531:    resetGameScreen: function () {
+6541:    triggerSignalOrFake: function () {
+6550:    triggerFake: function () {
+6579:    triggerRealSignal: function () {
+6592:    handleTap: function () {
+6626:    showResult: function (ms, msg) {
+6655:                if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
+6670:    reset: function () {
+6696:function initSecretVault() {
+6721:function checkVaultPass(code) {
+6750:function loadVaultContent() {
+6754:function renderVaultSlide(index) {
+6778:function vaultNextSlide() {
+6783:function vaultPrevSlide() {
+6792:function showNotification(title, body) {
+6825:function initTruths() {
+6843:        div.onclick = function () {
+6858:function filterTruths() {
+6886:function initMap() {
+6957:function initInkpot() {
+6962:function nextPoem() {
+6977:function renderPoem() {
+7201:function initNotDumb() {
+7256:function nextNotDumbSlide() {
+7305:window.showLetterOverlay = function () {
+7328:window.closeLetter = function () {
+7344:function setupAccessibility() {
+7358:    function makeFocusable(el) {
+7408:                if (typeof closeModal === 'function') closeModal();
+7441:function sealLetter() {
+7446:    if (typeof createModal === 'function') createModal({ title: 'Letter Sealed', desc: 'Stored in the archives of time.', icon: '≡ƒò»∩╕Å' });
+7530:window.spinCompass = function () {
+7685:window.triggerMadridEffect = function (btn) {
+7702:        if (typeof createModal === 'function') createModal({ title: "Audio Error", desc: "Browser blocked autoplay. Interacted first?", icon: "≡ƒöç" });
+7706:    if (typeof confetti === 'function') {
+7713:document.addEventListener('contextmenu', function (e) {
+8701:function initNotificationSystem() {
+8744:function check1221EasterEgg() {
+8758:function show1221Notification() {
+8775:function checkTimeBasedNotifications() {
+8793:function showRandomCareMessage() {
+8805:function showRandomFunNotification() {
+8818:function displayNotification(notification, isSpecial = false) {
+8868:function showHugAnimation() {
+8882:function showFileRenameEffect() {
+8897:function showPositivityWave() {
+8917:function openWaterTracker() {
+8927:                    <p>Your body needs water to function.</p>
+8937:function markHydrated() {
+8951:function startEyeRestMode() {
+8968:function startEyeTimer() {
+8982:function showWalkEncouragement() {
+9004:function showCleanupTips() {
+9022:function showCheckInMessage() {
+9041:function respondMood(mood) {
+9056:function showRiddleGame() {
+9070:function checkRiddleAnswer() {
+9084:function showMoreJokes() {
+9101:function showFullPoem() {
+9122:function startMouseGame() {
+9138:function initMouseGame() {
+9164:function decodeCrypticMessage() {
+9177:function revealCrypticMessage() {
+9190:function showThinkingBubble() {
+9198:function showGoodnightSequence() {
+9220:function showCuteArchives() {
+9228:function showDreamWish() {
+9236:function showMorningMotivation() {
+9244:function showAfternoonBoost() {
+9252:function showEveningReflection() {
+9260:function showNightCare() {
+9279:function showSmileEncouragement() {
+9287:function showPrideMessage() {
+9295:function showLunchReminder() {
+9303:function showStretchGuide() {
+9321:function showCareMessage() {
+9329:function createInteractiveModal({ title, content, onOpen }) {
+9355:function fireConfetti() {
+9356:    if (typeof confetti === 'function') {
+9401:window.closeModal = function (id) {
+9461:function initNotDumb() {
+9473:function renderNotDumbSlide() {
+9503:function nextNotDumbSlide() {
+9512:function startFactsApp() {
+9531:window.toggleTruth = function (card) {
+9540:function openBlueprint() {
+9555:function closeBlueprint() {
+9688:        if (trophyEarned && typeof confetti === 'function') {
