@@ -4,14 +4,15 @@ function getTimePhase(hours) {
     if (hours >= 6 && hours < 12) return 'morning';
     if (hours >= 12 && hours < 18) return 'afternoon';
     if (hours >= 18 && hours < 24) return 'evening';
-    return 'night'; 
+    return 'night';
 }
 
 function updateSystemBasedOnTime(hours) {
     if (hours === undefined) hours = new Date().getHours();
     const phase = getTimePhase(hours);
     const now = new Date();
-    const releaseDate = new Date(2026, 1, 1); 
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const releaseDate = new Date(2026, 0, 30);
 
     const wIcon = document.getElementById('weather-icon');
     const wText = document.getElementById('weather-text');
@@ -114,7 +115,7 @@ const Persistence = {
         const now = new Date().toLocaleString();
         localStorage.setItem('lastVisitDate', now);
 
-        
+
         if (!localStorage.getItem('foldersOpened')) localStorage.setItem('foldersOpened', '[]');
         if (!localStorage.getItem('achievementsUnlocked')) localStorage.setItem('achievementsUnlocked', '[]');
 
@@ -310,7 +311,7 @@ const RabbitSquad = {
         el.style.left = x + 'px';
         el.style.top = y + 'px';
 
-        
+
         el.onclick = () => {
             el.classList.add('talking');
             if (type.action) type.action(el);
@@ -319,7 +320,7 @@ const RabbitSquad = {
 
         const rabbit = { el, type, x, y, state: 'idle', moveInt: null };
 
-        
+
         rabbit.moveInt = setInterval(() => this.updateRabbit(rabbit), 2000 + Math.random() * 1000);
 
         field.appendChild(el);
@@ -332,12 +333,12 @@ const RabbitSquad = {
             return;
         }
 
-        
+
         const carrot = this.findNearestCarrot(rabbit);
         if (carrot) {
             rabbit.state = 'eating';
             this.moveTo(rabbit, carrot.x, carrot.y);
-            
+
             if (this.getDistance(rabbit, carrot) < 30) {
                 this.removeCarrot(carrot);
                 rabbit.el.querySelector('.bun-msg').innerText = "Yum! 🥕";
@@ -347,7 +348,7 @@ const RabbitSquad = {
             return;
         }
 
-        
+
         rabbit.state = 'idle';
         const nx = Math.random() * (this.bounds.w - 100) + 20;
         const ny = Math.random() * (this.bounds.h - 150) + 80;
@@ -383,7 +384,7 @@ const RabbitSquad = {
             { id: 'snow', role: 'The Stoic', emoji: '🐰❄️', cls: 'bun-snow', msg: 'Cool as ice.', action: () => { } },
             {
                 id: 'love', role: 'The Lover', emoji: '🐰🎀', cls: 'bun-love', msg: 'You matter! ❤️', action: (e) => {
-                    
+
                     const h = mbCreate('div', 'absolute -top-6 left-1/2 -translate-x-1/2 text-xl animate-float-up', '❤️');
                     e.appendChild(h);
                     setTimeout(() => h.remove(), 1000);
@@ -398,7 +399,7 @@ const RabbitSquad = {
         this.rabbits.forEach(r => {
             if (r.type.id === 'madrid') {
                 const inner = r.el.querySelector('.bun-inner');
-                
+
                 const originalHTML = inner.innerHTML;
                 inner.innerHTML = '<div class="text-6xl animate-bounce">⚽🥅</div><div class="bun-msg" style="opacity:1; top:-40px;">SIUUU!</div>';
 
@@ -406,7 +407,7 @@ const RabbitSquad = {
                 if (sfx) sfx.play().catch(e => console.log(e));
 
                 setTimeout(() => {
-                    inner.innerHTML = originalHTML; 
+                    inner.innerHTML = originalHTML;
                 }, 3000);
             }
         });
@@ -420,7 +421,7 @@ const RabbitSquad = {
         this.rabbits.forEach(r => {
             r.state = 'sleeping';
             clearInterval(r.moveInt);
-            
+
             r.el.querySelector('.bun-inner').innerHTML = '<div class="text-4xl">🐰💤</div>';
         });
     },
@@ -443,7 +444,7 @@ const RabbitSquad = {
         const carrotData = { x, y, el: carrotEl };
         this.carrots.push(carrotData);
 
-        
+
         setTimeout(() => this.removeCarrot(carrotData), 10000);
     },
 
@@ -1308,7 +1309,7 @@ const apps = [
     },
 
     {
-        id: 'flash', title: 'Fastest Alive', icon: '<img src="assets/icons/app_speed.png" alt="flash" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 900, height: 700, onOpen: () => FlashApp.init(), content: `
+        id: 'flash', title: 'Fastest Alive', icon: '<img src="assets/icons/app_speed.png" alt="flash" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 900, height: 700, onOpen: () => FlashApp.init(), onClose: () => FlashApp.stopGameLoop(), content: `
         <style>
             @keyframes lightning-flash {
                 0%, 100% { opacity: 0; }
@@ -1445,7 +1446,7 @@ const apps = [
     },
 
     {
-        id: 'rabbit', title: 'The Rabbit Squad', icon: '<img src="assets/icons/app_rabbit_new.png" alt="rabbit" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 700, height: 600, onOpen: () => RabbitSquad.init(), content: `
+        id: 'rabbit', title: 'The Rabbit Squad', icon: '<img src="assets/icons/app_rabbit_new.png" alt="rabbit" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 700, height: 600, onOpen: () => RabbitSquad.init(), onClose: () => RabbitSquad.stop(), content: `
         <div class="h-full bg-[#f0fdf4] relative overflow-hidden select-none font-sans flex flex-col" id="rabbit-den">
             <!-- Background: Soft Field with Depth -->
             <div class="absolute inset-0 z-0 bg-gradient-to-b from-sky-100 via-green-50 to-emerald-100"></div>
@@ -1505,7 +1506,7 @@ const apps = [
             </style>
         </div>
     `},
-    
+
     {
         id: 'secret-gallery', title: 'The Hidden Corner', icon: '<img src="assets/icons/app_memories_new.png" alt="hidden" style="width: 100%; height: 100%;">', dock: false, width: 900, height: 650, content: `
         <div class="h-full bg-black p-8 relative overflow-hidden">
@@ -1543,7 +1544,7 @@ const apps = [
         </div>
     `},
 
-    
+
     {
         id: 'inkpot', title: 'The Inkpot', icon: '<img src="assets/icons/app_inkpot.png" alt="inkpot">', dock: false, folder: 'folder-feelings', width: 800, height: 750, onOpen: initInkpot, content: `
         <div class="inkpot-wrapper h-full relative overflow-hidden bg-[#f0e6d2]">
@@ -1574,7 +1575,7 @@ const apps = [
         </div>
     `},
 
-    
+
     {
         id: 'last-thing', title: 'One Last Thing', icon: '<img src="assets/icons/app_rose.png" alt="last thing" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 500, height: 400, content: `
         <div class="h-full bg-black flex flex-col items-center justify-center text-center p-6 relative overflow-y-auto custom-scroll">
@@ -1597,7 +1598,7 @@ const apps = [
              </div>
         </div>
     `},
-    
+
     {
         id: 'tired', title: 'When Tired', icon: '<img src="assets/icons/app_sleep.png" alt="tired" style="width: 100%; height: 100%;">', dock: true, width: 600, height: 500, onOpen: initTired, content: `
         <div id="tired-container" class="tired-container">
@@ -1606,7 +1607,7 @@ const apps = [
         </div>
     `},
 
-    
+
     {
         id: 'app-grown', title: '19.exe', icon: '<img src="assets/icons/app_19.png" alt="19">', dock: true, width: 800, height: 700, content: `
         <div class="h-full bg-gradient-to-br from-slate-50 to-indigo-50/50 p-8 flex flex-col items-center relative overflow-hidden">
@@ -1653,7 +1654,7 @@ const apps = [
             </div>
         </div>
     `},
-    
+
     {
         id: 'future', title: 'Future You', icon: '<img src="assets/icons/app_future_new.png" alt="future" style="width: 100%; height: 100%;">', dock: false, width: 800, height: 600, content: `
         <div class="h-full w-full relative bg-black custom-scroll overflow-y-auto group">
@@ -1676,7 +1677,7 @@ const apps = [
             </div>
         </div>
     `},
-    
+
     {
         id: 'inkpot-new', title: 'The Inkpot', icon: '<img src="assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 500, height: 600, onOpen: initInkpot, content: `
         <div class="inkpot-bg">
@@ -1749,7 +1750,12 @@ const apps = [
     `},
 
     {
-        id: 'spotify', title: 'Spotify - Vibe Check', icon: '<img src="assets/icons/app_spotify.png" alt="spotify" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-fun', width: 450, height: 600, content: `
+        id: 'spotify', title: 'Spotify - Vibe Check', icon: '<img src="assets/icons/app_spotify.png" alt="spotify" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-fun', width: 450, height: 600,
+        onClose: () => {
+            const audio = document.getElementById('spotify-audio');
+            if (audio) { audio.pause(); isSpotifyPlaying = false; }
+        },
+        content: `
         <div class="h-full bg-gradient-to-b from-[#1DB954] to-black text-white p-6 flex flex-col items-center justify-center relative overflow-hidden">
             <div class="w-48 h-48 bg-gray-800 shadow-2xl mb-6 rounded-md overflow-hidden relative group album-spin">
                 <img src="assets/images/album-cover.jpg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
@@ -2246,7 +2252,225 @@ const apps = [
         }
     },
 
+    {
+        id: 'app-capsule', title: 'Time Capsule', icon: '<img src="assets/icons/app_capsule_new.png" alt="capsule" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 600, height: 700, onOpen: () => CapsuleApp.reset(), content: `
+        <div id="capsule-app" class="h-full bg-[#fdfbf7] relative overflow-hidden font-serif select-none flex flex-col">
+             <!-- Background Texture -->
+            <div class="absolute inset-0 opacity-40 pointer-events-none" style="background-image: url('assets/images/pattern_paper.png'); opacity: 0.1;"></div>
+
+            <!-- Header -->
+            <div class="relative z-10 pt-8 pb-4 text-center border-b border-gray-200/50">
+                <div class="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-bold mb-2">Digital Keepsake</div>
+                <h2 class="text-3xl text-gray-800" style="font-family: 'Playfair Display', serif;">Open When...</h2>
+            </div>
+            
+            <!-- Category Selection -->
+            <div id="capsule-categories" class="flex-1 flex flex-col items-center justify-center gap-6 p-8 relative z-10 transition-all duration-500">
+                
+                <!-- Sad -->
+                <button onclick="CapsuleApp.openCategory('sad')" class="group relative w-full range-card p-6 rounded-xl border border-blue-100 bg-gradient-to-br from-slate-50 to-blue-50/30 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center gap-4">
+                        <div class="text-3xl opacity-70 group-hover:scale-110 transition">🌙</div>
+                        <div class="text-left">
+                            <div class="text-lg font-bold text-slate-700 font-serif">You're Sad</div>
+                            <div class="text-[10px] text-slate-400 uppercase tracking-widest mt-1">For heavy nights</div>
+                        </div>
+                        <div class="ml-auto text-slate-300 group-hover:text-blue-400 transition">➜</div>
+                    </div>
+                </button>
+
+                 <!-- Bored -->
+                <button onclick="CapsuleApp.openCategory('bored')" class="group relative w-full range-card p-6 rounded-xl border border-amber-100 bg-gradient-to-br from-amber-50 to-orange-50/30 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center gap-4">
+                        <div class="text-3xl opacity-70 group-hover:scale-110 transition">🎮</div>
+                        <div class="text-left">
+                            <div class="text-lg font-bold text-amber-900 font-serif">You're Bored</div>
+                            <div class="text-[10px] text-amber-600/60 uppercase tracking-widest mt-1">Playful distractions</div>
+                        </div>
+                         <div class="ml-auto text-amber-200 group-hover:text-amber-500 transition">➜</div>
+                    </div>
+                </button>
+
+                 <!-- Happy -->
+                <button onclick="CapsuleApp.openCategory('happy')" class="group relative w-full range-card p-6 rounded-xl border border-rose-100 bg-gradient-to-br from-rose-50 to-pink-50/30 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center gap-4">
+                        <div class="text-3xl opacity-70 group-hover:scale-110 transition">🌤️</div>
+                        <div class="text-left">
+                            <div class="text-lg font-bold text-rose-900 font-serif">You're Happy</div>
+                            <div class="text-[10px] text-rose-400 uppercase tracking-widest mt-1">Celebrate this</div>
+                        </div>
+                         <div class="ml-auto text-rose-200 group-hover:text-rose-500 transition">➜</div>
+                    </div>
+                </button>
+
+            </div>
+
+            <!-- Messages View (Hidden initially) -->
+            <div id="capsule-view" class="absolute inset-0 bg-[#fdfbf7] z-20 flex flex-col hidden opacity-0 transition-opacity duration-500">
+                <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+                     <button onclick="CapsuleApp.back()" class="text-gray-400 hover:text-gray-600 transition font-mono text-xs uppercase tracking-wider"><i class="fas fa-arrow-left mr-2"></i> Back</button>
+                     <div id="capsule-cat-title" class="text-xs font-bold uppercase tracking-widest text-gray-400">CATEGORY</div>
+                     <div class="w-16"></div>
+                </div>
+                
+                <div class="flex-1 flex flex-col items-center justify-center p-8 text-center relative pointer-events-none">
+                     <!-- Card -->
+                     <div id="capsule-card" class="bg-white pointer-events-auto w-full max-w-md min-h-[300px] p-10 rounded-sm shadow-[0_10px_40px_rgba(0,0,0,0.05)] border border-gray-100 flex flex-col items-center justify-center relative cursor-pointer transform transition-all duration-500 hover:scale-[1.02] active:scale-100" onclick="CapsuleApp.reveal()">
+                         
+                         <!-- Card pattern -->
+                         <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: url('assets/images/pattern_paper.png');"></div>
+                         
+                         <div id="capsule-icon" class="text-5xl mb-8 opacity-80 animate-bounce-slow">✨</div>
+                         
+                         <div id="capsule-text" class="relative z-10 font-serif text-2xl text-gray-700 leading-relaxed">
+                            Tap to reveal...
+                         </div>
+
+                         <div id="capsule-hint" class="absolute bottom-6 text-[10px] text-gray-300 uppercase tracking-[0.3em] font-medium animate-pulse">
+                            Tap for next
+                         </div>
+                     </div>
+                </div>
+            </div>
+
+        </div>
+    `},
+
 ];
+
+const CapsuleApp = {
+    data: {
+        sad: [
+            "Hey. Pause for a second.<br><br>Take one slow breath — not to fix anything, just to exist.",
+            "Read this slowly.<br><br>You don’t need to be strong right now. Just real.",
+            "If today feels heavy,<br>put the weight down here for a moment.",
+            "Close your eyes for 5 seconds.<br><br>Pretend someone you trust is sitting next to you.",
+            "You don’t have to explain what you’re feeling.<br>Some feelings just want company, not answers.",
+            "This isn’t you failing.<br>This is you being human.",
+            "If you’re blaming yourself — stop.<br>This moment doesn’t get to judge your whole life.",
+            "Whatever you’re feeling…<br>you’re still allowed to rest.",
+            "Read this twice:<br>You are not a burden for feeling this way.",
+            "Imagine this sadness as a wave.<br>You don’t fight waves. You let them pass."
+        ],
+        bored: [
+            "Quick task:<br>Name one song that always hits. No thinking.",
+            "You’re bored — good.<br>That means your brain wants something real.",
+            "Look around and find one thing you’ve never noticed before.<br>Yes, even something small counts.",
+            "If you could disappear for 1 hour right now,<br>where would you go?",
+            "Boredom check:<br>Have you eaten? Slept? Hydrated? Be honest.",
+            "Do one useless thing on purpose.<br>Not everything needs a reason.",
+            "Scroll less for 2 minutes.<br>Let your thoughts wander — they know where to go.",
+            "Think of one memory that makes you smile for no reason.<br>Stay there for a bit.",
+            "You don’t need entertainment.<br>You need a pause.",
+            "Bored doesn’t mean empty.<br>It means space."
+        ],
+        happy: [
+            "Smile thoda aur.<br>This version of you? I like it a lot.",
+            "If today feels good,<br>let it. You don’t need to earn it.",
+            "Stay in this moment.<br>You worked harder than you admit.",
+            "This happiness didn’t come easy.<br>Remember that.",
+            "I’m quietly proud of you right now.<br>No announcements. Just truth."
+        ]
+    },
+    currentCat: null,
+    idx: 0,
+    isRevealed: false,
+
+    reset() {
+        const view = document.getElementById('capsule-view');
+        const cats = document.getElementById('capsule-categories');
+        if (view) view.classList.add('hidden');
+        if (cats) {
+            cats.style.opacity = '0';
+            setTimeout(() => cats.style.opacity = '1', 500);
+        }
+    },
+
+    openCategory(cat) {
+        this.currentCat = cat;
+        // Random start
+        this.idx = Math.floor(Math.random() * this.data[cat].length);
+        this.isRevealed = false;
+
+        const view = document.getElementById('capsule-view');
+        const title = document.getElementById('capsule-cat-title');
+
+        if (view) {
+            view.classList.remove('hidden');
+            // Force reflow
+            void view.offsetWidth;
+            view.style.opacity = 1;
+        }
+        if (title) title.innerText = cat.toUpperCase() + " MOMENTS";
+
+        this.renderCard(false);
+    },
+
+    back() {
+        const view = document.getElementById('capsule-view');
+        if (view) {
+            view.style.opacity = 0;
+            setTimeout(() => view.classList.add('hidden'), 500);
+        }
+    },
+
+    reveal() {
+        if (this.isRevealed) return; // Only allow reveal once
+
+        const card = document.getElementById('capsule-card');
+        if (!card) return;
+
+        // Animate Out
+        card.style.transition = "all 0.4s ease-in";
+        card.style.transform = "rotateY(90deg)";
+        card.style.opacity = 0;
+
+        setTimeout(() => {
+            this.isRevealed = true;
+            this.renderCard(true);
+
+            // Prepare for Animate In
+            card.style.transition = 'none';
+            card.style.transform = "rotateY(-90deg)";
+
+            setTimeout(() => {
+                // Animate In with new text
+                card.style.transition = "all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+                card.style.transform = "rotateY(0)";
+                card.style.opacity = 1;
+            }, 50);
+        }, 400);
+    },
+
+    renderCard(isRevealedParams) {
+        const textEl = document.getElementById('capsule-text');
+        const iconEl = document.getElementById('capsule-icon');
+        const hintEl = document.getElementById('capsule-hint'); // Changed ID for easier targeting
+
+        if (!this.isRevealed) {
+            // Closed State
+            if (textEl) textEl.innerHTML = "Tap to open...";
+            if (hintEl) {
+                hintEl.innerText = "One message awaits.";
+                hintEl.style.opacity = 1;
+            }
+            if (iconEl) iconEl.innerText = "✨";
+        } else {
+            // Revealed State
+            if (textEl) textEl.innerHTML = this.data[this.currentCat][this.idx];
+            if (hintEl) {
+                hintEl.style.opacity = 0; // Hide hint after reveal
+            }
+
+            let icon = "✨";
+            if (this.currentCat === 'sad') icon = "🌙";
+            if (this.currentCat === 'bored') icon = "🎮";
+            if (this.currentCat === 'happy') icon = "🌤️";
+
+            if (iconEl) iconEl.innerText = icon;
+        }
+    }
+};
 
 const FrequencyApp = {
     storageKey: 'frequency_3015_messages',
@@ -2564,7 +2788,7 @@ function setWallpaper(url, el) {
     settingsState.wallpaper = url;
     document.getElementById('desktop').style.backgroundImage = `url('${url}')`;
     document.getElementById('desktop').style.backgroundSize = 'cover';
-    
+
     document.getElementById('desktop-bg').style.opacity = 0;
     document.querySelectorAll('.wallpaper-thumb').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
@@ -2595,7 +2819,7 @@ function toggleControlCenter() {
 
 
 document.addEventListener('click', (e) => {
-    
+
     const isMenuClick = e.target.closest('[id$="-menu"]') || e.target.closest('.menu-item-apple');
     const isCCClick = e.target.closest('#control-center') || e.target.closest('[onclick="toggleControlCenter()"]');
 
@@ -2609,11 +2833,11 @@ document.addEventListener('click', (e) => {
 
 
 function triggerAction(action) {
-    
+
     document.querySelectorAll('[id$="-menu"]').forEach(el => el.classList.add('hidden'));
 
     switch (action) {
-        
+
         case 'new-folder':
             const name = prompt("Enter folder name:", "Untitled Folder");
             if (name) {
@@ -2626,10 +2850,10 @@ function triggerAction(action) {
             }
             break;
 
-        
+
         case 'select-all':
-            
-            
+
+
             const activeId = Array.from(state.appsOpened).pop();
             if (activeId) {
                 const win = document.getElementById(`win-${activeId}`);
@@ -2638,7 +2862,7 @@ function triggerAction(action) {
             }
             break;
 
-        
+
         case 'toggle-fullscreen':
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
@@ -2658,17 +2882,17 @@ function triggerAction(action) {
             document.body.style.zoom = 1;
             break;
 
-        
+
         case 'go-back':
-            
+
             break;
 
-        
+
         case 'min-all':
             state.appsOpened.forEach(id => minimizeApp(id));
             break;
         case 'close-all':
-            
+
             Array.from(state.appsOpened).forEach(id => closeApp(id));
             break;
 
@@ -2733,7 +2957,7 @@ function advanceBond() {
     if (!container) return;
 
     if (bondStep >= bondSequence.length) {
-        
+
         container.style.opacity = 0;
         setTimeout(() => {
             const win = document.getElementById('win-connection-log');
@@ -2742,8 +2966,8 @@ function advanceBond() {
                 win.style.opacity = 0;
                 win.style.transform = "scale(0.9)";
                 setTimeout(() => win.style.display = "none", 1000);
-                
-                
+
+
             }
         }, 1000);
         return;
@@ -2782,10 +3006,11 @@ function startCountdownGatekeeper() {
     const cdSub = document.getElementById('countdown-sub');
     const cdProgress = document.getElementById('countdown-progress');
 
-    
+
     const now = new Date();
-    
-    const skipStart = new Date(2026, 0, 31, 0, 0, 0);
+
+
+    const skipStart = new Date(2026, 0, 30, 0, 0, 0);
     const nextBirthday = new Date(2027, 0, 30, 0, 0, 0);
 
     if (now >= skipStart && now < nextBirthday) {
@@ -2796,12 +3021,12 @@ function startCountdownGatekeeper() {
 
     if (cdScreen) cdScreen.style.display = 'flex';
 
-    
+
     const targetDate = new Date(2026, 0, 30, 0, 0, 0).getTime();
-    const startDate = new Date(2026, 0, 1, 0, 0, 0).getTime(); 
+    const startDate = new Date(2026, 0, 1, 0, 0, 0).getTime();
     const totalDuration = targetDate - startDate;
 
-    window.goToDesktop = skipToDesktop; 
+    window.goToDesktop = skipToDesktop;
 
     const phrases = [
         "Curating the memories...",
@@ -2813,20 +3038,20 @@ function startCountdownGatekeeper() {
         "Preparing the new chapter..."
     ];
 
-    const int = setInterval(() => {
+    const updateCountdown = () => {
         if (document.getElementById('desktop').style.display === 'block') { clearInterval(int); return; }
 
         const now = new Date().getTime();
         const distance = targetDate - now;
 
-        
+
         if (cdProgress) {
             const elapsed = now - startDate;
             const percentage = Math.min(Math.max((elapsed / totalDuration) * 100, 0), 100);
             cdProgress.style.width = percentage + "%";
         }
 
-        
+
         if (cdSub && Math.random() < 0.05) {
             cdSub.innerText = phrases[Math.floor(Math.random() * phrases.length)];
         }
@@ -2855,7 +3080,10 @@ function startCountdownGatekeeper() {
         if (cdDisplay) {
             cdDisplay.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
-    }, 1000);
+    };
+
+    const int = setInterval(updateCountdown, 1000);
+    updateCountdown();
 }
 
 
@@ -2863,7 +3091,7 @@ function startCountdownGatekeeper() {
 
 window.skipCountdown = function () {
     state.countdownFinished = true;
-    startCountdownGatekeeper = null; 
+    startCountdownGatekeeper = null;
     const cd = document.getElementById('countdown-phase');
     if (cd) cd.style.display = 'none';
     playBirthdaySequence();
@@ -2881,25 +3109,25 @@ window.test1221EasterEgg = function () {
 
 
 function playJourneyIntro() {
-    if (document.getElementById('desktop').style.display === 'block') return; 
+    if (document.getElementById('desktop').style.display === 'block') return;
 
-    
+
     const cd = document.getElementById('countdown-phase');
     if (cd) { cd.style.display = 'none'; }
 
     const intro = document.getElementById('journey-intro');
     intro.style.display = 'flex';
     const screens = document.querySelectorAll('.journey-screen');
-    const timings = [{ t: 5000 }, { t: 5500 }, { t: 8000 }, { t: 6000 }, { t: 6000 }]; 
+    const timings = [{ t: 5000 }, { t: 5500 }, { t: 8000 }, { t: 6000 }, { t: 6000 }];
     let current = 0;
 
     function showNext() {
         if (document.getElementById('desktop').style.display === 'block') return;
 
-        
+
         if (current > 0) {
             screens[current - 1].classList.remove('active');
-            
+
             setTimeout(() => {
                 if (document.getElementById('desktop').style.display === 'block') return;
                 startNextScreen();
@@ -2923,7 +3151,7 @@ function playJourneyIntro() {
             const subs = screen.querySelectorAll('.journey-sub');
             subs.forEach((sub, i) => setTimeout(() => sub.classList.add('active'), 500 + (i * 1500)));
 
-            
+
             setTimeout(showNext, timings[current].t);
             current++;
         }
@@ -2942,7 +3170,7 @@ function playBirthdaySequence() {
     if (document.getElementById('desktop').style.display === 'block') return;
     state.birthdaySequenceStarted = true;
 
-    
+
     const cd = document.getElementById('countdown-phase');
     if (cd) {
         cd.style.opacity = 0;
@@ -2953,25 +3181,25 @@ function playBirthdaySequence() {
     if (intro) {
         intro.classList.remove('hidden');
         intro.style.display = 'flex';
-        intro.style.zIndex = '99999'; 
+        intro.style.zIndex = '99999';
         intro.style.opacity = '1';
 
-        
+
         birthdaySlides = document.querySelectorAll('.birthday-screen');
         birthdaySlideIndex = 0;
 
-        
+
         birthdaySlides.forEach(s => {
             s.style.opacity = '0';
             s.classList.remove('active');
-            s.style.display = 'none'; 
+            s.style.display = 'none';
         });
 
-        
+
         showBirthdaySlide(0);
     } else {
         console.error("Birthday Intro Element Not Found!");
-        
+
         playJourneyIntro();
     }
 }
@@ -2979,7 +3207,7 @@ function playBirthdaySequence() {
 function showBirthdaySlide(index) {
     if (document.getElementById('desktop').style.display === 'block') return;
 
-    
+
     if (index > 0 && birthdaySlides[index - 1]) {
         birthdaySlides[index - 1].classList.remove('active');
         birthdaySlides[index - 1].style.opacity = 0;
@@ -2993,7 +3221,7 @@ function showBirthdaySlide(index) {
         return;
     }
 
-    
+
     if (window.paraTimeouts) {
         window.paraTimeouts.forEach(t => clearTimeout(t));
     }
@@ -3001,34 +3229,34 @@ function showBirthdaySlide(index) {
 
     const currentSlide = birthdaySlides[index];
     currentSlide.style.display = 'flex';
-    
+
     setTimeout(() => {
         currentSlide.classList.add('active');
         currentSlide.style.opacity = 1;
 
-        
+
         const elements = currentSlide.querySelectorAll('p, h1');
         elements.forEach((el, i) => {
-            
+
             el.classList.remove('revealed');
             const t = setTimeout(() => {
                 el.classList.add('revealed');
-            }, 500 + (i * 1200)); 
+            }, 500 + (i * 1200));
             window.paraTimeouts.push(t);
         });
     }, 100);
 
     birthdaySlideIndex = index;
 
-    
-    
-    
-    
-    
+
+
+
+
+
 
     if (index === 0) setTimeout(() => showBirthdaySlide(1), 4000);
     else if (index === 1) setTimeout(() => showBirthdaySlide(2), 5000);
-    
+
 }
 
 
@@ -3036,38 +3264,41 @@ window.showBirthdaySlide = showBirthdaySlide;
 
 
 
-window.blowCandle = function () {
-    const flames = document.querySelectorAll('.candles-container .flame');
-    const msg = document.getElementById('wish-msg');
-    let anyBlown = false;
+window.blowIndividualCandle = function (flame) {
+    if (!flame || flame.classList.contains('blown')) return;
 
-    flames.forEach(flame => {
-        if (!flame.classList.contains('blown')) {
-            flame.classList.add('blown');
-            anyBlown = true;
+    flame.classList.add('blown');
 
-            
-            const smoke = document.createElement('div');
-            smoke.className = 'smoke';
-            
-            if (flame.parentElement) {
-                flame.parentElement.appendChild(smoke);
-            }
-        }
-    });
+    // Add smoke effect
+    const smoke = document.createElement('div');
+    smoke.className = 'smoke';
+    if (flame.parentElement) {
+        flame.parentElement.appendChild(smoke);
+    }
 
-    if (anyBlown) {
+    // Check if all candles are blown
+    const allFlames = document.querySelectorAll('.candles-container .flame');
+    const blownFlames = document.querySelectorAll('.candles-container .flame.blown');
+
+    if (allFlames.length > 0 && allFlames.length === blownFlames.length) {
+        const msg = document.getElementById('wish-msg');
         if (msg) {
             msg.innerText = "Yay! May all your wishes come true! ✨";
             msg.style.opacity = '1';
         }
 
-        
+        // Proceed to next slide after a delay
         setTimeout(() => {
             showBirthdaySlide(3);
         }, 3000);
     }
 };
+
+window.blowCandle = function () {
+    const flames = document.querySelectorAll('.candles-container .flame');
+    flames.forEach(f => blowIndividualCandle(f));
+};
+
 
 window.cutCake = function () {
     const cakeWhole = document.getElementById('cake-whole');
@@ -3078,17 +3309,17 @@ window.cutCake = function () {
         knife.classList.add('cutting');
     }
 
-    
+
     setTimeout(() => {
-        
+
         if (typeof confetti === 'function') {
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
 
         if (cakeWhole) {
-            
-            
-            
+
+
+
             const innerCake = `
                  <div class="cake-frosting"></div>
                  <div class="cake-layer top-layer"></div>
@@ -3109,18 +3340,18 @@ window.cutCake = function () {
             <div class="plate"></div>
         `;
 
-            
+
             requestAnimationFrame(() => {
                 const slice = document.getElementById('cake-slice');
                 const left = document.getElementById('cake-left');
                 const right = document.getElementById('cake-right');
 
                 if (slice) {
-                    
+
                     slice.style.transform = 'translateY(100px) scale(1.1)';
                 }
-                if (left) left.style.transform = 'translateX(-10px)'; 
-                if (right) right.style.transform = 'translateX(10px)'; 
+                if (left) left.style.transform = 'translateX(-10px)';
+                if (right) right.style.transform = 'translateX(10px)';
             });
 
             if (instruction) instruction.innerText = "Here is a piece for you! 🍰";
@@ -3129,7 +3360,7 @@ window.cutCake = function () {
                 showLetterOverlay();
             }, 3500);
         }
-    }, 400); 
+    }, 400);
 };
 
 function finishBirthdaySequence() {
@@ -3178,7 +3409,7 @@ window.runSystemBoot = function () {
 
 
 function enterDesktop() {
-    
+
     const cd = document.getElementById('countdown-phase');
     if (cd) cd.style.display = 'none';
 
@@ -3188,11 +3419,11 @@ function enterDesktop() {
     const boot = document.getElementById('boot-sequence');
     if (boot) boot.style.display = 'none';
 
-    
+
     const space = document.getElementById('space-bg');
     if (space) {
         space.classList.add('space-warp');
-        
+
         setTimeout(() => {
             space.style.opacity = 0;
         }, 800);
@@ -3201,15 +3432,15 @@ function enterDesktop() {
         }, 2000);
     }
 
-    
+
     const desktopBg = document.getElementById('desktop-bg');
     if (desktopBg) { desktopBg.style.display = 'block'; desktopBg.style.opacity = 1; }
 
-    
+
     const desk = document.getElementById('desktop');
     desk.style.display = 'block';
 
-    
+
     desk.style.opacity = 0;
     requestAnimationFrame(() => {
         desk.style.transition = "opacity 2.5s ease";
@@ -3218,10 +3449,10 @@ function enterDesktop() {
 
     initDesktop();
 
-    
+
     new Audio('assets/audio/startup.mp3').play().catch(e => console.log("Startup sound deferred:", e));
 
-    
+
 }
 
 
@@ -3231,7 +3462,7 @@ function initDesktop() {
     const dock = document.getElementById('dock');
     grid.innerHTML = ''; dock.innerHTML = '';
     apps.forEach(app => {
-        
+
         if (app.id !== 'hidden-unlock' && !app.folder) {
             const icon = document.createElement('div');
             icon.className = 'desktop-icon group';
@@ -3248,7 +3479,7 @@ function initDesktop() {
         }
     });
 
-    
+
     const bpIcon = document.createElement('div');
     bpIcon.className = 'desktop-icon group';
     bpIcon.innerHTML = `<div class="icon-img text-3xl mb-2 transition duration-500"><img src="assets/icons/app_blueprint.png" alt="blueprint" style="width: 100%; height: 100%;"></div><div class="icon-label text-white px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm shadow-black/50 drop-shadow-md">Blueprint.bp</div>`;
@@ -3455,7 +3686,7 @@ function playFirstConversation(container) {
     convoIndex = 0;
     container.innerHTML = '';
 
-    
+
     const typingIndicator = document.createElement('div');
     typingIndicator.className = 'typing-bubble hidden';
     typingIndicator.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
@@ -3464,7 +3695,7 @@ function playFirstConversation(container) {
         if (convoIndex >= firstConversation.length) return;
 
         const msg = firstConversation[convoIndex];
-        let delay = 1000; 
+        let delay = 1000;
 
         if (msg.user === 'system') {
             const systemDiv = document.createElement('div');
@@ -3487,7 +3718,7 @@ function playFirstConversation(container) {
             setTimeout(nextMessage, 2500);
             return;
         } else {
-            
+
             if (msg.user === 'shravii') {
                 container.appendChild(typingIndicator);
                 typingIndicator.classList.remove('hidden');
@@ -3508,7 +3739,7 @@ function playFirstConversation(container) {
         const isHarshit = msg.user === 'harshit';
         const wrapper = document.createElement('div');
         wrapper.className = `flex flex-col mb-4 ${isHarshit ? 'items-end' : 'items-start'} group`;
-        
+
         const nameRow = document.createElement('div');
         nameRow.className = 'flex items-center gap-1 mb-1 px-1';
 
@@ -3525,7 +3756,7 @@ function playFirstConversation(container) {
             nameRow.appendChild(status);
         }
 
-        
+
         const bubble = document.createElement('div');
         bubble.className = `chat-bubble ${isHarshit ? 'chat-right' : 'chat-left'}`;
         bubble.style.whiteSpace = 'pre-wrap';
@@ -3548,7 +3779,7 @@ function playFirstConversation(container) {
             bubble.textContent = msg.text;
         }
 
-        
+
         if (msg.text && typeof msg.text === 'string' && msg.text.includes('spotify.com')) {
             const preview = document.createElement('div');
             preview.className = 'chat-media-preview';
@@ -3557,7 +3788,7 @@ function playFirstConversation(container) {
             bubble.appendChild(preview);
         }
 
-        
+
         bubble.onclick = () => {
             const existing = bubble.querySelector('.chat-reaction');
             if (existing) {
@@ -3573,12 +3804,12 @@ function playFirstConversation(container) {
         wrapper.appendChild(nameRow);
         wrapper.appendChild(bubble);
 
-        
+
         if (!isHarshit) {
             const seen = document.createElement('div');
             seen.className = 'seen-receipt';
 
-            
+
             let replyTime = '';
             for (let i = convoIndex + 1; i < firstConversation.length; i++) {
                 if (firstConversation[i].user === 'harshit') {
@@ -3590,7 +3821,7 @@ function playFirstConversation(container) {
                 }
             }
 
-            
+
             if (!replyTime) {
                 const match = msg.text.match(/(\d{1,2}:\d{2}\s?[AP]M)/i);
                 if (match) replyTime = match[1];
@@ -3619,26 +3850,26 @@ function initLetterReveal() {
     const container = document.getElementById('letter-content');
     if (!container) return;
 
-    
+
     const children = Array.from(container.children);
     children.forEach(c => {
         c.style.opacity = '0';
         c.style.transform = 'translateY(20px)';
         c.style.transition = 'opacity 1s ease, transform 1s ease';
-        c.style.display = 'none'; 
+        c.style.display = 'none';
     });
 
     let idx = 0;
     function processNext() {
         if (idx >= children.length) {
-            
+
             return;
         }
 
         const child = children[idx];
-        child.style.display = 'block'; 
+        child.style.display = 'block';
 
-        
+
         void child.offsetWidth;
 
         const isHeading = ['H1', 'H2', 'H3'].includes(child.tagName);
@@ -3655,7 +3886,7 @@ function initLetterReveal() {
                 if (i < originalText.length) {
                     child.innerText += originalText.charAt(i);
                     i++;
-                    container.scrollTop = container.scrollHeight; 
+                    container.scrollTop = container.scrollHeight;
                     setTimeout(type, 50);
                 } else {
                     child.classList.remove('typing-cursor');
@@ -3665,21 +3896,21 @@ function initLetterReveal() {
             }
             type();
         } else {
-            
+
             child.style.opacity = '1';
             child.style.transform = 'translateY(0)';
             container.scrollTop = container.scrollHeight;
 
-            
+
             const chars = child.innerText.length;
-            const readingTime = Math.max(1000, chars * 25); 
+            const readingTime = Math.max(1000, chars * 25);
 
             idx++;
             setTimeout(processNext, readingTime);
         }
     }
 
-    
+
     setTimeout(processNext, 500);
 }
 
@@ -3713,10 +3944,10 @@ const Apps = {
             return;
         }
 
-        
+
         setAppName(app.title);
 
-        
+
         if (typeof Persistence !== 'undefined') {
             Persistence.trackOpen(id);
         }
@@ -3724,8 +3955,8 @@ const Apps = {
         state.appsOpened.add(id);
         const exist = document.getElementById(`win-${id}`);
         if (exist) {
-            
-            if (app.onOpen) app.onOpen(); 
+
+            if (app.onOpen) app.onOpen();
             exist.style.display = 'flex';
             exist.classList.remove('minimized', 'closing');
 
@@ -3749,17 +3980,17 @@ const Apps = {
 
         let contentHTML = app.content || '';
 
-        
+
         if (app.url) {
             contentHTML = `<iframe src="${app.url}" class="w-full h-full border-0 bg-white"></iframe>`;
         }
 
-        
+
         if (app.role === 'folder' && app.children) {
-            
+
         }
 
-        
+
 
         win.innerHTML = `<div class="title-bar" onmousedown="startDrag(event, '${win.id}')">
             <div class="traffic-lights">
@@ -3781,10 +4012,13 @@ const Apps = {
 };
 
 function closeApp(id) {
+    const app = apps.find(a => a && a.id === id);
+    if (app && app.onClose) app.onClose();
+
     const win = document.getElementById(`win-${id}`);
     if (win) {
-        win.classList.add('closing'); 
-        setTimeout(() => win.remove(), 400); 
+        win.classList.add('closing');
+        setTimeout(() => win.remove(), 400);
     }
     const dot = document.getElementById(`dot-${id}`);
     if (dot) dot.parentElement.classList.remove('active');
@@ -3812,24 +4046,24 @@ function triggerQuietEnding() {
 function minimizeApp(id) {
     const win = document.getElementById(`win-${id}`);
     if (win) {
-        win.classList.add('minimized'); 
-        
-        
-        
+        win.classList.add('minimized');
+
+
+
     }
 }
 
 function maximizeApp(id) {
     const win = document.getElementById(`win-${id}`);
 
-    
+
     if (win.getAttribute('data-maximized') === 'true') {
         win.style.width = win.getAttribute('data-prev-w');
         win.style.height = win.getAttribute('data-prev-h');
         win.style.left = win.getAttribute('data-prev-l');
         win.style.top = win.getAttribute('data-prev-t');
         win.removeAttribute('data-maximized');
-        win.style.borderRadius = "14px"; 
+        win.style.borderRadius = "14px";
     } else {
         win.setAttribute('data-prev-w', win.style.width);
         win.setAttribute('data-prev-h', win.style.height);
@@ -3837,10 +4071,10 @@ function maximizeApp(id) {
         win.setAttribute('data-prev-t', win.style.top);
 
         win.style.width = '100vw';
-        win.style.height = 'calc(100vh - 32px)'; 
+        win.style.height = 'calc(100vh - 32px)';
         win.style.left = '0';
         win.style.top = '32px';
-        win.style.borderRadius = "0px"; 
+        win.style.borderRadius = "0px";
         win.setAttribute('data-maximized', 'true');
     }
 }
@@ -3881,7 +4115,7 @@ let dragItem = null, offX = 0, offY = 0;
 function startDrag(e, id) {
     if (e.target.closest('.traffic-lights') || e.target.closest('.dark-close-btn')) return;
 
-    
+
     const appId = id.replace('win-', '');
     const app = apps.find(a => a.id === appId);
     if (app) setAppName(app.title);
@@ -3902,10 +4136,10 @@ function handleTerminalCommand() {
     const cmd = input.value.trim();
     if (!cmd) return;
 
-    
+
     output.innerHTML += `<div > <span class="term-prompt">root@harshit:~$</span> ${cmd}</div> `;
 
-    
+
     let response = '';
     const args = cmd.split(' ');
     const command = args[0].toLowerCase();
@@ -3953,14 +4187,14 @@ function handleTerminalCommand() {
             break;
         case 'cake':
             response = `🎂 Initiating Cake Protocol...<br>Happy 19th Birthday Harshit! 🎉`;
-            
+
             if (typeof confetti === 'function') confetti();
             break;
         case 'date':
             response = `Critical Date: June 20, 2024 (Origin)`;
             break;
-        case 'carry': 
-            
+        case 'carry':
+
             const egg = document.createElement('div');
             egg.className = 'fixed inset-0 z-[60000] flex items-center justify-center pointer-events-none text-2xl font-light text-white tracking-widest bg-black/80 fade-in-out';
             egg.innerText = "You never had to be strong alone.";
@@ -3971,7 +4205,7 @@ function handleTerminalCommand() {
         case 'clear':
             output.innerHTML = '';
             input.value = '';
-            return; 
+            return;
         case 'sleep':
             triggerQuietEnding();
             return;
@@ -3984,7 +4218,7 @@ function handleTerminalCommand() {
 
     if (response) output.innerHTML += `<div>${response}</div>`;
 
-    
+
     input.value = '';
     output.scrollTop = output.scrollHeight;
 }
@@ -3993,7 +4227,7 @@ function handleTerminalCommand() {
 
 function initBubbleWrap() {
     const container = document.getElementById('bubble-container');
-    if (container.children.length > 0) return; 
+    if (container.children.length > 0) return;
 
     for (let i = 0; i < 48; i++) {
         const b = document.createElement('div');
@@ -4001,8 +4235,8 @@ function initBubbleWrap() {
         b.onclick = function () {
             if (!this.classList.contains('popped')) {
                 this.classList.add('popped');
-                
-                
+
+
             }
         };
         container.appendChild(b);
@@ -4016,12 +4250,12 @@ function initGallery() {
     const container = document.getElementById('gallery-container');
     if (!container) return;
 
-    
+
     if (container.dataset.loaded === 'true') return;
     container.innerHTML = '';
     container.dataset.loaded = 'true';
 
-    
+
     const uploadBtn = document.createElement('div');
     uploadBtn.className = 'polaroid-card upload-card';
     uploadBtn.innerHTML = `
@@ -4059,7 +4293,7 @@ function createPolaroid(src, caption, container, date = "") {
         ${date ? `<div class="date text-[8px] opacity-30 mt-1">${date}</div>` : ''}
     `;
 
-    
+
     const randomRot = Math.random() * 16 - 8;
     const randomTop = Math.random() * (container.clientHeight - 300);
     const maxLeft = container.clientWidth - 200;
@@ -4069,7 +4303,7 @@ function createPolaroid(src, caption, container, date = "") {
     card.style.top = `${Math.max(20, randomTop)}px`;
     card.style.left = `${Math.max(20, randomLeft)}px`;
 
-    
+
     card.onmousedown = function (e) {
         if (e.target.tagName === 'INPUT') return;
         card.style.zIndex = ++zIndex;
@@ -4104,15 +4338,15 @@ function openBlueprint() {
 
     const body = win.querySelector('.dark-body');
     if (body) {
-        
+
         if (!body.dataset.original) {
             body.dataset.original = body.innerHTML;
         }
 
-        
+
         body.innerHTML = body.dataset.original;
 
-        
+
         runSmartTypewriter(body);
     }
 }
@@ -4130,12 +4364,12 @@ function runSmartTypewriter(element, speed = 15) {
     const nodes = [];
 
     function walk(node) {
-        if (node.nodeType === 3) { 
+        if (node.nodeType === 3) {
             nodes.push({
                 node: node,
                 text: node.textContent
             });
-            node.textContent = ""; 
+            node.textContent = "";
         } else {
             for (let child of node.childNodes) {
                 walk(child);
@@ -4255,7 +4489,7 @@ const spiralWords = {
     "Good": ["Food", "Sleep", "Friends", "Better"],
     "New": ["Day", "Start", "Chance", "Change"],
     "Future": ["Blind", "Bright", "Yours", "Change"],
-    
+
     "DEFAULT": ["Growth", "You", "Better", "Change"]
 };
 function initWordSpiral() {
@@ -4266,7 +4500,7 @@ function renderSpiral(word) {
     const opts = document.getElementById('spiral-opts');
     if (!main) return;
 
-    
+
     main.style.opacity = 0;
     setTimeout(() => {
         main.innerText = word;
@@ -4321,7 +4555,7 @@ function renderPQuiz() {
     if (!qEl) return;
 
     if (pQuizIdx >= pQuizData.length) {
-        
+
         const winner = Object.keys(pScores).reduce((a, b) => pScores[a] > pScores[b] ? a : b);
         let msg = "";
         if (winner === "Builder") msg = "You are The Architect.\nYou build strong things. You protect.";
@@ -4352,22 +4586,22 @@ function handlePQuiz(type) {
 
 function typeToTerminal(element, text, delay = 20, callback) {
     const line = document.createElement('div');
-    line.className = 'term-line mb-1'; 
+    line.className = 'term-line mb-1';
     element.appendChild(line);
     element.scrollTop = element.scrollHeight;
 
-    
+
     if (text.includes('<')) {
-        
-        
-        
-        
+
+
+
+
         line.innerHTML = text;
-        
-        
+
+
         if (callback) setTimeout(callback, delay * 5);
     } else {
-        
+
         let i = 0;
         const interval = setInterval(() => {
             line.textContent += text[i];
@@ -4407,22 +4641,22 @@ function handleTerminalAppCommand() {
     const cmd = input.value.trim();
     if (!cmd) return;
 
-    
+
     output.innerHTML += `<div><span class="term-prompt">root@harshit:~$</span> ${cmd}</div>`;
     input.value = '';
     output.scrollTop = output.scrollHeight;
 
-    
+
     const command = cmd.toLowerCase().split(' ')[0];
 
-    
+
     if (command === 'clear') {
         new Audio('assets/audio/shred.mp3').play().catch(e => { });
         output.innerHTML = '';
         return;
     }
 
-    
+
     input.disabled = true;
     input.placeholder = "Processing...";
 
@@ -4511,10 +4745,10 @@ function handleTerminalAppCommand() {
 
 
 function deleteTarget() {
-    
+
     new Audio('assets/audio/shred.mp3').play().catch(e => { });
 
-    
+
     if (typeof createModal === 'function') {
         createModal({
             title: "Security Protocol",
@@ -4527,36 +4761,36 @@ function deleteTarget() {
 
 
 function launchDesktop() {
-    
+
     const term = document.getElementById('terminal-boot');
     if (term) term.style.display = 'none';
 
-    
+
     const space = document.getElementById('space-bg');
     if (space) space.style.opacity = 0;
 
-    
+
     const desktopBg = document.getElementById('desktop-bg');
     if (desktopBg) { desktopBg.style.display = 'block'; requestAnimationFrame(() => desktopBg.style.opacity = 1); }
 
-    
+
     const desk = document.getElementById('desktop');
     desk.style.display = 'block';
 
-    
+
     desk.style.opacity = 0;
     requestAnimationFrame(() => {
         desk.style.transition = "opacity 2.5s ease";
         desk.style.opacity = 1;
     });
 
-    
+
     const skipBtn = document.getElementById('dev-skip-btn');
     if (skipBtn) skipBtn.style.display = 'none';
 
     initDesktop();
 
-    
+
     new Audio('assets/audio/startup.mp3').play().catch(e => console.log("Startup sound deferred:", e));
 }
 
@@ -4567,10 +4801,10 @@ function skipToDesktop() {
         if (el) el.style.display = 'none';
     });
 
-    
+
     state.countdownFinished = true;
 
-    
+
     launchDesktop();
 }
 
@@ -4583,7 +4817,7 @@ let rrVelocity = 0;
 let rrGravity = 0.6;
 let rrJumpStrength = -10;
 let rrPlatforms = [];
-let rrItems = []; 
+let rrItems = [];
 const rrSpeed = 3;
 
 function initRabbitGame() {
@@ -4595,14 +4829,14 @@ function initRabbitGame() {
 function startRabbitGame() {
     rrActive = true;
     rrScore = 0;
-    rrPlayerY = 300; 
+    rrPlayerY = 300;
     rrVelocity = 0;
     rrPlatforms = [];
     rrItems = [];
     document.getElementById('rr-start-screen').style.display = 'none';
     document.getElementById('rr-score').innerText = 'Score: 0';
 
-    
+
     spawnPlatform(50, 400, 200);
     spawnPlatform(300, 350, 150);
     spawnPlatform(550, 300, 150);
@@ -4610,7 +4844,7 @@ function startRabbitGame() {
     if (rrLoopIdx) cancelAnimationFrame(rrLoopIdx);
     rrGameLoop();
 
-    
+
     document.getElementById('rr-container').onmousedown = jumpRabbit;
     document.addEventListener('keydown', (e) => { if (e.code === 'Space') jumpRabbit(); });
 }
@@ -4625,9 +4859,9 @@ function spawnPlatform(x, y, w) {
     const txt = msgs[Math.floor(Math.random() * msgs.length)];
     rrPlatforms.push({ x, y, w, text: txt, passed: false });
 
-    
+
     if (Math.random() > 0.6) {
-        const type = Math.random() > 0.3 ? 'sub' : 'bhindi'; 
+        const type = Math.random() > 0.3 ? 'sub' : 'bhindi';
         rrItems.push({ type, x: x + w / 2 - 15, y: y - 40, collected: false });
     }
 }
@@ -4635,11 +4869,11 @@ function spawnPlatform(x, y, w) {
 function rrGameLoop() {
     if (!rrActive) return;
 
-    
+
     rrVelocity += rrGravity;
     rrPlayerY += rrVelocity;
 
-    
+
     if (rrPlayerY > 480) {
         gameOverRabbit("You fell into the void!");
         return;
@@ -4651,23 +4885,23 @@ function rrGameLoop() {
         playerEl.style.transform = `rotate(${rrVelocity * 2}deg)`;
     }
 
-    
-    const world = document.getElementById('rr-world');
-    world.innerHTML = ''; 
 
-    
-    
+    const world = document.getElementById('rr-world');
+    world.innerHTML = '';
+
+
+
     const lastPlat = rrPlatforms[rrPlatforms.length - 1];
     if (lastPlat && lastPlat.x < 600) {
         const newY = Math.max(150, Math.min(400, lastPlat.y + (Math.random() * 200 - 100)));
         spawnPlatform(800 + Math.random() * 100, newY, 120 + Math.random() * 80);
     }
 
-    
+
     rrPlatforms.forEach((p, i) => {
         p.x -= rrSpeed;
 
-        
+
         if (p.x + p.w > 0 && p.x < 800) {
             const div = document.createElement('div');
             div.className = 'absolute bg-white border-2 border-gray-200 rounded-2xl flex items-center justify-center text-xs font-bold text-gray-500 shadow-sm';
@@ -4679,8 +4913,8 @@ function rrGameLoop() {
             world.appendChild(div);
         }
 
-        
-        
+
+
         if (rrVelocity > 0 &&
             rrPlayerY + 40 >= p.y &&
             rrPlayerY + 40 <= p.y + 20 &&
@@ -4688,18 +4922,18 @@ function rrGameLoop() {
             50 < p.x + p.w) {
             rrVelocity = 0;
             rrPlayerY = p.y - 40;
-            
+
         }
 
-        
+
         if (p.x + p.w < -100) rrPlatforms.splice(i, 1);
     });
 
-    
+
     rrItems.forEach((item, i) => {
         item.x -= rrSpeed;
 
-        
+
         if (!item.collected && item.x > 0 && item.x < 800) {
             const el = document.createElement('div');
             el.className = 'absolute text-2xl animate-bounce';
@@ -4708,8 +4942,8 @@ function rrGameLoop() {
             el.style.top = item.y + 'px';
             world.appendChild(el);
 
-            
-            
+
+
             const dx = (50 + 20) - (item.x + 15);
             const dy = (rrPlayerY + 20) - (item.y + 15);
             if (Math.sqrt(dx * dx + dy * dy) < 40) {
@@ -4744,14 +4978,14 @@ function gameOverRabbit(reason) {
 
 let vaultIdx = 0;
 const vaultPhotos = [
-    "https://images.unsplash.com/photo-1518176258769-f227c798150e?q=80&w=2670", 
-    "https://images.unsplash.com/photo-1549488497-758969f91a51?q=80&w=2670", 
-    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=2689", 
-    "https://images.unsplash.com/photo-1504297050568-910d24c426d3?q=80&w=1287" 
+    "https://images.unsplash.com/photo-1518176258769-f227c798150e?q=80&w=2670",
+    "https://images.unsplash.com/photo-1549488497-758969f91a51?q=80&w=2670",
+    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=2689",
+    "https://images.unsplash.com/photo-1504297050568-910d24c426d3?q=80&w=1287"
 ];
 
 function initSecretVault() {
-    
+
     document.getElementById('vault-lock').style.display = 'flex';
     document.getElementById('vault-lock').style.opacity = '1';
     document.getElementById('vault-pass').value = '';
@@ -4759,10 +4993,10 @@ function initSecretVault() {
     document.getElementById('vault-content').style.display = 'none';
     document.getElementById('vault-content').style.opacity = '0';
 
-    
+
     setTimeout(() => document.getElementById('vault-pass').focus(), 500);
 
-    
+
     const inp = document.getElementById('vault-pass');
     inp.onkeyup = (e) => {
         if (inp.value.length === 6) checkVaultPassword();
@@ -4775,23 +5009,23 @@ function checkVaultPassword() {
     const err = document.getElementById('vault-error');
 
     if (inp.value === '200624') {
-        
+
         inp.blur();
         document.getElementById('vault-lock').style.opacity = '0';
         setTimeout(() => {
             document.getElementById('vault-lock').style.display = 'none';
             document.getElementById('vault-content').style.display = 'block';
 
-            
+
             renderVaultSlide();
 
-            
+
             requestAnimationFrame(() => {
                 document.getElementById('vault-content').style.opacity = '1';
             });
         }, 500);
     } else {
-        
+
         err.style.opacity = '1';
         inp.classList.add('shake');
         setTimeout(() => inp.classList.remove('shake'), 500);
@@ -4830,12 +5064,12 @@ function orderCravings() {
     const content = document.getElementById('cravings-content');
     if (!btn || !content) return;
 
-    
+
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
     btn.classList.add('opacity-75', 'cursor-not-allowed');
 
     setTimeout(() => {
-        
+
         content.innerHTML = `
             <div class="h-full flex flex-col items-center justify-center p-8 text-center animate-fade-in select-none">
                  <div class="text-6xl mb-6 transform hover:scale-110 transition duration-500">🚫🚚</div>
@@ -4857,7 +5091,7 @@ function orderCravings() {
 
 
 function initAppVault() {
-    
+
     const lock = document.getElementById('vault-lock-screen');
     const pass = document.getElementById('vault-passcode');
     const badge = document.getElementById('vault-badge');
@@ -4878,7 +5112,7 @@ function initAppVault() {
     if (pass) {
         pass.value = '';
         pass.classList.remove('shake-premium', 'border-red-500');
-        pass.style.borderColor = '#e5e7eb'; 
+        pass.style.borderColor = '#e5e7eb';
     }
     if (badge) {
         badge.innerText = 'System Secure';
@@ -4894,7 +5128,7 @@ function initAppVault() {
 
     state.vaultUnlockAttempts = 0;
 
-    
+
     setTimeout(() => { if (pass) pass.focus(); }, 200);
 }
 
@@ -4908,16 +5142,16 @@ function unlockVault() {
 
     if (!input) return;
 
-    
-    if (input.value === '200624') {
-        
-        input.classList.remove('shake-premium');
-        input.style.borderColor = '#10b981'; 
 
-        
+    if (input.value === '200624') {
+
+        input.classList.remove('shake-premium');
+        input.style.borderColor = '#10b981';
+
+
         lockScreen.classList.add('vault-unlocked-anim');
 
-        
+
         setTimeout(() => {
             lockScreen.style.display = 'none';
             if (grid) {
@@ -4928,16 +5162,16 @@ function unlockVault() {
         }, 800);
 
     } else {
-        
+
         state.vaultUnlockAttempts = (state.vaultUnlockAttempts || 0) + 1;
 
-        
+
         if (badge) {
             badge.innerText = `Attempts: ${state.vaultUnlockAttempts}`;
             badge.style.color = state.vaultUnlockAttempts > 3 ? '#ef4444' : '#94a3b8';
         }
 
-        
+
         if (errorMsg) {
             errorMsg.innerText = state.vaultUnlockAttempts > 3 ? "SYSTEM LOCKED: Incorrect Format" : "Access Denied";
             errorMsg.style.opacity = '1';
@@ -4945,7 +5179,7 @@ function unlockVault() {
         input.classList.add('shake-premium');
         input.style.borderColor = '#ef4444';
 
-        
+
         if (state.vaultUnlockAttempts >= 1 && hintMain) {
             hintMain.innerText = "Hint: A score of days, six moons deep, in the year where two dozen secrets we keep.";
             hintMain.style.opacity = "1";
@@ -4991,7 +5225,7 @@ function renderJourney() {
     const container = document.getElementById('journey-container');
     if (!container) return;
 
-    
+
     currentMovieIndex = 0;
     movieItems = [];
     journeyData.forEach(ch => {
@@ -5042,8 +5276,8 @@ function playNextMovieScene() {
     const frame = document.createElement('div');
     frame.className = 'movie-frame opacity-0 transition-opacity duration-1000 flex flex-col items-center justify-center text-center w-full h-full p-12';
 
-    
-    let displayDuration = 3000; 
+
+    let displayDuration = 3000;
 
     if (item.type === 'title') {
         frame.innerHTML = `
@@ -5060,7 +5294,7 @@ function playNextMovieScene() {
                 <div id="typewriter-id" class="text-2xl font-medium text-white/90"></div>
             </div>
         `;
-        
+
         displayDuration = 2000 + (item.text.length * 60);
     } else if (item.type === 'scene') {
         frame.innerHTML = `
@@ -5090,7 +5324,7 @@ function playNextMovieScene() {
 
     screen.appendChild(frame);
 
-    
+
     requestAnimationFrame(() => {
         frame.classList.remove('opacity-0');
         if (item.type === 'title') {
@@ -5102,7 +5336,7 @@ function playNextMovieScene() {
         if (item.type === 'recipe') {
             setTimeout(() => {
                 frame.querySelectorAll('.step-reveal').forEach(el => el.classList.remove('opacity-0', 'translate-x-4'));
-                
+
                 frame.querySelectorAll('.step-reveal').forEach(el => {
                     el.style.transition = 'opacity 1s, transform 1s';
                     el.style.opacity = '1';
@@ -5111,7 +5345,7 @@ function playNextMovieScene() {
         }
     });
 
-    
+
     movieTimer = setTimeout(() => {
         frame.classList.add('opacity-0');
         setTimeout(() => {
@@ -5148,7 +5382,7 @@ function showTheEnd() {
 }
 
 
-window.Apps = Apps; 
+window.Apps = Apps;
 window.onload = function () {
     startCountdownGatekeeper();
     initHappyMenuBar();
@@ -5183,7 +5417,7 @@ function initBattery() {
             battery.addEventListener('chargingchange', updateBattery);
         });
     } else {
-        
+
         if (level) level.innerText = '100% (External Power)';
     }
 }
@@ -5197,7 +5431,7 @@ function initNetworkStatus() {
             icon.className = isOnline ? 'fas fa-wifi text-[14px]' : 'fas fa-wifi text-[14px] text-red-500 opacity-50';
             icon.parentElement.title = isOnline ? 'Wi-Fi: Connected (Strong)' : 'Wi-Fi: Disconnected';
         }
-        
+
     };
     window.addEventListener('online', update);
     window.addEventListener('offline', update);
@@ -5238,7 +5472,7 @@ document.getElementById('spotlight-input')?.addEventListener('input', (e) => {
         return;
     }
 
-    
+
     const matches = apps.filter(app => app.title.toLowerCase().includes(query));
 
     const html = matches.map(app =>
@@ -5278,13 +5512,13 @@ function initWeather() {
 
 const System = {
     about: () => {
-        
+
         const id = 'sys-about-win';
-        if (document.getElementById(id)) return; 
+        if (document.getElementById(id)) return;
 
         const win = document.createElement('div');
         win.id = id;
-        const safeTop = Math.max(40, (window.innerHeight - 300) / 2); 
+        const safeTop = Math.max(40, (window.innerHeight - 300) / 2);
         win.className = 'window bg-[#ECECEC] rounded-xl shadow-2xl z-[5000] overflow-hidden flex flex-col font-sans animate-zoom-in';
         win.style.position = 'absolute';
         win.style.width = '320px';
@@ -5318,7 +5552,7 @@ const System = {
     },
 
     settings: () => {
-        
+
         toggleControlCenter();
     },
 
@@ -5350,7 +5584,7 @@ const System = {
     }
 };
 
-window.System = System; 
+window.System = System;
 
 
 
@@ -5358,7 +5592,7 @@ window.System = System;
 
 
 
-let calendarDate = new Date(); 
+let calendarDate = new Date();
 let calendarClickCount = 0;
 let calendarClickTimer = null;
 
@@ -5368,16 +5602,16 @@ function changeMonth(offset) {
 }
 
 function toggleCalendar() {
-    
+
     calendarClickCount++;
     if (calendarClickTimer) clearTimeout(calendarClickTimer);
     calendarClickTimer = setTimeout(() => {
         calendarClickCount = 0;
-    }, 1000); 
+    }, 1000);
 
     if (calendarClickCount >= 7) {
         Apps.open('secret-gallery');
-        
+
         calendarClickCount = 0;
         return;
     }
@@ -5387,7 +5621,7 @@ function toggleCalendar() {
 
     if (cal.classList.contains('hidden')) {
         cal.classList.remove('hidden');
-        calendarDate = new Date(); 
+        calendarDate = new Date();
         renderCalendar();
     } else {
         cal.classList.add('hidden');
@@ -5396,7 +5630,7 @@ function toggleCalendar() {
 
 function renderCalendar() {
     const viewDate = calendarDate;
-    const today = new Date(); 
+    const today = new Date();
 
     const monthEl = document.getElementById('cal-month');
     const yearEl = document.getElementById('cal-year');
@@ -5407,18 +5641,18 @@ function renderCalendar() {
 
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-    
+
     if (monthEl) monthEl.innerText = monthNames[viewDate.getMonth()];
     if (yearEl) yearEl.innerText = viewDate.getFullYear();
 
-    
+
     const specialDates = [
-        { d: 30, m: 0, title: "Harshit Birthday 🎂" }, 
-        { d: 15, m: 8, title: "Shravii's Birthday 🎉" }, 
-        { d: 20, m: -1, title: "The First Meet ❤️" }   
+        { d: 30, m: 0, title: "Harshit Birthday 🎂" },
+        { d: 15, m: 8, title: "Shravii's Birthday 🎉" },
+        { d: 20, m: -1, title: "The First Meet ❤️" }
     ];
 
-    
+
     const year = viewDate.getFullYear();
     const month = viewDate.getMonth();
     const firstDay = new Date(year, month, 1).getDay();
@@ -5426,33 +5660,33 @@ function renderCalendar() {
 
     daysEl.innerHTML = '';
 
-    
+
     for (let i = 0; i < firstDay; i++) {
         daysEl.innerHTML += `<div></div>`;
     }
 
     let activeEventText = "No events selected.";
 
-    
+
     for (let d = 1; d <= daysInMonth; d++) {
-        
+
         const isToday = (d === today.getDate() && month === today.getMonth() && year === today.getFullYear());
 
-        
+
         const evt = specialDates.find(e => e.d === d && (e.m === -1 || e.m === month));
 
-        
+
         if (isToday) activeEventText = evt ? evt.title : "No events today.";
 
-        
+
         let dayClass = "aspect-square flex flex-col items-center justify-center rounded-full relative ";
         if (isToday) dayClass += "bg-red-500 text-white shadow-lg font-bold";
         else dayClass += "hover:bg-white/10 cursor-pointer text-gray-300 transition-colors";
 
-        
+
         const dotHtml = evt ? `<div class="w-1 h-1 rounded-full ${isToday ? 'bg-white' : 'bg-blue-400'} absolute bottom-1"></div>` : '';
 
-        
+
         const clickAction = evt ? `document.querySelector('#mini-calendar .text-blue-300').innerText = '${evt.title.replace("'", "\\'")}'` : `document.querySelector('#mini-calendar .text-blue-300').innerText = 'No events on this day.'`;
 
         daysEl.innerHTML += `
@@ -5473,13 +5707,13 @@ function initHappyMenuBar() {
     initNetworkStatus();
     initWeather();
 
-    
+
     if (clockInterval) clearInterval(clockInterval);
     clockInterval = setInterval(updateClock, 1000);
 
     updateClock();
 
-    
+
     document.addEventListener('click', (e) => {
         const cal = document.getElementById('mini-calendar');
         const clock = document.getElementById('clock');
@@ -5498,10 +5732,10 @@ function startFactsApp() {
     term.classList.add('hidden');
     main.classList.add('active');
 
-    
+
     main.scrollTop = 0;
 
-    
+
     const sections = main.querySelectorAll('.facts-section');
     sections.forEach((sec, i) => {
         setTimeout(() => {
@@ -5512,14 +5746,14 @@ function startFactsApp() {
 
 
 function switchMadTab(tabBtn, tabId) {
-    
+
     const allTabs = document.querySelectorAll('.mad-tab');
     allTabs.forEach(t => t.classList.remove('active'));
 
-    
+
     tabBtn.classList.add('active');
 
-    
+
     const dash = document.getElementById('tab-dash');
     const match = document.getElementById('tab-match');
 
@@ -5531,10 +5765,10 @@ function switchMadTab(tabBtn, tabId) {
         match.style.display = 'block';
     }
 }
-window.switchMadTab = switchMadTab; 
+window.switchMadTab = switchMadTab;
 
 function triggerMadridEffect(btn) {
-    
+
     const originalTransform = btn.style.transform;
     btn.style.transform = "scale(0.95)";
     setTimeout(() => {
@@ -5544,7 +5778,7 @@ function triggerMadridEffect(btn) {
     const balls = ['⚽', '⚽️', '🧤', '🏆', '👑', '🤍'];
     const rect = btn.getBoundingClientRect();
 
-    
+
     for (let i = 0; i < 30; i++) {
         const p = document.createElement('div');
         p.className = 'ball-particle';
@@ -5558,14 +5792,14 @@ function triggerMadridEffect(btn) {
         p.style.left = `${rect.left + rect.width / 2}px`;
         p.style.top = `${rect.top}px`;
 
-        
+
         p.style.fontSize = Math.random() > 0.5 ? '24px' : '16px';
 
         document.body.appendChild(p);
         setTimeout(() => p.remove(), 1500);
     }
 
-    
+
     const audio = document.getElementById('madrid-siuuu');
     if (audio) {
         audio.volume = 0.6;
@@ -5590,13 +5824,13 @@ function toggleUCLMode() {
     const tier = document.getElementById('madrid-tier');
 
     if (dash.classList.contains('ucl-mode')) {
-        
+
         dash.classList.remove('ucl-mode');
         headText.innerText = "HALAMADRID DASHBOARD";
         logo.innerText = "⚽";
         tier.innerText = "Ultra Tier";
     } else {
-        
+
         dash.classList.add('ucl-mode');
         headText.innerText = "CHAMPIONS LEAGUE MODE";
         logo.innerText = "🏆";
@@ -5852,11 +6086,11 @@ function initTired() {
 
     container.innerHTML = '';
 
-    
+
     const data = tiredMessages[Math.floor(Math.random() * tiredMessages.length)];
     const lines = data.text.split('\n');
 
-    
+
     const audioWrapper = document.createElement('div');
     audioWrapper.className = 'tired-audio-wrapper opacity-0 transition duration-1000';
     audioWrapper.innerHTML = `
@@ -5868,7 +6102,7 @@ function initTired() {
     `;
     container.appendChild(audioWrapper);
 
-    
+
     let delay = 800;
 
     lines.forEach(line => {
@@ -5890,7 +6124,7 @@ function initTired() {
         }
     });
 
-    
+
     setTimeout(() => {
         audioWrapper.classList.remove('opacity-0');
     }, 1500);
@@ -5912,7 +6146,7 @@ function toggleTiredAudio() {
         icon.classList.remove('animate-pulse');
     }
 
-    
+
     audio.onended = () => {
         icon.innerText = "🎙️";
         icon.classList.remove('animate-pulse');
@@ -5931,7 +6165,7 @@ const inkEntries = [
 let currentInkIndex = 0;
 
 function initInkpot() {
-    
+
     setTimeout(() => {
         showInkEntry(currentInkIndex);
     }, 100);
@@ -5941,13 +6175,13 @@ function showInkEntry(index) {
     const el = document.getElementById('journal-entry');
     if (!el) return;
 
-    
+
     el.style.opacity = 0;
     el.style.transform = 'translateY(5px)';
 
     setTimeout(() => {
         el.textContent = inkEntries[index] || '';
-        
+
         el.style.opacity = 1;
         el.style.transform = 'translateY(0)';
     }, 300);
@@ -5978,7 +6212,7 @@ function newInkEntry() {
 
 
 const shraviiQuotes = [
-    
+
     "Did you drink water today? Hydrate or diedrate! 💧",
     "Posture check! Sit up straight, you banana! 🍌",
     "Have you eaten? And no, coffee doesn't count as a meal. 🍱",
@@ -5990,7 +6224,7 @@ const shraviiQuotes = [
     "Is your room dark? Turn on a light! 💡",
     "Don't forget to blink! 👁️",
 
-    
+
     "I'm so proud of you. Just existing is hard sometimes. ❤️",
     "You are doing better than you think. Trust me. 🌟",
     "I believe in you. Even when you don't. ✨",
@@ -6002,7 +6236,7 @@ const shraviiQuotes = [
     "Sending you a virtual hug. Squeeze! 🫂",
     "You make the world brighter just by being in it. ☀️",
 
-    
+
     "Focus mode: ON. You can do this! 🎯",
     "One task at a time. Multitasking is a myth! 🐢",
     "I saw that bug you fixed. Nice one. 🐛",
@@ -6014,7 +6248,7 @@ const shraviiQuotes = [
     "Remember why you started. (To rule the world? Maybe.) 🌍",
     "Small steps still move you forward. 👣",
 
-    
+
     "I saw that typo. It's okay, I won't tell. 🤫",
     " Why are you awake? Go to sleeeeeep! 🛌",
     "Are you really going to open that file again? 📂",
@@ -6026,14 +6260,14 @@ const shraviiQuotes = [
     "Can we watch a movie later? 🎬",
     "You're my favorite human. Don't tell the others. 🤫",
 
-    
+
     "The world is asleep. You should be too. 🌙",
     "Nothing good happens after 2 AM. Go to bed! 🕑",
     "Your brain needs sleep to store all this genius. 🧠",
     "The code will still be there in the morning. 🌅",
     "Sleep is the best debugger. 🐞",
 
-    
+
     "Just a reminder: You are loved. ❤️",
     "I'm glad you're here. 🏠",
     "You matter. A lot. 🌈",
@@ -6048,7 +6282,7 @@ const shraviiQuotes = [
 
 function initShravii() {
     updateShraviiState();
-    
+
     if (!window.shraviiInterval) {
         window.shraviiInterval = setInterval(updateShraviiState, 60000);
     }
@@ -6072,47 +6306,47 @@ function updateShraviiState() {
     const hour = new Date().getHours();
     let statusText = "ONLINE";
     let stateClass = "state-day";
-    let avatarUrl = "https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif"; 
+    let avatarUrl = "https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif";
 
-    
+
     if (hour >= 0 && hour < 7) {
-        
+
         statusText = "SLEEP MODE 💤";
         stateClass = "state-night";
-        ledEl.style.background = "#60a5fa"; 
-        avatarUrl = "https://media.tenor.com/PFC1L2aEwEIAAAAj/mocha-bear.gif"; 
+        ledEl.style.background = "#60a5fa";
+        avatarUrl = "https://media.tenor.com/PFC1L2aEwEIAAAAj/mocha-bear.gif";
 
-        
+
         if (Math.random() > 0.5) {
             quoteEl.textContent = "Zzz... (I'm charging... you should too...)";
             return;
         }
 
     } else if (hour >= 7 && hour < 18) {
-        
+
         statusText = "MONITORING 🛡️";
         stateClass = "state-day";
-        ledEl.style.background = "#4ade80"; 
-        avatarUrl = "https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif"; 
+        ledEl.style.background = "#4ade80";
+        avatarUrl = "https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif";
 
     } else {
-        
+
         statusText = "CHAOS HOURS 😈";
         stateClass = "state-party";
-        ledEl.style.background = "#f472b6"; 
-        avatarUrl = "https://media.tenor.com/N2s4YqCqK90AAAAj/music-dance.gif"; 
+        ledEl.style.background = "#f472b6";
+        avatarUrl = "https://media.tenor.com/N2s4YqCqK90AAAAj/music-dance.gif";
     }
 
-    
-    
+
+
     const rIndex = Math.floor(Math.random() * shraviiQuotes.length);
     quoteEl.textContent = shraviiQuotes[rIndex];
 
-    
+
     statusEl.textContent = statusText;
     updateChibiImage(avatarUrl);
 
-    
+
     container.className = `h-full flex flex-col p-6 transition-colors duration-1000 ${stateClass}`;
 }
 
@@ -6121,7 +6355,7 @@ function refreshShravii() {
     const quoteEl = document.getElementById('shravii-quote');
     const rIndex = Math.floor(Math.random() * shraviiQuotes.length);
 
-    
+
     quoteEl.style.opacity = 0;
     setTimeout(() => {
         quoteEl.textContent = shraviiQuotes[rIndex];
@@ -6135,7 +6369,7 @@ let vbIsPlaying = false;
 let vbIsRecording = false;
 
 function initVoiceBox() {
-    
+
     vbIsPlaying = false;
     vbIsRecording = false;
     stopVBMotion();
@@ -6145,18 +6379,18 @@ function initVoiceBox() {
 function toggleVBPlay() {
     const playBtn = document.getElementById('vb-play-btn');
     if (vbIsPlaying) {
-        
+
         vbIsPlaying = false;
         stopVBMotion();
         playBtn.classList.remove('active-mech-btn');
         updateVBStatus('STOPPED');
     } else {
-        
+
         vbIsPlaying = true;
         vbIsRecording = false;
         startVBMotion();
         playBtn.classList.add('active-mech-btn');
-        
+
         document.getElementById('vb-rec-btn').classList.remove('active-mech-btn');
         updateVBStatus('PLAYING ▶');
     }
@@ -6165,34 +6399,34 @@ function toggleVBPlay() {
 function toggleVBRecord() {
     const recBtn = document.getElementById('vb-rec-btn');
     if (vbIsRecording) {
-        
+
         vbIsRecording = false;
         stopVBMotion();
         recBtn.classList.remove('active-mech-btn');
         updateVBStatus('SAVED');
     } else {
-        
+
         vbIsRecording = true;
         vbIsPlaying = false;
         startVBMotion();
         recBtn.classList.add('active-mech-btn');
-        
+
         document.getElementById('vb-play-btn').classList.remove('active-mech-btn');
         updateVBStatus('REC ●');
     }
 }
 
 function startVBMotion() {
-    
+
     const reels = document.querySelectorAll('.vb-reel');
     reels.forEach(r => r.classList.add('spinning'));
 
-    
+
     const needle = document.getElementById('vb-needle');
     if (needle) {
         if (vbInterval) clearInterval(vbInterval);
         vbInterval = setInterval(() => {
-            
+
             const deg = Math.floor(Math.random() * 60) - 30;
             needle.style.transform = `translateX(-50%) rotate(${deg}deg)`;
         }, 100);
@@ -6200,11 +6434,11 @@ function startVBMotion() {
 }
 
 function stopVBMotion() {
-    
+
     const reels = document.querySelectorAll('.vb-reel');
     reels.forEach(r => r.classList.remove('spinning'));
 
-    
+
     const needle = document.getElementById('vb-needle');
     if (needle) needle.style.transform = `translateX(-50%) rotate(-45deg)`;
     if (vbInterval) clearInterval(vbInterval);
@@ -6252,12 +6486,12 @@ window.FlashApp = {
         document.getElementById('flash-instruction').innerText = "WAIT...";
         document.getElementById('flash-instruction').className = "text-4xl font-black italic text-red-200 tracking-tighter animate-pulse";
 
-        
+
         if (this.fakeTimeout) clearTimeout(this.fakeTimeout);
     },
 
     triggerSignalOrFake: function () {
-        
+
         if (Math.random() < 0.35) {
             this.triggerFake();
         } else {
@@ -6267,14 +6501,14 @@ window.FlashApp = {
 
     triggerFake: function () {
         this.isFake = true;
-        
+
         const audioFail = document.getElementById('sfx-fail');
         if (audioFail) { audioFail.currentTime = 0; audioFail.volume = 0.3; audioFail.play().catch(e => { }); }
 
         const bg = document.getElementById('flash-game-bg');
         const txt = document.getElementById('flash-instruction');
 
-        
+
         const types = [
             { cls: 'bg-blue-600', msg: 'WAIT FOR IT...', textCls: 'text-blue-200' },
             { cls: 'bg-yellow-500', msg: 'NOT YET!', textCls: 'text-yellow-900' }
@@ -6285,10 +6519,10 @@ window.FlashApp = {
         txt.innerText = type.msg;
         txt.className = `text-5xl font-black italic ${type.textCls} tracking-tighter animate-bounce`;
 
-        
+
         this.fakeTimeout = setTimeout(() => {
             if (this.waiting) {
-                this.resetGameScreen(); 
+                this.resetGameScreen();
                 setTimeout(() => this.triggerRealSignal(), 500 + Math.random() * 1000);
             }
         }, 800);
@@ -6308,7 +6542,7 @@ window.FlashApp = {
     },
 
     handleTap: function () {
-        
+
         if (this.waiting && this.isFake) {
             clearTimeout(this.timeout);
             if (this.fakeTimeout) clearTimeout(this.fakeTimeout);
@@ -6321,7 +6555,7 @@ window.FlashApp = {
             return;
         }
 
-        
+
         if (this.waiting) {
             clearTimeout(this.timeout);
             if (this.fakeTimeout) clearTimeout(this.fakeTimeout);
@@ -6335,7 +6569,7 @@ window.FlashApp = {
             return;
         }
 
-        
+
         const time = Date.now() - this.startTime;
         document.getElementById('sfx-success').play().catch(e => { });
         this.showResult(time);
@@ -6351,8 +6585,8 @@ window.FlashApp = {
         const rankDisplay = document.getElementById('flash-rank-display');
         const newRecordDisplay = document.getElementById('flash-new-record');
 
-        newRecordDisplay.classList.add('hidden'); 
-        resScreen.className = "absolute inset-0 flex flex-col items-center justify-center z-30 bg-black/90 p-8 text-center"; 
+        newRecordDisplay.classList.add('hidden');
+        resScreen.className = "absolute inset-0 flex flex-col items-center justify-center z-30 bg-black/90 p-8 text-center";
 
         if (ms === null) {
             timeDisplay.innerText = "FAIL";
@@ -6365,7 +6599,7 @@ window.FlashApp = {
             timeDisplay.classList.remove('text-red-500');
             timeDisplay.classList.add('text-yellow-400');
 
-            
+
             if (!this.personalBest || ms < this.personalBest) {
                 this.personalBest = ms;
                 localStorage.setItem('harshit_flash_pb', ms);
@@ -6390,7 +6624,7 @@ window.FlashApp = {
         document.getElementById('flash-result').classList.remove('flex');
         document.getElementById('flash-intro').classList.remove('hidden');
 
-        
+
         if (this.personalBest) {
             document.getElementById('flash-pb-intro').innerText = "PERSONAL BEST: " + this.personalBest + "ms";
         }
@@ -6415,11 +6649,11 @@ function initSecretVault() {
     const input = document.getElementById('vault-pass');
     if (!input) return;
 
-    
-    input.value = '';
-    state.vaultUnlockAttempts = 0; 
 
-    
+    input.value = '';
+    state.vaultUnlockAttempts = 0;
+
+
     document.getElementById('vault-lock').style.display = 'flex';
     document.getElementById('vault-lock').style.opacity = '1';
 
@@ -6428,7 +6662,7 @@ function initSecretVault() {
 
     document.getElementById('vault-error').style.opacity = '0';
 
-    
+
     input.onkeyup = (e) => {
         if (input.value.length === 6) {
             checkVaultPass(input.value);
@@ -6438,16 +6672,16 @@ function initSecretVault() {
 
 function checkVaultPass(code) {
     if (code === '200624') {
-        
+
         document.getElementById('vault-lock').style.opacity = '0';
         setTimeout(() => {
-            document.getElementById('vault-lock').style.display = 'none'; 
+            document.getElementById('vault-lock').style.display = 'none';
 
             const content = document.getElementById('vault-content');
-            content.style.display = 'block'; 
+            content.style.display = 'block';
             content.classList.remove('hidden');
 
-            
+
             requestAnimationFrame(() => {
                 content.classList.remove('opacity-0');
                 content.classList.add('opacity-100');
@@ -6456,9 +6690,9 @@ function checkVaultPass(code) {
             loadVaultContent();
         }, 500);
     } else {
-        
+
         const err = document.getElementById('vault-error');
-        err.style.opacity = '1';  
+        err.style.opacity = '1';
         const inp = document.getElementById('vault-pass');
         inp.classList.add('shake');
         setTimeout(() => inp.classList.remove('shake'), 500);
@@ -6508,7 +6742,7 @@ function vaultPrevSlide() {
 
 
 function showNotification(title, body) {
-    
+
     const notif = document.createElement('div');
     notif.className = 'ghost-notification';
     if (title.includes('Alert') || title.includes('Critical')) {
@@ -6522,8 +6756,8 @@ function showNotification(title, body) {
 
     document.body.appendChild(notif);
 
-    
-    
+
+
     setTimeout(() => {
         notif.remove();
     }, 5500);
@@ -6557,7 +6791,7 @@ function initTruths() {
     <div class="text-sm text-green-400/80 leading-relaxed font-light line-clamp-2 transition-all duration-300">${t.content}</div>
 `;
 
-        
+
         div.onclick = function () {
             const contentDiv = this.querySelector('div:last-child');
             if (contentDiv.classList.contains('line-clamp-2')) {
@@ -6578,7 +6812,7 @@ function filterTruths() {
     const filter = input.value.toLowerCase();
     const grid = document.getElementById('truth-grid');
 
-    
+
     grid.innerHTML = '';
 
     truthData.forEach(t => {
@@ -6621,7 +6855,7 @@ function initMap() {
         marker.style.top = loc.y + '%';
         marker.title = loc.name;
 
-        
+
         const tip = document.createElement('div');
         tip.className = 'absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-white/90 backdrop-blur px-2 py-1 text-xs font-bold text-slate-700 rounded shadow-sm whitespace-nowrap opacity-0 pointer-events-none transition-opacity duration-300';
         tip.innerText = loc.desc;
@@ -6629,7 +6863,7 @@ function initMap() {
         marker.onmouseenter = () => tip.style.opacity = 1;
         marker.onmouseleave = () => tip.style.opacity = 0;
 
-        marker.appendChild(tip); 
+        marker.appendChild(tip);
         mapContainer.appendChild(marker);
     });
 }
@@ -6680,7 +6914,7 @@ function initInkpot() {
 function nextPoem() {
     currentPoemIndex = (currentPoemIndex + 1) % poems.length;
 
-    
+
     const textEl = document.getElementById('inkpot-text');
     if (textEl) {
         textEl.style.opacity = 0;
@@ -6705,7 +6939,7 @@ function renderPoem() {
                                                                     </div>
                                                                     `;
 
-    
+
     textEl.style.opacity = 1;
     textEl.style.transform = 'translateY(0)';
 }
@@ -6716,10 +6950,10 @@ window.nextPoem = nextPoem;
 
 let notDumbStep = 0;
 const notDumbSlides = [
-    
+
     { type: 'entry' },
 
-    
+
     {
         type: 'html', content: `
         <div class="space-y-6 animate-fade-in-up">
@@ -6748,7 +6982,7 @@ const notDumbSlides = [
         </div>
     `},
 
-    
+
     {
         type: 'html', content: `
         <div class="flex flex-col items-center justify-center h-full animate-fade-in-up">
@@ -6773,7 +7007,7 @@ const notDumbSlides = [
         </div>
     `},
 
-    
+
     {
         type: 'html', content: `
         <div class="space-y-4 animate-fade-in-up h-full overflow-y-auto custom-scroll pr-2 pt-2">
@@ -6838,7 +7072,7 @@ const notDumbSlides = [
         </div>
     `},
 
-    
+
     {
         type: 'html', content: `
         <div class="flex flex-col justify-center h-full animate-fade-in-up space-y-10 px-6">
@@ -6870,7 +7104,7 @@ const notDumbSlides = [
         <style> @keyframes fillBar {from {width: 0; } } </style>
     `},
 
-    
+
     {
         type: 'html', content: `
         <div class="flex flex-col items-center justify-center h-full animate-fade-in-up text-center cursor-help select-none" title="Permission: Admin Shravii">
@@ -6884,7 +7118,7 @@ const notDumbSlides = [
         </div>
     `},
 
-    
+
     {
         type: 'html', content: `
         <div class="flex flex-col items-center justify-center h-full animate-fade-in-up text-center relative z-10">
@@ -6921,11 +7155,11 @@ function initNotDumb() {
     const container = document.getElementById('not-dumb-content');
     const nav = document.getElementById('not-dumb-nav');
 
-    
+
     if (container) container.innerHTML = '';
     if (nav) nav.style.opacity = '0';
 
-    
+
     if (container) {
         container.innerHTML = `
             <div class="flex flex-col justify-center h-full font-mono text-xs space-y-6 select-none relative">
@@ -6965,7 +7199,7 @@ function initNotDumb() {
         `;
     }
 
-    
+
     setTimeout(() => {
         if (nav) nav.style.opacity = '1';
     }, 5000);
@@ -6977,7 +7211,7 @@ function nextNotDumbSlide() {
     const nav = document.getElementById('not-dumb-nav');
 
     if (notDumbStep >= notDumbSlides.length) {
-        
+
         Apps.close('not-dumb');
         return;
     }
@@ -6985,7 +7219,7 @@ function nextNotDumbSlide() {
     const slide = notDumbSlides[notDumbStep];
 
     if (slide.type === 'html' && container) {
-        
+
         container.style.opacity = '0';
         container.style.transform = 'translateY(10px) scale(0.98)';
 
@@ -6997,7 +7231,7 @@ function nextNotDumbSlide() {
         }, 200);
     }
 
-    
+
     if (notDumbStep === notDumbSlides.length - 1 && nav) {
         nav.style.opacity = '0';
         nav.style.pointerEvents = 'none';
@@ -7021,7 +7255,7 @@ window.nextNotDumbSlide = nextNotDumbSlide;
 
 
 window.showLetterOverlay = function () {
-    
+
     const intro = document.getElementById('birthday-intro');
     if (intro) {
         intro.style.transition = 'opacity 1s';
@@ -7029,12 +7263,12 @@ window.showLetterOverlay = function () {
         setTimeout(() => intro.style.display = 'none', 1000);
     }
 
-    
+
     const letter = document.getElementById('letter-overlay');
     if (letter) {
         letter.classList.remove('hidden');
         void letter.offsetWidth;
-        letter.style.display = 'flex'; 
+        letter.style.display = 'flex';
         setTimeout(() => {
             letter.classList.add('visible');
             letter.style.opacity = '1';
@@ -7052,7 +7286,7 @@ window.closeLetter = function () {
             letter.classList.add('hidden');
             letter.style.display = 'none';
 
-            
+
             finishBirthdaySequence();
         }, 1000);
     }
@@ -7060,7 +7294,7 @@ window.closeLetter = function () {
 
 
 function setupAccessibility() {
-    
+
     const interactiveSelectors = [
         '.dock-icon',
         '.desktop-icon',
@@ -7087,9 +7321,9 @@ function setupAccessibility() {
 
     document.querySelectorAll(interactiveSelectors.join(',')).forEach(makeFocusable);
 
-    
+
     document.addEventListener('keydown', (e) => {
-        
+
         if (e.key === 'Escape') {
             const spotlight = document.getElementById('spotlight-overlay');
             if (spotlight && !spotlight.classList.contains('hidden')) {
@@ -7130,7 +7364,7 @@ function setupAccessibility() {
         }
     });
 
-    
+
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             if (mutation.addedNodes.length) {
@@ -7163,7 +7397,7 @@ function sealLetter() {
 
     if (typeof createModal === 'function') createModal({ title: 'Letter Sealed', desc: 'Stored in the archives of time.', icon: '🕯️' });
 
-    
+
     setTimeout(() => {
         air.style.opacity = 1;
         const replies = [
@@ -7335,10 +7569,10 @@ const dailyBloomData = [
 
 apps.push({
     id: 'app-bloom', title: 'Daily Bloom', icon: '<img src="assets/icons/app_bloom_new.png" alt="bloom" style="width: 100%; height: 100%;">', dock: false, width: 500, height: 600, onOpen: () => {
-        
+
         const bloom = dailyBloomData[Math.floor(Math.random() * dailyBloomData.length)];
 
-        
+
         setTimeout(() => {
             const imgEl = document.getElementById('bloom-img');
             const messageEl = document.getElementById('bloom-message');
@@ -7347,11 +7581,11 @@ apps.push({
                 imgEl.src = bloom.image;
                 imgEl.title = bloom.name;
 
-                
+
                 imgEl.style.opacity = '0.5';
                 imgEl.style.transform = 'scale(0.95)';
 
-                
+
                 setTimeout(() => {
                     imgEl.style.opacity = '1';
                     imgEl.style.transform = 'scale(1) rotate(0deg)';
@@ -7407,10 +7641,10 @@ window.triggerMadridEffect = function (btn) {
         setTimeout(() => btn.innerText = "Hala Madrid! 🚀", 2000);
     }
 
-    
+
     let audio = document.getElementById('madrid-siuuu');
 
-    
+
     if (!audio) {
         audio = new Audio('https://www.myinstants.com/media/sounds/cristiano-ronaldo-siuuu.mp3');
     }
@@ -7420,7 +7654,7 @@ window.triggerMadridEffect = function (btn) {
         if (typeof createModal === 'function') createModal({ title: "Audio Error", desc: "Browser blocked autoplay. Interacted first?", icon: "🔇" });
     });
 
-    
+
     if (typeof confetti === 'function') {
         confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
     }
@@ -7433,7 +7667,7 @@ document.addEventListener('contextmenu', function (e) {
 
     let menu = document.getElementById('ctx-menu');
     if (!menu) {
-        
+
         menu = document.createElement('div');
         menu.id = 'ctx-menu';
         menu.className = 'fixed bg-white/90 backdrop-blur border border-gray-200 shadow-xl rounded-lg py-2 w-48 z-[99999] hidden flex-col';
@@ -7446,11 +7680,11 @@ document.addEventListener('contextmenu', function (e) {
         `;
         document.body.appendChild(menu);
 
-        
+
         document.addEventListener('click', () => menu.classList.add('hidden'));
     }
 
-    
+
     const x = Math.min(e.clientX, window.innerWidth - 200);
     const y = Math.min(e.clientY, window.innerHeight - 200);
 
@@ -7690,7 +7924,7 @@ const TiredApp = {
     progressFill: null,
     playIcon: null,
     transcript: [
-        
+
         { time: 0, text: "Hey..." },
         { time: 2, text: "I know things feel heavy right now." },
         { time: 5, text: "Just take a deep breath." },
@@ -7723,7 +7957,7 @@ const TiredApp = {
                 this.playIcon.classList.remove('fa-play');
                 this.playIcon.classList.add('fa-pause');
             }
-            
+
             const pulse = document.getElementById('tired-bg-pulse');
             if (pulse) pulse.classList.add('animate-pulse');
         } else {
@@ -7741,19 +7975,19 @@ const TiredApp = {
         if (!this.audio) return;
         const currentTime = this.audio.currentTime;
 
-        
+
         if (this.progressFill) {
             const pct = (currentTime / this.audio.duration) * 100 || 0;
             this.progressFill.style.width = pct + '%';
         }
 
-        
+
         if (this.display) {
             const activeSegment = this.transcript.slice().reverse().find(seg => currentTime >= seg.time);
 
             if (activeSegment) {
                 if (this.display.innerText !== activeSegment.text) {
-                    
+
                     this.display.style.opacity = 0;
                     this.display.style.transform = 'translateY(10px) scale(0.95)';
 
@@ -7764,9 +7998,9 @@ const TiredApp = {
                     }, 300);
                 }
             } else {
-                
+
                 if (currentTime < 1 && this.display.innerText !== "Press play...") {
-                    
+
                 }
             }
         }
@@ -7798,7 +8032,7 @@ const TiredApp = {
 apps.push({
     id: 'tired',
     title: 'When Tired',
-    icon: 'assets/icons/app_sleep.png', 
+    icon: 'assets/icons/app_sleep.png',
     dock: false,
     folder: 'folder-feelings',
     width: 600,
@@ -8002,9 +8236,9 @@ const WeatherEngine = {
         this.rainContainer = document.getElementById('bg-rain-container');
         if (!this.snowContainer || !this.rainContainer) return;
 
-        
-        setInterval(() => this.createFlake(), 200); 
-        setInterval(() => this.createRaindrop(), 120); 
+
+        setInterval(() => this.createFlake(), 200);
+        setInterval(() => this.createRaindrop(), 120);
 
         document.addEventListener('mousemove', (e) => {
             this.targetWindX = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -8030,7 +8264,7 @@ const WeatherEngine = {
             x: parseFloat(flake.style.left),
             y: -10,
             speedX: (Math.random() - 0.5) * 0.1,
-            speedY: 100 / (duration * 60) 
+            speedY: 100 / (duration * 60)
         });
 
         setTimeout(() => {
@@ -8061,7 +8295,7 @@ const WeatherEngine = {
     },
 
     checkCollisions() {
-        
+
         for (let i = 0; i < this.flakes.length; i++) {
             const f = this.flakes[i];
             for (let j = 0; j < this.drops.length; j++) {
@@ -8094,7 +8328,7 @@ const WeatherEngine = {
         this.windX += (this.targetWindX - this.windX) * 0.05;
 
         this.flakes.forEach(f => {
-            f.y += f.speedY; 
+            f.y += f.speedY;
             f.x += f.speedX + (this.windX * 0.1);
             f.el.style.left = f.x + '%';
         });
@@ -8123,18 +8357,18 @@ window.addEventListener('load', () => WeatherEngine.init());
 
 
 document.addEventListener('mousemove', (e) => {
-    
+
     if (Math.random() < 0.25) {
         const flake = document.createElement('div');
 
-        
+
         const icons = ['❄', '❅', '❆', '•'];
         const isDot = Math.random() < 0.3;
 
         flake.className = 'snow-flake';
         flake.innerText = isDot ? '•' : icons[Math.floor(Math.random() * icons.length)];
 
-        
+
         const drift = (Math.random() - 0.5) * 200 + 'px';
         const rot = (Math.random() - 0.5) * 720 + 'deg';
         flake.style.setProperty('--drift', drift);
@@ -8143,13 +8377,13 @@ document.addEventListener('mousemove', (e) => {
         flake.style.left = e.clientX + 'px';
         flake.style.top = e.clientY + 'px';
 
-        
+
         const scale = Math.random() * 0.5 + 0.5;
         flake.style.transform = `scale(${scale})`;
 
         document.body.appendChild(flake);
 
-        
+
         setTimeout(() => flake.remove(), 2500);
     }
 });
@@ -8170,7 +8404,7 @@ const NotificationConfig = {
 
 
 const NotificationDatabase = {
-    
+
     affirmations: [
         {
             id: 'virtual-hug',
@@ -8195,7 +8429,7 @@ const NotificationDatabase = {
         }
     ],
 
-    
+
     careReminders: [
         {
             id: 'hydration-2min',
@@ -8247,7 +8481,7 @@ const NotificationDatabase = {
         }
     ],
 
-    
+
     funNotifications: [
         {
             id: 'riddle-4min',
@@ -8290,7 +8524,7 @@ const NotificationDatabase = {
         }
     ],
 
-    
+
     insideJokes: [
         {
             id: 'hmmm-detected',
@@ -8329,7 +8563,7 @@ const NotificationDatabase = {
         }
     ],
 
-    
+
     timeGreetings: {
         morning: {
             id: 'morning-greeting',
@@ -8419,16 +8653,16 @@ const NotificationTracker = {
 function initNotificationSystem() {
     console.log('%c[Notification System] ðŸ’Œ Initializing...', 'color: #ec4899; font-weight: bold;');
 
-    
+
     setInterval(check1221EasterEgg, 60000);
 
-    
-    setInterval(checkTimeBasedNotifications, 60000); 
 
-    
+    setInterval(checkTimeBasedNotifications, 60000);
+
+
     const randomCareInterval = () => {
-        const min = 10 * 60 * 1000; 
-        const max = 20 * 60 * 1000; 
+        const min = 10 * 60 * 1000;
+        const max = 20 * 60 * 1000;
         return Math.random() * (max - min) + min;
     };
 
@@ -8487,11 +8721,11 @@ function show1221Notification() {
         }
     };
 
-    displayNotification(notification, true); 
+    displayNotification(notification, true);
 }
 
 function checkTimeBasedNotifications() {
-    const sessionTime = Math.floor((new Date() - NotificationConfig.sessionStartTime) / 60000); 
+    const sessionTime = Math.floor((new Date() - NotificationConfig.sessionStartTime) / 60000);
 
     NotificationDatabase.careReminders.forEach(reminder => {
         if (sessionTime >= reminder.minutes && !NotificationTracker.shown.has(reminder.id)) {
@@ -8510,10 +8744,10 @@ function checkTimeBasedNotifications() {
 
 function showRandomCareMessage() {
     const now = Date.now();
-    if (now - NotificationTracker.lastCareMessage < 5 * 60 * 1000) return; 
+    if (now - NotificationTracker.lastCareMessage < 5 * 60 * 1000) return;
 
     const messages = NotificationDatabase.careMessages.filter(m => !NotificationTracker.shown.has(m.id));
-    if (messages.length === 0) NotificationTracker.shown.clear(); 
+    if (messages.length === 0) NotificationTracker.shown.clear();
 
     const message = messages[Math.floor(Math.random() * messages.length)] || NotificationDatabase.careMessages[0];
     NotificationTracker.lastCareMessage = now;
@@ -8524,7 +8758,7 @@ function showRandomFunNotification() {
     const now = Date.now();
     if (now - NotificationTracker.lastFunNotif < 10 * 60 * 1000) return;
 
-    const funs = NotificationDatabase.funNotifications.filter(f => !f.minutes); 
+    const funs = NotificationDatabase.funNotifications.filter(f => !f.minutes);
     const fun = funs[Math.floor(Math.random() * funs.length)];
 
     if (fun) {
@@ -9084,7 +9318,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const desktop = document.getElementById('desktop');
         if (desktop && window.getComputedStyle(desktop).display !== 'none') {
             clearInterval(checkDesktop);
-            setTimeout(initNotificationSystem, 3000); 
+            setTimeout(initNotificationSystem, 3000);
         }
     }, 500);
 });
@@ -9232,7 +9466,7 @@ function startFactsApp() {
     const content = document.getElementById('facts-main-content');
 
     if (term && content) {
-   
+
         term.style.opacity = '0';
 
         setTimeout(() => {
@@ -9247,7 +9481,7 @@ function startFactsApp() {
 }
 
 window.toggleTruth = function (card) {
-    
+
     document.querySelectorAll('.truth-card.active').forEach(c => {
         if (c !== card) c.classList.remove('active');
     });
@@ -9261,11 +9495,11 @@ function openBlueprint() {
     if (win) {
         win.style.display = 'block';
         setTimeout(() => win.classList.add('active'), 50);
-       
+
         win.style.zIndex = ++zIndex;
         if (overlay) {
             overlay.style.opacity = '0.3';
-            overlay.style.pointerEvents = 'auto'; 
+            overlay.style.pointerEvents = 'auto';
         }
     }
 }
@@ -9390,7 +9624,7 @@ const FlashApp = {
             }
         } else {
             if (resVal) resVal.innerText = finalScore;
-          
+
             const earnedXP = Math.floor(finalScore / 10);
             this.state.xp += earnedXP;
 
@@ -9413,7 +9647,7 @@ const FlashApp = {
             if (this.sfx.success) this.sfx.success.play();
         }
 
-        
+
         if (typeof userStats !== 'undefined') {
             userStats.trophies = this.state.trophies;
             if (typeof Persistence !== 'undefined' && Persistence.save) {
@@ -9481,7 +9715,7 @@ const FlashApp = {
                 player.grounded = true;
             }
 
-            ctx.fillStyle = '#fbbf24'; 
+            ctx.fillStyle = '#fbbf24';
             ctx.shadowColor = '#f59e0b';
             ctx.shadowBlur = 20;
             ctx.fillRect(player.x, player.y, player.w, player.h);
@@ -9513,12 +9747,12 @@ const FlashApp = {
                     player.y + player.h > obs.y
                 ) {
                     if (obs.type === 'bad') {
-                      
+
                         if (this.sfx.fail) this.sfx.fail.play().catch(() => { });
                         this.stopGame();
                         return;
                     } else {
-                        
+
                         if (this.sfx.success) {
                             const s = this.sfx.success.cloneNode();
                             s.volume = 0.3;
@@ -9545,7 +9779,7 @@ const FlashApp = {
         loop();
     },
 
-  
+
     initMadrid() {
         const container = document.getElementById('flash-madrid');
         if (container) container.style.display = 'block';
@@ -9554,16 +9788,16 @@ const FlashApp = {
         const sc = document.getElementById('madrid-score');
         if (sc) sc.innerText = '0';
 
-        const targets = ['⚽', '🏆', '👟', '🥅']; 
-                const distractions = ['🐍', '🟥', '❌', '💤']; 
+        const targets = ['⚽', '🏆', '👟', '🥅'];
+        const distractions = ['🐍', '🟥', '❌', '💤'];
 
         this.state.madridInterval = setInterval(() => {
             if (!this.state.active) return;
             if (!gameArea) return;
 
             const el = document.createElement('div');
-            const isTarget = Math.random() > 0.4; 
-                        const content = isTarget ? targets[Math.floor(Math.random() * targets.length)] : distractions[Math.floor(Math.random() * distractions.length)];
+            const isTarget = Math.random() > 0.4;
+            const content = isTarget ? targets[Math.floor(Math.random() * targets.length)] : distractions[Math.floor(Math.random() * distractions.length)];
 
             el.innerText = content;
             el.style.position = 'absolute';
@@ -9595,7 +9829,7 @@ const FlashApp = {
 
             gameArea.appendChild(el);
 
-           
+
             setTimeout(() => {
                 if (el.parentNode) {
                     el.style.opacity = '0';
@@ -9606,7 +9840,7 @@ const FlashApp = {
         }, 600);
     },
 
- 
+
     initReaction() {
         const container = document.getElementById('flash-reaction');
         const bg = document.getElementById('reaction-bg');
@@ -9616,7 +9850,7 @@ const FlashApp = {
 
         if (container) container.style.display = 'flex';
 
-       
+
         if (bg) bg.className = 'absolute inset-0 transition-colors duration-200 bg-red-900/50';
         if (icon) icon.innerText = '⚠️';
         if (text) text.innerText = 'WAIT...';
@@ -9625,13 +9859,13 @@ const FlashApp = {
 
         if (this.sfx.wait) this.sfx.wait.play().catch(() => { });
 
-        
+
         const delay = Math.random() * 4000 + 2000;
 
         this.state.reactionTimeout = setTimeout(() => {
             if (!this.state.active) return;
 
-            
+
             this.reactionState = 'go';
             this.state.startTime = Date.now();
 
@@ -9650,17 +9884,17 @@ const FlashApp = {
         if (!this.state.active || this.state.mode !== 'reaction') return;
 
         if (this.reactionState === 'waiting') {
-           
+
             if (this.sfx.fail) this.sfx.fail.play().catch(() => { });
             if (this.sfx.wait) this.sfx.wait.pause();
             clearTimeout(this.state.reactionTimeout);
 
             const txt = document.getElementById('reaction-text');
             if (txt) txt.innerText = "TOO SOON!";
-            this.state.score = 0; 
+            this.state.score = 0;
             setTimeout(() => this.stopGame(), 1000);
         } else if (this.reactionState === 'go') {
-         
+
             const reactionTime = Date.now() - this.state.startTime;
             this.state.score = reactionTime;
             if (this.sfx.success) this.sfx.success.play().catch(() => { });

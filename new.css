@@ -1,8 +1,16 @@
 :root {
-    --glass-bg: rgba(255, 255, 255, 0.75);
-    --glass-border: rgba(255, 255, 255, 0.4);
-    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-    --dock-bg: rgba(255, 255, 255, 0.3);
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+    --dock-bg: rgba(15, 23, 42, 0.6);
+
+    --neon-pink: #ec4899;
+    --neon-purple: #8b5cf6;
+    --neon-blue: #3b82f6;
+
+    --glow-pink: 0 0 15px rgba(236, 72, 153, 0.6);
+    --glow-purple: 0 0 15px rgba(139, 92, 246, 0.6);
+    --glow-blue: 0 0 15px rgba(59, 130, 246, 0.6);
 }
 
 body {
@@ -15,7 +23,27 @@ body {
     cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='8' cy='8' r='4' fill='white' style='filter: drop-shadow(0 0 2px rgba(255,255,255,0.8));'/></svg>") 8 8, auto;
 
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+    scrollbar-color: var(--neon-purple) transparent;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--neon-purple);
+    border-radius: 10px;
+    box-shadow: 0 0 10px var(--neon-purple);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-pink);
+    box-shadow: 0 0 15px var(--neon-pink);
 }
 
 #desktop {
@@ -129,16 +157,26 @@ body {
 }
 
 .desktop-icon:hover {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    transform: scale(1.1);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    background: rgba(139, 92, 246, 0.15);
+    backdrop-filter: blur(12px);
+    transform: scale(1.08) translateY(-5px);
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(139, 92, 246, 0.3),
+        inset 0 0 15px rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.4);
 }
 
 .icon-img {
     font-size: 42px;
     margin-bottom: 6px;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.desktop-icon:hover .icon-img {
+    filter: drop-shadow(0 0 12px var(--neon-purple));
+    transform: scale(1.1);
 }
 
 .icon-label {
@@ -437,15 +475,19 @@ body {
 
 .window {
     position: absolute;
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 14px;
-    box-shadow: var(--glass-shadow), 0 0 0 1px var(--glass-border);
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 12px;
+    box-shadow:
+        var(--glass-shadow),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 0 25px rgba(139, 92, 246, 0.15);
     display: flex;
     flex-direction: column;
     min-width: 300px;
     min-height: 200px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
         opacity 0.3s ease,
@@ -498,12 +540,12 @@ body {
 
 .title-bar {
     height: 38px;
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.03);
     display: flex;
     align-items: center;
     padding: 0 14px;
     cursor: grab;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     flex-shrink: 0;
 }
 
@@ -625,7 +667,7 @@ body {
 
 #dock {
     background: var(--dock-bg);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     border-radius: 24px;
@@ -633,7 +675,9 @@ body {
     display: flex;
     gap: 14px;
     align-items: flex-end;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(139, 92, 246, 0.2);
     pointer-events: auto;
     transform-origin: bottom;
     transform: translateY(150%);
@@ -780,29 +824,7 @@ body {
     }
 }
 
-* {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
-}
-
-::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
-}
-
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    transition: background 0.2s;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.2);
-}
+/* Global Scrollbar managed in :root */
 
 .window.dark ::-webkit-scrollbar-thumb,
 .dark-mode ::-webkit-scrollbar-thumb {
@@ -1110,21 +1132,26 @@ body {
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(37, 99, 235, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
-    background-size: 50px 50px;
-    mask-image: radial-gradient(circle at center, black, transparent 80%);
+        linear-gradient(rgba(59, 130, 246, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.12) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(circle at center, black, transparent 90%);
 }
 
 .scan-beam {
     position: absolute;
     top: 0;
     left: -100%;
-    width: 50%;
+    width: 60%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.05), transparent);
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(139, 92, 246, 0.08),
+            rgba(59, 130, 246, 0.15),
+            rgba(139, 92, 246, 0.08),
+            transparent);
     transform: skewX(-20deg);
-    animation: scanBeam 8s infinite linear;
+    animation: scanBeam 6s infinite linear;
 }
 
 @keyframes scanBeam {
@@ -1142,18 +1169,44 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.3));
+    filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.4));
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
+.holographic-text {
+    background: linear-gradient(45deg,
+            #3b82f6,
+            #8b5cf6,
+            #ec4899,
+            #3b82f6);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: holo-shift 4s linear infinite;
+    filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.5));
+}
 
+.neon-text-blue {
+    color: #fff;
+    text-shadow:
+        0 0 7px #fff,
+        0 0 10px #3b82f6,
+        0 0 21px #3b82f6,
+        0 0 42px #3b82f6;
+}
+
+.neon-text-purple {
+    color: #fff;
+    text-shadow:
+        0 0 7px #fff,
+        0 0 10px #8b5cf6,
+        0 0 21px #8b5cf6,
+        0 0 42px #8b5cf6;
+}
+
+@keyframes holo-shift {
     to {
-        opacity: 1;
-        transform: translateY(0);
+        background-position: 200% center;
     }
 }
 
@@ -1212,12 +1265,13 @@ body {
     top: 0;
     width: 100%;
     height: 32px;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(15, 23, 42, 0.8);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     display: flex;
     flex-direction: row !important;
-
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
@@ -5526,7 +5580,7 @@ body {
     box-shadow: 0 0 10px #f97316, 0 0 20px #fde047;
     animation: flicker 1s infinite alternate;
     transform-origin: center bottom;
-    pointer-events: none;
+    pointer-events: auto;
 }
 
 .flame.blown {

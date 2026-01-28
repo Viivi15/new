@@ -69,7 +69,7 @@
             <div
                 class="countdown-container p-14 rounded-[40px] backdrop-blur-3xl shadow-2xl flex flex-col items-center">
                 <div id="countdown-display"
-                    class="text-6xl md:text-7xl font-thin font-mono tracking-[0.1em] text-white/90">
+                    class="text-6xl md:text-7xl font-thin font-mono tracking-[0.1em] text-white/90 neon-text-blue">
                     --d --h --m --s</div>
 
                 <div class="relative w-[300px] md:w-[400px] h-[2px] bg-white/5 mt-12 rounded-full overflow-hidden">
@@ -87,18 +87,18 @@
                 <button onclick="skipCountdown()"
                     class="group relative px-12 py-3 overflow-hidden rounded-full transition-all duration-500 hover:scale-105 active:scale-95">
                     <div
-                        class="absolute inset-0 bg-white/[0.02] border border-white/5 group-hover:bg-white/[0.05] transition-colors">
+                        class="absolute inset-0 bg-blue-500/[0.02] border border-blue-500/20 group-hover:bg-blue-500/[0.08] group-hover:border-blue-400/40 transition-all duration-300">
                     </div>
                     <span
-                        class="relative text-[10px] tracking-[0.4em] uppercase font-bold text-white/30 group-hover:text-blue-200 transition-colors">Bypass</span>
+                        class="relative text-[10px] tracking-[0.4em] uppercase font-bold text-white/30 group-hover:text-blue-200 group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)] transition-colors">Bypass</span>
                 </button>
                 <button onclick="goToDesktop()"
                     class="group relative px-12 py-3 overflow-hidden rounded-full transition-all duration-500 hover:scale-105 active:scale-95">
                     <div
-                        class="absolute inset-0 bg-white/[0.02] border border-white/5 group-hover:bg-white/[0.05] transition-colors">
+                        class="absolute inset-0 bg-purple-500/[0.02] border border-purple-500/20 group-hover:bg-purple-500/[0.08] group-hover:border-purple-400/40 transition-all duration-300">
                     </div>
                     <span
-                        class="relative text-[10px] tracking-[0.4em] uppercase font-bold text-white/30 group-hover:text-blue-200 transition-colors">Desktop</span>
+                        class="relative text-[10px] tracking-[0.4em] uppercase font-bold text-white/30 group-hover:text-purple-200 group-hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.5)] transition-colors">Desktop</span>
                 </button>
                 <button onclick="test1221EasterEgg()"
                     class="group relative px-8 py-3 overflow-hidden rounded-full transition-all duration-500 hover:scale-105 active:scale-95">
@@ -133,11 +133,13 @@
             <p class="text-2xl font-serif text-white mb-12 animate-bounce">Harshit...Close your eyes and make a wish you
                 wish to come true </p>
 
-            <div class="cake-container relative cursor-pointer" onclick="blowCandle()" title="Click to blow!">
+            <div class="cake-container relative" title="Click individual candles to blow!">
                 <div class="candles-container">
-                    <div class="candle-num">1<div class="flame"></div>
+                    <div class="candle-num cursor-pointer" onclick="blowIndividualCandle(this.querySelector('.flame'))">
+                        1<div class="flame"></div>
                     </div>
-                    <div class="candle-num">9<div class="flame"></div>
+                    <div class="candle-num cursor-pointer" onclick="blowIndividualCandle(this.querySelector('.flame'))">
+                        9<div class="flame"></div>
                     </div>
                 </div>
 
@@ -301,6 +303,7 @@
                     <img src="assets/icons/app_brand.png" alt="logo"
                         style="width: 20px; height: 20px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));">
                 </div>
+
                 <div id="apple-menu"
                     class="absolute top-8 left-0 w-56 bg-[rgba(30,30,30,0.9)] backdrop-blur-xl rounded-lg border border-white/10 shadow-xl hidden flex-col py-1.5 z-50 text-white/90 font-light">
                     <div class="px-3 py-1 hover:bg-blue-600 rounded mx-1 cursor-pointer" onclick="System.about()">About
