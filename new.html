@@ -284,6 +284,64 @@
         <div id="terminal-content"></div>
     </div>
 
+    <div id="password-screen"
+        class="fixed inset-0 z-[60000] bg-black flex flex-col items-center justify-center text-white hidden">
+        <div class="mb-8">
+            <h1 class="text-2xl font-serif tracking-widest text-center text-white/80">AUTHENTICATION REQUIRED</h1>
+            <p class="text-xs text-center text-white/40 font-mono mt-2">SECURE GATEWAY: Harshit OS</p>
+        </div>
+
+        <div class="relative">
+            <input type="password" id="login-password"
+                class="bg-transparent border-b-2 border-white/20 text-center text-3xl font-mono tracking-[0.5em] w-64 py-2 outline-none focus:border-blue-500 transition-colors text-white"
+                placeholder="****" maxlength="4" autocomplete="off" onkeydown="if(event.key === 'Enter') checkLogin()">
+            <div id="login-error"
+                class="absolute -bottom-8 left-0 w-full text-center text-red-400 text-xs font-mono tracking-wider opacity-0 transition-opacity">
+                ACCESS DENIED
+            </div>
+        </div>
+
+        <button onclick="checkLogin()"
+            class="mt-12 px-8 py-2 bg-white/10 hover:bg-white/20 rounded-full text-xs uppercase tracking-widest transition border border-white/10 text-white/60 hover:text-white">
+            Enter System
+        </button>
+    </div>
+
+    <div id="login-screen"
+        style="background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=2069'); background-size: cover; background-position: center;"
+        class="fixed inset-0 z-[60000] flex flex-col items-center justify-center text-white hidden opacity-0 transition-opacity duration-700">
+        <!-- Overlay for better text readability -->
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-xl"></div>
+
+        <div class="flex flex-col items-center gap-6 fade-in-up relative z-10">
+            <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl relative">
+                <div class="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/20"></div>
+                <img src="assets/images/user_avatar_new.png"
+                    onerror="this.src='https://ui-avatars.com/api/?name=H&background=0d9488&color=fff&size=128'"
+                    class="w-full h-full object-cover">
+            </div>
+            <div class="text-3xl font-serif font-bold tracking-wide drop-shadow-md">Harshit</div>
+
+            <div class="relative group mt-2">
+                <input type="password" id="desktop-password"
+                    class="bg-white/5 border border-white/10 rounded-full px-6 py-3 w-72 text-center text-white placeholder-white/30 focus:outline-none focus:bg-white/10 focus:border-white/30 transition-all duration-300 backdrop-blur-md shadow-inner text-lg letter-spacing-widest"
+                    placeholder="Enter Password" onkeydown="if(event.key === 'Enter') checkDesktopPassword()">
+                <div class="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-white/40 hover:text-white transition transform hover:scale-110"
+                    onclick="checkDesktopPassword()">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <p id="login-msg"
+                class="h-6 text-sm text-rose-400 opacity-0 transition-opacity font-light tracking-wider mt-2">Incorrect
+                Password</p>
+
+            <div class="absolute bottom-12 text-center">
+                <p class="text-[10px] text-white/20 tracking-[0.5em] uppercase font-mono">V-Space Protected</p>
+            </div>
+        </div>
+    </div>
+
     <div id="desktop-bg"></div>
 
     <audio id="bg-music" loop>

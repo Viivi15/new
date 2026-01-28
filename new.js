@@ -3382,6 +3382,53 @@ function finishBirthdaySequence() {
 
 
 
+window.showPasswordScreen = function () {
+    const screen = document.getElementById('login-screen');
+    const input = document.getElementById('desktop-password');
+    if (screen) {
+        screen.classList.remove('hidden');
+        screen.style.display = 'flex';
+        // Force reflow
+        void screen.offsetWidth;
+        setTimeout(() => screen.style.opacity = 1, 50);
+        if (input) setTimeout(() => input.focus(), 100);
+    } else {
+        enterDesktop();
+    }
+};
+
+window.checkDesktopPassword = function () {
+    const input = document.getElementById('desktop-password');
+    const error = document.getElementById('login-msg');
+
+    if (input && input.value === '3015') {
+        const screen = document.getElementById('login-screen');
+        if (screen) {
+            screen.style.transition = 'opacity 1s ease';
+            screen.style.opacity = 0;
+            setTimeout(() => {
+                screen.style.display = 'none';
+                enterDesktop();
+            }, 1000);
+        } else {
+            enterDesktop();
+        }
+    } else {
+        if (error) {
+            error.style.opacity = 1;
+            if (input) {
+                input.value = '';
+                // Shake animation
+                input.style.transform = "translateX(5px)";
+                setTimeout(() => input.style.transform = "translateX(-5px)", 50);
+                setTimeout(() => input.style.transform = "translateX(5px)", 100);
+                setTimeout(() => input.style.transform = "translateX(0)", 150);
+            }
+            setTimeout(() => error.style.opacity = 0, 2000);
+        }
+    }
+};
+
 window.runSystemBoot = function () {
     const boot = document.getElementById('boot-sequence');
     const intro = document.getElementById('journey-intro');
@@ -3398,11 +3445,11 @@ window.runSystemBoot = function () {
             boot.style.opacity = 0;
             setTimeout(() => {
                 boot.style.display = 'none';
-                enterDesktop();
+                showPasswordScreen();
             }, 1000);
         }, 6000);
     } else {
-        enterDesktop();
+        showPasswordScreen();
     }
 };
 
