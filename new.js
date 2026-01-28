@@ -7333,11 +7333,170 @@ window.closeLetter = function () {
             letter.classList.add('hidden');
             letter.style.display = 'none';
 
-
-            finishBirthdaySequence();
+            // Instead of finishBirthdaySequence, start the gifts phase
+            startGiftsPhase();
         }, 1000);
     }
 };
+
+/* --- Gifts Phase Logic --- */
+const giftsData = [
+    {
+        id: 'earpods',
+        title: 'Earpods',
+        emoji: '🎧',
+        img: 'assets/images/gift_earpods.jpg',
+        quote: "“For music, silence, late nights, and when you need to tune the world out.”"
+    },
+    {
+        id: 'keychain',
+        title: 'Keychain',
+        emoji: '🔑',
+        img: 'assets/images/gift_keychain.jpg',
+        quote: "“No matter where you go, a small piece of us goes with you.”"
+    },
+    {
+        id: 'bottle',
+        title: 'Water Bottle',
+        emoji: '💧',
+        img: 'assets/images/gift_bottle.jpg',
+        quote: "“A reminder to take care of yourself...Paani pite rehena”"
+    },
+    {
+        id: 'hoodie-1',
+        title: 'Hoodie',
+        emoji: '🧥',
+        img: 'assets/images/gift_hoodie_dark.jpg',
+        quote: "“Your cozy shield against the world, for all the times you need a hug.”"
+    },
+    {
+        id: 'hoodie-2',
+        title: 'Vintage Hoodie',
+        emoji: '✨',
+        img: 'assets/images/gift_hoodie_vintage.jpg',
+        quote: "“Wrapped in warmth, even when I'm not around. Keep it vintage, keep it real.”"
+    }
+];
+
+let openedGifts = new Set();
+
+function startGiftsPhase() {
+    const overlay = document.getElementById('gifts-overlay');
+    if (!overlay) return;
+
+    overlay.classList.remove('hidden');
+    overlay.style.display = 'flex';
+    setTimeout(() => overlay.style.opacity = '1', 100);
+
+    renderGifts();
+    initGiftsParticles();
+}
+
+function renderGifts() {
+    const container = document.getElementById('gift-selector');
+    if (!container) return;
+
+    container.innerHTML = giftsData.map((gift, index) => `
+        <div class="gift-box-item ${openedGifts.has(gift.id) ? 'opened' : ''}" 
+             onclick="revealGift('${gift.id}')" 
+             style="animation-delay: ${index * 200}ms">
+            <div class="gift-box-inner group">
+                ${gift.emoji}
+                <div class="gift-status-dot"></div>
+                <!-- Tooltip -->
+                <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 text-[10px] text-white/40 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                    ${gift.title}
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function revealGift(id) {
+    const gift = giftsData.find(g => g.id === id);
+    if (!gift) return;
+
+    const focus = document.getElementById('gift-focus');
+    const img = document.getElementById('focus-img');
+    const title = document.getElementById('focus-title');
+    const desc = document.getElementById('focus-desc');
+
+    img.src = gift.img;
+    title.innerText = gift.title;
+    desc.innerHTML = ''; // Clear for typewriter
+
+    focus.classList.remove('hidden');
+    focus.classList.add('visible');
+
+    // Typewriter effect
+    let i = 0;
+    const speed = 40;
+    function type() {
+        if (i < gift.quote.length) {
+            desc.innerHTML += gift.quote.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        } else {
+            desc.innerHTML += '<span class="line-cursor"></span>';
+        }
+    }
+    setTimeout(type, 600);
+
+    openedGifts.add(id);
+    renderGifts();
+
+    // Show continue button if all gifts opened
+    if (openedGifts.size === giftsData.length) {
+        const btn = document.getElementById('gifts-continue-btn');
+        btn.classList.add('visible');
+        btn.style.opacity = '1';
+        btn.style.transform = 'translateY(0)';
+        btn.style.pointerEvents = 'auto';
+    }
+}
+
+window.closeGiftFocus = function () {
+    const focus = document.getElementById('gift-focus');
+    focus.classList.add('hidden');
+    focus.classList.remove('visible');
+};
+
+window.finishGiftsPhase = function () {
+    const overlay = document.getElementById('gifts-overlay');
+    overlay.style.opacity = '0';
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        finishBirthdaySequence();
+    }, 1000);
+};
+
+function initGiftsParticles() {
+    const container = document.getElementById('gifts-particles');
+    if (!container) return;
+
+    for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.className = 'gift-particle';
+        const size = Math.random() * 3 + 1;
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.top = Math.random() * 100 + '%';
+
+        const duration = 10 + Math.random() * 20;
+        p.animate([
+            { transform: 'translateY(0) rotate(0deg)', opacity: 0 },
+            { transform: 'translateY(-100vh) rotate(360deg)', opacity: 0.5 },
+            { transform: 'translateY(-200vh) rotate(720deg)', opacity: 0 }
+        ], {
+            duration: duration * 1000,
+            iterations: Infinity,
+            delay: -Math.random() * 20000
+        });
+
+        container.appendChild(p);
+    }
+}
 
 
 function setupAccessibility() {
