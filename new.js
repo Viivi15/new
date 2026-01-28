@@ -3831,7 +3831,7 @@ function playFirstConversation(container) {
             const preview = document.createElement('div');
             preview.className = 'chat-media-preview';
             preview.style.width = '100%';
-            preview.innerHTML = `<iframe style="border-radius:12px" src="${msg.text.replace('open.spotify.com/', 'open.spotify.com/embed/')}" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+            preview.innerHTML = `<iframe style="border-radius:12px" src="${msg.text.replace('open.spotify.com/', 'open.spotify.com/embed/')}" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
             bubble.appendChild(preview);
         }
 
@@ -5559,9 +5559,10 @@ function initWeather() {
 
 const System = {
     about: () => {
-
         const id = 'sys-about-win';
         if (document.getElementById(id)) return;
+
+        let updateClicks = 0;
 
         const win = document.createElement('div');
         win.id = id;
@@ -5585,7 +5586,7 @@ const System = {
             <div class="p-6 flex flex-col items-center justify-center text-center">
                 <div class="text-6xl mb-4">🍎</div> 
                 <h2 class="text-2xl font-bold text-gray-800">V-Space</h2>
-                <p class="text-sm text-gray-500 font-medium mb-4">Version 19.0 (Best Edition)</p>
+                <p id="system-version-info" class="text-sm text-gray-500 font-medium mb-4 cursor-pointer select-none">Version 19.0 (Best Edition)</p>
                 <div class="bg-white rounded border border-gray-300 p-3 w-full text-xs text-left shadow-inner space-y-1">
                     <div class="flex justify-between"><span class="text-gray-500">Processor</span> <span class="font-medium">Heart M1 (Infinite Love)</span></div>
                     <div class="flex justify-between"><span class="text-gray-500">Memory</span> <span class="font-medium">Unforgettable</span></div>
@@ -5596,6 +5597,17 @@ const System = {
             </div>
         `;
         document.body.appendChild(win);
+
+        const verText = win.querySelector('#system-version-info');
+        if (verText) {
+            verText.onclick = () => {
+                updateClicks++;
+                if (updateClicks >= 5) {
+                    document.getElementById(id).remove();
+                    triggerSystemUpdate(true);
+                }
+            };
+        }
     },
 
     settings: () => {
@@ -8682,7 +8694,7 @@ const NotificationDatabase = {
             minutes: 60,
             title: '💭 System Check-In',
             body: 'Just checking in. No reason, just wanted to see how you are.',
-            emoji: 'ðŸ’™',
+            emoji: '💙',
             action: () => showCheckInMessage()
         }
     ],
@@ -8857,7 +8869,7 @@ const NotificationTracker = {
 
 
 function initNotificationSystem() {
-    console.log('%c[Notification System] ðŸ’Œ Initializing...', 'color: #ec4899; font-weight: bold;');
+    console.log('%c[Notification System] 💌 Initializing...', 'color: #ec4899; font-weight: bold;');
 
 
     setInterval(check1221EasterEgg, 60000);
@@ -8896,7 +8908,7 @@ function initNotificationSystem() {
 
     scheduleNextFunNotif();
 
-    console.log('%c[Notification System] âœ… Ready to care for you', 'color: #10b981; font-weight: bold;');
+    console.log('%c[Notification System] ✅ Ready to care for you', 'color: #10b981; font-weight: bold;');
 }
 
 function check1221EasterEgg() {
@@ -8916,8 +8928,8 @@ function check1221EasterEgg() {
 function show1221Notification() {
     const notification = {
         id: '1221-easter-egg',
-        title: 'ðŸŒ™ 12:21 AM - The Time It All Started',
-        body: 'Some moments last forever. âœ¨\n\nJune 20, 2024 â€¢ 12:21 AM\nA conversation began.',
+        title: '🌙 12:21 AM - The Time It All Started',
+        body: 'Some moments last forever. ✨\n\nJune 20, 2024 • 12:21 AM\nA conversation began.',
         emoji: 'â°',
         action: () => {
             if (typeof Apps !== 'undefined') {
@@ -9525,6 +9537,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (desktop && window.getComputedStyle(desktop).display !== 'none') {
             clearInterval(checkDesktop);
             setTimeout(initNotificationSystem, 3000);
+            setTimeout(checkForSystemUpdates, 5000);
         }
     }, 500);
 });
@@ -10108,3 +10121,182 @@ const FlashApp = {
         }
     }
 };
+// --- Harshit OS v20.0 (The Future Update) Logic ---
+
+function checkForSystemUpdates() {
+    const now = new Date();
+    const updateDate = new Date(2027, 0, 30); // Jan 30, 2027
+
+    // Check if v20 has already been installed in this browser
+    if (localStorage.getItem('v20_installed')) {
+        start2027BirthdaySurprise(true); // Skip update, go straight to surprise
+        return;
+    }
+
+    // If it's on or after Jan 30, 2027
+    if (now >= updateDate) {
+        triggerSystemUpdate();
+    }
+}
+
+function triggerSystemUpdate(isForced = false) {
+    displayNotification({
+        title: ' System Update',
+        body: 'Harshit OS v20.0 is available! Click to install.',
+        emoji: '',
+        action: () => {
+            openUpdateWindow();
+        }
+    }, true); // isSpecial = true ensures it doesn't auto-dismiss too fast
+
+    if (isForced) {
+        setTimeout(openUpdateWindow, 500);
+    }
+}
+
+function openUpdateWindow() {
+    const overlay = document.getElementById('update-modal-overlay');
+    const box = document.getElementById('update-modal-box');
+    if (overlay && box) {
+        overlay.classList.add('active');
+        overlay.classList.remove('hidden');
+        setTimeout(() => {
+            overlay.style.opacity = '1';
+            box.style.transform = 'scale(1)';
+        }, 10);
+    }
+}
+
+function closeUpdateWindow() {
+    const overlay = document.getElementById('update-modal-overlay');
+    const box = document.getElementById('update-modal-box');
+    if (overlay && box) {
+        overlay.style.opacity = '0';
+        box.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+            overlay.classList.remove('active');
+        }, 500);
+    }
+}
+
+function startUpdateInstallation() {
+    const btn = document.getElementById('install-update-btn');
+    const progressContainer = document.getElementById('update-progress-container');
+    const progressBar = document.getElementById('update-progress-bar');
+    const statusText = document.getElementById('update-status');
+    const percentText = document.getElementById('update-percent');
+
+    if (btn) btn.style.display = 'none';
+    if (progressContainer) progressContainer.classList.remove('hidden');
+
+    const steps = [
+        { p: 10, t: "Initializing download..." },
+        { p: 25, t: "Downloading Future Memories..." },
+        { p: 45, t: "Extracting Secret Files..." },
+        { p: 70, t: "Patching Core Emotions..." },
+        { p: 90, t: "Optimizing 2027 Birthday Sequence..." },
+        { p: 100, t: "Finalizing..." }
+    ];
+
+    let currentStep = 0;
+    const interval = setInterval(() => {
+        if (currentStep < steps.length) {
+            const s = steps[currentStep];
+            if (progressBar) progressBar.style.width = s.p + '%';
+            if (statusText) statusText.innerText = s.t;
+            if (percentText) percentText.innerText = s.p + '%';
+            currentStep++;
+        } else {
+            clearInterval(interval);
+            setTimeout(finishUpdate, 800);
+        }
+    }, 1200);
+}
+
+function finishUpdate() {
+    closeUpdateWindow();
+
+    // Restart sequence
+    const restart = document.createElement('div');
+    restart.className = 'restart-screen animate-fade-in';
+    restart.innerHTML = `
+        <div class="glitch-static absolute inset-0"></div>
+        <div class="text-4xl animate-spin mb-6"><i class="fas fa-spinner"></i></div>
+        <div class="text-xl font-bold tracking-[0.3em] mb-4 font-mono text-white">RESTARTING...</div>
+        <div class="update-log font-mono">
+            <div>> Updating kernel... [DONE]</div>
+            <div>> Verifying memory integrity... [DONE]</div>
+            <div>> Loading Harshit OS v20.0... [DONE]</div>
+            <div>> Initialising Future.exe...</div>
+        </div>
+    `;
+    document.body.appendChild(restart);
+
+    setTimeout(() => {
+        restart.classList.add('opacity-0');
+        restart.style.transition = 'opacity 1s';
+        setTimeout(() => {
+            restart.remove();
+            localStorage.setItem('v20_installed', 'true');
+            start2027BirthdaySurprise();
+        }, 1000);
+    }, 5000);
+}
+
+function start2027BirthdaySurprise(immediate = false) {
+    if (immediate) {
+        const desktop = document.getElementById('desktop');
+        const countdown = document.getElementById('countdown-phase');
+        const boot = document.getElementById('boot-sequence');
+        const intro = document.getElementById('birthday-intro');
+        if (desktop) desktop.style.display = 'none';
+        if (countdown) countdown.style.display = 'none';
+        if (boot) boot.style.display = 'none';
+        if (intro) intro.style.display = 'none';
+    }
+
+    const futureWish = document.createElement('div');
+    futureWish.className = 'future-wish-container animate-fade-in';
+    futureWish.innerHTML = `
+        <div class="glitch-static absolute inset-0"></div>
+        <div class="relative z-10 flex flex-col items-center max-w-2xl px-6">
+            <div class="text-[10px] tracking-[0.8em] text-blue-400 uppercase mb-8 font-mono animate-pulse">Frequency: Jan 30, 2027</div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-8 hologram-text font-serif italic text-center text-white">Happy Birthday, Harshit.</h1>
+            <div class="w-24 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mb-12"></div>
+            
+            <div id="future-message-box" class="space-y-6 text-lg md:text-xl text-blue-100/90 font-light leading-relaxed font-serif text-center">
+                <p class="opacity-0 transform translate-y-4 transition-all duration-1000" id="fm-1">We successfully made it to 2027.</p>
+                <p class="opacity-0 transform translate-y-4 transition-all duration-1000" id="fm-2">Think back to Jan 30, 2026 — exactly one year ago.</p>
+                <p class="opacity-0 transform translate-y-4 transition-all duration-1000" id="fm-3">I wrote this message for you back then, knowing that no matter where time took us, I'd still want to be here wishing you the best.</p>
+                <p class="opacity-0 transform translate-y-4 transition-all duration-1000" id="fm-4">You're a year older, definitely still as annoying (kidding), but also more incredible.</p>
+                <p class="opacity-0 transform translate-y-4 transition-all duration-1000" id="fm-5">Happy Birthday, Harshit OS v20.0. This space evolved with us.</p>
+                <p class="opacity-0 transform translate-y-4 transition-all duration-1000 text-3xl font-bold hologram-text mt-12 text-white" id="fm-6">❤️ Shravii</p>
+            </div>
+
+            <button onclick="localStorage.removeItem('v20_installed'); location.reload()" class="mt-16 px-10 py-3 border border-blue-400/30 text-blue-300 text-[10px] uppercase tracking-[0.4em] font-bold rounded-full hover:bg-blue-400/10 transition-all opacity-0 transform translate-y-4" id="fm-btn">Reload Original System</button>
+        </div>
+    `;
+    document.body.appendChild(futureWish);
+
+    const timing = [1000, 3500, 7000, 11000, 15000, 19000];
+    for (let i = 1; i <= 6; i++) {
+        setTimeout(() => {
+            const el = document.getElementById('fm-' + i);
+            if (el) {
+                el.classList.remove('opacity-0', 'translate-y-4');
+            }
+        }, timing[i - 1]);
+    }
+
+    setTimeout(() => {
+        const btn = document.getElementById('fm-btn');
+        if (btn) btn.classList.remove('opacity-0', 'translate-y-4');
+    }, 21000);
+
+    if (typeof fireConfetti === 'function') {
+        fireConfetti();
+        setTimeout(fireConfetti, 2000);
+        setTimeout(fireConfetti, 4000);
+    }
+}
