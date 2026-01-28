@@ -1019,11 +1019,6 @@ const apps = [
                         <p>Gentle, alert, emotionally sensitive. Needs safety to show softness.</p>
                     </div>
                     <div class="facts-alias-card">
-                        <div class="facts-alias-icon">🐭</div>
-                        <h3>Mr. Chuha</h3>
-                        <p>Soft, cute, unintentionally endearing. (Don't tell him I said this).</p>
-                    </div>
-                    <div class="facts-alias-card">
                         <div class="facts-alias-icon">🎮</div>
                         <h3>Mr. Ota</h3>
                         <p>Teasing, playful. Built entirely from inside jokes.</p>
@@ -6825,7 +6820,6 @@ function showNotification(title, body) {
 
 const truthData = [
     { title: "First Meet", tags: ["start"], content: "June 20, 2024. 12:21 AM.<br>You asked 'is anyone watching euros?'.<br>I asked 'Where ya from Harry?'.<br>And so it began." },
-    { title: "Mr. Chuha", tags: ["funny", "names"], content: "You told me your front teeth used to slightly protrude.<br>I called you 'Mr. Chuha'.<br>You didn't get mad. You owned it. 🐭" },
     { title: "The Promise", tags: ["emotional"], content: "I tried to push you away.<br>You said: 'You don't have any IRL friends so I'm not leaving DC.'<br>Stubborn. But I needed that." },
     { title: "The Poem", tags: ["birthday"], content: "For my birthday, you wrote a poem.<br>You tried to time it perfectly letter-by-letter for 12:00 AM.<br>Your math failed (ended at 11:59).<br>But it was perfect. ✨" },
     { title: "Mumbai Detective", tags: ["smart"], content: "I said 'Cream building, blue benches'.<br>You found L.R. Tiwari College of Engineering.<br>Stalker? Maybe. <br>Impressed? Yes." },
