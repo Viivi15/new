@@ -43,7 +43,7 @@ Emotional and sentimental content.
 ### 🕹️ Unstable Features (Folder)
 Fun, games, and chaotic elements.
 - **Rabbit Runner**: A custom mini-game.
-- **The Us Quiz / Who Are You?**: Personality and friendship quizzes.
+
 - **Radio Harshit**: Custom station.
 - **Bangalore Network**: WiFi tools.
 

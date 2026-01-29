@@ -293,181 +293,7 @@ const journeyData = [
 
 const state = { appsOpened: new Set(), countdownFinished: false, vaultUnlockAttempts: 0, birthdaySequenceStarted: false };
 
-const RabbitSquad = {
-    rabbits: [],
-    bounds: { w: 600, h: 500 },
-    carrots: [],
 
-    init() {
-        const den = document.getElementById('rabbit-den');
-        if (!den) return;
-        this.bounds.w = den.offsetWidth;
-        this.bounds.h = den.offsetHeight;
-        this.assemble();
-    },
-
-    createRabbit(type) {
-        const field = document.getElementById('rabbit-field');
-        if (!field) return;
-
-        const el = document.createElement('div');
-        el.className = 'bun-item ' + type.cls;
-        el.innerHTML = `
-            <div class="bun-inner relative group">
-                <div class="text-5xl drop-shadow-lg transform transition-transform duration-300 group-hover:-translate-y-2">${type.emoji}</div>
-                <div class="bun-badge absolute -bottom-2 left-1/2 -translate-x-1/2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full backdrop-blur-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">${type.role}</div>
-                <div class="bun-msg">${type.msg}</div>
-            </div>
-        `;
-
-        const x = Math.random() * (this.bounds.w - 100) + 20;
-        const y = Math.random() * (this.bounds.h - 150) + 80;
-
-        el.style.left = x + 'px';
-        el.style.top = y + 'px';
-
-
-        el.onclick = () => {
-            el.classList.add('talking');
-            if (type.action) type.action(el);
-            setTimeout(() => el.classList.remove('talking'), 2500);
-        };
-
-        const rabbit = { el, type, x, y, state: 'idle', moveInt: null };
-
-
-        rabbit.moveInt = setInterval(() => this.updateRabbit(rabbit), 2000 + Math.random() * 1000);
-
-        field.appendChild(el);
-        this.rabbits.push(rabbit);
-    },
-
-    updateRabbit(rabbit) {
-        if (rabbit.state === 'sleeping') {
-            rabbit.el.querySelector('.bun-inner').innerHTML = `<div class="text-5xl hue-rotate-15">💤</div>`;
-            return;
-        }
-
-
-        const carrot = this.findNearestCarrot(rabbit);
-        if (carrot) {
-            rabbit.state = 'eating';
-            this.moveTo(rabbit, carrot.x, carrot.y);
-
-            if (this.getDistance(rabbit, carrot) < 30) {
-                this.removeCarrot(carrot);
-                rabbit.el.querySelector('.bun-msg').innerText = "Yum! 🥕";
-                rabbit.el.classList.add('talking');
-                setTimeout(() => rabbit.el.classList.remove('talking'), 1500);
-            }
-            return;
-        }
-
-
-        rabbit.state = 'idle';
-        const nx = Math.random() * (this.bounds.w - 100) + 20;
-        const ny = Math.random() * (this.bounds.h - 150) + 80;
-        this.moveTo(rabbit, nx, ny);
-    },
-
-    moveTo(rabbit, x, y) {
-        rabbit.el.style.transition = 'all 2s ease-in-out';
-        rabbit.el.style.left = x + 'px';
-        rabbit.el.style.top = y + 'px';
-        rabbit.x = x;
-        rabbit.y = y;
-    },
-
-    findNearestCarrot(rabbit) {
-        if (this.carrots.length === 0) return null;
-        return this.carrots.sort((a, b) => this.getDistance(rabbit, a) - this.getDistance(rabbit, b))[0];
-    },
-
-    getDistance(r1, r2) {
-        return Math.sqrt(Math.pow(r1.x - r2.x, 2) + Math.pow(r1.y - r2.y, 2));
-    },
-
-    assemble() {
-        this.clear();
-        const types = [
-            { id: 'cozy', role: 'The Softie', emoji: '🐰🧥', cls: 'bun-cozy', msg: 'I need a hoodie...', action: () => { } },
-            { id: 'snow', role: 'The Stoic', emoji: '🐰❄️', cls: 'bun-snow', msg: 'Cool as ice.', action: () => { } },
-            {
-                id: 'love', role: 'The Lover', emoji: '🐰🎀', cls: 'bun-love', msg: 'You matter! ❤️', action: (e) => {
-
-                    const h = mbCreate('div', 'absolute -top-6 left-1/2 -translate-x-1/2 text-xl animate-float-up', '❤️');
-                    e.appendChild(h);
-                    setTimeout(() => h.remove(), 1000);
-                }
-            }
-        ];
-
-        types.forEach(t => this.createRabbit(t));
-    },
-
-    celebrate() {
-        this.rabbits.forEach(r => {
-        });
-    },
-
-    stop() {
-        this.rabbits.forEach(r => clearInterval(r.moveInt));
-    },
-
-    napTime() {
-        this.rabbits.forEach(r => {
-            r.state = 'sleeping';
-            clearInterval(r.moveInt);
-
-            r.el.querySelector('.bun-inner').innerHTML = '<div class="text-4xl">🐰💤</div>';
-        });
-    },
-
-    feed() {
-        const field = document.getElementById('rabbit-field');
-        if (!field) return;
-
-        const x = Math.random() * (this.bounds.w - 100) + 50;
-        const y = Math.random() * (this.bounds.h - 100) + 50;
-
-        const carrotEl = document.createElement('div');
-        carrotEl.innerHTML = '🥕';
-        carrotEl.className = 'absolute text-2xl drop-shadow-md animate-bounce';
-        carrotEl.style.left = x + 'px';
-        carrotEl.style.top = y + 'px';
-
-        field.appendChild(carrotEl);
-
-        const carrotData = { x, y, el: carrotEl };
-        this.carrots.push(carrotData);
-
-
-        setTimeout(() => this.removeCarrot(carrotData), 10000);
-    },
-
-    removeCarrot(c) {
-        const idx = this.carrots.indexOf(c);
-        if (idx > -1) {
-            this.carrots.splice(idx, 1);
-            if (c.el && c.el.parentNode) c.el.remove();
-        }
-    },
-
-    clear() {
-        const field = document.getElementById('rabbit-field');
-        if (field) field.innerHTML = '';
-        this.rabbits.forEach(r => clearInterval(r.moveInt));
-        this.rabbits = [];
-        this.carrots = [];
-    }
-};
-
-function mbCreate(tag, cls, html) {
-    const d = document.createElement(tag);
-    if (cls) d.className = cls;
-    if (html) d.innerHTML = html;
-    return d;
-}
 
 
 function initMrSnowApp() {
@@ -670,9 +496,9 @@ const apps = [
             <div class="win-icon" onclick="Apps.open('thank-you')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_gratitude_new.png" alt="gratitude" style="width: 100%; height: 100%;"></div><div class="icon-label">Gratitude</div></div>
             <div class="win-icon" onclick="Apps.open('inkpot-new')"><div class="icon-img"><img src="assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;"></div><div class="icon-label">The Inkpot</div></div>
             <div class="win-icon" onclick="Apps.open('app-capsule')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_capsule_new.png" alt="capsule" style="width: 100%; height: 100%;"></div><div class="icon-label">Time Capsule</div></div>
-            <div class="win-icon" onclick="Apps.open('app-journal')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_journal_new.png" alt="journal" style="width: 100%; height: 100%;"></div><div class="icon-label">Our Story</div></div>
+
             <div class="win-icon" onclick="Apps.open('last-thing')"><div class="icon-img"><img src="assets/icons/app_rose.png" alt="last thing" style="width: 100%; height: 100%;"></div><div class="icon-label">One Last Thing</div></div>
-            <div class="win-icon" onclick="Apps.open('admire')"><div class="icon-img"><img src="assets/icons/app_truth_new.png" alt="truth" style="width: 100%; height: 100%;"></div><div class="icon-label">Deep Truths</div></div>
+
         </div>
     `},
 
@@ -680,18 +506,8 @@ const apps = [
         id: 'folder-fun', title: 'Unstable Features', icon: '<img src="assets/icons/folder_fun.png" alt="folder" style="filter: sepia(1) saturate(4) hue-rotate(50deg);">', dock: false, width: 800, height: 600, content: `
         <div class="folder-window-grid">
 
-            <div class="win-icon" onclick="Apps.open('flash')"><div class="icon-img"><img src="assets/icons/app_speed.png" alt="flash" style="width: 100%; height: 100%;"></div><div class="icon-label">Fastest<br>Alive</div></div>
-             <div class="win-icon" onclick="Apps.open('rabbit')"><div class="icon-img"><img src="assets/icons/app_rabbit_new.png" alt="rabbit" style="width: 100%; height: 100%;"></div><div class="icon-label">Rabbit<br>Mode</div></div>
-            <div class="win-icon" onclick="Apps.open('rabbit-runner')"><div class="icon-img"><img src="assets/icons/app_rabbit_new.png" alt="rabbit" style="width: 100%; height: 100%;"></div><div class="icon-label">Rabbit<br>Runner</div></div>
-            <div class="win-icon" onclick="Apps.open('word-spiral')"><div class="icon-img"><img src="assets/icons/app_spiral.png" alt="spiral" style="width: 100%; height: 100%;"></div><div class="icon-label">Word Spiral</div></div>
-            <div class="win-icon" onclick="Apps.open('the-path')"><div class="icon-img"><img src="assets/icons/app_path.png" alt="path" style="width: 100%; height: 100%;"></div><div class="icon-label">The Path</div></div>
-            <div class="win-icon" onclick="Apps.open('personality-quiz')"><div class="icon-img"><img src="assets/icons/app_us_quiz.png" alt="quiz" style="width: 100%; height: 100%;"></div><div class="icon-label">Who Are You?</div></div>
-             <div class="win-icon" onclick="Apps.open('radio-harshit')"><div class="icon-img"><img src="assets/icons/app_radio.png" alt="radio" style="filter: sepia(1) saturate(3) hue-rotate(300deg);"></div><div class="icon-label">Radio<br>Harshit</div></div>
-                <div class="win-icon" onclick="Apps.open('spotify')"><div class="icon-img"><img src="assets/icons/app_spotify.png" alt="spotify" style="filter: sepia(1) saturate(5) hue-rotate(100deg);"></div><div class="icon-label">Vibe Check</div></div>
+            <div class="win-icon" onclick="Apps.open('spotify')"><div class="icon-img"><img src="assets/icons/app_spotify.png" alt="spotify" style="filter: sepia(1) saturate(5) hue-rotate(100deg);"></div><div class="icon-label">Vibe Check</div></div>
 
-
-            <div class="win-icon" onclick="Apps.open('app-decision')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_decision_new.png" alt="decision" style="width: 100%; height: 100%;"></div><div class="icon-label">Decision<br>Helper</div></div>
-            <div class="win-icon" onclick="Apps.open('frequency-3015')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_radio.png" alt="frequency" style="width: 100%; height: 100%;"></div><div class="icon-label">Frequency<br>3015.exe</div></div>
         </div>
     `},
 
@@ -717,10 +533,7 @@ const apps = [
             <div id="vault-grid" class="hidden h-full p-8 overflow-y-auto custom-scroll">
                 <div class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6 border-b border-gray-700 pb-2">Vault Contents</div>
                 <div class="folder-window-grid">
-                     <div class="win-icon group" onclick="Apps.open('truth-archives')">
-                        <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_files.png" alt="archives" style="width: 100%; height: 100%;"></div>
-                        <div class="icon-label text-gray-300 group-hover:text-green-400">Truth Archives</div>
-                    </div>
+
                     <div class="win-icon group" onclick="Apps.open('map-of-us')">
                         <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_treasure.png" alt="map" style="width: 100%; height: 100%;"></div>
                         <div class="icon-label text-gray-300 group-hover:text-blue-400">Detail Map</div>
@@ -821,118 +634,7 @@ const apps = [
 
 
 
-    {
-        id: 'admire', title: 'Deep Truths', icon: '<img src="assets/icons/app_truth_new.png" alt="truth" style="width: 100%; height: 100%;">', dock: false, width: 900, height: 650, content: `
-        <div class="truth-container h-full p-8 flex flex-col relative overflow-hidden">
-            <!-- Background Elements -->
-             <div class="absolute top-[-50%] left-[-20%] w-[150%] h-[150%] bg-gradient-to-br from-slate-900 via-slate-800 to-black -z-20"></div>
-             <div class="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none animate-pulse"></div>
-             <div class="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-[80px] pointer-events-none"></div>
 
-            <div class="relative z-10 mb-8 border-b border-white/10 pb-4">
-                <h3 class="font-serif text-3xl text-white/90 tracking-wider">Verified Core Data</h3>
-                 <div class="text-[10px] text-emerald-400 uppercase tracking-[0.3em] mt-1 flex items-center gap-2">
-                    <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> System Integrity: 100%
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 z-10 overflow-y-auto custom-scroll pr-2 pb-4">
-                <!-- Card 1: Honesty -->
-                <div class="truth-card group" onclick="toggleTruth(this)">
-                    <div class="flex items-center gap-4 mb-2">
-                        <div class="truth-icon text-3xl filter drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]">💎</div>
-                        <div class="truth-header">
-                            <div class="font-bold text-white text-lg">Honesty</div>
-                            <div class="text-[10px] text-blue-300 uppercase tracking-widest">Status: Non-Negotiable</div>
-                        </div>
-                    </div>
-                    <div class="truth-details">
-                        <p>You don’t bend your values for convenience. If something feels wrong, you won’t pretend otherwise. Your honesty is quiet and steady — rooted in self-respect, even when it makes things harder.</p>
-                    </div>
-                </div>
-                
-                <!-- Card 2: Quiet Protection -->
-                <div class="truth-card group" onclick="toggleTruth(this)">
-                     <div class="flex items-center gap-4 mb-2">
-                        <div class="truth-icon text-3xl filter drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]">🛡️</div>
-                        <div class="truth-header">
-                            <div class="font-bold text-white text-lg">Quiet Protection</div>
-                            <div class="text-[10px] text-emerald-300 uppercase tracking-widest">Type: Always Watching</div>
-                        </div>
-                    </div>
-                     <div class="truth-details">
-                        <p>You protect without announcing it. You notice shifts in mood, pauses in words, the weight between lines. You step in gently — not to control, but to make sure things don’t fall apart.</p>
-                        <p style="margin-top: 10px; color: #a7f3d0; font-style: italic; opacity: 0.9;">"You handle me well, like a kid. You make me feel special, like a queen. You are always there to rescue me from thoughts that overcome me."</p>
-                    </div>
-                </div>
-
-                <!-- Card 3: Persistence -->
-                <div class="truth-card group" onclick="toggleTruth(this)">
-                     <div class="flex items-center gap-4 mb-2">
-                        <div class="truth-icon text-3xl filter drop-shadow-[0_0_10px_rgba(249,115,22,0.5)]">🔥</div>
-                        <div class="truth-header">
-                            <div class="font-bold text-white text-lg">Persistence</div>
-                            <div class="text-[10px] text-orange-300 uppercase tracking-widest">Energy: Engineered Endurance</div>
-                        </div>
-                    </div>
-                     <div class="truth-details">
-                        <p>You keep moving even when you’re exhausted. Even when no one’s watching. Your strength isn’t loud motivation — it’s discipline, showing up again and again, refusing to quit on yourself.</p>
-                    </div>
-                </div>
-
-                <!-- Card 4: Memory -->
-                <div class="truth-card group" onclick="toggleTruth(this)">
-                     <div class="flex items-center gap-4 mb-2">
-                        <div class="truth-icon text-3xl filter drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]">🧠</div>
-                        <div class="truth-header">
-                            <div class="font-bold text-white text-lg">Memory</div>
-                            <div class="text-[10px] text-purple-300 uppercase tracking-widest">Accuracy: Emotional + Logical</div>
-                        </div>
-                    </div>
-                     <div class="truth-details">
-                        <p>You remember details others dismiss — dates, phrases, patterns. Not to impress, but because when something matters to you, it stays stored permanently.</p>
-                         <p style="margin-top: 10px; color: #e9d5ff; font-style: italic; opacity: 0.9;">"You remember the small things. The passing comments, the hidden meanings, the dates. It shows how deeply you pay attention."</p>
-                    </div>
-                </div>
-                
-                 <!-- Card 5: Soft Core -->
-                <div class="truth-card group" onclick="toggleTruth(this)">
-                     <div class="flex items-center gap-4 mb-2">
-                        <div class="truth-icon text-3xl filter drop-shadow-[0_0_10px_rgba(244,63,94,0.5)]">💓</div>
-                        <div class="truth-header">
-                            <div class="font-bold text-white text-lg">Soft Core</div>
-                            <div class="text-[10px] text-rose-300 uppercase tracking-widest">State: Protected</div>
-                        </div>
-                    </div>
-                     <div class="truth-details">
-                        <p>You feel deeply, even if you don’t expose it easily. Your heart is careful — not cold. When you care, it’s intense, loyal, and lasting, even when you don’t say it out loud.</p>
-                    </div>
-                </div>
-
-                <!-- Card 6: The Listener -->
-                <div class="truth-card group" onclick="toggleTruth(this)">
-                     <div class="flex items-center gap-4 mb-2">
-                        <div class="truth-icon text-3xl">🎧</div>
-                        <div class="truth-header">
-                            <div class="font-bold text-white text-lg">The Listener</div>
-                            <div class="text-[10px] text-purple-300 uppercase">Input: Emotion</div>
-                        </div>
-                    </div>
-                     <div class="truth-details">
-                        <p>Music isn’t background noise for you. It’s how you process what words can’t hold — how you steady yourself, understand yourself, and sometimes say what you never will.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-auto border-t border-white/5 pt-4 flex justify-between items-end">
-                <div class="text-[9px] text-slate-500 font-mono">
-                    ID: 847-HK-TRUE<br>
-                    CLR: 
-                </div>
-                 <div class="text-xs text-slate-400 tracking-widest uppercase opacity-70 animate-pulse">Access Granted</div>
-            </div>
-        </div>
-    `},
 
     {
         id: 'facts', title: 'Harshit Facts.txt', icon: '<img src="assets/icons/app_facts.png" alt="facts" style="filter: hue-rotate(0deg);">', folder: 'system', dock: false, width: 800, height: 750, onOpen: startFactsApp, content: `
@@ -1130,189 +832,9 @@ const apps = [
     `},
 
 
-    {
-        id: 'flash', title: 'Fastest Alive', icon: '<img src="assets/icons/app_speed.png" alt="flash" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 900, height: 700, onOpen: () => FlashApp.init(), onClose: () => FlashApp.stopGameLoop(), content: `
-        <style>
-            @keyframes lightning-flash {
-                0%, 100% { opacity: 0; }
-                10%, 90% { opacity: 0; }
-                50% { opacity: 0.8; }
-            }
-            .speed-background {
-                background: linear-gradient(135deg, #7f1d1d, #b91c1c, #f59e0b);
-                background-size: 400% 400%;
-                animation: speed-bg 2s infinite linear;
-            }
-            @keyframes speed-bg {
-                0% { background-position: 0% 50%; }
-                100% { background-position: 100% 50%; }
-            }
-            .lightning-overlay {
-                background: url('assets/gifs/lightning.gif') center/cover;
-                mix-blend-mode: screen;
-                opacity: 0.3;
-                pointer-events: none;
-            }
-            .flash-menu-btn {
-                background: rgba(255,255,255,0.05);
-                border: 1px solid rgba(255,255,255,0.1);
-                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-                position: relative;
-                overflow: hidden;
-            }
-            .flash-menu-btn::before {
-                content: '';
-                position: absolute;
-                top: 0; left: 0; w: 100%; h: 100%;
-                background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-                transform: translateX(-100%);
-                transition: 0.5s;
-            }
-            .flash-menu-btn:hover::before {
-                transform: translateX(100%);
-            }
-            .flash-menu-btn:hover {
-                background: rgba(255,215,0,0.1);
-                border-color: rgba(255,215,0,0.6);
-                transform: translateY(-5px) scale(1.02);
-                box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            }
-        </style>
-        <div id="flash-app-container" class="h-full w-full speed-background relative overflow-hidden font-sans text-white select-none">
-            <!-- Lightning Overlay -->
-            <div class="absolute inset-0 lightning-overlay"></div>
-            
-            <!-- Menu -->
-            <div id="flash-menu" class="absolute inset-0 flex flex-col items-center justify-center z-10 p-8 space-y-8 transition-opacity duration-500">
-                <div class="text-center">
-                    <h1 class="text-6xl font-black italic uppercase tracking-tighter text-yellow-400 drop-shadow-[0_0_25px_rgba(255,200,0,0.6)]" style="font-family: 'Inter', sans-serif; -webkit-text-stroke: 2px #b45309;">Speed Force</h1>
-                    <p class="text-yellow-200/60 font-mono tracking-[0.5em] text-xs mt-2 uppercase">Harshit Edition</p>
-                </div>
-
-                <div class="flex gap-6 mt-4">
-                    <div class="text-center px-6 py-3 bg-black/40 rounded-xl border border-white/10 backdrop-blur-md">
-                        <div class="text-[10px] text-gray-400 uppercase tracking-wider">Total XP</div>
-                        <div class="text-2xl font-bold text-blue-400" id="flash-total-xp">0</div>
-                    </div>
-                    <div class="text-center px-6 py-3 bg-black/40 rounded-xl border border-white/10 backdrop-blur-md">
-                         <div class="text-[10px] text-gray-400 uppercase tracking-wider">Trophies</div>
-                        <div class="text-2xl font-bold text-yellow-400" id="flash-total-trophies">0</div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl mt-4">
-                    <!-- Mode 1 -->
-                    <button onclick="FlashApp.startMode('runner')" class="flash-menu-btn p-8 rounded-2xl flex flex-col items-center gap-4 group">
-                         <div class="text-5xl group-hover:scale-110 transition duration-300 filter drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]">🏃‍♂️</div>
-                         <div>
-                            <div class="text-xl font-bold italic uppercase text-white group-hover:text-blue-300">Memory Runner</div>
-                            <div class="text-[10px] text-gray-400 mt-1">Dodge obstacles, collect moments</div>
-                         </div>
-                    </button>
-                    <!-- Mode 3 -->
-                    <button onclick="FlashApp.startMode('reaction')" class="flash-menu-btn p-8 rounded-2xl flex flex-col items-center gap-4 group">
-                         <div class="text-5xl group-hover:scale-110 transition duration-300 filter drop-shadow-[0_0_10px_rgba(234,179,8,0.5)]">⚡</div>
-                         <div>
-                            <div class="text-xl font-bold italic uppercase text-white group-hover:text-yellow-300">Quick Click</div>
-                            <div class="text-[10px] text-gray-400 mt-1">Test your pure reaction speed</div>
-                         </div>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Runner Game -->
-            <div id="flash-runner" class="absolute inset-0 hidden z-20">
-                <canvas id="runner-canvas" class="w-full h-full block bg-black/20"></canvas>
-                <div class="absolute top-6 left-6 text-2xl font-black italic text-yellow-400 drop-shadow-md">XP: <span id="runner-xp">0</span></div>
-                <div class="absolute bottom-6 w-full text-center text-white/40 text-xs font-mono">ARROWS to Move • UP to Jump</div>
-                <button onclick="FlashApp.stopGame()" class="absolute top-6 right-6 px-4 py-2 bg-red-600/20 text-red-400 text-xs border border-red-500/50 rounded hover:bg-red-600/40 transition">EXIT</button>
-            </div>
 
 
-            <!-- Reaction Game -->
-            <div id="flash-reaction" class="absolute inset-0 hidden z-20 flex-col items-center justify-center cursor-pointer select-none" onclick="FlashApp.handleReactionTap()">
-                <div id="reaction-bg" class="absolute inset-0 transition-colors duration-200 bg-red-900/50"></div>
-                <div class="relative z-10 text-center pointer-events-none">
-                     <div id="reaction-icon" class="text-8xl mb-6 filter drop-shadow-lg transition-transform duration-100">⚠️</div>
-                     <h2 id="reaction-text" class="text-5xl font-black uppercase text-white tracking-widest drop-shadow-xl">Wait...</h2>
-                     <p id="reaction-sub" class="text-white/60 mt-4 font-mono">Tap as soon as it turns GREEN</p>
-                </div>
-                 <button onclick="FlashApp.stopGame()" class="absolute top-6 right-6 px-4 py-2 bg-white/10 text-white/60 text-xs border border-white/20 rounded hover:bg-white/20 transition z-30 pointer-events-auto">EXIT</button>
-            </div>
-            
-            <!-- Result Overlay -->
-            <div id="flash-result" class="absolute inset-0 bg-black/95 z-50 flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300">
-                 <h2 class="text-2xl font-bold text-gray-400 mb-2 uppercase tracking-widest">Session Complete</h2>
-                 <div class="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-yellow-400 to-orange-500 italic mb-4" id="flash-result-val">0</div>
-                 <div id="flash-reward-msg" class="text-blue-300 text-lg mb-10 font-medium h-8"></div>
-                 <button onclick="FlashApp.showMenu()" class="px-10 py-3 bg-white text-black font-black uppercase tracking-widest hover:scale-105 transition hover:bg-blue-50 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.4)]">Continue</button>
-            </div>
 
-        </div>
-    `,
-    },
-
-    {
-        id: 'rabbit', title: 'The Rabbit Squad', icon: '<img src="assets/icons/app_rabbit_new.png" alt="rabbit" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 700, height: 600, onOpen: () => RabbitSquad.init(), onClose: () => RabbitSquad.stop(), content: `
-        <div class="h-full bg-[#f0fdf4] relative overflow-hidden select-none font-sans flex flex-col" id="rabbit-den">
-            <!-- Background: Soft Field with Depth -->
-            <div class="absolute inset-0 z-0 bg-gradient-to-b from-sky-100 via-green-50 to-emerald-100"></div>
-             <!-- Decorative Clouds -->
-             <div class="absolute top-10 left-10 text-6xl opacity-40 blur-sm animate-pulse">☁️</div>
-             <div class="absolute top-20 right-20 text-4xl opacity-30 blur-sm">☁️</div>
-
-             <!-- Header Info -->
-             <div class="relative z-20 pt-4 px-6 flex justify-between items-start">
-                 <div>
-                    <h2 class="text-lg font-bold text-emerald-800 tracking-wide">The Burrow</h2>
-                    <p class="text-[10px] text-emerald-600 uppercase tracking-widest font-bold opacity-70">Harshit's Emotional Support Unit</p>
-                 </div>
-                 <div class="bg-white/40 px-3 py-1 rounded-full text-xs font-mono text-emerald-700">Status: Active</div>
-             </div>
-            
-            <!-- Controls -->
-            <div class="absolute bottom-6 left-0 w-full z-20 flex justify-center gap-3">
-                <button onclick="RabbitSquad.stop()" class="group relative px-4 py-2 bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/40 hover:scale-105 transition active:scale-95">
-                    <span class="text-xl">🛑</span>
-                    <span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">Freeze</span>
-                </button>
-                 <button onclick="RabbitSquad.assemble()" class="group relative px-4 py-2 bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/40 hover:scale-105 transition active:scale-95">
-                    <span class="text-xl">📢</span>
-                    <span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">Assembly</span>
-                </button>
-                <button onclick="RabbitSquad.feed()" class="group relative px-8 py-2 bg-orange-400/90 text-white backdrop-blur-md rounded-2xl shadow-lg shadow-orange-300/30 border border-orange-300 hover:scale-105 hover:bg-orange-500 transition active:scale-95 animate-pulse-slow">
-                    <span class="font-bold tracking-wider text-sm flex items-center gap-2">🥕 FEED</span>
-                </button>
-                <button onclick="RabbitSquad.celebrate()" class="group relative px-4 py-2 bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/40 hover:scale-105 transition active:scale-95">
-                    <span class="text-xl">⚽</span>
-                    <span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">Goal</span>
-                </button>
-                 <button onclick="RabbitSquad.napTime()" class="group relative px-4 py-2 bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/40 hover:scale-105 transition active:scale-95">
-                    <span class="text-xl">💤</span>
-                     <span class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">Sleep</span>
-                </button>
-            </div>
-
-            <!-- Rabbits Container -->
-            <div id="rabbit-field" class="absolute inset-x-0 bottom-[80px] top-[80px] z-10 pointer-events-none">
-                <!-- Rabbits injected here -->
-            </div>
-            
-            <style>
-                .bun-item { position: absolute; cursor: pointer; transition: all 1s ease-in-out; pointer-events: auto; z-index: 10; }
-                .bun-msg { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); background: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; opacity: 0; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color: #374151; border: 1px solid #f3f4f6; }
-                .bun-msg::after { content:''; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%) rotate(45deg); width: 8px; height: 8px; background: white; border-bottom: 1px solid #f3f4f6; border-right: 1px solid #f3f4f6; }
-                .bun-item:hover .bun-msg, .bun-item.talking .bun-msg { opacity: 1; top: -50px; transform: translateX(-50%) scale(1.1); }
-                
-                .bun-madrid { filter: drop-shadow(0 4px 0 rgba(234, 179, 8, 0.2)); }
-                .bun-snow { filter: drop-shadow(0 4px 0 rgba(6, 182, 212, 0.2)); }
-                .bun-love { filter: drop-shadow(0 4px 0 rgba(244, 63, 94, 0.2)); }
-                .bun-cozy { filter: drop-shadow(0 4px 0 rgba(100, 100, 100, 0.2)); }
-
-                @keyframes floatUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-40px) scale(1.5); } }
-            </style>
-        </div>
-    `},
 
     {
         id: 'secret-gallery', title: 'The Hidden Corner', icon: '<img src="assets/icons/app_memories_new.png" alt="hidden" style="width: 100%; height: 100%;">', dock: false, width: 900, height: 650, content: `
@@ -1406,13 +928,7 @@ const apps = [
         </div>
     `},
 
-    {
-        id: 'tired', title: 'When Tired', icon: '<img src="assets/icons/app_sleep.png" alt="tired" style="width: 100%; height: 100%;">', dock: true, width: 600, height: 500, onOpen: initTired, content: `
-        <div id="tired-container" class="tired-container">
-            <div id="tired-content" class="tired-content"></div>
-            <div class="heart-corner">❤️</div>
-        </div>
-    `},
+
 
 
     {
@@ -1470,69 +986,13 @@ const apps = [
             <div class="inkpot-quill" onclick="nextPoem()">🖋️</div>
         </div>
     `},
-    {
-        id: 'radio-harshit', title: 'Radio Harshit', icon: '<img src="assets/icons/app_radio.png" alt="radio">', dock: true, folder: 'folder-fun', width: 500, height: 600, onOpen: initRadio, content: `
-        <div class="radio-ui">
-            <div class="radio-display" id="radio-screen">WAITING FOR SIGNAL...</div>
-            <div class="radio-buttons">
-                <button class="radio-btn tired" onclick="playRadio('tired')">Tired 😴</button>
-                <button class="radio-btn happy" onclick="playRadio('happy')">Happy 😄</button>
-                <button class="radio-btn annoyed" onclick="playRadio('annoyed')">Annoyed 😤</button>
-                <button class="radio-btn proud" onclick="playRadio('proud')">Proud 🦁</button>
-            </div>
-        </div>
-    `},
 
-    {
-        id: 'the-path', title: 'The Path', icon: '<img src="assets/icons/app_path.png" alt="path" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 800, height: 600, onOpen: startPathGame, content: `
-        <div class="path-game" id="path-container" onclick="handlePathClick(event)">
-            <!-- Dynamic Content -->
-        </div>
-    `},
 
-    {
-        id: 'word-spiral', title: 'Word Spiral', icon: '<img src="assets/icons/app_spiral.png" alt="spiral" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 600, height: 700, onOpen: initWordSpiral, content: `
-        <div class="spiral-bg">
-            <div id="spiral-content" class="h-full flex flex-col items-center justify-center p-8 text-center text-white">
-                <div class="text-4xl mb-6 animate-spin-slow">🌀</div>
-                <div id="spiral-word" class="text-3xl font-serif font-bold mb-8">Growth</div>
-                <div id="spiral-opts" class="grid grid-cols-1 gap-4 w-full max-w-xs"></div>
-            </div>
-        </div>
-    `},
 
-    {
-        id: 'personality-quiz', title: 'Who Are You?', icon: '<img src="assets/icons/app_identity_new.png" alt="personality" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 600, height: 700, onOpen: initPersonalityQuiz, content: `
-        <div class="quiz-bg">
-            <div id="p-quiz-content" class="h-full flex flex-col items-center justify-center p-8 text-center overflow-y-auto custom-scroll">
-                <div class="text-5xl mb-6">🔍</div>
-                <div id="p-quiz-q" class="text-xl font-bold text-gray-800 mb-8">System Check...</div>
-                <div id="p-quiz-opts" class="flex flex-col gap-3 w-full max-w-xs"></div>
-            </div>
-        </div>
-    `},
 
-    {
-        id: 'rabbit-runner', title: 'RabbitRunner.exe', icon: '<img src="assets/icons/app_rabbit_new.png" alt="rabbit runner" style="filter: invert(1); width: 100%; height: 100%;">', dock: false, folder: 'folder-fun', width: 900, height: 600, onOpen: initRabbitGame, content: `
-        <div id="rr-container" class="relative w-full h-full bg-[#e0f7fa] overflow-hidden select-none font-sans">
-             <div id="rr-score" class="absolute top-4 left-4 text-2xl font-bold text-gray-700 z-10">Score: 0</div>
-             <div id="rr-start-screen" class="absolute inset-0 flex flex-col items-center justify-center bg-black/50 z-20 text-white">
-                <h2 class="text-4xl font-bold mb-4">Rabbit Run 🐰</h2>
-                <div class="space-y-2 text-center text-sm mb-6 opacity-90">
-                    <p>Hop on messages! 💬</p>
-                    <p>Collect Subs 🥪</p>
-                    <p>Dodge Bhindi 🥒</p>
-                </div>
-                <button onclick="startRabbitGame()" class="px-6 py-3 bg-blue-500 rounded-full font-bold hover:bg-blue-600 transition transform hover:scale-105">START GAME</button>
-             </div>
-             
-             <!-- Player -->
-             <div id="rr-player" class="absolute text-4xl transition-transform" style="bottom: 100px; left: 50px;">🐰</div>
-             
-             <!-- Game World (Platforms, Items added via JS) -->
-             <div id="rr-world"></div>
-        </div>
-    `},
+
+
+
 
     {
         id: 'spotify', title: 'Spotify - Vibe Check', icon: '<img src="assets/icons/app_spotify.png" alt="spotify" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-fun', width: 450, height: 600,
@@ -1750,27 +1210,7 @@ const apps = [
         </div>
     `},
 
-    {
-        id: 'truth-archives', title: 'Truth Archives', icon: '<img src="assets/icons/app_files.png" alt="archives" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 800, height: 600, onOpen: initTruths, content: `
-        <div class="h-full bg-[#1a1a1a] text-green-400 p-6 font-mono flex flex-col">
-             <div class="border-b border-green-800 pb-4 mb-4 flex justify-between items-center">
-                <h2 class="text-xl tracking-widest uppercase">Truth_Database_v1.0</h2>
-                <div class="text-xs opacity-50">STATUS: UNCLASSIFIED</div>
-             </div>
-             
-             <!-- Search -->
-             <div class="mb-6 relative">
-                <input type="text" id="truth-search" onkeyup="filterTruths()" placeholder="Search archives (e.g., 'worst', 'crush')..." 
-                       class="w-full bg-black/50 border border-green-900 p-3 rounded text-sm focus:outline-none focus:border-green-500 transition-colors placeholder-green-800/50">
-                <div class="absolute right-3 top-3 text-xs opacity-50">🔍</div>
-             </div>
 
-             <!-- Grid -->
-             <div id="truth-grid" class="flex-1 overflow-y-auto custom-scroll grid grid-cols-1 gap-4">
-                <!-- Injected via JS -->
-             </div>
-        </div>
-    `},
 
     {
         id: 'map-of-us', title: 'Map of Us', icon: '<img src="assets/icons/app_map_icon.png" alt="map" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 900, height: 600, onOpen: initMap, content: `
@@ -1800,9 +1240,7 @@ const apps = [
                 <p class="text-sm text-gray-700 leading-relaxed">
                     Hi.<br>
                     I’m the part of your life that won’t stop caring.<br>
-                    Sorry. Not sorry.<br><br>
-                    (Also, drink water.)
-                </p>
+                        </p>
             </div>
             <div class="flex justify-center mt-8">
                 <img src="assets/gifs/bear_love.gif" class="w-32 rounded-lg opacity-80 mix-blend-multiply">
@@ -1888,17 +1326,7 @@ const apps = [
         </div>
     `},
 
-    {
-        id: 'app-decision', title: 'Decision Helper', icon: '<img src="assets/icons/app_decision_new.png" alt="decision" style="width: 100%; height: 100%;">', dock: false, width: 600, height: 600, content: `
-    <div class="decision-app">
-            <h2 class="text-2xl font-bold text-blue-900 mb-4">What should we do?</h2>
-            <div class="decision-wheel" id="decision-wheel">🤔</div>
-             <div class="w-full max-w-xs">
-                <input type="text" id="decision-q" class="decision-input" placeholder="e.g. Kya khaaun?" value="Kya khaaun?">
-                <button class="decision-btn w-full" onclick="DecisionApp.spin()">Decide for Us</button>
-            </div>
-        </div >
-    `},
+
 
 
 
@@ -1912,7 +1340,6 @@ const apps = [
             <!-- Header -->
             <div class="relative z-10 pt-8 pb-4 text-center border-b border-gray-200/50">
                 <div class="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-bold mb-2">Digital Keepsake</div>
-                <h2 class="text-3xl text-gray-800" style="font-family: 'Playfair Display', serif;">Open When...</h2>
             </div>
             
             <!-- Category Selection -->
@@ -2165,34 +1592,7 @@ const CapsuleApp = {
 
 
 
-const DecisionApp = {
-    options: ["Subway 🥪", "Pizza 🍕", "Chinese 🍜", "Nothing (Hawa) 🌬️", "Maggi 🍝", "Ice Cream 🍦"],
-    spinning: false,
-    spin() {
-        if (this.spinning) return;
-        this.spinning = true;
-        const wheel = document.getElementById('decision-wheel');
-        const finalDeg = 1080 + Math.floor(Math.random() * 360);
 
-        if (wheel) {
-            wheel.style.transform = "rotate(" + finalDeg + "deg)";
-            wheel.innerText = "🎲";
-        }
-
-        setTimeout(() => {
-            this.spinning = false;
-            if (wheel) {
-                wheel.style.transition = "none";
-                wheel.style.transform = "rotate(0deg)";
-                setTimeout(() => wheel.style.transition = "transform 3s cubic-bezier(0.17, 0.67, 0.83, 0.67)", 50);
-
-                const choice = this.options[Math.floor(Math.random() * this.options.length)];
-                wheel.innerText = choice.split(' ')[1] || '✨';
-                createModal({ title: "Decision Made!", desc: "The universe says: <b>" + choice + "</b>", icon: "✨" });
-            }
-        }, 3000);
-    }
-};
 const BanterApp = {
     bure: 0,
     achhe: 0,
@@ -3051,11 +2451,6 @@ function enterDesktop() {
     });
 
     initDesktop();
-
-
-    new Audio('assets/audio/startup.mp3').play().catch(e => console.log("Startup sound deferred:", e));
-
-
 }
 
 
@@ -3096,12 +2491,9 @@ window.goToDesktop = enterDesktop;
 
 const bearGifs = [
     'assets/gifs/bear_milk.gif',
-    'assets/gifs/bear_love.gif',
+    'assets/gifs/bear_madrid.gif',
     'assets/gifs/milk-run.gif',
-    'assets/gifs/milk_mascot.gif',
-    'assets/gifs/cute_anime_1.gif',
-    'assets/gifs/cute_anime_2.gif',
-    'assets/gifs/cute_anime_3.gif'
+
 ];
 let mastiActive = false;
 function spawnBears() {
@@ -3939,182 +3331,13 @@ function closeWindow(id) {
 }
 
 
-function initRadio() {
-    const el = document.getElementById('radio-screen');
-    if (el) el.innerText = "WAITING FOR SIGNAL...";
-}
-function playRadio(mood) {
-    const el = document.getElementById('radio-screen');
-    if (!el) return;
-    el.innerText = "TUNING...";
-    setTimeout(() => {
-        let msg = "";
-        switch (mood) {
-            case 'tired': msg = "🎵 Playing: SoftRain.mp3\n(Relax, Harshit.)"; break;
-            case 'happy': msg = "🎵 Playing: Celebration.wav\n(Heck yeah!)"; break;
-            case 'annoyed': msg = "🎵 Playing: Silence.flac\n(People are dumb.)"; break;
-            case 'proud': msg = "🎵 Playing: Applause.ogg\n(You did good.)"; break;
-        }
-        el.innerText = msg;
-    }, 500);
-}
 
 
-const pathStory = {
-    start: {
-        text: "You stand at a crossroad. It's late.",
-        opts: [
-            { txt: "Go to Gym", next: 'gym' },
-            { txt: "Go to Sleep", next: 'sleep' }
-        ]
-    },
-    gym: {
-        text: "You lift things. Heavy things. The sadness leaves your body with the sweat.\nYou feel stronger.",
-        opts: [
-            { txt: "Go Home", next: 'home_strong' }
-        ]
-    },
-    sleep: {
-        text: "You lie down. The thoughts come, but you are too tired to fight them. You drift off.",
-        opts: [
-            { txt: "Dream", next: 'dream' }
-        ]
-    },
-    home_strong: {
-        text: "You walk home. The stars look nice. You realize you can handle tomorrow.",
-        opts: [
-            { txt: "Restart", next: 'start' }
-        ]
-    },
-    dream: {
-        text: "You dream of a place where assignments finish themselves. It is beautiful.",
-        opts: [
-            { txt: "Wake Up", next: 'start' }
-        ]
-    }
-};
-
-function startPathGame() {
-    renderPath('start');
-}
-
-function renderPath(id) {
-    const scene = pathStory[id];
-    const con = document.getElementById('path-container');
-    if (!con) return;
-
-    let html = `<div class="path-text">${scene.text}</div><div class="path-options">`;
-    scene.opts.forEach(o => {
-        html += `<button class="path-btn" onclick="renderPath('${o.next}')">${o.txt}</button>`;
-    });
-    html += `</div>`;
-    con.innerHTML = html;
-}
 
 
-const spiralWords = {
-    "Growth": ["Pain", "Change", "Better", "You"],
-    "Pain": ["Temporary", "Necessary", "Stronger", "Growth"],
-    "Change": ["Scary", "Good", "New", "Future"],
-    "Better": ["Work", "Time", "Patience", "Focus"],
-    "You": ["Enough", "Real", "Here", "Growth"],
-    "Temporary": ["Rain", "Night", "Feelings", "Pain"],
-    "Necessary": ["Rain", "Discipline", "Focus", "Better"],
-    "Stronger": ["Gym", "Mind", "Heart", "You"],
-    "Scary": ["Unknown", "Dark", "Space", "Change"],
-    "Good": ["Food", "Sleep", "Friends", "Better"],
-    "New": ["Day", "Start", "Chance", "Change"],
-    "Future": ["Blind", "Bright", "Yours", "Change"],
-
-    "DEFAULT": ["Growth", "You", "Better", "Change"]
-};
-function initWordSpiral() {
-    renderSpiral("Growth");
-}
-function renderSpiral(word) {
-    const main = document.getElementById('spiral-word');
-    const opts = document.getElementById('spiral-opts');
-    if (!main) return;
 
 
-    main.style.opacity = 0;
-    setTimeout(() => {
-        main.innerText = word;
-        main.style.opacity = 1;
-    }, 200);
 
-    const nextWords = spiralWords[word] || spiralWords["DEFAULT"];
-    opts.innerHTML = nextWords.map(w =>
-        `<button class="spiral-btn" onclick="renderSpiral('${w}')">${w}</button>`
-    ).join('');
-}
-
-
-const pQuizData = [
-    {
-        q: "It's 2 AM. What is Harshit usually doing?",
-        a: [
-            { t: "Solving a bug / Gaming 🎮", s: "Builder" },
-            { t: "Listening to music / Overthinking 🎧", s: "Dreamer" },
-            { t: "Actually sleeping? (Rare event) 😴", s: "Healer" }
-        ]
-    },
-    {
-        q: "When Shravii creates 'chaos' or starts yapping, you...",
-        a: [
-            { t: "Listen patiently (The Anchor) 🛡️", s: "Healer" },
-            { t: "Roast her logically 🤓", s: "Builder" },
-            { t: "Enjoy the drama silently 🍿", s: "Dreamer" }
-        ]
-    },
-    {
-        q: "Your Super Power in this friendship is...",
-        a: [
-            { t: "Never leaving (Staying) ❤️", s: "Healer" },
-            { t: "Fixing everything (Logic) 🧩", s: "Builder" },
-            { t: "Predicting the future (Insight) 👁️", s: "Dreamer" }
-        ]
-    }
-];
-let pQuizIdx = 0;
-let pScores = {};
-
-function initPersonalityQuiz() {
-    pQuizIdx = 0;
-    pScores = { "Builder": 0, "Healer": 0, "Dreamer": 0 };
-    renderPQuiz();
-}
-
-function renderPQuiz() {
-    const qEl = document.getElementById('p-quiz-q');
-    const oEl = document.getElementById('p-quiz-opts');
-    if (!qEl) return;
-
-    if (pQuizIdx >= pQuizData.length) {
-
-        const winner = Object.keys(pScores).reduce((a, b) => pScores[a] > pScores[b] ? a : b);
-        let msg = "";
-        if (winner === "Builder") msg = "You are The Architect.\nYou build strong things. You protect.";
-        if (winner === "Healer") msg = "You are The Anchor.\nYou keep people safe. You care deeply.";
-        if (winner === "Dreamer") msg = "You are The Visionary.\nYou see what could be. You hope.";
-
-        qEl.innerText = winner;
-        oEl.innerHTML = `<div class="text-sm text-gray-600 leading-relaxed">${msg}</div><button class="mt-4 px-4 py-2 bg-black text-white rounded" onclick="initPersonalityQuiz()">Restart</button>`;
-        return;
-    }
-
-    const curr = pQuizData[pQuizIdx];
-    qEl.innerText = curr.q;
-    oEl.innerHTML = curr.a.map(opt =>
-        `<button class="p-quiz-btn" onclick="handlePQuiz('${opt.s}')">${opt.t}</button>`
-    ).join('');
-}
-
-function handlePQuiz(type) {
-    pScores[type]++;
-    pQuizIdx++;
-    renderPQuiz();
-}
 
 
 
@@ -4316,9 +3539,6 @@ function launchDesktop() {
     if (skipBtn) skipBtn.style.display = 'none';
 
     initDesktop();
-
-
-    new Audio('assets/audio/startup.mp3').play().catch(e => console.log("Startup sound deferred:", e));
 }
 
 function skipToDesktop() {
@@ -4336,171 +3556,7 @@ function skipToDesktop() {
 }
 
 
-let rrActive = false;
-let rrScore = 0;
-let rrLoopIdx;
-let rrPlayerY = 0;
-let rrVelocity = 0;
-let rrGravity = 0.6;
-let rrJumpStrength = -10;
-let rrPlatforms = [];
-let rrItems = [];
-const rrSpeed = 3;
 
-function initRabbitGame() {
-    rrActive = false;
-    document.getElementById('rr-start-screen').style.display = 'flex';
-    document.getElementById('rr-world').innerHTML = '';
-}
-
-function startRabbitGame() {
-    rrActive = true;
-    rrScore = 0;
-    rrPlayerY = 300;
-    rrVelocity = 0;
-    rrPlatforms = [];
-    rrItems = [];
-    document.getElementById('rr-start-screen').style.display = 'none';
-    document.getElementById('rr-score').innerText = 'Score: 0';
-
-
-    spawnPlatform(50, 400, 200);
-    spawnPlatform(300, 350, 150);
-    spawnPlatform(550, 300, 150);
-
-    if (rrLoopIdx) cancelAnimationFrame(rrLoopIdx);
-    rrGameLoop();
-
-
-    document.getElementById('rr-container').onmousedown = jumpRabbit;
-    document.addEventListener('keydown', (e) => { if (e.code === 'Space') jumpRabbit(); });
-}
-
-function jumpRabbit() {
-    if (!rrActive) return;
-    rrVelocity = rrJumpStrength;
-}
-
-function spawnPlatform(x, y, w) {
-    const msgs = ["Good morning", "Take care", "Hydrate", "Proud of you", "Remember me?", "Keep going", "You got this", "Stay safe"];
-    const txt = msgs[Math.floor(Math.random() * msgs.length)];
-    rrPlatforms.push({ x, y, w, text: txt, passed: false });
-
-
-    if (Math.random() > 0.6) {
-        const type = Math.random() > 0.3 ? 'sub' : 'bhindi';
-        rrItems.push({ type, x: x + w / 2 - 15, y: y - 40, collected: false });
-    }
-}
-
-function rrGameLoop() {
-    if (!rrActive) return;
-
-
-    rrVelocity += rrGravity;
-    rrPlayerY += rrVelocity;
-
-
-    if (rrPlayerY > 480) {
-        gameOverRabbit("You fell into the void!");
-        return;
-    }
-
-    const playerEl = document.getElementById('rr-player');
-    if (playerEl) {
-        playerEl.style.top = rrPlayerY + 'px';
-        playerEl.style.transform = `rotate(${rrVelocity * 2}deg)`;
-    }
-
-
-    const world = document.getElementById('rr-world');
-    world.innerHTML = '';
-
-
-
-    const lastPlat = rrPlatforms[rrPlatforms.length - 1];
-    if (lastPlat && lastPlat.x < 600) {
-        const newY = Math.max(150, Math.min(400, lastPlat.y + (Math.random() * 200 - 100)));
-        spawnPlatform(800 + Math.random() * 100, newY, 120 + Math.random() * 80);
-    }
-
-
-    rrPlatforms.forEach((p, i) => {
-        p.x -= rrSpeed;
-
-
-        if (p.x + p.w > 0 && p.x < 800) {
-            const div = document.createElement('div');
-            div.className = 'absolute bg-white border-2 border-gray-200 rounded-2xl flex items-center justify-center text-xs font-bold text-gray-500 shadow-sm';
-            div.style.left = p.x + 'px';
-            div.style.top = p.y + 'px';
-            div.style.width = p.w + 'px';
-            div.style.height = '40px';
-            div.innerText = p.text;
-            world.appendChild(div);
-        }
-
-
-
-        if (rrVelocity > 0 &&
-            rrPlayerY + 40 >= p.y &&
-            rrPlayerY + 40 <= p.y + 20 &&
-            50 + 30 > p.x &&
-            50 < p.x + p.w) {
-            rrVelocity = 0;
-            rrPlayerY = p.y - 40;
-
-        }
-
-
-        if (p.x + p.w < -100) rrPlatforms.splice(i, 1);
-    });
-
-
-    rrItems.forEach((item, i) => {
-        item.x -= rrSpeed;
-
-
-        if (!item.collected && item.x > 0 && item.x < 800) {
-            const el = document.createElement('div');
-            el.className = 'absolute text-2xl animate-bounce';
-            el.innerText = item.type === 'sub' ? '🥪' : '🥒';
-            el.style.left = item.x + 'px';
-            el.style.top = item.y + 'px';
-            world.appendChild(el);
-
-
-
-            const dx = (50 + 20) - (item.x + 15);
-            const dy = (rrPlayerY + 20) - (item.y + 15);
-            if (Math.sqrt(dx * dx + dy * dy) < 40) {
-                item.collected = true;
-                if (item.type === 'sub') {
-                    rrScore += 10;
-                    document.getElementById('rr-score').innerText = `Score: ${rrScore}`;
-                } else {
-                    gameOverRabbit("You ate Bhindi! 🤢");
-                }
-            }
-        }
-
-        if (item.x < -50) rrItems.splice(i, 1);
-    });
-
-    rrLoopIdx = requestAnimationFrame(rrGameLoop);
-}
-
-function gameOverRabbit(reason) {
-    rrActive = false;
-    const screen = document.getElementById('rr-start-screen');
-    screen.style.display = 'flex';
-    screen.innerHTML = `
-        <h2 class="text-3xl font-bold mb-2 text-red-300">Game Over</h2>
-        <p class="text-xl mb-6">${reason}</p>
-        <p class="text-2xl font-bold mb-8">Score: ${rrScore}</p>
-        <button onclick="startRabbitGame()" class="px-6 py-3 bg-white text-black rounded-full font-bold hover:bg-gray-200">Try Again</button>
-    `;
-}
 
 
 let vaultIdx = 0;
@@ -4722,19 +3778,14 @@ function unlockVault() {
 }
 window.unlockVault = unlockVault;
 window.initAppVault = initAppVault;
-window.startRabbitGame = startRabbitGame;
-window.initRabbitGame = initRabbitGame;
+
 window.handleTerminalAppCommand = handleTerminalAppCommand;
-window.handlePQuiz = handlePQuiz;
-window.initPersonalityQuiz = initPersonalityQuiz;
-window.renderSpiral = renderSpiral;
-window.initWordSpiral = initWordSpiral;
 
 
-window.renderPath = renderPath;
-window.startPathGame = startPathGame;
-window.playRadio = playRadio;
-window.initRadio = initRadio;
+
+
+
+
 window.initInkpot = initInkpot;
 window.nextPoem = nextPoem;
 window.toggleSpotify = toggleSpotify;
@@ -5433,186 +4484,6 @@ function createModal({ title, desc, icon }) {
 window.createModal = createModal;
 
 
-const tiredMessages = [
-    {
-        audio: 'assets/tired_1.mp3',
-        text: `Hey.
-
-I know you’re tired.
-Not the “sleepy” kind — the kind where even existing feels heavy.
-
-You don’t have to hold yourself together right now.
-You don’t have to explain anything.
-
-If today asked too much from you, it’s okay to put it down.
-You’re allowed to rest without earning it.
-
-I see how much you try.
-Even on days when no one notices.
-
-For now, just stay here.
-Breathe.
-I’m not going anywhere.`
-    },
-
-    {
-        audio: 'assets/tired_2.mp3',
-        text: `Hey.
-I know you’re tired.
-The kind where your mind won’t slow down and your body feels done.
-
-You don’t need to be okay right now.
-You don’t need to figure anything out.
-
-If today took too much from you,
-it’s okay to stop giving.
-
-Just sit here for a bit.
-Breathe.
-I’m right here.`
-    },
-
-    {
-        audio: 'assets/tired_3.mp3',
-        text: `I know it’s been a long day.
-And maybe a longer stretch of days before that.
-
-You don’t have to keep pushing tonight.
-Nothing needs to be solved.
-
-You’ve already done enough.
-Even if it doesn’t feel like it.
-
-Stay for a moment.
-Let yourself rest.
-I’m not leaving.`
-    },
-
-    {
-        audio: 'assets/tired_4.mp3',
-        text: `Hey…
-You’ve been holding a lot inside.
-
-You don’t need to hold it anymore.
-Not here.
-
-If you feel worn out, that makes sense.
-Anyone would.
-
-Just pause with me.
-Breathe slowly.
-You’re safe right now.`
-    },
-
-    {
-        audio: 'assets/tired_5.mp3',
-        text: `I know you’re tired in ways sleep doesn’t fix.
-
-You don’t have to pretend you’re fine.
-You don’t owe strength to anyone.
-
-If today was heavy,
-you’re allowed to put it down.
-
-Stay here for a moment.
-Let the quiet settle.
-I’m here with you.`
-    },
-
-    {
-        audio: 'assets/tired_6.mp3',
-        text: `It’s okay if you’re exhausted.
-It’s okay if you feel empty.
-
-You don’t need to carry everything tonight.
-You don’t need to be strong.
-
-You matter even when you rest.
-Especially then.
-
-Breathe.
-Stay.
-I’m not going anywhere.`
-    }
-];
-
-function initTired() {
-    const container = document.getElementById('tired-content');
-    if (!container) return;
-
-    container.innerHTML = '';
-
-
-    const data = tiredMessages[Math.floor(Math.random() * tiredMessages.length)];
-    const lines = data.text.split('\n');
-
-
-    const audioWrapper = document.createElement('div');
-    audioWrapper.className = 'tired-audio-wrapper opacity-0 transition duration-1000';
-    audioWrapper.innerHTML = `
-        <audio id="tired-audio-player" src="${data.audio}"></audio>
-        <button class="tired-play-btn" onclick="toggleTiredAudio()">
-            <span id="tired-play-icon">🎙️</span>
-            <span class="text-xs ml-2">Voice Note</span>
-        </button>
-    `;
-    container.appendChild(audioWrapper);
-
-
-    let delay = 800;
-
-    lines.forEach(line => {
-        if (line.trim() === '') {
-            const spac = document.createElement('div');
-            spac.style.height = '16px';
-            container.appendChild(spac);
-        } else {
-            const div = document.createElement('div');
-            div.className = 'tired-line';
-            div.innerText = line;
-            container.appendChild(div);
-
-            setTimeout(() => {
-                div.classList.add('visible');
-            }, delay);
-
-            delay += 1200;
-        }
-    });
-
-
-    setTimeout(() => {
-        audioWrapper.classList.remove('opacity-0');
-    }, 1500);
-}
-
-
-function toggleTiredAudio() {
-    const audio = document.getElementById('tired-audio-player');
-    const icon = document.getElementById('tired-play-icon');
-    if (!audio) return;
-
-    if (audio.paused) {
-        audio.play().catch(e => console.log("Audio missing or blocked"));
-        icon.innerText = "⏸️";
-        icon.classList.add('animate-pulse');
-    } else {
-        audio.pause();
-        icon.innerText = "🎙️";
-        icon.classList.remove('animate-pulse');
-    }
-
-
-    audio.onended = () => {
-        icon.innerText = "🎙️";
-        icon.classList.remove('animate-pulse');
-    };
-}
-window.toggleTiredAudio = toggleTiredAudio;
-window.initTired = initTired;
-
-
-
 const inkEntries = [
     `Some words are better left written in ink than spoken aloud.`,
     `Sometimes I wonder if you know how much impact you have. Providing a safe space isn't easy, but you make it look effortless.`,
@@ -6220,73 +5091,7 @@ function showNotification(title, body) {
 }
 
 
-const truthData = [
-    { title: "First Meet", tags: ["start"], content: "June 20, 2024. 12:21 AM.<br>You asked 'is anyone watching euros?'.<br>I asked 'Where ya from Harry?'.<br>And so it began." },
-    { title: "The Promise", tags: ["emotional"], content: "I tried to push you away.<br>You said: 'You don't have any IRL friends so I'm not leaving DC.'<br>Stubborn. But I needed that." },
-    { title: "The Poem", tags: ["birthday"], content: "For my birthday, you wrote a poem.<br>You tried to time it perfectly letter-by-letter for 12:00 AM.<br>Your math failed (ended at 11:59).<br>But it was perfect. ✨" },
-    { title: "Mumbai Detective", tags: ["smart"], content: "I said 'Cream building, blue benches'.<br>You found L.R. Tiwari College of Engineering.<br>Stalker? Maybe. <br>Impressed? Yes." },
-    { title: "The 'Dumb' Role", tags: ["funny"], content: "We both claim to be the 'dumb' one.<br>But you solved my code issues while I panicked.<br>So... I win the dumb trophy. 🏆" },
-    { title: "Echo Archive", tags: ["system", "void"], content: "Echoes of the past... [Empty for now].<br>Waiting for new signals. 🕸️" }
-];
 
-function initTruths() {
-    const grid = document.getElementById('truth-grid');
-    if (!grid) return;
-
-    grid.innerHTML = '';
-
-    truthData.forEach(t => {
-        const div = document.createElement('div');
-        div.className = 'bg-black/40 border border-green-900/30 p-4 rounded hover:bg-green-900/10 transition group cursor-pointer';
-        div.innerHTML = `
-    < div class="flex justify-between items-start mb-2" >
-                <h3 class="font-bold text-green-400 group-hover:text-green-300">${t.title}</h3>
-                <span class="text-[10px] uppercase tracking-wider opacity-50 border border-green-800 px-1 rounded">${t.tags[0]}</span>
-            </div >
-    <div class="text-sm text-green-400/80 leading-relaxed font-light line-clamp-2 transition-all duration-300">${t.content}</div>
-`;
-
-
-        div.onclick = function () {
-            const contentDiv = this.querySelector('div:last-child');
-            if (contentDiv.classList.contains('line-clamp-2')) {
-                contentDiv.classList.remove('line-clamp-2');
-                this.classList.add('bg-green-900/20');
-            } else {
-                contentDiv.classList.add('line-clamp-2');
-                this.classList.remove('bg-green-900/20');
-            }
-        };
-
-        grid.appendChild(div);
-    });
-}
-
-function filterTruths() {
-    const input = document.getElementById('truth-search');
-    const filter = input.value.toLowerCase();
-    const grid = document.getElementById('truth-grid');
-
-
-    grid.innerHTML = '';
-
-    truthData.forEach(t => {
-        if (t.title.toLowerCase().includes(filter) || t.content.toLowerCase().includes(filter) || t.tags.some(tag => tag.includes(filter))) {
-            const div = document.createElement('div');
-            div.className = 'bg-black/40 border border-green-900/30 p-4 rounded hover:bg-green-900/10 transition group';
-            div.innerHTML = `
-    < div class="flex justify-between items-start mb-2" >
-                    <h3 class="font-bold text-green-400 group-hover:text-green-300">${t.title}</h3>
-                    <span class="text-[10px] uppercase tracking-wider opacity-50 border border-green-800 px-1 rounded">${t.tags[0]}</span>
-                </div >
-    <p class="text-sm text-green-400/80 leading-relaxed font-light">${t.content}</p>
-`;
-            grid.appendChild(div);
-        }
-    });
-}
-window.initTruths = initTruths;
-window.filterTruths = filterTruths;
 
 
 
@@ -7283,62 +6088,7 @@ apps.push({
 
 
 
-const JournalApp = {
-    chapters: [
-        { title: "Chapter 1: The Beginning", content: "It all started with a simple 'Hi'. Who knew it would lead to a special OS built just for you? Every conversation since then has been a building block for us." },
-        { title: "Chapter 2: To knowning", content: "From '' to 'Ota', we've built a language of our own. These small moments are what make the journey worth it." },
-        { title: "Chapter 3: The Growth", content: "We've faced shifts and changes, but through it all, the care remained. This system isn't just about the past; it's a bridge to what's next." }
-    ],
-    index: 0,
 
-    render() {
-        const title = document.getElementById('journal-title');
-        const text = document.getElementById('journal-text');
-        const pageNum = document.getElementById('journal-page-num');
-        if (!title || !text) return;
-
-        title.innerText = this.chapters[this.index].title;
-        text.innerText = this.chapters[this.index].content;
-        pageNum.innerText = `Page ${this.index + 1} of ${this.chapters.length}`;
-    },
-
-    next() {
-        if (this.index < this.chapters.length - 1) {
-            this.index++;
-            this.render();
-        }
-    },
-
-    prev() {
-        if (this.index > 0) {
-            this.index--;
-            this.render();
-        }
-    }
-};
-
-apps.push({
-    id: 'app-journal', title: 'Our Story', icon: '<img src="assets/icons/app_journal_new.png" alt="journal" style="width: 100%; height: 100%;">', dock: false, width: 700, height: 600, onOpen: () => JournalApp.render(), content: `
-    <div class="h-full bg-[#fdfaf5] p-10 flex items-center justify-center relative">
-        <div class="w-full max-w-xl h-full bg-white shadow-2xl rounded-sm border-l-[15px] border-amber-900 p-12 flex flex-col justify-between relative overflow-hidden">
-             <!-- Paper Texture -->
-            <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');"></div>
-            
-            <div class="relative z-10">
-                <h2 id="journal-title" class="text-3xl font-serif font-bold text-amber-900 mb-8 italic border-b border-amber-100 pb-4"></h2>
-                <p id="journal-text" class="text-lg text-slate-700 leading-loose font-serif italic first-letter:text-5xl first-letter:mr-2 first-letter:float-left"></p>
-            </div>
-
-            <div class="relative z-10 flex justify-between items-center mt-12 pt-6 border-t border-slate-100">
-                <div class="flex gap-4">
-                    <button onclick="JournalApp.prev()" class="text-xs font-bold text-amber-800 hover:text-amber-600 transition tracking-widest">← PREV</button>
-                    <button onclick="JournalApp.next()" class="text-xs font-bold text-amber-800 hover:text-amber-600 transition tracking-widest">NEXT →</button>
-                </div>
-                <div id="journal-page-num" class="text-[10px] text-slate-400 font-mono tracking-widest uppercase"></div>
-            </div>
-        </div>
-    </div>
-`});
 
 
 
@@ -7520,7 +6270,7 @@ apps.push({
         <div class="relative z-20 pb-10 px-10 flex flex-col items-center w-full">
             
             <!-- Replace 'src' with your actual audio file -->
-            <audio id="tired-audio" src="assets/audio/tired_voice.mp3" preload="metadata"></audio> 
+            <audio id="tired-audio" preload="metadata"></audio> 
             
             <!-- Custom Progress Bar -->
             <div id="tired-progress-bar" class="w-full max-w-md h-1.5 bg-white/5 rounded-full mb-8 relative cursor-pointer group overflow-hidden" 
@@ -7962,14 +6712,7 @@ const NotificationDatabase = {
             emoji: '🖱️',
             action: () => startMouseGame()
         },
-        {
-            id: 'cryptic-message-57min',
-            minutes: 57,
-            title: '🔎 Encrypted Message',
-            body: 'A secret admirer has left you a cryptic message: `01001001 01001100 01011001`',
-            emoji: '💌',
-            action: () => decodeCrypticMessage()
-        }
+
     ],
 
 
@@ -8561,31 +7304,9 @@ function initMouseGame() {
     }
 }
 
-function decodeCrypticMessage() {
-    createInteractiveModal({
-        title: '🔎 Encrypted Message',
-        content: `
-            <div class="cryptic-message">
-                <div class="encrypted-text">01001001 01001100 01011001</div>
-                <button class="btn-primary mt-4" onclick="revealCrypticMessage()">Decrypt</button>
-                <div id="decrypted-message" class="decrypted-message"></div>
-            </div>
-        `
-    });
-}
 
-function revealCrypticMessage() {
-    const msgEl = document.getElementById('decrypted-message');
-    if (msgEl) {
-        msgEl.innerHTML = `
-            <div class="decrypt-animation">
-                <div class="decrypting">Decrypting...</div>
-                <div class="decoded-text">I Love You ❤️</div>
-            </div>
-        `;
-        setTimeout(() => fireConfetti(), 500);
-    }
-}
+
+
 
 function showThinkingBubble() {
     createModal({
@@ -8940,328 +7661,7 @@ window.toggleTruth = function (card) {
 
 
 
-const FlashApp = {
-    state: {
-        mode: null,
-        active: false,
-        score: 0,
-        xp: 0,
-        trophies: (typeof userStats !== 'undefined' ? userStats.trophies : 0) || 0,
-        startTime: 0,
-        gameLoop: null
-    },
 
-    sfx: {
-        hover: null,
-        wait: null,
-        signal: null,
-        success: null,
-        fail: null
-    },
-
-    init() {
-        this.sfx.hover = document.getElementById('sfx-hover');
-        this.sfx.wait = document.getElementById('sfx-wait');
-        this.sfx.signal = document.getElementById('sfx-signal');
-        this.sfx.success = document.getElementById('sfx-success');
-        this.sfx.fail = document.getElementById('sfx-fail');
-
-        this.updateMenuStats();
-        this.showMenu();
-    },
-
-    playHover() {
-        if (this.sfx.hover) {
-            this.sfx.hover.currentTime = 0;
-            this.sfx.hover.volume = 0.2;
-            this.sfx.hover.play().catch(() => { });
-        }
-    },
-
-    showMenu() {
-        this.stopGameLoop();
-        const menu = document.getElementById('flash-menu');
-        const runner = document.getElementById('flash-runner');
-        const reaction = document.getElementById('flash-reaction');
-        const result = document.getElementById('flash-result');
-
-        if (menu) menu.style.display = 'flex';
-        if (runner) runner.style.display = 'none';
-        if (reaction) reaction.style.display = 'none';
-        if (result) {
-            result.style.display = 'none';
-            result.style.opacity = '0';
-        }
-
-        this.updateMenuStats();
-    },
-
-    updateMenuStats() {
-        const xpEl = document.getElementById('flash-total-xp');
-        const trophEl = document.getElementById('flash-total-trophies');
-        if (xpEl) xpEl.innerText = this.state.xp;
-        if (trophEl) trophEl.innerText = this.state.trophies;
-    },
-
-    startMode(mode) {
-        this.playHover();
-        this.state.mode = mode;
-        this.state.active = true;
-        this.state.score = 0;
-        const menu = document.getElementById('flash-menu');
-        if (menu) menu.style.display = 'none';
-
-        if (mode === 'runner') this.initRunner();
-        if (mode === 'reaction') this.initReaction();
-    },
-
-    stopGame() {
-        this.state.active = false;
-        this.stopGameLoop();
-
-        const resOverlay = document.getElementById('flash-result');
-        const resVal = document.getElementById('flash-result-val');
-        const resMsg = document.getElementById('flash-reward-msg');
-
-        if (resOverlay) {
-            resOverlay.style.display = 'flex';
-            setTimeout(() => resOverlay.style.opacity = '1', 10);
-        }
-
-        let finalScore = this.state.score;
-        let trophyEarned = false;
-
-        if (this.state.mode === 'reaction') {
-            if (resVal) resVal.innerText = finalScore + 'ms';
-            if (finalScore < 250 && finalScore > 0) {
-                if (resMsg) resMsg.innerText = "⚡ GOD SPEED! New Trophy Unlocked!";
-                this.state.trophies++;
-                trophyEarned = true;
-            } else if (finalScore < 400 && finalScore > 0) {
-                if (resMsg) resMsg.innerText = "Fast... but can be faster.";
-            } else {
-                if (resMsg) resMsg.innerText = "Were you sleeping? 😴";
-            }
-        } else {
-            if (resVal) resVal.innerText = finalScore;
-
-            const earnedXP = Math.floor(finalScore / 10);
-            this.state.xp += earnedXP;
-
-            if (finalScore > 1000) {
-                if (resMsg) resMsg.innerText = "🏆 LEGENDARY RUN! Trophy Unlocked!";
-                this.state.trophies++;
-                trophyEarned = true;
-            } else {
-                if (resMsg) resMsg.innerText = `You earned ${earnedXP} XP!`;
-            }
-        }
-
-        if (trophyEarned && typeof confetti === 'function') {
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#FFD700', '#FFA500']
-            });
-            if (this.sfx.success) this.sfx.success.play();
-        }
-
-
-        if (typeof userStats !== 'undefined') {
-            userStats.trophies = this.state.trophies;
-            if (typeof Persistence !== 'undefined' && Persistence.save) {
-                Persistence.save(userStats);
-            }
-        }
-    },
-
-    stopGameLoop() {
-        if (this.state.gameLoop) cancelAnimationFrame(this.state.gameLoop);
-        if (this.state.reactionTimeout) clearTimeout(this.state.reactionTimeout);
-    },
-
-    initRunner() {
-        const container = document.getElementById('flash-runner');
-        if (container) container.style.display = 'block';
-        const canvas = document.getElementById('runner-canvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-
-        canvas.width = container.clientWidth;
-        canvas.height = container.clientHeight;
-
-        const player = { x: 50, y: canvas.height - 100, w: 40, h: 40, dy: 0, jumpStrength: 15, grounded: true };
-        const obstacles = [];
-        const gravity = 0.8;
-        const groundHeight = 60;
-        let speed = 5;
-        let frame = 0;
-
-        const handleInput = (e) => {
-            if (!this.state.active) return;
-            if ((e.code === 'Space' || e.code === 'ArrowUp') && player.grounded) {
-                player.dy = -player.jumpStrength;
-                player.grounded = false;
-            }
-        };
-        window.addEventListener('keydown', handleInput);
-
-        const types = [
-            { text: "💤", type: 'bad' },
-            { text: "⚠️", type: 'bad' },
-            { text: "☕", type: 'good' },
-            { text: "⚡", type: 'good' }
-        ];
-
-        const loop = () => {
-            if (!this.state.active) {
-                window.removeEventListener('keydown', handleInput);
-                return;
-            }
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = '#444';
-            ctx.fillRect(0, canvas.height - groundHeight, canvas.width, groundHeight);
-
-            player.dy += gravity;
-            player.y += player.dy;
-
-            if (player.y + player.h > canvas.height - groundHeight) {
-                player.y = canvas.height - groundHeight - player.h;
-                player.dy = 0;
-                player.grounded = true;
-            }
-
-            ctx.fillStyle = '#fbbf24';
-            ctx.shadowColor = '#f59e0b';
-            ctx.shadowBlur = 20;
-            ctx.fillRect(player.x, player.y, player.w, player.h);
-            ctx.shadowBlur = 0;
-
-            if (frame % 100 === 0) {
-                const item = types[Math.floor(Math.random() * types.length)];
-                obstacles.push({
-                    x: canvas.width,
-                    y: canvas.height - groundHeight - 40,
-                    w: 40,
-                    h: 40,
-                    ...item
-                });
-                speed += 0.1;
-            }
-
-            for (let i = obstacles.length - 1; i >= 0; i--) {
-                let obs = obstacles[i];
-                obs.x -= speed;
-
-                ctx.font = '30px Arial';
-                ctx.fillText(obs.text, obs.x + 5, obs.y + 30);
-
-                if (
-                    player.x < obs.x + obs.w &&
-                    player.x + player.w > obs.x &&
-                    player.y < obs.y + obs.h &&
-                    player.y + player.h > obs.y
-                ) {
-                    if (obs.type === 'bad') {
-
-                        if (this.sfx.fail) this.sfx.fail.play().catch(() => { });
-                        this.stopGame();
-                        return;
-                    } else {
-
-                        if (this.sfx.success) {
-                            const s = this.sfx.success.cloneNode();
-                            s.volume = 0.3;
-                            s.play().catch(() => { });
-                        }
-                        this.state.score += 50;
-                        const xp = document.getElementById('runner-xp');
-                        if (xp) xp.innerText = this.state.score;
-                        obstacles.splice(i, 1);
-                    }
-                }
-
-                if (obs.x + obs.w < 0) obstacles.splice(i, 1);
-            }
-
-            this.state.score++;
-            const xpOverall = document.getElementById('runner-xp');
-            if (xpOverall) xpOverall.innerText = this.state.score;
-
-            frame++;
-            this.state.gameLoop = requestAnimationFrame(loop);
-        };
-
-        loop();
-    },
-
-
-
-
-    initReaction() {
-        const container = document.getElementById('flash-reaction');
-        const bg = document.getElementById('reaction-bg');
-        const icon = document.getElementById('reaction-icon');
-        const text = document.getElementById('reaction-text');
-        const sub = document.getElementById('reaction-sub');
-
-        if (container) container.style.display = 'flex';
-
-
-        if (bg) bg.className = 'absolute inset-0 transition-colors duration-200 bg-red-900/50';
-        if (icon) icon.innerText = '⚠️';
-        if (text) text.innerText = 'WAIT...';
-        if (sub) sub.innerText = 'Do not click yet.';
-        this.reactionState = 'waiting';
-
-        if (this.sfx.wait) this.sfx.wait.play().catch(() => { });
-
-
-        const delay = Math.random() * 4000 + 2000;
-
-        this.state.reactionTimeout = setTimeout(() => {
-            if (!this.state.active) return;
-
-
-            this.reactionState = 'go';
-            this.state.startTime = Date.now();
-
-            if (bg) bg.className = 'absolute inset-0 transition-colors duration-0 bg-green-600';
-            if (icon) icon.innerText = '⚡';
-            if (text) text.innerText = 'CLICK!';
-            if (sub) sub.innerText = 'GO GO GO!';
-
-            if (this.sfx.wait) this.sfx.wait.pause();
-            if (this.sfx.signal) this.sfx.signal.play().catch(() => { });
-
-        }, delay);
-    },
-
-    handleReactionTap() {
-        if (!this.state.active || this.state.mode !== 'reaction') return;
-
-        if (this.reactionState === 'waiting') {
-
-            if (this.sfx.fail) this.sfx.fail.play().catch(() => { });
-            if (this.sfx.wait) this.sfx.wait.pause();
-            clearTimeout(this.state.reactionTimeout);
-
-            const txt = document.getElementById('reaction-text');
-            if (txt) txt.innerText = "TOO SOON!";
-            this.state.score = 0;
-            setTimeout(() => this.stopGame(), 1000);
-        } else if (this.reactionState === 'go') {
-
-            const reactionTime = Date.now() - this.state.startTime;
-            this.state.score = reactionTime;
-            if (this.sfx.success) this.sfx.success.play().catch(() => { });
-            this.stopGame();
-        }
-    }
-};
 // --- Harshit OS v20.0 (The Future Update) Logic ---
 
 function checkForSystemUpdates() {

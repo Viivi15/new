@@ -21,11 +21,10 @@ The system automatically starts **3 seconds** after your desktop loads. No butto
 - **4 minutes** → 🧩 Riddle time
 - **5 minutes** → 👁️ Eye rest reminder
 - **15 minutes** → 🚶 Walk encouragement
-- **25 minutes** → 🎵 Music break
+
 - **35 minutes** → 📜 Poem delivery
 - **38 minutes** → 🧹 Cleanup motivation  
 - **50 minutes** → 🖱️ Mouse game
-- **57 minutes** → 🔐 Cryptic message
 - **60 minutes** → 💭 Check-in
 
 #### 2️⃣ **Random Intervals** (Automatic)
@@ -49,14 +48,14 @@ When you **click a notification**, it opens an interactive modal:
 | 💧 Hydration | Water tracker with fillable glass |
 | 👁️ Eye Rest | 20-second countdown timer |
 | 🚶 Walk | Benefits list with encouragement |
-| 🎵 Music | Opens your Mixtape app |
+
 | 🧹 Cleanup | 5-minute challenge tasks |
 | 💭 Check-In | Mood selector (4 options) |
 | 🧩 Riddle | Interactive riddle game |
 | 😄 Dad Joke | Random joke display |
 | 📜 Poem | Beautiful poem for you |
 | 🖱️ Mouse Game | Particle playground |
-| 🔐 Cryptic | Decrypts to "I Love You ❤️" |
+
 | 🌙 Goodnight | Animated sequence |
 | ⏰ 12:21 AM | Opens first conversation + confetti |
 
@@ -104,9 +103,7 @@ Notifications slide in from the **top-right corner** of the screen.
    - User clicks → Smile encouragement modal
 7. **3:15 PM** - 🚶 "Movement Break" notification
    - User clicks → Walk benefits list
-8. **3:25 PM** - 🎵 "Music Break" notification
-   - User clicks → Mixtape app opens!
-9. **3:30 PM** - 😄 Random fun: "Dad Joke Module Active"
+8. **3:30 PM** - 😄 Random fun: "Dad Joke Module Active"
    - User clicks → Random dad joke displays
 
 ### At 12:21 AM (special)
