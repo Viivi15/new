@@ -1376,7 +1376,6 @@ function startCountdownGatekeeper() {
     const startDate = new Date(2026, 0, 1, 0, 0, 0).getTime();
     const totalDuration = targetDate - startDate;
 
-    window.goToDesktop = skipToDesktop;
 
     const phrases = [
         "Curating the memories...",
@@ -1435,21 +1434,7 @@ function startCountdownGatekeeper() {
     updateCountdown();
 }
 
-window.skipCountdown = function () {
-    state.countdownFinished = true;
-    startCountdownGatekeeper = null;
-    const cd = document.getElementById('countdown-phase');
-    if (cd) cd.style.display = 'none';
-    playBirthdaySequence();
-};
 
-window.test1221EasterEgg = function () {
-    createModal({
-        title: "12:21 AM — June 20, 2024",
-        desc: "🤔<br><br>This was the minute we first talked. The minute a random 'Hi' turned into months of late nights, inside jokes, and a friendship I never saw coming.<br><br>You didn't just pass through my life.<br>You changed it.<br><br>Some connections are meant to last.<br>This is one of them. ❤️",
-        icon: "🌙"
-    });
-};
 
 function playJourneyIntro() {
     if (document.getElementById('desktop').style.display === 'block') return;
@@ -1831,8 +1816,6 @@ function initDesktop() {
 }
 
 
-window.skipToDesktop = enterDesktop;
-window.goToDesktop = enterDesktop;
 
 
 const bearGifs = [
