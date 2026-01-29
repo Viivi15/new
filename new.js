@@ -6845,10 +6845,21 @@ function initNotificationSystem() {
     console.log('%c[Notification System] 💌 Initializing...', 'color: #ec4899; font-weight: bold;');
 
 
-    setInterval(check1221EasterEgg, 60000);
+    const randomPeriodicInterval = () => {
+        const min = 5 * 60 * 1000;
+        const max = 10 * 60 * 1000;
+        return Math.random() * (max - min) + min;
+    };
 
+    const schedulePeriodicChecks = () => {
+        setTimeout(() => {
+            check1221EasterEgg();
+            checkTimeBasedNotifications();
+            schedulePeriodicChecks();
+        }, randomPeriodicInterval());
+    };
 
-    setInterval(checkTimeBasedNotifications, 60000);
+    schedulePeriodicChecks();
 
 
     const randomCareInterval = () => {
@@ -6867,8 +6878,8 @@ function initNotificationSystem() {
     scheduleNextCareMessage();
 
     const randomFunInterval = () => {
-        const min = 15 * 60 * 1000;
-        const max = 30 * 60 * 1000;
+        const min = 10 * 60 * 1000;
+        const max = 20 * 60 * 1000;
         return Math.random() * (max - min) + min;
     };
 
@@ -6908,7 +6919,6 @@ function show1221Notification() {
             if (typeof Apps !== 'undefined') {
                 Apps.open('first-conversation');
             }
-            fireConfetti();
         }
     };
 
