@@ -1,4 +1,4 @@
-let hasShownTimeGreeting = false;
+﻿let hasShownTimeGreeting = false;
 
 function getTimePhase(hours) {
     if (hours >= 6 && hours < 12) return 'morning';
@@ -983,23 +983,13 @@ const apps = [
                 <!-- Footer / Signature -->
                 <div class="mt-10 pt-6 border-t border-slate-200 text-center opacity-0 animate-[fadeInUp_1s_ease-out_0.8s_forwards]">
                     <p class="font-[Dancing_Script] text-2xl text-indigo-600 mb-2">I’m really proud of the person you’re becoming.</p>
-                    <p class="text-xs text-slate-400 uppercase tracking-[0.2em] font-medium">May this year bring you peace</p>
+                    <p class="text-xs text-slate-400 uppercase tracking-[0.2em] font-medium">May this year bring you all the Happiness in da world</p>
                 </div>
 
                 <!-- Bottom Spacer for Scroll -->
                 <div class="h-8"></div>
             </div>
                      </div>
-
-            <!-- Footer / Signature -->
-            <div class="mt-10 pt-6 border-t border-slate-200 text-center opacity-0 animate-[fadeInUp_1s_ease-out_0.8s_forwards]">
-                <p class="font-[Dancing_Script] text-2xl text-indigo-600 mb-2">I’m really proud of the person you’re becoming.</p>
-                <p class="text-xs text-slate-400 uppercase tracking-[0.2em] font-medium">May this year bring you peace</p>
-            </div>
-
-            <!-- Bottom Spacer for Scroll -->
-            <div class="h-8"></div>
-        </div>
     </div>
 `},
 {
