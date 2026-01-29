@@ -973,7 +973,6 @@ body {
     }
 }
 
-/* Global Scrollbar managed in :root */
 
 .window.dark ::-webkit-scrollbar-thumb,
 .dark-mode ::-webkit-scrollbar-thumb {
@@ -2293,12 +2292,6 @@ body {
 .window.dark .win-icon:hover {
     background: rgba(255, 255, 255, 0.1);
 }
-
-
-
-
-/* Consolidated traffic light styles moved to top of file */
-
 
 .dark-close-btn {
     position: absolute;
@@ -7745,7 +7738,6 @@ body {
     animation: shake 0.3s ease-in-out;
 }
 
-/* --- Gifts Phase Styles --- */
 #gifts-overlay {
     background: radial-gradient(circle at center, #020617 0%, #000 100%);
 }
@@ -7890,7 +7882,6 @@ body {
     animation: zoomIn 0.5s ease-out forwards;
 }
 
-/* --- The Blueprint App Styles --- */
 .blueprint-container {
     height: 100%;
     background: rgba(15, 23, 42, 0.95);
@@ -7980,7 +7971,6 @@ body {
     font-style: italic;
 }
 
-/* --- Shravii.exe Enhanced --- */
 .shravii-container {
     background: linear-gradient(135deg, #fff5f7 0%, #fce4ec 100%);
     position: relative;

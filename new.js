@@ -5165,13 +5165,10 @@ window.closeLetter = function () {
             letter.classList.add('hidden');
             letter.style.display = 'none';
 
-            // Instead of finishBirthdaySequence, start the gifts phase
             startGiftsPhase();
         }, 1000);
     }
 };
-
-/* --- Gifts Phase Logic --- */
 const giftsData = [
     {
         id: 'keychain',
@@ -5668,7 +5665,7 @@ if (document.readyState === 'loading') {
 
 window.startFactsApp = startFactsApp;
 
-/* === RABBIT RUNNER LOGIC === */
+
 let rrActive = false;
 let rrScore = 0;
 let rrLoopIdx;
@@ -5677,7 +5674,7 @@ let rrVelocity = 0;
 let rrGravity = 0.6;
 let rrJumpStrength = -10;
 let rrPlatforms = [];
-let rrItems = []; // {type: 'sub'|'bhindi', x, y}
+let rrItems = []; 
 const rrSpeed = 3;
 
 function initRabbitGame() {
@@ -7513,7 +7510,6 @@ function start2027BirthdaySurprise(immediate = false) {
 }
 
 
-/* --- Blueprint App Logic --- */
 window.saveBlueprint = function () {
     const editor = document.getElementById('blueprint-editor');
     if (editor) {
