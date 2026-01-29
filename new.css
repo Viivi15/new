@@ -8150,13 +8150,26 @@ body {
 }
 
 @keyframes flyHeart {
-    0% {
-        transform: translateY(0) scale(1) rotate(0deg);
-        opacity: 1;
-    }
+0% {
+transform: translateY(0) scale(1) rotate(0deg);
+opacity: 1;
+}
 
-    100% {
-        transform: translateY(-100px) scale(1.5) rotate(45deg);
-        opacity: 0;
-    }
+100% {
+transform: translateY(-100px) scale(1.5) rotate(45deg);
+opacity: 0;
+}
+}
+
+/* Vault password input styling */
+#vault-passcode {
+color: #000 !important;
+letter-spacing: 0.3em !important;
+font-family: monospace !important;
+font-size: 1.2em !important;
+}
+
+#vault-passcode::placeholder {
+color: #999 !important;
+letter-spacing: normal !important;
 }
