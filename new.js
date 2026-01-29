@@ -444,6 +444,45 @@ function mrSnowFlurry() {
 const apps = [
 
     {
+        id: 'app-blueprint', title: 'The Blueprint', icon: '<img src="./assets/icons/app_blueprint.png" alt="blueprint" style="width: 100%; height: 100%;">', dock: true, width: 800, height: 650,
+        content: `
+        <div class="h-full custom-scroll p-10 select-text blueprint-container">
+            <div class="dark-header">
+                <h2>The Blueprint</h2>
+                <div class="dark-line"></div>
+            </div>
+            <!-- Interactive Editor Area -->
+            <div id="blueprint-editor" class="dark-body outline-none" contenteditable="true" spellcheck="false" oninput="saveBlueprint()">
+                <p><strong>Subject: Why this world looks the way it does</strong></p>
+                <br>
+                <p>I thought about making this loud. Or flashy.<br> But then I thought about you.</p>
+                <p>This isn't about spectacle.<br> It's about a place that feels like <strong>Us</strong>.</p>
+                <hr class="dark-divider">
+                <p>Small moments.<br>Honesty.<br>Comfort.</p>
+                <p class="dark-quote"><em>"Because you don't need spectacle to feel something real."</em></p>
+            </div>
+        </div>
+        `,
+        onOpen: () => {
+            const win = document.getElementById('win-app-blueprint');
+            if (win) {
+                const editor = win.querySelector('#blueprint-editor');
+                if (editor) {
+                    const saved = localStorage.getItem('harshit_os_blueprint');
+                    if (saved) {
+                        editor.innerHTML = saved; // Load existing work
+                    } else {
+                        // First-time reveal
+                        if (!editor.dataset.original) editor.dataset.original = editor.innerHTML;
+                        editor.innerHTML = '';
+                        runSmartTypewriter(editor, editor.dataset.original, 30);
+                    }
+                }
+            }
+        }
+    },
+
+    {
         id: 'folder-system', title: 'System Core', icon: '<img src="./assets/icons/folder_system.png" alt="folder" style="filter: sepia(1) saturate(3) hue-rotate(200deg);">', dock: false, width: 800, height: 600, content: `
         <div class="h-full bg-gradient-to-b from-gray-50 to-white p-6 overflow-y-auto custom-scroll">
             <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6 border-b border-gray-100 pb-2">Root Directory</div>
@@ -492,7 +531,6 @@ const apps = [
 
             <div class="win-icon group" onclick="Apps.open('app-bloom')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_bloom_new.png" alt="bloom" style="width: 100%; height: 100%;"></div><div class="icon-label">Daily Bloom</div></div>
 
-            <div class="win-icon" onclick="Apps.open('tired')"><div class="icon-img"><img src="./assets/icons/app_sleep.png" alt="tired" style="width: 100%; height: 100%;"></div><div class="icon-label">When Tired</div></div>
             <div class="win-icon" onclick="Apps.open('thank-you')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_gratitude_new.png" alt="gratitude" style="width: 100%; height: 100%;"></div><div class="icon-label">Gratitude</div></div>
             <div class="win-icon" onclick="Apps.open('inkpot-new')"><div class="icon-img"><img src="./assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;"></div><div class="icon-label">The Inkpot</div></div>
             <div class="win-icon" onclick="Apps.open('app-capsule')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_capsule_new.png" alt="capsule" style="width: 100%; height: 100%;"></div><div class="icon-label">Time Capsule</div></div>
@@ -1412,49 +1450,8 @@ const apps = [
             </div>
 
         </div>
-    `},
-
-    {
-        id: 'app-blueprint', title: 'The Blueprint', icon: '<img src="./assets/icons/app_blueprint.png" alt="blueprint" style="width: 100%; height: 100%;">', dock: true, width: 800, height: 650,
-        content: `
-        <div class="h-full custom-scroll p-10 select-text blueprint-container">
-            <div class="dark-header">
-                <h2>The Blueprint</h2>
-                <div class="dark-line"></div>
-            </div>
-            <!-- Interactive Editor Area -->
-            <div id="blueprint-editor" class="dark-body outline-none" contenteditable="true" spellcheck="false" oninput="saveBlueprint()">
-                <p><strong>Subject: Why this world looks the way it does</strong></p>
-                <br>
-                <p>I thought about making this loud. Or flashy.<br> But then I thought about you.</p>
-                <p>This isn't about spectacle.<br> It's about a place that feels like <strong>Us</strong>.</p>
-                <hr class="dark-divider">
-                <p>Small moments.<br>Honesty.<br>Comfort.</p>
-                <p class="dark-quote"><em>"Because you don’t need spectacle to feel something real."</em></p>
-            </div>
-        </div>
-        `,
-        onOpen: () => {
-            const win = document.getElementById('win-app-blueprint');
-            if (win) {
-                const editor = win.querySelector('#blueprint-editor');
-                if (editor) {
-                    const saved = localStorage.getItem('harshit_os_blueprint');
-                    if (saved) {
-                        editor.innerHTML = saved; // Load existing work
-                    } else {
-                        // First-time reveal
-                        if (!editor.dataset.original) editor.dataset.original = editor.innerHTML;
-                        editor.innerHTML = '';
-                        runSmartTypewriter(editor, editor.dataset.original, 30);
-                    }
-                }
-            }
-        }
-    },
-
+    `}
 ];
-
 
 const CapsuleApp = {
     data: {
@@ -5406,7 +5403,7 @@ const notDumbSlides = [
                 </div>
             </div>
         </div>
-    `}
+    `},
 ];
 
 function initNotDumb() {
@@ -6122,172 +6119,6 @@ apps.push({
 `});
 
 
-const TiredApp = {
-    audio: null,
-    display: null,
-    progressBar: null,
-    progressFill: null,
-    playIcon: null,
-    transcript: [
-
-        { time: 0, text: "Hey..." },
-        { time: 2, text: "I know things feel heavy right now." },
-        { time: 5, text: "Just take a deep breath." },
-        { time: 8, text: "You don't have to carry the world on your shoulders." },
-        { time: 12, text: "It's okay to rest." },
-        { time: 16, text: "You are doing enough." },
-        { time: 20, text: "Sleep tight. Tomorrow is a new day." },
-        { time: 25, text: "I'm here." }
-    ],
-
-    init() {
-        this.audio = document.getElementById('tired-audio');
-        this.display = document.getElementById('tired-display');
-        this.progressBar = document.getElementById('tired-progress-bar');
-        this.progressFill = document.getElementById('tired-progress-fill');
-        this.playIcon = document.getElementById('tired-play-icon');
-
-        if (this.audio) {
-            this.audio.addEventListener('timeupdate', () => this.syncVisuals());
-            this.audio.addEventListener('ended', () => this.reset());
-        }
-    },
-
-    togglePlay() {
-        if (!this.audio) return;
-
-        if (this.audio.paused) {
-            this.audio.play();
-            if (this.playIcon) {
-                this.playIcon.classList.remove('fa-play');
-                this.playIcon.classList.add('fa-pause');
-            }
-
-            const pulse = document.getElementById('tired-bg-pulse');
-            if (pulse) pulse.classList.add('animate-pulse');
-        } else {
-            this.audio.pause();
-            if (this.playIcon) {
-                this.playIcon.classList.remove('fa-pause');
-                this.playIcon.classList.add('fa-play');
-            }
-            const pulse = document.getElementById('tired-bg-pulse');
-            if (pulse) pulse.classList.remove('animate-pulse');
-        }
-    },
-
-    syncVisuals() {
-        if (!this.audio) return;
-        const currentTime = this.audio.currentTime;
-
-
-        if (this.progressFill) {
-            const pct = (currentTime / this.audio.duration) * 100 || 0;
-            this.progressFill.style.width = pct + '%';
-        }
-
-
-        if (this.display) {
-            const activeSegment = this.transcript.slice().reverse().find(seg => currentTime >= seg.time);
-
-            if (activeSegment) {
-                if (this.display.innerText !== activeSegment.text) {
-
-                    this.display.style.opacity = 0;
-                    this.display.style.transform = 'translateY(10px) scale(0.95)';
-
-                    setTimeout(() => {
-                        this.display.innerText = activeSegment.text;
-                        this.display.style.opacity = 1;
-                        this.display.style.transform = 'translateY(0) scale(1)';
-                    }, 300);
-                }
-            } else {
-
-                if (currentTime < 1 && this.display.innerText !== "Press play...") {
-
-                }
-            }
-        }
-    },
-
-    seek(pct) {
-        if (!this.audio) return;
-        const time = (pct / 100) * this.audio.duration;
-        this.audio.currentTime = time;
-    },
-
-    reset() {
-        if (this.playIcon) {
-            this.playIcon.classList.remove('fa-pause');
-            this.playIcon.classList.add('fa-play');
-        }
-        const pulse = document.getElementById('tired-bg-pulse');
-        if (pulse) pulse.classList.remove('animate-pulse');
-
-        if (this.display) {
-            this.display.style.opacity = 0.5;
-            this.display.innerText = "Press play...";
-            this.display.style.transform = 'none';
-        }
-        if (this.progressFill) this.progressFill.style.width = '0%';
-    }
-};
-
-apps.push({
-    id: 'tired',
-    title: 'When Tired',
-    icon: 'assets/icons/app_sleep.png',
-    dock: false,
-    folder: 'folder-feelings',
-    width: 600,
-    height: 500,
-    onOpen: () => {
-        setTimeout(() => TiredApp.init(), 100);
-    },
-    onClose: () => {
-        if (TiredApp.audio) {
-            TiredApp.audio.pause();
-            TiredApp.audio.currentTime = 0;
-            TiredApp.reset();
-        }
-    },
-    content: `
-    <div class="h-full bg-[#0f172a] text-blue-100 flex flex-col relative overflow-hidden font-serif select-none">
-        
-        <!-- Ambient Background -->
-        <div id="tired-bg-pulse" class="absolute inset-0 bg-blue-900/10 blur-[100px] transition-opacity duration-1000"></div>
-        <div class="absolute inset-0 opacity-10" style="background-image: url('assets/images/pattern_stardust.png');"></div>
-
-        <!-- Main Display Area -->
-        <div class="relative z-10 flex-1 flex flex-col items-center justify-center p-10 text-center">
-            <div id="tired-display" class="text-2xl md:text-3xl font-light text-blue-50/90 leading-relaxed drop-shadow-lg transition-all duration-700 ease-out opacity-60">
-                Press play...
-            </div>
-        </div>
-
-        <!-- Controls -->
-        <div class="relative z-20 pb-10 px-10 flex flex-col items-center w-full">
-            
-            <!-- Replace 'src' with your actual audio file -->
-            <audio id="tired-audio" preload="metadata"></audio> 
-            
-            <!-- Custom Progress Bar -->
-            <div id="tired-progress-bar" class="w-full max-w-md h-1.5 bg-white/5 rounded-full mb-8 relative cursor-pointer group overflow-hidden" 
-                 onclick="const rect = this.getBoundingClientRect(); const pct = ((event.clientX - rect.left) / rect.width) * 100; TiredApp.seek(pct);">
-                <div id="tired-progress-fill" class="absolute left-0 top-0 h-full bg-blue-300/50 rounded-full shadow-[0_0_10px_rgba(147,197,253,0.5)] transition-all duration-100" style="width: 0%"></div>
-                <div class="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors"></div>
-
-
-            <!-- Play Button -->
-            <button onclick="TiredApp.togglePlay()" class="w-14 h-14 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/10 hover:scale-105 active:scale-95 transition-all duration-300 shadow-2xl group">
-                <i id="tired-play-icon" class="fas fa-play text-lg text-blue-200 group-hover:text-white ml-0.5 transition-colors"></i>
-            </button>
-            
-            <div class="mt-4 text-[10px] text-blue-400/30 uppercase tracking-[0.3em] font-sans">Synced Voice Note</div>
-        </div>
-    </div>
-`});
 
 const ConstellationApp = {
     messages: [
