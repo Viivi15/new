@@ -64,7 +64,7 @@ function updateSystemBasedOnTime(hours) {
                         window.hasTriggered1221 = true;
                         createModal({
                             title: "12:21 AM — June 20, 2024",
-                            desc: "OH HEYYY IT'S 12:21 rememberr this dayy 🤔<br><br>This was the minute we first talked. The minute a random 'Hi' turned into months of late nights, inside jokes, and a friendship I never saw coming.<br><br>You didn't just pass through my life.<br>You changed it.<br><br>Some connections are meant to last.<br>This is one of them. ❤️",
+                            desc: "12:21 🤔<br><br>This was the minute we first talked. The minute a random 'Hi' turned into months of late nights, inside jokes, and a friendship I never saw coming.<br><br>You didn't just pass through my life.<br>You changed it.<br><br>Some connections are meant to last.<br>This is one of them. ❤️",
                             icon: "🌙"
                         });
                     }
@@ -1931,7 +1931,7 @@ window.cutCake = function () {
                 if (right) right.style.transform = 'translateX(10px)';
             });
 
-            if (instruction) instruction.innerText = "Here is a piece for you! 🍰";
+            if (instruction) instruction.innerText = "Here is a piece for you 🍰";
 
             setTimeout(() => {
                 showLetterOverlay();
@@ -2073,7 +2073,6 @@ function enterDesktop() {
 
     initDesktop();
 }
-
 
 let zIndex = 100;
 function initDesktop() {
