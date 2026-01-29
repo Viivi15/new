@@ -470,9 +470,9 @@ const apps = [
                 if (editor) {
                     const saved = localStorage.getItem('harshit_os_blueprint');
                     if (saved) {
-                        editor.innerHTML = saved; // Load existing work
+                        editor.innerHTML = saved;
                     } else {
-                        // First-time reveal
+                       
                         if (!editor.dataset.original) editor.dataset.original = editor.innerHTML;
                         editor.innerHTML = '';
                         runSmartTypewriter(editor, editor.dataset.original, 30);
@@ -1127,7 +1127,7 @@ const CapsuleApp = {
 
     openCategory(cat) {
         this.currentCat = cat;
-        // Random start
+       
         this.idx = Math.floor(Math.random() * this.data[cat].length);
         this.isRevealed = false;
 
@@ -1136,7 +1136,7 @@ const CapsuleApp = {
 
         if (view) {
             view.classList.remove('hidden');
-            // Force reflow
+        
             void view.offsetWidth;
             view.style.opacity = 1;
         }
@@ -1154,12 +1154,12 @@ const CapsuleApp = {
     },
 
     reveal() {
-        if (this.isRevealed) return; // Only allow reveal once
+        if (this.isRevealed) return; 
 
         const card = document.getElementById('capsule-card');
         if (!card) return;
 
-        // Animate Out
+
         card.style.transition = "all 0.4s ease-in";
         card.style.transform = "rotateY(90deg)";
         card.style.opacity = 0;
@@ -1168,12 +1168,10 @@ const CapsuleApp = {
             this.isRevealed = true;
             this.renderCard(true);
 
-            // Prepare for Animate In
             card.style.transition = 'none';
             card.style.transform = "rotateY(-90deg)";
 
             setTimeout(() => {
-                // Animate In with new text
                 card.style.transition = "all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
                 card.style.transform = "rotateY(0)";
                 card.style.opacity = 1;
@@ -1184,10 +1182,10 @@ const CapsuleApp = {
     renderCard(isRevealedParams) {
         const textEl = document.getElementById('capsule-text');
         const iconEl = document.getElementById('capsule-icon');
-        const hintEl = document.getElementById('capsule-hint'); // Changed ID for easier targeting
+        const hintEl = document.getElementById('capsule-hint'); 
 
         if (!this.isRevealed) {
-            // Closed State
+         
             if (textEl) textEl.innerHTML = "Tap to open...";
             if (hintEl) {
                 hintEl.innerText = "One message awaits.";
@@ -1195,10 +1193,10 @@ const CapsuleApp = {
             }
             if (iconEl) iconEl.innerText = "✨";
         } else {
-            // Revealed State
+           
             if (textEl) textEl.innerHTML = this.data[this.currentCat][this.idx];
             if (hintEl) {
-                hintEl.style.opacity = 0; // Hide hint after reveal
+                hintEl.style.opacity = 0; 
             }
 
             let icon = "✨";
@@ -1210,9 +1208,6 @@ const CapsuleApp = {
         }
     }
 };
-
-
-
 
 const BanterApp = {
     bure: 0,
@@ -1846,14 +1841,12 @@ window.blowIndividualCandle = function (flame) {
 
     flame.classList.add('blown');
 
-    // Add smoke effect
     const smoke = document.createElement('div');
     smoke.className = 'smoke';
     if (flame.parentElement) {
         flame.parentElement.appendChild(smoke);
     }
 
-    // Check if all candles are blown
     const allFlames = document.querySelectorAll('.candles-container .flame');
     const blownFlames = document.querySelectorAll('.candles-container .flame.blown');
 
@@ -1864,7 +1857,6 @@ window.blowIndividualCandle = function (flame) {
             msg.style.opacity = '1';
         }
 
-        // Proceed to next slide after a delay
         setTimeout(() => {
             showBirthdaySlide(3);
         }, 3000);
@@ -1965,7 +1957,7 @@ window.showPasswordScreen = function () {
     if (screen) {
         screen.classList.remove('hidden');
         screen.style.display = 'flex';
-        // Force reflow
+
         void screen.offsetWidth;
         setTimeout(() => screen.style.opacity = 1, 50);
         if (input) setTimeout(() => input.focus(), 100);
@@ -1995,7 +1987,6 @@ window.checkDesktopPassword = function () {
             error.style.opacity = 1;
             if (input) {
                 input.value = '';
-                // Shake animation
                 input.style.transform = "translateX(5px)";
                 setTimeout(() => input.style.transform = "translateX(-5px)", 50);
                 setTimeout(() => input.style.transform = "translateX(5px)", 100);
@@ -2097,8 +2088,6 @@ function initDesktop() {
         }
     });
 
-
-    // Redundant manual bpIcon creation removed - now handled via apps array
     setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }); }, 1000);
 
 
@@ -5252,12 +5241,11 @@ function revealGift(id) {
 
     img.src = gift.img;
     title.innerText = gift.title;
-    desc.innerHTML = ''; // Clear for typewriter
+    desc.innerHTML = ''; 
 
     focus.classList.remove('hidden');
     focus.classList.add('visible');
 
-    // Typewriter effect
     let i = 0;
     const speed = 40;
     function type() {
@@ -5274,7 +5262,6 @@ function revealGift(id) {
     openedGifts.add(id);
     renderGifts();
 
-    // Show continue button if all gifts opened
     if (openedGifts.size === giftsData.length) {
         const btn = document.getElementById('gifts-continue-btn');
         btn.classList.add('visible');
@@ -5686,14 +5673,13 @@ function initRabbitGame() {
 function startRabbitGame() {
     rrActive = true;
     rrScore = 0;
-    rrPlayerY = 300; // Start mid-air
+    rrPlayerY = 300;
     rrVelocity = 0;
     rrPlatforms = [];
     rrItems = [];
     document.getElementById('rr-start-screen').style.display = 'none';
     document.getElementById('rr-score').innerText = 'Score: 0';
 
-    // Spawn initial platform
     spawnPlatform(50, 400, 200);
     spawnPlatform(300, 350, 150);
     spawnPlatform(550, 300, 150);
@@ -5701,7 +5687,6 @@ function startRabbitGame() {
     if (rrLoopIdx) cancelAnimationFrame(rrLoopIdx);
     rrGameLoop();
 
-    // Controls
     document.getElementById('rr-container').onmousedown = jumpRabbit;
     document.addEventListener('keydown', (e) => { if (e.code === 'Space') jumpRabbit(); });
 }
@@ -5716,9 +5701,8 @@ function spawnPlatform(x, y, w) {
     const txt = msgs[Math.floor(Math.random() * msgs.length)];
     rrPlatforms.push({ x, y, w, text: txt, passed: false });
 
-    // Spawn item? 40% chance
     if (Math.random() > 0.6) {
-        const type = Math.random() > 0.3 ? 'sub' : 'bhindi'; // 70% Sub, 30% Bhindi
+        const type = Math.random() > 0.3 ? 'sub' : 'bhindi';
         rrItems.push({ type, x: x + w / 2 - 15, y: y - 40, collected: false });
     }
 }
@@ -5726,11 +5710,11 @@ function spawnPlatform(x, y, w) {
 function rrGameLoop() {
     if (!rrActive) return;
 
-    // Update Player
+
     rrVelocity += rrGravity;
     rrPlayerY += rrVelocity;
 
-    // Floor Collision (Game Over)
+
     if (rrPlayerY > 480) {
         gameOverRabbit("You fell into the void!");
         return;
@@ -5742,23 +5726,19 @@ function rrGameLoop() {
         playerEl.style.transform = `rotate(${rrVelocity * 2}deg)`;
     }
 
-    // Update Platforms
-    const world = document.getElementById('rr-world');
-    world.innerHTML = ''; // Clear & Redraw (Naive but functional for simple DOM game)
 
-    // --- RENDER & LOGIC LOOP ---
-    // 1. New Platform Spawning
+    const world = document.getElementById('rr-world');
+    world.innerHTML = ''; 
+
     const lastPlat = rrPlatforms[rrPlatforms.length - 1];
     if (lastPlat && lastPlat.x < 600) {
         const newY = Math.max(150, Math.min(400, lastPlat.y + (Math.random() * 200 - 100)));
         spawnPlatform(800 + Math.random() * 100, newY, 120 + Math.random() * 80);
     }
 
-    // 2. Platforms Logic
     rrPlatforms.forEach((p, i) => {
         p.x -= rrSpeed;
 
-        // Render
         if (p.x + p.w > 0 && p.x < 800) {
             const div = document.createElement('div');
             div.className = 'absolute bg-white border-2 border-gray-200 rounded-2xl flex items-center justify-center text-xs font-bold text-gray-500 shadow-sm';
@@ -5770,8 +5750,6 @@ function rrGameLoop() {
             world.appendChild(div);
         }
 
-        // Collision: Rabbit landing on Platform
-        // Rabbit is ~40x40 at x=50
         if (rrVelocity > 0 &&
             rrPlayerY + 40 >= p.y &&
             rrPlayerY + 40 <= p.y + 20 &&
@@ -5779,18 +5757,13 @@ function rrGameLoop() {
             50 < p.x + p.w) {
             rrVelocity = 0;
             rrPlayerY = p.y - 40;
-            // Jump Auto check? No, manual jump only
         }
-
-        // Cleanup
         if (p.x + p.w < -100) rrPlatforms.splice(i, 1);
     });
 
-    // 3. Items Logic
     rrItems.forEach((item, i) => {
         item.x -= rrSpeed;
 
-        // Render
         if (!item.collected && item.x > 0 && item.x < 800) {
             const el = document.createElement('div');
             el.className = 'absolute text-2xl animate-bounce';
@@ -5799,8 +5772,6 @@ function rrGameLoop() {
             el.style.top = item.y + 'px';
             world.appendChild(el);
 
-            // Collision with Player
-            // Dist check
             const dx = (50 + 20) - (item.x + 15);
             const dy = (rrPlayerY + 20) - (item.y + 15);
             if (Math.sqrt(dx * dx + dy * dy) < 40) {
@@ -5915,8 +5886,6 @@ apps.push({
         </div>
     </div>
 `});
-
-
 
 const ConstellationApp = {
     messages: [
@@ -7325,23 +7294,13 @@ window.toggleTruth = function (card) {
     card.classList.toggle('active');
 };
 
-
-
-
-
-// --- Harshit OS v20.0 (The Future Update) Logic ---
-
 function checkForSystemUpdates() {
     const now = new Date();
-    const updateDate = new Date(2027, 0, 30); // Jan 30, 2027
-
-    // Check if v20 has already been installed in this browser
+    const updateDate = new Date(2027, 0, 30); 
     if (localStorage.getItem('v20_installed')) {
-        start2027BirthdaySurprise(true); // Skip update, go straight to surprise
+        start2027BirthdaySurprise(true); 
         return;
     }
-
-    // If it's on or after Jan 30, 2027
     if (now >= updateDate) {
         triggerSystemUpdate();
     }
@@ -7355,7 +7314,7 @@ function triggerSystemUpdate(isForced = false) {
         action: () => {
             openUpdateWindow();
         }
-    }, true); // isSpecial = true ensures it doesn't auto-dismiss too fast
+    }, true); 
 
     if (isForced) {
         setTimeout(openUpdateWindow, 500);
@@ -7424,8 +7383,6 @@ function startUpdateInstallation() {
 
 function finishUpdate() {
     closeUpdateWindow();
-
-    // Restart sequence
     const restart = document.createElement('div');
     restart.className = 'restart-screen animate-fade-in';
     restart.innerHTML = `
