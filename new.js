@@ -177,8 +177,9 @@ const journeyData = [
         color: "#3b82f6",
         items: [
             { type: "title", text: "The Beginning" },
-            { type: "scene", text: "It all started with a simple 'Hi'. Every conversation since then has been a building block for us." },
-           
+            { type: "scene", text: "It all started with a simple 'Hi'. Who knew it would lead to a special OS built just for you? Every conversation since then has been a building block for us." },
+            { type: "chat", speaker: "System", text: "Connection Established — June 20, 2024 • 12:21 AM" },
+            { type: "scene", text: "We met late at night without knowing it would turn into anything. The conversation was random, easy, and it kept going longer than expected." }
         ]
     },
     {
@@ -188,7 +189,8 @@ const journeyData = [
         color: "#a855f7",
         items: [
             { type: "title", text: "To Knowing" },
-            { type: "scene", text: "From 'Strangers' to 'Home', we've built a language of our own. These small moments are what make the journey worth it." },
+            { type: "scene", text: "From '' to 'Ota', we've built a language of our own. These small moments are what make the journey worth it." },
+            { type: "scene", text: "Over time, you stayed involved and helped wherever you could." },
             { type: "scene", text: "Trust didn’t come all at once. It built slowly, through consistency and effort." }
         ]
     },
@@ -200,6 +202,7 @@ const journeyData = [
         items: [
             { type: "title", text: "Feeling Protected" },
             { type: "scene", text: "There was a moment when I was overthinking and feeling small. You noticed, and you stepped in without being asked." },
+            { type: "chat", speaker: "Harshit", text: "You don’t have to tell people what they want to hear." }
         ]
     },
     {
@@ -209,7 +212,8 @@ const journeyData = [
         color: "#f59e0b",
         items: [
             { type: "title", text: "Comfort" },
-            { type: "scene", text: "Talking to you slowly became a habit. Not something I had to think about ...just something that felt natural." }, 
+            { type: "scene", text: "Talking to you slowly became a habit. Not something I had to think about — just something that felt natural." },
+            { type: "chat", speaker: "Ota Rules", text: "Don’t hide anything. Just stay real." }
         ]
     },
     {
@@ -220,12 +224,22 @@ const journeyData = [
         items: [
             { type: "title", text: "Late-Night Talks" },
             { type: "scene", text: "Most of our real conversations happened when everything else was quiet." },
-            { type: "scene", text: "Some nights were light, some were heavy... but we stayed, even when it was easier to leave." }
+            { type: "scene", text: "Some nights were light, some were heavy — but we stayed, even when it was easier to leave." }
         ]
     },
-
     {
         chapter: 6,
+        title: "Pride",
+        subtitle: "Seeing You Grow",
+        color: "#3b82f6",
+        items: [
+            { type: "title", text: "Pride" },
+            { type: "scene", text: "Your birthday wasn’t just about the date. It was about seeing how much you’ve grown." },
+            { type: "chat", speaker: "Harshit", text: "Thank you… aapki vajah se hi main ye sab kar paata hoon aur khush rehta hoon." }
+        ]
+    },
+    {
+        chapter: 7,
         title: "Growing Together",
         subtitle: "Side by Side",
         color: "#8b5cf6",
@@ -236,7 +250,7 @@ const journeyData = [
         ]
     },
     {
-        chapter: 7,
+        chapter: 8,
         title: "Fights & Fixing Things",
         subtitle: "Not Walking Away",
         color: "#ef4444",
@@ -247,19 +261,19 @@ const journeyData = [
         ]
     },
     {
-        chapter: 8,
+        chapter: 9,
         title: "Still Here",
         subtitle: "After Everything",
         color: "#22c55e",
         items: [
             { type: "title", text: "Still Here" },
-            { type: "scene", text: "We've faced shifts and changes, but through it all, the care remained." },
-            { type: "scene", text: "After everything... the changes, the late nights, the misunderstandings — we’re still here." },
+            { type: "scene", text: "We've faced shifts and changes, but through it all, the care remained. This system isn't just about the past; it's a bridge to what's next." },
+            { type: "scene", text: "After everything — the changes, the late nights, the misunderstandings — we’re still here." },
             { type: "scene", text: "That, by itself, means more than anything else." }
         ]
     },
     {
-        chapter: 9,
+        chapter: 10,
         title: "The Gallery",
         subtitle: "Us Moments",
         color: "#ec4899",
@@ -458,7 +472,7 @@ const apps = [
                     if (saved) {
                         editor.innerHTML = saved;
                     } else {
-
+                       
                         if (!editor.dataset.original) editor.dataset.original = editor.innerHTML;
                         editor.innerHTML = '';
                         runSmartTypewriter(editor, editor.dataset.original, 30);
@@ -512,6 +526,7 @@ const apps = [
             <div class="win-icon group" onclick="Apps.open('app-bloom')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_bloom_new.png" alt="bloom" style="width: 100%; height: 100%;"></div><div class="icon-label">Daily Bloom</div></div>
 
             <div class="win-icon" onclick="Apps.open('thank-you')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_gratitude_new.png" alt="gratitude" style="width: 100%; height: 100%;"></div><div class="icon-label">Gratitude</div></div>
+            <div class="win-icon" onclick="Apps.open('inkpot')"><div class="icon-img"><img src="./assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;"></div><div class="icon-label">The Inkpot</div></div>
 
             <div class="win-icon" onclick="Apps.open('last-thing')"><div class="icon-img"><img src="./assets/icons/app_rose.png" alt="last thing" style="width: 100%; height: 100%;"></div><div class="icon-label">One Last Thing</div></div>
 
@@ -929,8 +944,8 @@ const apps = [
                      </div>
     </div>
 `},
-    {
-        id: 'soft-core', title: 'Soft Core', icon: '<img src="./assets/icons/app_softcore.png" alt="softcore" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-system', width: 800, height: 600, content: `
+{
+    id: 'soft-core', title: 'Soft Core', icon: '<img src="./assets/icons/app_softcore.png" alt="softcore" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-system', width: 800, height: 600, content: `
     <div class="h-full bg-gradient-to-br from-slate-50 to-indigo-50/50 p-8 flex flex-col items-center relative overflow-hidden">
         <!-- Background Watermark -->
         <div class="absolute top-[-20px] right-[-20px] text-[180px] font-serif font-bold text-slate-100 select-none z-0 rotate-12">SOFT</div>
@@ -1011,43 +1026,6 @@ const apps = [
             </div>
 
         </div>
-    },
-    {
-        id: 'shravii', title: 'Shravii.exe', icon: '<img src="./assets/icons/app_shravii.png" alt="shravii" style="width: 100%; height: 100%;">', dock: true, width: 500, height: 600, 
-        onOpen: () => {
-            if (typeof initShraviiMessages === 'function') initShraviiMessages();
-        },
-        content: `
-        <div class="shravii-container">
-            <div class="shravii-header">
-                <div class="shravii-avatar">
-                    <img src="./assets/icons/app_shravii.png" alt="Shravii">
-                    <div class="shravii-pulse"></div>
-                </div>
-                <div class="shravii-name-box">
-                    <div class="shravii-name">Shravii</div>
-                    <div class="shravii-status">The part of your life that won’t stop caring.</div>
-                </div>
-            </div>
-            
-            <div class="shravii-chat-area custom-scroll" id="shravii-chat">
-                <!-- Chat bubbles will appear here -->
-            </div>
-
-            <div class="shravii-gif-box">
-                <img src="assets/gifs/bear_love.gif" alt="heart bear">
-            </div>
-
-            <div class="shravii-controls">
-                <button class="shravii-btn primary" onclick="shraviiSendMessage()">
-                    <span>Send Love</span>
-                    <i class="fas fa-heart"></i>
-                </button>
-                <button class="shravii-btn" onclick="shraviiTriggerSurprise()">
-                    <span>✨</span>
-                </button>
-            </div>
-        </div>
     `}
 ];
 
@@ -1101,7 +1079,7 @@ const CapsuleApp = {
 
     openCategory(cat) {
         this.currentCat = cat;
-
+       
         this.idx = Math.floor(Math.random() * this.data[cat].length);
         this.isRevealed = false;
 
@@ -1110,7 +1088,7 @@ const CapsuleApp = {
 
         if (view) {
             view.classList.remove('hidden');
-
+        
             void view.offsetWidth;
             view.style.opacity = 1;
         }
@@ -1128,7 +1106,7 @@ const CapsuleApp = {
     },
 
     reveal() {
-        if (this.isRevealed) return;
+        if (this.isRevealed) return; 
 
         const card = document.getElementById('capsule-card');
         if (!card) return;
@@ -1156,10 +1134,10 @@ const CapsuleApp = {
     renderCard(isRevealedParams) {
         const textEl = document.getElementById('capsule-text');
         const iconEl = document.getElementById('capsule-icon');
-        const hintEl = document.getElementById('capsule-hint');
+        const hintEl = document.getElementById('capsule-hint'); 
 
         if (!this.isRevealed) {
-
+         
             if (textEl) textEl.innerHTML = "Tap to open...";
             if (hintEl) {
                 hintEl.innerText = "One message awaits.";
@@ -1167,10 +1145,10 @@ const CapsuleApp = {
             }
             if (iconEl) iconEl.innerText = "✨";
         } else {
-
+           
             if (textEl) textEl.innerHTML = this.data[this.currentCat][this.idx];
             if (hintEl) {
-                hintEl.style.opacity = 0;
+                hintEl.style.opacity = 0; 
             }
 
             let icon = "✨";
@@ -1195,11 +1173,11 @@ function showUpdate(el) {
 
     const area = document.getElementById('settings-area');
     area.innerHTML = `
-    < div class="system-update" >
+        <div class="system-update">
             <h2>V-Space 19.0</h2>
             <p class="update-subtitle">System Update</p>
             <pre class="patch-notes" id="patchNotes"></pre>
-        </div >
+        </div>
     `;
 
     const patchText = "• Improved emotional resilience under pressure\\n• Fixed issue where self-doubt appeared late at night\\n• Added support for silence without loneliness\\n• Optimized strength — quieter, more stable\\n• Enhanced responsibility handling\\n• Known issue: still carries more than necessary";
@@ -1229,7 +1207,7 @@ function resetSettingsView(el) {
     }
     const area = document.getElementById('settings-area');
     area.innerHTML = `
-    < div class="settings-section" >
+        <div class="settings-section">
             <div class="settings-title">Appearance</div>
             <div class="appearance-options">
                 <div class="appearance-card active" onclick="setTheme('light', this)"><div class="theme-preview light"></div><div class="theme-label">Light</div></div>
@@ -1239,7 +1217,7 @@ function resetSettingsView(el) {
                 <div class="settings-title">WALLPAPER</div>
                 <div id="wp-grid" class="grid grid-cols-3 gap-3"></div>
             </div>
-        </div >
+        </div>
     `;
     renderSettings();
 }
@@ -1247,7 +1225,7 @@ function renderSettings() {
     const grid = document.getElementById('wp-grid');
     if (grid) {
         grid.innerHTML = wallpapers.map((wp, i) => `
-    < div class="wallpaper-thumb" onclick = "setWallpaper('${wp.full}', this)" >
+    <div class="wallpaper-thumb" onclick = "setWallpaper('${wp.full}', this)" >
         <img src="${wp.thumb}">
         </div>
 `).join('');
@@ -1334,7 +1312,7 @@ function triggerAction(action) {
                 const grid = document.getElementById('desktop-grid');
                 const icon = document.createElement('div');
                 icon.className = 'desktop-icon group';
-                icon.innerHTML = `< div class="icon-img text-3xl mb-2" ><img src="./assets/icons/folder_system.png" alt="folder" style="width: 100%; height: 100%;"></div><div class="icon-label text-white px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm shadow-black/50 drop-shadow-md">${name}</div>`;
+                icon.innerHTML = `<div class="icon-img text-3xl mb-2"><img src="./assets/icons/folder_system.png" alt="folder" style="width: 100%; height: 100%;"></div><div class="icon-label text-white px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm shadow-black/50 drop-shadow-md">${name}</div>`;
                 icon.onclick = () => alert("This folder is empty for now.");
                 grid.appendChild(icon);
             }
@@ -1344,7 +1322,7 @@ function triggerAction(action) {
 
             const activeId = Array.from(state.appsOpened).pop();
             if (activeId) {
-                const win = document.getElementById(`win - ${ activeId } `);
+                const win = document.getElementById(`win-${activeId}`);
                 if (win) win.classList.add('ring-2', 'ring-blue-500');
                 setTimeout(() => win && win.classList.remove('ring-2', 'ring-blue-500'), 500);
             }
@@ -1354,7 +1332,7 @@ function triggerAction(action) {
         case 'toggle-fullscreen':
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
-                    console.log(`Error attempting to enable full - screen mode: ${ err.message } (${ err.name })`);
+                    console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
                 });
             } else {
                 document.exitFullscreen();
@@ -1464,7 +1442,7 @@ function startCountdownGatekeeper() {
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
         if (cdDisplay) {
-            cdDisplay.innerText = `${ days }d ${ hours }h ${ minutes }m ${ seconds } s`;
+            cdDisplay.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
     };
 
@@ -1677,15 +1655,15 @@ window.cutCake = function () {
         if (cakeWhole) {
 
             const innerCake = `
-    < div class="cake-frosting" ></div >
+                 <div class="cake-frosting"></div>
                  <div class="cake-layer top-layer"></div>
                  <div class="cake-layer middle-layer"></div>
                  <div class="cake-layer bottom-layer"></div>
-`;
+            `;
             cakeWhole.innerHTML = `
-    < div id = "cake-left" class="absolute inset-0 cake-left-rem" >
-        ${ innerCake }
-            </div >
+            <div id="cake-left" class="absolute inset-0 cake-left-rem">
+                 ${innerCake}
+            </div>
             <div id="cake-right" class="absolute inset-0 cake-right-rem">
                  ${innerCake}
             </div>
@@ -1693,7 +1671,7 @@ window.cutCake = function () {
                  ${innerCake}
             </div>
             <div class="plate"></div>
-`;
+        `;
             requestAnimationFrame(() => {
                 const slice = document.getElementById('cake-slice');
                 const left = document.getElementById('cake-left');
@@ -1851,14 +1829,14 @@ function initDesktop() {
         if (app.id !== 'hidden-unlock' && !app.folder && app.showOnDesktop !== false) {
             const icon = document.createElement('div');
             icon.className = 'desktop-icon group';
-            icon.innerHTML = `< div class="icon-img text-3xl mb-2 transition duration-500" > ${ app.icon }</div > <div class="icon-label text-white px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm shadow-black/50 drop-shadow-md">${app.title}</div>`;
+            icon.innerHTML = `<div class="icon-img text-3xl mb-2 transition duration-500">${app.icon}</div><div class="icon-label text-white px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm shadow-black/50 drop-shadow-md">${app.title}</div>`;
             icon.onclick = () => Apps.open(app.id);
             grid.appendChild(icon);
         }
         if (app.dock) {
             const icon = document.createElement('div');
             icon.className = 'dock-icon';
-            icon.innerHTML = `< div class="text-2xl opacity-80 hover:opacity-100 transition" > ${ app.icon }</div ><div class="dock-tooltip">${app.title}</div><div class="dock-dot" id="dot-${app.id}"></div>`;
+            icon.innerHTML = `<div class="text-2xl opacity-80 hover:opacity-100 transition">${app.icon}</div><div class="dock-tooltip">${app.title}</div><div class="dock-dot" id="dot-${app.id}"></div>`;
             icon.onclick = () => Apps.open(app.id);
             dock.appendChild(icon);
         }
@@ -2077,8 +2055,8 @@ function playFirstConversation(container) {
         } else if (msg.user === 'game') {
             const gameCard = document.createElement('div');
             gameCard.className = 'chat-game-card mx-auto my-4 p-4 bg-gray-50/5 border border-white/10 rounded-lg text-center max-w-[80%] shadow-sm';
-            gameCard.innerHTML = `< div class="text-[10px] text-blue-400 uppercase tracking-widest mb-1 italic" > Event Memory</div >
-    <div class="font-bold text-gray-300 text-sm whitespace-pre-wrap">${msg.text}</div>`;
+            gameCard.innerHTML = `<div class="text-[10px] text-blue-400 uppercase tracking-widest mb-1 italic">Event Memory</div>
+                                <div class="font-bold text-gray-300 text-sm whitespace-pre-wrap">${msg.text}</div>`;
             container.appendChild(gameCard);
             container.scrollTop = container.scrollHeight;
 
@@ -2106,7 +2084,7 @@ function playFirstConversation(container) {
     function renderUserMessage(msg) {
         const isHarshit = msg.user === 'harshit';
         const wrapper = document.createElement('div');
-        wrapper.className = `flex flex - col mb - 4 ${ isHarshit ? 'items-end' : 'items-start' } group`;
+        wrapper.className = `flex flex-col mb-4 ${isHarshit ? 'items-end' : 'items-start'} group`;
 
         const nameRow = document.createElement('div');
         nameRow.className = 'flex items-center gap-1 mb-1 px-1';
@@ -2126,7 +2104,7 @@ function playFirstConversation(container) {
 
 
         const bubble = document.createElement('div');
-        bubble.className = `chat - bubble ${ isHarshit ? 'chat-right' : 'chat-left' } `;
+        bubble.className = `chat-bubble ${isHarshit ? 'chat-right' : 'chat-left'}`;
         bubble.style.whiteSpace = 'pre-wrap';
 
         if (msg.type === 'image') {
@@ -2151,7 +2129,7 @@ function playFirstConversation(container) {
             const preview = document.createElement('div');
             preview.className = 'chat-media-preview';
             preview.style.width = '100%';
-            preview.innerHTML = `< iframe style = "border-radius:12px" src = "${msg.text.replace('open.spotify.com/', 'open.spotify.com/embed/')}" width = "100%" height = "80" frameBorder = "0" allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading = "lazy" ></iframe > `;
+            preview.innerHTML = `<iframe style="border-radius:12px" src="${msg.text.replace('open.spotify.com/', 'open.spotify.com/embed/')}" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
             bubble.appendChild(preview);
         }
 
@@ -2275,14 +2253,7 @@ function initLetterReveal() {
     setTimeout(processNext, 500);
 }
 
-/* === SPOTIFY VIBE CHECK LOGIC === */
-// Tracks the playing state of the Spotify mini-player
 let isSpotifyPlaying = false;
-
-/**
- * Toggles the playback of the Spotify audio and updates the UI icon.
- * Used for the 'Vibe Check' application to play/pause background music.
- */
 function toggleSpotify() {
     const audio = document.getElementById('spotify-audio');
     const playIcon = document.getElementById('spotify-play-icon');
@@ -2317,7 +2288,7 @@ window.Apps = {
         }
 
         state.appsOpened.add(id);
-        const exist = document.getElementById(`win - ${ id } `);
+        const exist = document.getElementById(`win-${id}`);
         if (exist) {
 
             if (app.onOpen) app.onOpen();
@@ -2333,12 +2304,12 @@ window.Apps = {
         }
 
         const win = document.createElement('div');
-        win.className = `window ${ app.dark ? 'dark' : '' } ${ app.fancy ? 'fancy' : '' } `;
-        win.id = `win - ${ id } `;
+        win.className = `window ${app.dark ? 'dark' : ''} ${app.fancy ? 'fancy' : ''}`;
+        win.id = `win-${id}`;
         win.style.width = (app.width || 800) + 'px';
         win.style.height = (app.height || 600) + 'px';
         const safeTop = Math.max(40, (window.innerHeight - (app.height || 600)) / 2 + Math.random() * 20);
-        win.style.left = `calc(50 % - ${(app.width || 800) / 2}px + ${ Math.random() * 20 }px)`;
+        win.style.left = `calc(50% - ${(app.width || 800) / 2}px + ${Math.random() * 20}px)`;
         win.style.top = safeTop + 'px';
         win.style.zIndex = ++zIndex;
 
@@ -2346,7 +2317,7 @@ window.Apps = {
 
 
         if (app.url) {
-            contentHTML = `< iframe src = "${app.url}" class="w-full h-full border-0 bg-white" ></iframe > `;
+            contentHTML = `<iframe src="${app.url}" class="w-full h-full border-0 bg-white"></iframe>`;
         }
 
         if (app.role === 'folder' && app.children) {
@@ -2354,18 +2325,18 @@ window.Apps = {
         }
 
 
-        win.innerHTML = `< div class="title-bar" onmousedown = "startDrag(event, '${win.id}')" >
+        win.innerHTML = `<div class="title-bar" onmousedown="startDrag(event, '${win.id}')">
             <div class="traffic-lights">
                 <div class="traffic-light close" onmousedown="event.stopPropagation(); closeApp('${id}')"></div>
                 <div class="traffic-light minimize" onmousedown="event.stopPropagation(); minimizeApp('${id}')"></div>
                 <div class="traffic-light maximize" onmousedown="event.stopPropagation(); maximizeApp('${id}')"></div>
             </div>
             <div class="text-xs text-center w-full absolute pt-1 pointer-events-none opacity-50 font-medium">${app.title}</div>
-        </div >
-    <div class="win-content custom-scroll" style="height: calc(100% - 38px);">${contentHTML}</div>`;
+        </div>
+        <div class="win-content custom-scroll" style="height: calc(100% - 38px);">${contentHTML}</div>`;
         document.getElementById('desktop').appendChild(win);
         if (app.onOpen) app.onOpen();
-        const dot = document.getElementById(`dot - ${ id } `); if (dot) dot.parentElement.classList.add('active');
+        const dot = document.getElementById(`dot-${id}`); if (dot) dot.parentElement.classList.add('active');
     },
 
     close: (id) => {
@@ -2381,12 +2352,12 @@ function closeApp(id) {
     const app = apps.find(a => a && a.id === id);
     if (app && app.onClose) app.onClose();
 
-    const win = document.getElementById(`win - ${ id } `);
+    const win = document.getElementById(`win-${id}`);
     if (win) {
         win.classList.add('closing');
         setTimeout(() => win.remove(), 400);
     }
-    const dot = document.getElementById(`dot - ${ id } `);
+    const dot = document.getElementById(`dot-${id}`);
     if (dot) dot.parentElement.classList.remove('active');
 
     state.appsOpened.delete(id);
@@ -2410,7 +2381,7 @@ function triggerQuietEnding() {
 }
 
 function minimizeApp(id) {
-    const win = document.getElementById(`win - ${ id } `);
+    const win = document.getElementById(`win-${id}`);
     if (win) {
         win.classList.add('minimized');
 
@@ -2418,7 +2389,7 @@ function minimizeApp(id) {
 }
 
 function maximizeApp(id) {
-    const win = document.getElementById(`win - ${ id } `);
+    const win = document.getElementById(`win-${id}`);
 
 
     if (win.getAttribute('data-maximized') === 'true') {
@@ -2491,7 +2462,7 @@ function handleTerminalCommand() {
     const cmd = input.value.trim();
     if (!cmd) return;
 
-    output.innerHTML += `< div > <span class="term-prompt">root@harshit:~$</span> ${ cmd }</div > `;
+    output.innerHTML += `<div > <span class="term-prompt">root@harshit:~$</span> ${cmd}</div> `;
 
     let response = '';
     const args = cmd.split(' ');
@@ -2500,7 +2471,7 @@ function handleTerminalCommand() {
     switch (command) {
         case 'hold':
             input.disabled = true;
-            output.innerHTML += `< div >...</div > `;
+            output.innerHTML += `<div>...</div>`;
             setTimeout(() => {
                 if (output.lastElementChild.innerText === '...') output.lastElementChild.remove();
                 input.disabled = false;
@@ -2509,7 +2480,7 @@ function handleTerminalCommand() {
             return;
         case 'help':
             response = `
-    < div class="term-info" > Available Commands:</div >
+    <div class="term-info" > Available Commands:</div>
                 <div>  help       - Show this list</div>
                 <div>  update     - Check for system updates</div>
                 <div>  whois      - Identify the user</div>
@@ -2522,11 +2493,11 @@ function handleTerminalCommand() {
 `;
             break;
         case 'update':
-            output.innerHTML += `< div > <span class="term-info">Checking for updates...</span></div > `;
+            output.innerHTML += `<div > <span class="term-info">Checking for updates...</span></div> `;
             setTimeout(() => {
-                output.innerHTML += `< div > V - Space 19.0 is already up to date.</div > `;
+                output.innerHTML += `<div > V-Space 19.0 is already up to date.</div> `;
                 setTimeout(() => {
-                    output.innerHTML += `< div > <span class="term-info">Some improvements take time.</span></div > `;
+                    output.innerHTML += `<div > <span class="term-info">Some improvements take time.</span></div> `;
                 }, 1000);
             }, 1000);
             input.value = '';
@@ -2537,56 +2508,56 @@ function handleTerminalCommand() {
             break;
         case 'secret':
             response = `< span class="term-success" > Access Granted.</span > <br>Code: 1221<br>Meaning: The time it all started.`;
-    break;
-    case 'cake':
-    response = `🎂 Initiating Cake Protocol...<br>Happy 19th Birthday Harshit! 🎉`;
+            break;
+        case 'cake':
+            response = `🎂 Initiating Cake Protocol...<br>Happy 19th Birthday Harshit! 🎉`;
 
-        if (typeof confetti === 'function') confetti();
-        break;
+            if (typeof confetti === 'function') confetti();
+            break;
         case 'date':
-        response = `Critical Date: June 20, 2024 (Origin)`;
-        break;
+            response = `Critical Date: June 20, 2024 (Origin)`;
+            break;
         case 'carry':
 
-        const egg = document.createElement('div');
-        egg.className = 'fixed inset-0 z-[60000] flex items-center justify-center pointer-events-none text-2xl font-light text-white tracking-widest bg-black/80 fade-in-out';
-        egg.innerText = "You never had to be strong alone.";
-        document.body.appendChild(egg);
+            const egg = document.createElement('div');
+            egg.className = 'fixed inset-0 z-[60000] flex items-center justify-center pointer-events-none text-2xl font-light text-white tracking-widest bg-black/80 fade-in-out';
+            egg.innerText = "You never had to be strong alone.";
+            document.body.appendChild(egg);
             setTimeout(() => egg.remove(), 5000);
-        output.innerHTML += `<div><span class="term-success">Message received.</span></div>`;
-        return;
+            output.innerHTML += `<div><span class="term-success">Message received.</span></div>`;
+            return;
         case 'clear':
-        output.innerHTML = '';
-        input.value = '';
-        return;
+            output.innerHTML = '';
+            input.value = '';
+            return;
         case 'sleep':
-        triggerQuietEnding();
-        return;
+            triggerQuietEnding();
+            return;
         case 'sudo':
-        response = `<span class="term-error">Permission denied: You are already the strongest user.</span>`;
-        break;
+            response = `<span class="term-error">Permission denied: You are already the strongest user.</span>`;
+            break;
         default:
-        response = `<span class="term-error">Command not found: ${command}</span>`;
+            response = `<span class="term-error">Command not found: ${command}</span>`;
     }
 
-        if (response) output.innerHTML += `<div>${response}</div>`;
+    if (response) output.innerHTML += `<div>${response}</div>`;
 
-        input.value = '';
-        output.scrollTop = output.scrollHeight;
+    input.value = '';
+    output.scrollTop = output.scrollHeight;
 }
 
 
 
-        function initBubbleWrap() {
+function initBubbleWrap() {
     const container = document.getElementById('bubble-container');
     if (container.children.length > 0) return;
 
-        for (let i = 0; i < 48; i++) {
+    for (let i = 0; i < 48; i++) {
         const b = document.createElement('div');
         b.className = 'bubble';
         b.onclick = function () {
             if (!this.classList.contains('popped')) {
-            this.classList.add('popped');
+                this.classList.add('popped');
 
 
             }
@@ -2595,395 +2566,395 @@ function handleTerminalCommand() {
     }
 }
 
-        function typeToTerminal(element, text, delay = 20, callback) {
+function typeToTerminal(element, text, delay = 20, callback) {
     const line = document.createElement('div');
-        line.className = 'term-line mb-1';
-        element.appendChild(line);
-        element.scrollTop = element.scrollHeight;
+    line.className = 'term-line mb-1';
+    element.appendChild(line);
+    element.scrollTop = element.scrollHeight;
 
 
-        if (text.includes('<')) {
-            line.innerHTML = text;
+    if (text.includes('<')) {
+        line.innerHTML = text;
         if (callback) setTimeout(callback, delay * 5);
     } else {
 
-            let i = 0;
+        let i = 0;
         const interval = setInterval(() => {
             line.textContent += text[i];
-        element.scrollTop = element.scrollHeight;
-        i++;
+            element.scrollTop = element.scrollHeight;
+            i++;
             if (i >= text.length) {
-            clearInterval(interval);
-        if (callback) callback();
+                clearInterval(interval);
+                if (callback) callback();
             }
         }, delay);
     }
 }
 
-        function runTerminalSequence(element, lines, speed = 20, gap = 500, onComplete) {
-            let index = 0;
+function runTerminalSequence(element, lines, speed = 20, gap = 500, onComplete) {
+    let index = 0;
 
-        function nextLine() {
+    function nextLine() {
         if (index >= lines.length) {
             if (onComplete) onComplete();
-        return;
+            return;
         }
         typeToTerminal(element, lines[index], speed, () => {
             index++;
-        setTimeout(nextLine, gap);
+            setTimeout(nextLine, gap);
         });
     }
 
-        nextLine();
+    nextLine();
 }
 
-        function handleTerminalAppCommand() {
+function handleTerminalAppCommand() {
     const input = document.getElementById('term-input-app');
-        const output = document.getElementById('term-output-app');
-        if (!input || !output) return;
+    const output = document.getElementById('term-output-app');
+    if (!input || !output) return;
 
-        const cmd = input.value.trim();
-        if (!cmd) return;
+    const cmd = input.value.trim();
+    if (!cmd) return;
 
 
-        output.innerHTML += `<div><span class="term-prompt">root@harshit:~$</span> ${cmd}</div>`;
-        input.value = '';
-        output.scrollTop = output.scrollHeight;
-        const command = cmd.toLowerCase().split(' ')[0];
-        if (command === 'clear') {
-            output.innerHTML = '';
+    output.innerHTML += `<div><span class="term-prompt">root@harshit:~$</span> ${cmd}</div>`;
+    input.value = '';
+    output.scrollTop = output.scrollHeight;
+    const command = cmd.toLowerCase().split(' ')[0];
+    if (command === 'clear') {
+        output.innerHTML = '';
         return;
     }
 
-        input.disabled = true;
-        input.placeholder = "Processing...";
+    input.disabled = true;
+    input.placeholder = "Processing...";
 
     const enableInput = () => {
-            input.disabled = false;
+        input.disabled = false;
         input.placeholder = "Enter command...";
         input.focus();
     };
 
-        switch (command) {
+    switch (command) {
         case 'help':
-        runTerminalSequence(output, [
-        "Available Commands:",
-        "- help: Show this list",
-        "- whois: Identify the user",
-        "- strength: Analyze core metrics",
-        "- secret: Unlock hidden directory",
-        "- firstmeet: Origin Timestamp",
-        "- clear: Clear screen"
-        ], 10, 100, enableInput);
-        break;
+            runTerminalSequence(output, [
+                "Available Commands:",
+                "- help: Show this list",
+                "- whois: Identify the user",
+                "- strength: Analyze core metrics",
+                "- secret: Unlock hidden directory",
+                "- firstmeet: Origin Timestamp",
+                "- clear: Clear screen"
+            ], 10, 100, enableInput);
+            break;
 
         case 'whois':
-        runTerminalSequence(output, [
-        "Resolving identity...",
-        "User: Harshit",
-        "Role: Admin",
-        "Strength: Visible",
-        "Weakness: Never admitted",
-        "Status: Still becoming"
-        ], 20, 300, enableInput);
-        break;
+            runTerminalSequence(output, [
+                "Resolving identity...",
+                "User: Harshit",
+                "Role: Admin",
+                "Strength: Visible",
+                "Weakness: Never admitted",
+                "Status: Still becoming"
+            ], 20, 300, enableInput);
+            break;
 
         case 'strength':
-        runTerminalSequence(output, [
-        "Analyzing metrics...",
-        "Physical: 85%",
-        "Mental: Adaptive",
-        "Emotional: Hidden (High)",
-        "Resilience: 99.9%",
-        "Note: Survived things he never talks about"
-        ], 20, 300, enableInput);
-        break;
+            runTerminalSequence(output, [
+                "Analyzing metrics...",
+                "Physical: 85%",
+                "Mental: Adaptive",
+                "Emotional: Hidden (High)",
+                "Resilience: 99.9%",
+                "Note: Survived things he never talks about"
+            ], 20, 300, enableInput);
+            break;
 
         case 'secret':
-        runTerminalSequence(output, [
-        "Accessing secure vault...",
-        "Verifying credentials...",
-        "Access Granted.",
-        "Opening 'Vault' folder..."
+            runTerminalSequence(output, [
+                "Accessing secure vault...",
+                "Verifying credentials...",
+                "Access Granted.",
+                "Opening 'Vault' folder..."
             ], 30, 400, () => {
-            setTimeout(() => Apps.open('app-vault'), 500);
-        enableInput();
+                setTimeout(() => Apps.open('app-vault'), 500);
+                enableInput();
             });
-        break;
+            break;
 
         case 'firstmeet':
-        runTerminalSequence(output, [
-        "June 20, 2024 • 12:21 AM"
-        ], 18, 600, enableInput);
-        break;
+            runTerminalSequence(output, [
+                "June 20, 2024 • 12:21 AM"
+            ], 18, 600, enableInput);
+            break;
 
 
         case 'sudo':
-        runTerminalSequence(output, [
-        "Checking permissions...",
-        "Error: You are already the highest authority here."
-        ], 30, 200, enableInput);
-        break;
+            runTerminalSequence(output, [
+                "Checking permissions...",
+                "Error: You are already the highest authority here."
+            ], 30, 200, enableInput);
+            break;
 
         default:
-        output.innerHTML += `<div><span class="term-error">Command not found: ${command}</span></div>`;
-        enableInput();
-        break;
+            output.innerHTML += `<div><span class="term-error">Command not found: ${command}</span></div>`;
+            enableInput();
+            break;
     }
 }
 
 
-        function deleteTarget() {
+function deleteTarget() {
     if (typeof createModal === 'function') {
-            createModal({
-                title: "Security Protocol",
-                desc: "These files are protected by the 'Core Memories' encryption. No data was shred, but the security log has been updated. 😉",
-                icon: "🛡️"
-            });
+        createModal({
+            title: "Security Protocol",
+            desc: "These files are protected by the 'Core Memories' encryption. No data was shred, but the security log has been updated. 😉",
+            icon: "🛡️"
+        });
     }
 }
 
-        function launchDesktop() {
+function launchDesktop() {
 
     const term = document.getElementById('terminal-boot');
-        if (term) term.style.display = 'none';
+    if (term) term.style.display = 'none';
 
 
-        const space = document.getElementById('space-bg');
-        if (space) space.style.opacity = 0;
+    const space = document.getElementById('space-bg');
+    if (space) space.style.opacity = 0;
 
 
-        const desktopBg = document.getElementById('desktop-bg');
-        if (desktopBg) {desktopBg.style.display = 'block'; requestAnimationFrame(() => desktopBg.style.opacity = 1); }
+    const desktopBg = document.getElementById('desktop-bg');
+    if (desktopBg) { desktopBg.style.display = 'block'; requestAnimationFrame(() => desktopBg.style.opacity = 1); }
 
 
-        const desk = document.getElementById('desktop');
-        desk.style.display = 'block';
+    const desk = document.getElementById('desktop');
+    desk.style.display = 'block';
 
 
-        desk.style.opacity = 0;
+    desk.style.opacity = 0;
     requestAnimationFrame(() => {
-            desk.style.transition = "opacity 2.5s ease";
+        desk.style.transition = "opacity 2.5s ease";
         desk.style.opacity = 1;
     });
 
 
-        initDesktop();
+    initDesktop();
 }
 
-        function skipToDesktop() {
+function skipToDesktop() {
     const phases = ['boot-sequence', 'countdown-phase', 'journey-intro', 'terminal-boot'];
     phases.forEach(p => {
         const el = document.getElementById(p);
         if (el) el.style.display = 'none';
     });
 
-        state.countdownFinished = true;
+    state.countdownFinished = true;
 
 
-        launchDesktop();
+    launchDesktop();
 }
 
 
-        let vaultIdx = 0;
-        const vaultPhotos = [
-        "https://images.unsplash.com/photo-1518176258769-f227c798150e?q=80&w=2670",
-        "https://images.unsplash.com/photo-1549488497-758969f91a51?q=80&w=2670",
-        "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=2689",
-        "https://images.unsplash.com/photo-1504297050568-910d24c426d3?q=80&w=1287"
-        ];
+let vaultIdx = 0;
+const vaultPhotos = [
+    "https://images.unsplash.com/photo-1518176258769-f227c798150e?q=80&w=2670",
+    "https://images.unsplash.com/photo-1549488497-758969f91a51?q=80&w=2670",
+    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=2689",
+    "https://images.unsplash.com/photo-1504297050568-910d24c426d3?q=80&w=1287"
+];
 
-        function initSecretVault() {
+function initSecretVault() {
 
-            document.getElementById('vault-lock').style.display = 'flex';
-        document.getElementById('vault-lock').style.opacity = '1';
-        document.getElementById('vault-pass').value = '';
-        document.getElementById('vault-error').style.opacity = '0';
-        document.getElementById('vault-content').style.display = 'none';
-        document.getElementById('vault-content').style.opacity = '0';
+    document.getElementById('vault-lock').style.display = 'flex';
+    document.getElementById('vault-lock').style.opacity = '1';
+    document.getElementById('vault-pass').value = '';
+    document.getElementById('vault-error').style.opacity = '0';
+    document.getElementById('vault-content').style.display = 'none';
+    document.getElementById('vault-content').style.opacity = '0';
 
 
     setTimeout(() => document.getElementById('vault-pass').focus(), 500);
 
 
-        const inp = document.getElementById('vault-pass');
+    const inp = document.getElementById('vault-pass');
     inp.onkeyup = (e) => {
         if (inp.value.length === 6) checkVaultPassword();
         if (e.key === 'Enter') checkVaultPassword();
     };
 }
 
-        function checkVaultPassword() {
+function checkVaultPassword() {
     const inp = document.getElementById('vault-pass');
-        const err = document.getElementById('vault-error');
+    const err = document.getElementById('vault-error');
 
-        if (inp.value === '200624') {
+    if (inp.value === '200624') {
 
-            inp.blur();
+        inp.blur();
         document.getElementById('vault-lock').style.opacity = '0';
         setTimeout(() => {
             document.getElementById('vault-lock').style.display = 'none';
-        document.getElementById('vault-content').style.display = 'block';
-        renderVaultSlide();
+            document.getElementById('vault-content').style.display = 'block';
+            renderVaultSlide();
             requestAnimationFrame(() => {
-            document.getElementById('vault-content').style.opacity = '1';
+                document.getElementById('vault-content').style.opacity = '1';
             });
         }, 500);
     } else {
 
-            err.style.opacity = '1';
+        err.style.opacity = '1';
         inp.classList.add('shake');
         setTimeout(() => inp.classList.remove('shake'), 500);
         inp.value = '';
     }
 }
 
-        function renderVaultSlide() {
+function renderVaultSlide() {
     const con = document.getElementById('vault-carousel');
-        if (!con) return;
+    if (!con) return;
 
-        const url = vaultPhotos[vaultIdx];
-        con.innerHTML = `
-        <div class="w-full h-full bg-cover bg-center transition-all duration-700 ease-in-out transform scale-105"
-            style="background-image: url('${url}'); box-shadow: inset 0 0 100px black;">
+    const url = vaultPhotos[vaultIdx];
+    con.innerHTML = `
+        <div class="w-full h-full bg-cover bg-center transition-all duration-700 ease-in-out transform scale-105" 
+             style="background-image: url('${url}'); box-shadow: inset 0 0 100px black;">
         </div>
         <div class="absolute bottom-10 left-0 right-0 text-center text-white/80 font-serif italic text-lg tracking-widest drop-shadow-md">
             Memory ${vaultIdx + 1} of ${vaultPhotos.length}
         </div>
-        `;
+    `;
 }
 
-        function vaultNextSlide() {
-            vaultIdx = (vaultIdx + 1) % vaultPhotos.length;
-        renderVaultSlide();
+function vaultNextSlide() {
+    vaultIdx = (vaultIdx + 1) % vaultPhotos.length;
+    renderVaultSlide();
 }
 
-        function vaultPrevSlide() {
-            vaultIdx = (vaultIdx - 1 + vaultPhotos.length) % vaultPhotos.length;
-        renderVaultSlide();
+function vaultPrevSlide() {
+    vaultIdx = (vaultIdx - 1 + vaultPhotos.length) % vaultPhotos.length;
+    renderVaultSlide();
 }
 
-        function initAppVault() {
+function initAppVault() {
 
     const lock = document.getElementById('vault-lock-screen');
-        const pass = document.getElementById('vault-passcode');
-        const badge = document.getElementById('vault-badge');
-        const hintMain = document.getElementById('vault-hint-main');
-        const hintExtra = document.getElementById('vault-hint-extra');
-        const grid = document.getElementById('vault-grid');
-        const errorMsg = document.getElementById('vault-error');
+    const pass = document.getElementById('vault-passcode');
+    const badge = document.getElementById('vault-badge');
+    const hintMain = document.getElementById('vault-hint-main');
+    const hintExtra = document.getElementById('vault-hint-extra');
+    const grid = document.getElementById('vault-grid');
+    const errorMsg = document.getElementById('vault-error');
 
-        if (lock) {
-            lock.style.display = 'flex';
+    if (lock) {
+        lock.style.display = 'flex';
         lock.style.opacity = '1';
         lock.classList.remove('vault-unlocked-anim');
     }
-        if (grid) {
-            grid.style.display = 'none';
+    if (grid) {
+        grid.style.display = 'none';
         grid.classList.add('hidden');
     }
-        if (pass) {
-            pass.value = '';
+    if (pass) {
+        pass.value = '';
         pass.classList.remove('shake-premium', 'border-red-500');
         pass.style.borderColor = '#e5e7eb';
     }
-        if (badge) {
-            badge.innerText = 'System Secure';
+    if (badge) {
+        badge.innerText = 'System Secure';
         badge.style.color = '#94a3b8';
     }
-        if (hintMain) {
-            hintMain.innerText = 'Protected Memory. Correct credentials required.';
+    if (hintMain) {
+        hintMain.innerText = 'Protected Memory. Correct credentials required.';
         hintMain.style.opacity = '0.4';
         hintMain.classList.remove('text-indigo-600');
     }
-        if (hintExtra) hintExtra.style.opacity = '0';
-        if (errorMsg) errorMsg.style.opacity = '0';
+    if (hintExtra) hintExtra.style.opacity = '0';
+    if (errorMsg) errorMsg.style.opacity = '0';
 
-        state.vaultUnlockAttempts = 0;
+    state.vaultUnlockAttempts = 0;
 
 
     setTimeout(() => { if (pass) pass.focus(); }, 200);
 }
 
-        function unlockVault() {
+function unlockVault() {
     const input = document.getElementById('vault-passcode');
-        const errorMsg = document.getElementById('vault-error');
-        const lockScreen = document.getElementById('vault-lock-screen');
-        const badge = document.getElementById('vault-badge');
-        const hintMain = document.getElementById('vault-hint-main');
-        const grid = document.getElementById('vault-grid');
+    const errorMsg = document.getElementById('vault-error');
+    const lockScreen = document.getElementById('vault-lock-screen');
+    const badge = document.getElementById('vault-badge');
+    const hintMain = document.getElementById('vault-hint-main');
+    const grid = document.getElementById('vault-grid');
 
-        if (!input) return;
-        if (input.value === '200624') {
-            input.classList.remove('shake-premium');
+    if (!input) return;
+    if (input.value === '200624') {
+        input.classList.remove('shake-premium');
         input.style.borderColor = '#10b981';
         lockScreen.classList.add('vault-unlocked-anim');
         setTimeout(() => {
             lockScreen.style.display = 'none';
-        if (grid) {
-            grid.classList.remove('hidden');
-        grid.style.display = 'block';
+            if (grid) {
+                grid.classList.remove('hidden');
+                grid.style.display = 'block';
             }
-        if (typeof Persistence !== 'undefined') Persistence.unlock('Deep Access Level 1');
+            if (typeof Persistence !== 'undefined') Persistence.unlock('Deep Access Level 1');
         }, 800);
 
     } else {
 
-            state.vaultUnlockAttempts = (state.vaultUnlockAttempts || 0) + 1;
+        state.vaultUnlockAttempts = (state.vaultUnlockAttempts || 0) + 1;
         if (badge) {
             badge.innerText = `Attempts: ${state.vaultUnlockAttempts}`;
             badge.style.color = state.vaultUnlockAttempts > 3 ? '#ef4444' : '#94a3b8';
         }
         if (errorMsg) {
             errorMsg.innerText = state.vaultUnlockAttempts > 3 ? "SYSTEM LOCKED: Incorrect Format" : "Access Denied";
-        errorMsg.style.opacity = '1';
+            errorMsg.style.opacity = '1';
         }
         input.classList.add('shake-premium');
         input.style.borderColor = '#ef4444';
 
         if (state.vaultUnlockAttempts >= 1 && hintMain) {
             hintMain.innerText = "Hint: A score of days, six moons deep, in the year where two dozen secrets we keep.";
-        hintMain.style.opacity = "1";
+            hintMain.style.opacity = "1";
         }
 
         setTimeout(() => {
             input.classList.remove('shake-premium');
-        if (errorMsg) errorMsg.style.opacity = '0';
+            if (errorMsg) errorMsg.style.opacity = '0';
         }, 1000);
 
         input.value = '';
     }
 }
-        window.unlockVault = unlockVault;
-        window.initAppVault = initAppVault;
+window.unlockVault = unlockVault;
+window.initAppVault = initAppVault;
 
-        window.handleTerminalAppCommand = handleTerminalAppCommand;
+window.handleTerminalAppCommand = handleTerminalAppCommand;
 
+window.initInkpot = initInkpot;
+window.nextPoem = nextPoem;
+window.toggleSpotify = toggleSpotify;
+window.spawnBears = spawnBears;
+window.playFirstConversation = playFirstConversation;
+window.initLetterReveal = initLetterReveal;
 
-        window.nextPoem = nextPoem;
-        window.toggleSpotify = toggleSpotify;
-        window.spawnBears = spawnBears;
-        window.playFirstConversation = playFirstConversation;
-        window.initLetterReveal = initLetterReveal;
+let movieTimer = null;
+let currentMovieIndex = 0;
+let movieItems = [];
 
-        let movieTimer = null;
-        let currentMovieIndex = 0;
-        let movieItems = [];
-
-        function renderJourney() {
+function renderJourney() {
     const container = document.getElementById('journey-container');
-        if (!container) return;
+    if (!container) return;
 
 
-        currentMovieIndex = 0;
-        movieItems = [];
+    currentMovieIndex = 0;
+    movieItems = [];
     journeyData.forEach(ch => {
-            ch.items.forEach(item => {
-                movieItems.push({ ...item, chapterColor: ch.color });
-            });
+        ch.items.forEach(item => {
+            movieItems.push({ ...item, chapterColor: ch.color });
+        });
     });
 
-        container.innerHTML = `
+    container.innerHTML = `
         <div class="movie-viewport relative h-full w-full bg-black flex flex-col items-center justify-center overflow-hidden">
             <!-- Movie Screen -->
             <div id="movie-screen" class="w-full h-full flex items-center justify-center relative">
@@ -2997,12 +2968,12 @@ function handleTerminalCommand() {
             <!-- Cinematic Vignette -->
             <div class="absolute inset-0 pointer-events-none shadow-[inset_0_0_150px_rgba(0,0,0,1)]"></div>
         </div>
-        `;
+    `;
 }
 
-        function startAutomatedMovie() {
+function startAutomatedMovie() {
     const startBtn = document.getElementById('movie-start');
-        if (startBtn) startBtn.classList.add('opacity-0', 'pointer-events-none');
+    if (startBtn) startBtn.classList.add('opacity-0', 'pointer-events-none');
 
     setTimeout(() => {
         if (startBtn) startBtn.remove();
@@ -3010,26 +2981,26 @@ function handleTerminalCommand() {
     }, 1000);
 }
 
-        function playNextMovieScene() {
+function playNextMovieScene() {
     const screen = document.getElementById('movie-screen');
-        if (!screen) return;
+    if (!screen) return;
 
     if (currentMovieIndex >= movieItems.length) {
-            showTheEnd();
+        showTheEnd();
         return;
     }
 
-        const item = movieItems[currentMovieIndex];
-        screen.innerHTML = '';
+    const item = movieItems[currentMovieIndex];
+    screen.innerHTML = '';
 
-        const frame = document.createElement('div');
-        frame.className = 'movie-frame opacity-0 transition-opacity duration-1000 flex flex-col items-center justify-center text-center w-full h-full p-12';
+    const frame = document.createElement('div');
+    frame.className = 'movie-frame opacity-0 transition-opacity duration-1000 flex flex-col items-center justify-center text-center w-full h-full p-12';
 
 
-        let displayDuration = 3000;
+    let displayDuration = 3000;
 
-        if (item.type === 'title') {
-            frame.innerHTML = `
+    if (item.type === 'title') {
+        frame.innerHTML = `
             <div class="movie-title-card scale-90 transition-transform duration-[3s] ease-out">
                 <h1 class="text-4xl font-black text-white mb-4 tracking-tighter">${item.text}</h1>
                 <div class="w-24 h-1 mx-auto rounded-full" style="background: ${item.chapterColor}"></div>
@@ -3037,7 +3008,7 @@ function handleTerminalCommand() {
         `;
         displayDuration = 4000;
     } else if (item.type === 'chat') {
-            frame.innerHTML = `
+        frame.innerHTML = `
             <div class="movie-chat border-l-4 border-blue-500 bg-white/5 p-8 rounded-r-2xl max-w-lg text-left backdrop-blur-sm">
                 <div class="text-[10px] font-bold text-blue-400 uppercase mb-2 opacity-50 tracking-widest">${item.speaker}</div>
                 <div id="typewriter-id" class="text-lg font-medium text-white/90"></div>
@@ -3046,12 +3017,12 @@ function handleTerminalCommand() {
 
         displayDuration = 2000 + (item.text.length * 60);
     } else if (item.type === 'scene') {
-            frame.innerHTML = `
+        frame.innerHTML = `
             <div class="text-xl font-light italic text-white/70 leading-relaxed px-10">"${item.text}"</div>
         `;
         displayDuration = 4500;
     } else if (item.type === 'poem') {
-            frame.innerHTML = `
+        frame.innerHTML = `
             <div class="poem-scroll-card py-16 px-10 border-y border-white/5">
                 <div class="text-lg font-serif italic text-white/60 leading-[3] tracking-widest whitespace-pre-line">
                     ${item.text}
@@ -3060,7 +3031,7 @@ function handleTerminalCommand() {
         `;
         displayDuration = 6000;
     } else if (item.type === 'recipe') {
-            frame.innerHTML = `
+        frame.innerHTML = `
             <div class="recipe-cinematic text-left">
                 <div class="text-xs font-black text-yellow-500 uppercase tracking-widest mb-6 border-b border-yellow-500/20 pb-2">${item.title}</div>
                 <div class="space-y-4 text-lg font-serif italic text-yellow-100/40">
@@ -3070,7 +3041,7 @@ function handleTerminalCommand() {
         `;
         displayDuration = 2000 + (item.items.length * 1500);
     } else if (item.type === 'photo') {
-            frame.innerHTML = `
+        frame.innerHTML = `
             <div class="movie-photo-container flex flex-col items-center">
                 <img src="${item.src}" class="max-h-[75vh] w-auto rounded-lg shadow-[0_0_50px_rgba(255,255,255,0.1)] border border-white/10 opacity-0 animate-fade-in-up">
                 ${item.caption ? `<div class="mt-6 text-base font-serif italic text-white/60 text-center max-w-2xl animate-fade-in delay-500">${item.caption}</div>` : ''}
@@ -3079,10 +3050,10 @@ function handleTerminalCommand() {
         displayDuration = 6000;
     }
 
-        screen.appendChild(frame);
+    screen.appendChild(frame);
 
     requestAnimationFrame(() => {
-            frame.classList.remove('opacity-0');
+        frame.classList.remove('opacity-0');
         if (item.type === 'title') {
             setTimeout(() => frame.querySelector('.movie-title-card').classList.remove('scale-90'), 50);
         }
@@ -3103,118 +3074,118 @@ function handleTerminalCommand() {
 
 
     movieTimer = setTimeout(() => {
-            frame.classList.add('opacity-0');
+        frame.classList.add('opacity-0');
         setTimeout(() => {
             currentMovieIndex++;
-        playNextMovieScene();
+            playNextMovieScene();
         }, 1000);
     }, displayDuration);
 }
 
-        function runTypewriterMovie(id, text) {
+function runTypewriterMovie(id, text) {
     const el = document.getElementById(id);
-        if (!el) return;
-        let i = 0;
-        function type() {
+    if (!el) return;
+    let i = 0;
+    function type() {
         if (i < text.length) {
             el.innerHTML += text.charAt(i);
-        i++;
-        setTimeout(type, 40);
+            i++;
+            setTimeout(type, 40);
         }
     }
-        type();
+    type();
 }
 
-        function showTheEnd() {
+function showTheEnd() {
     const screen = document.getElementById('movie-screen');
-        screen.innerHTML = `
+    screen.innerHTML = `
         <div class="text-center animate-fade-in-slow">
             <div class="text-sm font-mono text-white/30 tracking-[1.5em] mb-6">THE END</div>
             <h1 class="text-5xl font-black text-white mb-2 tracking-tighter">To Be Continued... ❤️</h1>
             <p class="text-blue-500/50 text-xs tracking-widest uppercase mt-12">Closed System Reflections</p>
             <button onclick="renderJourney()" class="mt-8 text-[10px] text-white/20 hover:text-white transition uppercase tracking-[0.3em]">Replay Film</button>
         </div>
-        `;
+    `;
 }
 
 
-        window.Apps = Apps;
-        window.onload = function () {
-            startCountdownGatekeeper();
-        initHappyMenuBar();
+window.Apps = Apps;
+window.onload = function () {
+    startCountdownGatekeeper();
+    initHappyMenuBar();
 };
 
-        function initBattery() {
+function initBattery() {
     const icon = document.getElementById('battery-icon');
-        const level = document.getElementById('battery-level');
+    const level = document.getElementById('battery-level');
 
-        if (navigator.getBattery) {
-            navigator.getBattery().then(battery => {
-                const updateBattery = () => {
-                    const pct = Math.round(battery.level * 100);
-                    if (level) level.innerText = pct + '% ' + (battery.charging ? '(Charging)' : '');
-                    if (icon) {
-                        if (battery.charging) icon.className = 'fas fa-bolt text-[14px] text-yellow-400';
-                        else if (pct > 75) icon.className = 'fas fa-battery-full text-[14px] opacity-80';
-                        else if (pct > 50) icon.className = 'fas fa-battery-three-quarters text-[14px] opacity-80';
-                        else if (pct > 25) icon.className = 'fas fa-battery-half text-[14px] opacity-80';
-                        else icon.className = 'fas fa-battery-quarter text-[14px] text-red-500';
-                    }
-                };
-                updateBattery();
-                battery.addEventListener('levelchange', updateBattery);
-                battery.addEventListener('chargingchange', updateBattery);
-            });
+    if (navigator.getBattery) {
+        navigator.getBattery().then(battery => {
+            const updateBattery = () => {
+                const pct = Math.round(battery.level * 100);
+                if (level) level.innerText = pct + '% ' + (battery.charging ? '(Charging)' : '');
+                if (icon) {
+                    if (battery.charging) icon.className = 'fas fa-bolt text-[14px] text-yellow-400';
+                    else if (pct > 75) icon.className = 'fas fa-battery-full text-[14px] opacity-80';
+                    else if (pct > 50) icon.className = 'fas fa-battery-three-quarters text-[14px] opacity-80';
+                    else if (pct > 25) icon.className = 'fas fa-battery-half text-[14px] opacity-80';
+                    else icon.className = 'fas fa-battery-quarter text-[14px] text-red-500';
+                }
+            };
+            updateBattery();
+            battery.addEventListener('levelchange', updateBattery);
+            battery.addEventListener('chargingchange', updateBattery);
+        });
     } else {
 
         if (level) level.innerText = '100% (External Power)';
     }
 }
 
-        function initNetworkStatus() {
+function initNetworkStatus() {
     const icon = document.getElementById('wifi-icon');
     const update = () => {
         const isOnline = navigator.onLine;
         if (icon) {
             icon.className = isOnline ? 'fas fa-wifi text-[14px]' : 'fas fa-wifi text-[14px] text-red-500 opacity-50';
-        icon.parentElement.title = isOnline ? 'Wi-Fi: Connected (Strong)' : 'Wi-Fi: Disconnected';
+            icon.parentElement.title = isOnline ? 'Wi-Fi: Connected (Strong)' : 'Wi-Fi: Disconnected';
         }
 
     };
-        window.addEventListener('online', update);
-        window.addEventListener('offline', update);
-        update();
+    window.addEventListener('online', update);
+    window.addEventListener('offline', update);
+    update();
 }
 
-        function toggleSpotlight() {
+function toggleSpotlight() {
     const overlay = document.getElementById('spotlight-overlay');
-        const input = document.getElementById('spotlight-input');
-        const results = document.getElementById('spotlight-results');
+    const input = document.getElementById('spotlight-input');
+    const results = document.getElementById('spotlight-results');
 
-        if (!overlay) return;
+    if (!overlay) return;
 
-        if (overlay.classList.contains('hidden')) {
-            overlay.classList.remove('hidden');
+    if (overlay.classList.contains('hidden')) {
+        overlay.classList.remove('hidden');
         if (input) {
             input.value = '';
-        input.focus();
+            input.focus();
         }
         if (results) {
             results.innerHTML = '';
-        results.classList.add('hidden');
+            results.classList.add('hidden');
         }
     } else {
-            overlay.classList.add('hidden');
+        overlay.classList.add('hidden');
     }
 }
 
 document.getElementById('spotlight-input')?.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase();
-        const resultsContainer = document.getElementById('spotlight-results');
-        if (!resultsContainer) return;
+    const resultsContainer = document.getElementById('spotlight-results');
+    if (!resultsContainer) return;
 
-        if (query.length === 0) {
-            resultsContainer.innerHTML = '';
+    if (query.length === 0) {
+        resultsContainer.innerHTML = '';
         resultsContainer.classList.add('hidden');
         return;
     }
@@ -3224,17 +3195,17 @@ document.getElementById('spotlight-input')?.addEventListener('input', (e) => {
     const html = matches.map(app =>
         '<div class=\'spotlight-result\' onclick=\'Apps.open(\"' + app.id + '\"); toggleSpotlight();\'>' +
         '<div class=\'result-icon\'>' + (app.icon || '📱') + '</div>' +
-    '<div class=\'result-info\'><h4>' + app.title + '</h4><p>Application</p></div>' +
-    '</div>'
+        '<div class=\'result-info\'><h4>' + app.title + '</h4><p>Application</p></div>' +
+        '</div>'
     ).join('');
 
-if (matches.length > 0) {
-    resultsContainer.innerHTML = html;
-    resultsContainer.classList.remove('hidden');
-} else {
-    resultsContainer.innerHTML = '<div class=\'p-4 text-center text-white/50 text-sm\'>No results found.</div>';
-    resultsContainer.classList.remove('hidden');
-}
+    if (matches.length > 0) {
+        resultsContainer.innerHTML = html;
+        resultsContainer.classList.remove('hidden');
+    } else {
+        resultsContainer.innerHTML = '<div class=\'p-4 text-center text-white/50 text-sm\'>No results found.</div>';
+        resultsContainer.classList.remove('hidden');
+    }
 });
 
 document.getElementById('brightness-slider')?.addEventListener('input', (e) => {
@@ -3620,35 +3591,35 @@ function createModal({ title, desc, icon }) {
 }
 window.createModal = createModal;
 
-window.FlashApp = {
-    startTime: 0,
-    waiting: false,
-    timeout: null,
-    fakeTimeout: null,
-    isFake: false,
-    personalBest: localStorage.getItem('harshit_flash_pb') || null,
 
-    playHover: function () {
-        const audio = document.getElementById('sfx-hover');
-        if (audio) { audio.currentTime = 0; audio.volume = 0.2; audio.play().catch(e => { }); }
-    },
+const poems = [
+    "Some days are heavy,\nBut you carry them well.\nKeep going.",
+    "The world is loud,\nBut your peace is real.\nProtect it.",
+    "Not perfect.\nNot finished.\nJust right.",
+    "You are the best kind of chaos.\nNever change."
+];
+function initInkpot() {
+    poemIdx = 0;
+    const el = document.getElementById('inkpot-text');
+    if (el) el.innerText = "Click the quill...";
+}
+function nextPoem() {
+    const el = document.getElementById('inkpot-text');
+    if (!el) return;
+    el.innerText = "";
+    const txt = poems[poemIdx % poems.length];
+    poemIdx++;
 
-    startRun: function () {
-        document.getElementById('flash-intro').classList.add('hidden');
-        document.getElementById('flash-game').classList.remove('hidden');
-        this.resetGameScreen();
-
-        const audioWait = document.getElementById('sfx-wait');
-        if (audioWait) { audioWait.currentTime = 0; audioWait.volume = 0.5; audioWait.play().catch(e => { }); }
-
-        const introTime = 2000 + Math.random() * 3000;
-        this.waiting = true;
-        this.isFake = false;
-
-        this.timeout = setTimeout(() => {
-            this.triggerSignalOrFake();
-        }, introTime);
-    },
+    let i = 0;
+    function type() {
+        if (i < txt.length) {
+            el.innerText += txt.charAt(i);
+            i++;
+            setTimeout(type, 50);
+        }
+    }
+    type();
+}
 
     resetGameScreen: function () {
         const bg = document.getElementById('flash-game-bg');
@@ -3656,10 +3627,12 @@ window.FlashApp = {
         document.getElementById('flash-instruction').innerText = "WAIT...";
         document.getElementById('flash-instruction').className = "text-4xl font-black italic text-red-200 tracking-tighter animate-pulse";
 
+
         if (this.fakeTimeout) clearTimeout(this.fakeTimeout);
     },
 
     triggerSignalOrFake: function () {
+
         if (Math.random() < 0.35) {
             this.triggerFake();
         } else {
@@ -3669,11 +3642,13 @@ window.FlashApp = {
 
     triggerFake: function () {
         this.isFake = true;
+
         const audioFail = document.getElementById('sfx-fail');
         if (audioFail) { audioFail.currentTime = 0; audioFail.volume = 0.3; audioFail.play().catch(e => { }); }
 
         const bg = document.getElementById('flash-game-bg');
         const txt = document.getElementById('flash-instruction');
+
 
         const types = [
             { cls: 'bg-blue-600', msg: 'WAIT FOR IT...', textCls: 'text-blue-200' },
@@ -3684,6 +3659,7 @@ window.FlashApp = {
         bg.className = `absolute inset-0 ${type.cls} flex flex-col items-center justify-center shake-screen`;
         txt.innerText = type.msg;
         txt.className = `text-5xl font-black italic ${type.textCls} tracking-tighter animate-bounce`;
+
 
         this.fakeTimeout = setTimeout(() => {
             if (this.waiting) {
@@ -3707,6 +3683,7 @@ window.FlashApp = {
     },
 
     handleTap: function () {
+
         if (this.waiting && this.isFake) {
             clearTimeout(this.timeout);
             if (this.fakeTimeout) clearTimeout(this.fakeTimeout);
@@ -3732,62 +3709,11 @@ window.FlashApp = {
             return;
         }
 
+
         const time = Date.now() - this.startTime;
         document.getElementById('sfx-success').play().catch(e => { });
         this.showResult(time);
     },
-
-    showResult: function (ms, msg) {
-        document.getElementById('flash-game').classList.add('hidden');
-        const resScreen = document.getElementById('flash-result');
-        resScreen.classList.remove('hidden');
-        resScreen.classList.add('flex');
-
-        const timeDisplay = document.getElementById('flash-time-display');
-        const rankDisplay = document.getElementById('flash-rank-display');
-        const newRecordDisplay = document.getElementById('flash-new-record');
-
-        newRecordDisplay.classList.add('hidden');
-        resScreen.className = "absolute inset-0 flex flex-col items-center justify-center z-30 bg-black/90 p-8 text-center";
-
-        if (ms === null) {
-            timeDisplay.innerText = "FAIL";
-            timeDisplay.classList.add('text-red-500');
-            timeDisplay.classList.remove('text-yellow-400');
-            rankDisplay.innerText = msg;
-        } else {
-            timeDisplay.innerText = ms + "ms";
-            timeDisplay.classList.remove('text-red-500');
-            timeDisplay.classList.add('text-yellow-400');
-
-            if (!this.personalBest || ms < this.personalBest) {
-                this.personalBest = ms;
-                localStorage.setItem('harshit_flash_pb', ms);
-                newRecordDisplay.classList.remove('hidden');
-                if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
-            }
-
-            let rank = "";
-            if (ms < 150) rank = "⚡ SPEEDSTER LEVEL";
-            else if (ms < 200) rank = "🔥 BARRY ALLEN STATUS";
-            else if (ms < 250) rank = "💨 KID FLASH";
-            else rank = "🐢 TOO SLOW";
-
-            rankDisplay.innerText = rank;
-        }
-    },
-
-    reset: function () {
-        document.getElementById('flash-result').classList.add('hidden');
-        document.getElementById('flash-result').classList.remove('flex');
-        document.getElementById('flash-intro').classList.remove('hidden');
-
-        if (this.personalBest) {
-            document.getElementById('flash-pb-intro').innerText = "PERSONAL BEST: " + this.personalBest + "ms";
-        }
-    }
-};
-
 
 
 const vaultSlides = [
@@ -3952,7 +3878,79 @@ window.initMap = initMap;
 
 
 
+const poems = [
+    {
+        title: "Friendship Blooms",
+        text: `In the garden of our days, <br>
+    Where laughter gently grows,<br>
+        Friendship blooms like sunshine,<br>
+            In every path we chose.<br><br>
+                Through the seasons, side by side,<br>
+                    We’ve shared both joy and strife,<br>
+                        A bond that holds so true and bright,<br>
+                            In the journey of our life.`
+    },
+    {
+        title: "Happiest Birthday Vi",
+        text: `Happiest Birthday Vi, so bright,<br>
+                                May success and dreams take endless flight.<br>
+                                    With each sunrise, may you find anew,<br>
+                                        The joy and wonders waiting for you.<br><br>
+                                            A sweet and positive light you share,<br>
+                                                With an aura beyond compare.<br>
+                                                    Your presence draws us close, it’s true,<br>
+                                                        A magnet for the hearts you pursue.`
+    },
+    {
+        title: "The Anchor",
+        text: `You are the calm to my storm.<br>
+                                                            The person who notices the small things.<br>
+                                                                You make this OS (and my life)<br>
+                                                                    Better just by running in the background.`
+    }
+];
 
+let currentPoemIndex = 0;
+
+function initInkpot() {
+    currentPoemIndex = 0;
+    renderPoem();
+}
+
+function nextPoem() {
+    currentPoemIndex = (currentPoemIndex + 1) % poems.length;
+
+
+    const textEl = document.getElementById('inkpot-text');
+    if (textEl) {
+        textEl.style.opacity = 0;
+        textEl.style.transform = 'translateY(-10px)';
+
+        setTimeout(() => {
+            renderPoem();
+        }, 300);
+    }
+}
+
+function renderPoem() {
+    const textEl = document.getElementById('inkpot-text');
+    if (!textEl) return;
+
+    const poem = poems[currentPoemIndex];
+    textEl.innerHTML = `
+                                                                    <h3 class="text-xl font-serif font-bold mb-4 text-center text-slate-800">${poem.title}</h3>
+                                                                    <p class="font-serif italic text-slate-600 leading-relaxed text-center">${poem.text}</p>
+                                                                    <div class="mt-6 text-center text-xs text-slate-400 font-sans tracking-widest uppercase">
+                                                                        ${currentPoemIndex + 1} / ${poems.length}
+                                                                    </div>
+                                                                    `;
+
+
+    textEl.style.opacity = 1;
+    textEl.style.transform = 'translateY(0)';
+}
+window.initInkpot = initInkpot;
+window.nextPoem = nextPoem;
 
 
 
@@ -4365,7 +4363,7 @@ function revealGift(id) {
 
     img.src = gift.img;
     title.innerText = gift.title;
-    desc.innerHTML = '';
+    desc.innerHTML = ''; 
 
     focus.classList.remove('hidden');
     focus.classList.add('visible');
@@ -4733,7 +4731,7 @@ let rrVelocity = 0;
 let rrGravity = 0.6;
 let rrJumpStrength = -10;
 let rrPlatforms = [];
-let rrItems = [];
+let rrItems = []; 
 const rrSpeed = 3;
 
 function initRabbitGame() {
@@ -4800,7 +4798,7 @@ function rrGameLoop() {
 
 
     const world = document.getElementById('rr-world');
-    world.innerHTML = '';
+    world.innerHTML = ''; 
 
     const lastPlat = rrPlatforms[rrPlatforms.length - 1];
     if (lastPlat && lastPlat.x < 600) {
@@ -4878,11 +4876,6 @@ function gameOverRabbit(reason) {
 window.startRabbitGame = startRabbitGame;
 window.initRabbitGame = initRabbitGame;
 
-/**
- * Application: Spotify - Vibe Check
- * A mini-player inspired by Spotify that plays a curated track.
- * Featuring glassmorphism, gradient backgrounds, and interactive controls.
- */
 apps.push({
     id: 'spotify', title: 'Spotify - Vibe Check', icon: '<img src="./assets/icons/app_spotify.png" alt="spotify">', dock: true, width: 450, height: 600, content: `
         <div class="h-full bg-gradient-to-b from-[#1DB954] to-black text-white p-6 flex flex-col items-center justify-center relative overflow-hidden">
@@ -6365,9 +6358,9 @@ window.toggleTruth = function (card) {
 
 function checkForSystemUpdates() {
     const now = new Date();
-    const updateDate = new Date(2027, 0, 30);
+    const updateDate = new Date(2027, 0, 30); 
     if (localStorage.getItem('v20_installed')) {
-        start2027BirthdaySurprise(true);
+        start2027BirthdaySurprise(true); 
         return;
     }
     if (now >= updateDate) {
@@ -6383,7 +6376,7 @@ function triggerSystemUpdate(isForced = false) {
         action: () => {
             openUpdateWindow();
         }
-    }, true);
+    }, true); 
 
     if (isForced) {
         setTimeout(openUpdateWindow, 500);
@@ -6586,73 +6579,3 @@ window.runSmartTypewriter = function (target, html, speed) {
     target.innerHTML = '';
     typeRecursive(temp, target);
 };
-
-const shraviiMessagesList = [
-    "Hi. :)",
-    "I’m the part of your life that won’t stop caring.",
-    "Sorry. Not sorry.",
-    "Also, drink water.",
-    "You stay kind, even when things get heavy.",
-    "You don’t give up easily.",
-    "You carry storms quietly.",
-    "You are enough, exactly as you are."
-];
-
-let shraviiMsgIdx = 0;
-
-function initShraviiMessages() {
-    const chat = document.getElementById('shravii-chat');
-    if (chat && chat.children.length === 0) {
-        addShraviiBubble("Hi. :)");
-        setTimeout(() => addShraviiBubble("I’m the part of your life that won’t stop caring."), 1000);
-    }
-}
-
-function addShraviiBubble(text) {
-    const chat = document.getElementById('shravii-chat');
-    if (!chat) return;
-
-    const bubble = document.createElement('div');
-    bubble.className = 'shravii-bubble';
-    bubble.innerHTML = text;
-    chat.appendChild(bubble);
-    chat.scrollTop = chat.scrollHeight;
-}
-
-function shraviiSendMessage() {
-    const chat = document.getElementById('shravii-chat');
-    if (!chat) return;
-
-    // Heart particles
-    for (let i = 0; i < 8; i++) {
-        const heart = document.createElement('div');
-        heart.className = 'shravii-heart-particle';
-        heart.innerHTML = '❤️';
-        heart.style.left = (Math.random() * 80 + 10) + '%';
-        heart.style.bottom = '20%';
-        heart.style.animationDelay = (Math.random() * 0.5) + 's';
-        document.querySelector('.shravii-container').appendChild(heart);
-        setTimeout(() => heart.remove(), 2000);
-    }
-
-    // Response
-    const responses = [
-        "❤️ received.",
-        "Aww.",
-        "Stay safe.",
-        "Got it!",
-        "✨"
-    ];
-    const resp = responses[Math.floor(Math.random() * responses.length)];
-    setTimeout(() => addShraviiBubble(resp), 500);
-}
-
-function shraviiTriggerSurprise() {
-    const msg = shraviiMessagesList[shraviiMsgIdx % shraviiMessagesList.length];
-    addShraviiBubble(msg);
-    shraviiMsgIdx++;
-}
-
-window.shraviiSendMessage = shraviiSendMessage;
-window.shraviiTriggerSurprise = shraviiTriggerSurprise;
-window.initShraviiMessages = initShraviiMessages;
