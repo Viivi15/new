@@ -38,7 +38,6 @@ Emotional and sentimental content.
 - **Mixtape**: Curated tracks.
 
 - **Deep Truths**: Validated core personality traits.
-- **Time Capsule & Paper Planes**: Memories preserved for the future.
 
 ### 🕹️ Unstable Features (Folder)
 Fun, games, and chaotic elements.
@@ -50,9 +49,6 @@ Fun, games, and chaotic elements.
 ### 🔐 The Vault
 A secure, passcode-protected area containing:
 - **Truth Archives**
-- **Detail Map**
-- **Memories Gallery**
-- **Hidden Tracks**
 
 ## 🛠️ Personalization
 To customize the content:

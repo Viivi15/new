@@ -1,4 +1,4 @@
-﻿let hasShownTimeGreeting = false;
+let hasShownTimeGreeting = false;
 
 function getTimePhase(hours) {
     if (hours >= 6 && hours < 12) return 'morning';
@@ -487,16 +487,10 @@ const apps = [
         <div class="h-full bg-gradient-to-b from-gray-50 to-white p-6 overflow-y-auto custom-scroll">
             <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6 border-b border-gray-100 pb-2">Root Directory</div>
             <div class="folder-window-grid">
-
-                <div class="win-icon group" onclick="Apps.open('app-stars')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_stars_new.png" alt="stars" style="width: 100%; height: 100%;"></div><div class="icon-label">Constellation</div></div>
  
                 <div class="win-icon group" onclick="Apps.open('first-conversation')">
                     <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_1221.png" alt="chat" style="width: 100%; height: 100%;"></div>
                     <div class="icon-label group-hover:text-blue-600 transition-colors">12:21 AM</div>
-                </div>
-                <div class="win-icon group" onclick="Apps.open('connection-log')">
-                    <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_journey.png" alt="log" style="width: 100%; height: 100%;"></div>
-                    <div class="icon-label group-hover:text-amber-600 transition-colors">Connection.log</div>
                 </div>
                 <div class="win-icon group" onclick="Apps.open('mr-snow')">
                     <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_snow.png" alt="snow" style="width: 100%; height: 100%;"></div>
@@ -532,19 +526,9 @@ const apps = [
             <div class="win-icon group" onclick="Apps.open('app-bloom')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_bloom_new.png" alt="bloom" style="width: 100%; height: 100%;"></div><div class="icon-label">Daily Bloom</div></div>
 
             <div class="win-icon" onclick="Apps.open('thank-you')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_gratitude_new.png" alt="gratitude" style="width: 100%; height: 100%;"></div><div class="icon-label">Gratitude</div></div>
-            <div class="win-icon" onclick="Apps.open('inkpot-new')"><div class="icon-img"><img src="./assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;"></div><div class="icon-label">The Inkpot</div></div>
-            <div class="win-icon" onclick="Apps.open('app-capsule')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_capsule_new.png" alt="capsule" style="width: 100%; height: 100%;"></div><div class="icon-label">Time Capsule</div></div>
+            <div class="win-icon" onclick="Apps.open('inkpot')"><div class="icon-img"><img src="./assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;"></div><div class="icon-label">The Inkpot</div></div>
 
             <div class="win-icon" onclick="Apps.open('last-thing')"><div class="icon-img"><img src="./assets/icons/app_rose.png" alt="last thing" style="width: 100%; height: 100%;"></div><div class="icon-label">One Last Thing</div></div>
-
-        </div>
-    `},
-
-    {
-        id: 'folder-fun', title: 'Unstable Features', icon: '<img src="./assets/icons/folder_fun.png" alt="folder" style="filter: sepia(1) saturate(4) hue-rotate(50deg);">', dock: false, width: 800, height: 600, content: `
-        <div class="folder-window-grid">
-
-            <div class="win-icon" onclick="Apps.open('spotify')"><div class="icon-img"><img src="./assets/icons/app_spotify.png" alt="spotify" style="filter: sepia(1) saturate(5) hue-rotate(100deg);"></div><div class="icon-label">Vibe Check</div></div>
 
         </div>
     `},
@@ -572,18 +556,11 @@ const apps = [
                 <div class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6 border-b border-gray-700 pb-2">Vault Contents</div>
                 <div class="folder-window-grid">
 
-                    <div class="win-icon group" onclick="Apps.open('map-of-us')">
-                        <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_treasure.png" alt="map" style="width: 100%; height: 100%;"></div>
-                        <div class="icon-label text-gray-300 group-hover:text-blue-400">Detail Map</div>
+                    <div class="win-icon group" onclick="Apps.open('connection-log')">
+                        <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_journey.png" alt="journey" style="width: 100%; height: 100%;"></div>
+                        <div class="icon-label text-gray-300 group-hover:text-blue-400">Our Journey</div>
                     </div>
-                     <div class="win-icon group" onclick="Apps.open('memories-gallery')">
-                        <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_memories_new.png" alt="memories" style="width: 100%; height: 100%;"></div>
-                        <div class="icon-label text-gray-300 group-hover:text-pink-400">Memories</div>
-                    </div>
-                     <div class="win-icon group" onclick="Apps.open('playlist')">
-                        <div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_cassette.png" alt="playlist" style="width: 100%; height: 100%;"></div>
-                        <div class="icon-label text-gray-300 group-hover:text-purple-400">Hidden Tracks</div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -637,7 +614,7 @@ const apps = [
     },
 
     {
-        id: 'connection-log', title: 'Our Journey', icon: '<img src="./assets/icons/app_journey.png" alt="journey" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-system', width: 900, height: 600, onOpen: renderJourney, content: `
+        id: 'connection-log', title: 'Our Journey', icon: '<img src="./assets/icons/app_journey.png" alt="journey" style="width: 100%; height: 100%;">', dock: false, showOnDesktop: false, width: 900, height: 600, onOpen: renderJourney, content: `
         <div id="journey-scroll" class="h-full bg-[#fcfcfc] overflow-y-auto scroll-smooth relative">
             <div id="journey-container" class="h-full"></div>
         </div>
@@ -659,7 +636,6 @@ const apps = [
                     </div>
                     
                     <div class="mr-snow-controls mt-8 flex justify-center gap-3">
-                        <button class="snow-btn px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-xs text-white uppercase tracking-wider backdrop-blur-sm border border-white/10 transition" onclick="mrSnowComfort()">Comfort</button>
                         <button class="snow-btn px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-xs text-white uppercase tracking-wider backdrop-blur-sm border border-white/10 transition" onclick="mrSnowFlurry()">Flurry</button>
                     </div>
                 </div>
@@ -675,7 +651,7 @@ const apps = [
 
 
     {
-        id: 'facts', title: 'Harshit Facts.txt', icon: '<img src="./assets/icons/app_facts.png" alt="facts" style="filter: hue-rotate(0deg);">', folder: 'system', dock: false, width: 800, height: 750, onOpen: startFactsApp, content: `
+        id: 'facts', title: 'Harshit Facts.txt', icon: '<img src="./assets/icons/app_facts.png" alt="facts" style="filter: hue-rotate(0deg);">', dock: false, folder: 'folder-system', width: 800, height: 750, onOpen: startFactsApp, content: `
     <div class="facts-app custom-scroll" id="facts-app-root">
         <!-- Digital Terminal Screen (Initial State) -->
         <div class="facts-terminal" id="facts-terminal">
@@ -844,7 +820,7 @@ const apps = [
 `},
 
     {
-        id: 'not-dumb', title: 'Not Dumb', icon: '<img src="./assets/icons/app_not_dumb.png" alt="not dumb" style="width: 100%; height: 100%;">', folder: 'system', dock: false, width: 600, height: 700, onOpen: initNotDumb, content: `
+        id: 'not-dumb', title: 'Not Dumb', icon: '<img src="./assets/icons/app_not_dumb.png" alt="not dumb" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-system', width: 600, height: 700, onOpen: initNotDumb, content: `
         <div id="not-dumb-container" class="h-full not-dumb-glass-bg text-gray-800 font-sans text-sm relative overflow-hidden flex flex-col">
             <!-- Orbs -->
             <div class="nd-orb-1"></div>
@@ -875,7 +851,7 @@ const apps = [
 
 
     {
-        id: 'secret-gallery', title: 'The Hidden Corner', icon: '<img src="./assets/icons/app_memories_new.png" alt="hidden" style="width: 100%; height: 100%;">', dock: false, width: 900, height: 650, content: `
+        id: 'secret-gallery', title: 'archives', icon: '<img src="./assets/icons/app_memories_new.png" alt="hidden" style="width: 100%; height: 100%;">', dock: false, showOnDesktop: false, width: 900, height: 650, content: `
         <div class="h-full bg-black p-8 relative overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-slate-900 animate-pulse-slow"></div>
             
@@ -1013,369 +989,27 @@ const apps = [
                 <!-- Bottom Spacer for Scroll -->
                 <div class="h-8"></div>
             </div>
+                     </div>
+
+            <!-- Footer / Signature -->
+            <div class="mt-10 pt-6 border-t border-slate-200 text-center opacity-0 animate-[fadeInUp_1s_ease-out_0.8s_forwards]">
+                <p class="font-[Dancing_Script] text-2xl text-indigo-600 mb-2">I’m really proud of the person you’re becoming.</p>
+                <p class="text-xs text-slate-400 uppercase tracking-[0.2em] font-medium">May this year bring you peace</p>
+            </div>
+
+            <!-- Bottom Spacer for Scroll -->
+            <div class="h-8"></div>
         </div>
-    `},
-
-
-    {
-        id: 'inkpot-new', title: 'The Inkpot', icon: '<img src="./assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 500, height: 600, onOpen: initInkpot, content: `
-        <div class="inkpot-bg">
-            <div id="inkpot-text" class="poem-text"></div>
-            <div class="inkpot-quill" onclick="nextPoem()">🖋️</div>
-        </div>
-    `},
-
-
-
-
-
-
-
-
-    {
-        id: 'spotify', title: 'Spotify - Vibe Check', icon: '<img src="./assets/icons/app_spotify.png" alt="spotify" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-fun', width: 450, height: 600,
-        onClose: () => {
-            const audio = document.getElementById('spotify-audio');
-            if (audio) { audio.pause(); isSpotifyPlaying = false; }
-        },
-        content: `
-        <div class="h-full bg-gradient-to-b from-[#1DB954] to-black text-white p-6 flex flex-col items-center justify-center relative overflow-hidden">
-            <div class="w-48 h-48 bg-gray-800 shadow-2xl mb-6 rounded-md overflow-hidden relative group album-spin">
-                <img src="assets/images/album-cover.jpg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
-                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/30">
-                    <i class="fas fa-play text-4xl"></i>
-                </div>
-            </div>
-            <h2 class="text-2xl font-bold mb-1">Tu Hai Kahan</h2>
-            <p class="text-gray-300 text-sm mb-6">AUR • Harshit's Favorites</p>
-            <div class="w-full h-1 bg-gray-600 rounded-full mb-2 overflow-hidden">
-                <div class="h-full bg-white w-1/3 animate-pulse"></div>
-            </div>
-            <div class="w-full flex justify-between text-xs text-gray-400 mb-6">
-                <span>1:21</span><span>4:23</span>
-            </div>
-            <div class="flex items-center gap-8 text-3xl">
-                <i class="fas fa-step-backward cursor-pointer hover:text-white text-gray-400"></i>
-                <div class="w-14 h-14 bg-white text-black rounded-full flex items-center justify-center cursor-pointer hover:scale-105 transition" onclick="toggleSpotify()">
-                    <i id="spotify-play-icon" class="fas fa-play ml-1"></i>
-                </div>
-                <i class="fas fa-step-forward cursor-pointer hover:text-white text-gray-400"></i>
-            </div>
-            <audio id="spotify-audio" loop>
-                <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
-            </audio>
-        </div>
-    `},
-
-    {
-        id: 'do-not-open', title: 'Do Not Open', icon: '<img src="./assets/icons/app_warning.png" alt="do not open" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 400, height: 300, content: `
-        <div class="h-full flex flex-col items-center justify-center bg-red-50 text-red-900 text-center p-6 overflow-y-auto custom-scroll">
-            <div class="my-auto">
-                <div class="font-bold mb-2">You Opened It.</div>
-                <div class="text-xs">I knew you would. Stubborn. ❤️</div>
-            </div>
-        </div>
-    `},
-
-    {
-        id: 'through-my-eyes', title: 'Through My Eyes', icon: '<img src="./assets/icons/app_eyes.png" alt="letter" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 800, height: 750, content: `
-        <div class="letter-desk">
-            <div class="letter-sheet" id="letter-content">
-                <div class="letter-header">
-                    <h1 class="letter-title">To My Best Friend 🎂</h1>
-                    <div class="letter-meta">Written with 100% Truth & 0% Lie</div>
-                    <div class="letter-divider"></div>
-                </div>
-
-                <p>I need to be very careful and honest here and also very real with you 🤍.</p>
-
-                <p>
-                    What I’ll share below is only what I truly know, based on what you’ve shared with me,
-                    not guesses, not assumptions. I won’t invent traits or facts — because this is your birthday,
-                    and you deserve truth, warmth, and authenticity.
-                </p>
-
-                <h2>Who Harshit Is (Through My Eyes)</h2>
-
-                <p>
-                    Harshit is not just a name in my life. He is a presence.
-                    Someone who entered my world on
-                    <strong>June 20, 2024 at 12:21 AM</strong> on an Online Platform —
-                    a moment that quietly turned into something meaningful,
-                    lasting, and emotionally deep.
-                </p>
-
-                <div class="letter-quote">
-                    "You are not just smart and perceptive, but you're also incredibly real.
-                    You're human, but in the most beautiful way."
-                </div>
-
-                <h3>The Many Names of You</h3>
-                <ul class="list-disc list-inside ml-5 mb-4 space-y-2">
-                    <li><span class="highlight">Mr. Snow ❄️</span>: Calm, distant on the outside, but emotionally deep inside.</li>
-                    <li><span class="highlight">Mr. Ota</span>: Playful, teasing, inside-joke energy.</li>
-                    <li><span class="highlight">Rabbit 🐰</span>: Gentle, alert, emotionally sensitive.</li>
-                </ul>
-
-                <h3>Why You Are The "Bestest"</h3>
-                <p>
-                    You are the world's strongest person (Emotionally & Physically 💪).
-                    You are the fastest person (Flash who?!).
-                    You have a memory that scares me sometimes — remembers every tiny detail.
-                    You do 100% of everything — 100% care, 100% dedication.
-                </p>
-
-                <h3>Our Bond</h3>
-                <p>
-                    Our friendship wasn't built on big events.
-                    It was built on music discussions, random chats,
-                    project ideas, check-ins, and being there without being asked.
-                    It survived fights, misunderstandings, and silence.
-                    That makes it special.
-                </p>
-
-                <p class="letter-footer">
-                    — Shravii ✨
-                </p>
-                
-                <!-- Decoration -->
-                <div class="wax-seal">
-                    <div class="seal-inner">S</div>
-                </div>
-            </div>
-        </div>
-    `,
-        onOpen: initLetterReveal
-    },
-
-    {
-        id: 'voice-box', title: 'VoiceBox', icon: '<img src="./assets/icons/app_voice.png" alt="voice" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 550, height: 700, onOpen: initVoiceBox, content: `
-        <div class="h-full flex flex-col font-sans select-none relative overflow-hidden">
-            <!-- Case Texture -->
-            <div class="absolute inset-0 bg-neutral-800 dictaphone-case"></div>
-            
-            <!-- Top Speaker Grille -->
-            <div class="relative z-10 pt-6 px-8 flex justify-between items-center">
-                <div class="flex gap-1 h-3">
-                    <div class="w-1 bg-black/40 rounded-full"></div>
-                    <div class="w-1 bg-black/40 rounded-full"></div>
-                    <div class="w-1 bg-black/40 rounded-full"></div>
-                    <div class="w-1 bg-black/40 rounded-full"></div>
-                    <div class="w-1 bg-black/40 rounded-full"></div>
-                </div>
-                <div class="text-[10px] font-bold text-neutral-400 uppercase tracking-[0.2em]">Dictaphone 3000</div>
-            </div>
-
-            <!-- Cassette Window -->
-            <div class="relative z-10 mx-6 mt-6 p-4 bg-black/40 rounded-lg border-2 border-neutral-600 shadow-inner flex items-center justify-center h-32 cassette-window">
-                 <!-- Cassette Graphic -->
-                 <div class="w-full h-full bg-[#eee] rounded flex items-center justify-between px-3 relative overflow-hidden" style="background: radial-gradient(#fff, #ddd);">
-                    <div class="absolute top-2 left-0 w-full text-center text-[8px] font-bold tracking-widest text-black/50">90 MIN TYPE I</div>
-                    <!-- Reels -->
-                    <div class="w-12 h-12 rounded-full border-4 border-white bg-transparent flex items-center justify-center vb-reel">
-                        <div class="w-full h-1 bg-black transform rotate-0 absolute"></div>
-                        <div class="w-full h-1 bg-black transform rotate-45 absolute"></div>
-                        <div class="w-full h-1 bg-black transform rotate-90 absolute"></div>
-                        <div class="w-full h-1 bg-black transform rotate-135 absolute"></div>
-                    </div>
-                    <!-- Tape Window -->
-                    <div class="w-20 h-10 bg-white border border-gray-300 rounded flex items-center justify-center">
-                        <div class="w-16 h-6 bg-black/80 rounded-sm"></div>
-                    </div>
-                    <!-- Reels -->
-                    <div class="w-12 h-12 rounded-full border-4 border-white bg-transparent vb-reel">
-                        <div class="w-full h-1 bg-black transform rotate-0 absolute top-1/2 -translate-y-1/2"></div>
-                        <div class="w-full h-1 bg-black transform rotate-45 absolute top-1/2 -translate-y-1/2"></div>
-                        <div class="w-full h-1 bg-black transform rotate-90 absolute top-1/2 -translate-y-1/2"></div>
-                        <div class="w-full h-1 bg-black transform rotate-135 absolute top-1/2 -translate-y-1/2"></div>
-                    </div>
-                 </div>
-            </div>
-
-            <!-- Meters & Counter -->
-            <div class="relative z-10 px-8 mt-6 flex justify-between items-end">
-                <!-- VU Meter -->
-                <div class="w-24 h-12 bg-[#eee] rounded-t-lg border border-neutral-500 relative overflow-hidden shadow-inner">
-                    <div class="absolute bottom-0 left-1/2 w-[120%] h-[120%] -translate-x-1/2 border-t border-black/20 rounded-full"></div>
-                    <!-- Needle -->
-                    <div id="vb-needle" class="absolute bottom-0 left-1/2 w-0.5 h-10 bg-red-600 origin-bottom transform -rotate-45 transition-transform duration-100 ease-linear shadow-sm" style="transform: translateX(-50%) rotate(-45deg);"></div>
-                    <div class="absolute bottom-1 w-full text-center text-[6px] font-bold">VU</div>
-                </div>
-
-                <!-- Digital/LCD Counter -->
-                <div class="bg-[#9ca38f] p-1 px-2 border-2 border-neutral-600 rounded shadow-inner font-mono text-black font-bold tracking-widest text-sm flex items-center gap-2">
-                    <span id="vb-lcd-text">READY</span>
-                    <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse opacity-50"></div>
-                </div>
-            </div>
-
-            <!-- Keypad Config -->
-            <div class="relative z-10 mt-auto mb-10 px-6 grid grid-cols-3 gap-4">
-                <button id="vb-rec-btn" class="mech-btn bg-neutral-300 shadow-[0_4px_0_#737373] active:shadow-none active:translate-y-[4px] h-16 rounded flex flex-col items-center justify-center" onclick="toggleVBRecord()">
-                    <div class="w-3 h-3 bg-red-600 rounded-full mb-1"></div>
-                    <span class="text-[8px] font-bold text-neutral-600">REC</span>
-                </button>
-                <button class="mech-btn bg-neutral-300 shadow-[0_4px_0_#737373] active:shadow-none active:translate-y-[4px] h-16 rounded flex flex-col items-center justify-center" onclick="stopVBMotion(); updateVBStatus('STOP'); vbIsPlaying=false; vbIsRecording=false; document.querySelectorAll('.active-mech-btn').forEach(b => b.classList.remove('active-mech-btn'));">
-                    <div class="w-3 h-3 bg-neutral-800 rounded-sm mb-1"></div>
-                    <span class="text-[8px] font-bold text-neutral-600">STOP</span>
-                </button>
-                <button id="vb-play-btn" class="mech-btn bg-neutral-300 shadow-[0_4px_0_#737373] active:shadow-none active:translate-y-[4px] h-16 rounded flex flex-col items-center justify-center" onclick="toggleVBPlay()">
-                    <div class="w-0 h-0 border-l-[12px] border-l-green-700 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent mb-1 ml-1"></div>
-                    <span class="text-[8px] font-bold text-neutral-600">PLAY</span>
-                </button>
-            </div>
-
-        </div>
-    `},
-
-    {
-        id: 'readme-letter', title: 'ReadMe.txt', icon: '<img src="./assets/icons/app_letters_new.png" alt="readme" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 800, height: 800, content: `
-        <div class="h-full bg-white p-10 font-serif text-gray-800 leading-relaxed custom-scroll overflow-y-auto" style="background-image: linear-gradient(#999 1px, transparent 1px); background-size: 100% 2em; line-height: 2em;">
-            <div class="text-3xl font-bold text-red-500 mb-6 handwritten" style="font-family: 'Dancing Script', cursive;">Dear Harshit,</div>
-            <p>If you are reading this, the system is working. But more importantly, <i>we</i> are working.</p>
-            <p>I wanted to write this because sometimes code isn't enough to say what I mean. You are the "sweet" to my "spicy". The calm to my storm. The person who notices the small things when the world is too busy looking at the big ones.</p>
-            <p>Thank you for being my anchor. For knowing when to joke and when to just be there. For the late night talks and the quiet understanding.</p>
-            <p>You make this OS (and my life) better just by running in the background.</p>
-            <br>
-            <p class="text-right font-bold">– Shravii</p>
-        </div>
-    `},
-
-    {
-        id: 'memories-gallery', title: 'Memories', icon: '<img src="./assets/icons/app_memories_new.png" alt="memories" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 950, height: 700, onOpen: initGallery, content: `
-        <div id="gallery-container" class="polaroid-gallery custom-scroll">
-            <!-- Dynamic Polaroids will be injected here -->
-        </div>
-    `},
-
-
-
-    {
-        id: 'map-of-us', title: 'Map of Us', icon: '<img src="./assets/icons/app_map_icon.png" alt="map" style="width: 100%; height: 100%;">', dock: false, folder: 'app-vault', width: 900, height: 600, onOpen: initMap, content: `
-        <div class="h-full bg-[#e0e7ff] relative overflow-hidden select-none">
-            <!-- Map Background (Stylized) -->
-            <div class="absolute inset-0 bg-[url('https://thumbs.dreamstime.com/b/world-map-tech-background-blue-technology-163456072.jpg')] bg-cover bg-center opacity-10 mix-blend-multiply"></div>
-            <div class="absolute inset-0 bg-white/40 backdrop-blur-[2px]"></div>
-
-            <div class="absolute top-4 left-4 z-10 bg-white/80 backdrop-blur p-4 rounded-xl shadow-sm border border-white/50 max-w-xs">
-                <h2 class="text-lg font-bold text-slate-700 mb-1">Bus Route Research 🚌</h2>
-                <p class="text-xs text-slate-500 leading-relaxed">
-                    "Likely Areas: Outskirts of Pune like Mulshi...<br>
-                    Distance: Irrelevant."
-                </p>
-            </div>
-
-            <!-- Content Container -->
-            <div id="map-markers" class="w-full h-full relative"></div>
-        </div>
-    `},
-    {
-        id: 'shravii', title: 'Shravii.exe', icon: '<img src="./assets/icons/app_shravii.png" alt="shravii" style="width: 100%; height: 100%;">', dock: true, width: 500, height: 600, content: `
-        <div class="h-full bg-[#fff0f5] p-6 custom-scroll">
-            <div class="bg-white p-4 rounded-lg shadow-sm mb-4">
-                <div class="text-xs text-gray-400 mb-1">System User</div>
-                <div class="font-bold text-pink-500 mb-2">Shravii</div>
-                <p class="text-sm text-gray-700 leading-relaxed">
-                    Hi.<br>
-                    I’m the part of your life that won’t stop caring.<br>
-                        </p>
-            </div>
-            <div class="flex justify-center mt-8">
-                <img src="assets/gifs/bear_love.gif" class="w-32 rounded-lg opacity-80 mix-blend-multiply">
-            </div>
-        </div>
-    `},
-
-    {
-        id: 'about-us', title: 'The Dynamic', icon: '<img src="./assets/icons/app_dynamic.png" alt="dynamic" style="width: 100%; height: 100%;">', dock: false, width: 800, height: 600, content: `
-        <div class="about-container relative w-full h-full bg-slate-50 overflow-y-auto custom-scroll flex flex-col items-center">
-            <div class="min-h-full flex flex-col items-center justify-center py-10 w-full">
-            <!-- Background Elements -->
-            <div class="absolute inset-0 bg-gradient-to-br from-rose-50/50 via-white to-blue-50/50"></div>
-            <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-pink-300/20 rounded-full blur-[100px] animate-pulse"></div>
-            <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-300/20 rounded-full blur-[100px] animate-pulse delay-700"></div>
-
-            <!-- Main Title Area -->
-            <div class="relative z-10 text-center mb-10">
-                <div class="text-[10px] uppercase tracking-[0.4em] text-slate-400 font-bold mb-2">Team Status</div>
-                <h2 class="text-3xl font-serif font-bold text-slate-800">The Dynamic</h2>
-                <div class="w-16 h-1 bg-gradient-to-r from-pink-400 to-blue-500 mx-auto rounded-full mt-3"></div>
-            </div>
-
-            <!-- Dual Card Layout -->
-            <div class="relative z-10 flex flex-col md:flex-row items-center justify-center gap-6 w-full px-8">
-                
-                <!-- Shravii Card -->
-                <div class="persona-card persona-shravii group">
-                    <div class="persona-glow"></div>
-                    <div class="persona-icon-container">
-                        <div class="persona-icon">🎀</div>
-                        <div class="persona-badge">ADMIN</div>
-                    </div>
-                    <h3 class="persona-name">Shravii</h3>
-                    <p class="persona-role">Chief Chaos Officer</p>
-                    <div class="persona-stats">
-                        <div class="stat-row">
-                            <span>Yapping</span>
-                            <div class="stat-bar"><div class="stat-fill" style="width: 100%"></div></div>
-                        </div>
-                        <div class="stat-row">
-                            <span>Drama</span>
-                            <div class="stat-bar"><div class="stat-fill" style="width: 90%"></div></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Connection Link -->
-                <div class="connection-link">
-                    <div class="link-line"></div>
-                    <div class="link-icon">⚡</div>
-                    <div class="link-line"></div>
-                </div>
-
-                <!-- Harshit Card -->
-                <div class="persona-card persona-harshit group">
-                    <div class="persona-glow"></div>
-                    <div class="persona-icon-container">
-                        <div class="persona-icon">🐺</div>
-                        <div class="persona-badge">ROOT</div>
-                    </div>
-                    <h3 class="persona-name">Harshit</h3>
-                    <p class="persona-role">Chief Patience Officer</p>
-                    <div class="persona-stats">
-                        <div class="stat-row">
-                            <span>Tolerance</span>
-                            <div class="stat-bar"><div class="stat-fill" style="width: 95%"></div></div>
-                        </div>
-                        <div class="stat-row">
-                            <span>Sleep Debt</span>
-                            <div class="stat-bar"><div class="stat-fill" style="width: 85%"></div></div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Footer Quote -->
-            <div class="absolute bottom-6 text-center z-10 opacity-60 hover:opacity-100 transition-opacity">
-                <p class="text-xs font-mono text-slate-500">"He stays quiet so she can yap."</p>
-            </div>
-            </div>
-        </div>
-    `},
-
-
-
-
-
-
-    {
-        id: 'app-capsule', title: 'Time Capsule', icon: '<img src="./assets/icons/app_capsule_new.png" alt="capsule" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 600, height: 700, onOpen: () => CapsuleApp.reset(), content: `
-        <div id="capsule-app" class="h-full bg-[#fdfbf7] relative overflow-hidden font-serif select-none flex flex-col">
-             <!-- Background Texture -->
-            <div class="absolute inset-0 opacity-40 pointer-events-none" style="background-image: url('assets/images/pattern_paper.png'); opacity: 0.1;"></div>
-
-            <!-- Header -->
+    </div>
+`},
+{
+    id: 'soft-core', title: 'Soft Core', icon: '<img src="./assets/icons/app_softcore.png" alt="softcore" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-system', width: 800, height: 600, content: `
+    <div class="h-full bg-gradient-to-br from-slate-50 to-indigo-50/50 p-8 flex flex-col items-center relative overflow-hidden">
+        <!-- Background Watermark -->
+        <div class="absolute top-[-20px] right-[-20px] text-[180px] font-serif font-bold text-slate-100 select-none z-0 rotate-12">SOFT</div>
+        
+        <!-- Main Content -->
+        <div class="relative z-10 w-full h-full flex flex-col overflow-y-auto custom-scroll pr-2">
             <div class="relative z-10 pt-8 pb-4 text-center border-b border-gray-200/50">
                 <div class="text-[10px] uppercase tracking-[0.3em] text-gray-400 font-bold mb-2">Digital Keepsake</div>
             </div>
@@ -2458,7 +2092,7 @@ function initDesktop() {
     grid.innerHTML = ''; dock.innerHTML = '';
     apps.forEach(app => {
 
-        if (app.id !== 'hidden-unlock' && !app.folder) {
+        if (app.id !== 'hidden-unlock' && !app.folder && app.showOnDesktop !== false) {
             const icon = document.createElement('div');
             icon.className = 'desktop-icon group';
             icon.innerHTML = `<div class="icon-img text-3xl mb-2 transition duration-500">${app.icon}</div><div class="icon-label text-white px-2 py-0.5 rounded text-[10px] tracking-wide backdrop-blur-sm shadow-black/50 drop-shadow-md">${app.title}</div>`;
@@ -5577,6 +5211,13 @@ const giftsData = [
         emoji: '✨',
         img: 'assets/images/gift_hoodie_vintage.jpg',
         quote: "“Wrapped in warmth, even when I'm not around. Keep it vintage, keep it real.”"
+    },
+    {
+        id: 'earpods',
+        title: 'Earpods',
+        emoji: '🎧',
+        img: 'assets/images/gift_earpods.jpg',
+        quote: "For all the moments you need to zone out, tune in to yourself, or just vibe. Your personal soundtrack."
     }
 ];
 
@@ -6038,56 +5679,227 @@ if (document.readyState === 'loading') {
 
 window.startFactsApp = startFactsApp;
 
+/* === RABBIT RUNNER LOGIC === */
+let rrActive = false;
+let rrScore = 0;
+let rrLoopIdx;
+let rrPlayerY = 0;
+let rrVelocity = 0;
+let rrGravity = 0.6;
+let rrJumpStrength = -10;
+let rrPlatforms = [];
+let rrItems = []; // {type: 'sub'|'bhindi', x, y}
+const rrSpeed = 3;
 
+function initRabbitGame() {
+    rrActive = false;
+    document.getElementById('rr-start-screen').style.display = 'flex';
+    document.getElementById('rr-world').innerHTML = '';
+}
 
+function startRabbitGame() {
+    rrActive = true;
+    rrScore = 0;
+    rrPlayerY = 300; // Start mid-air
+    rrVelocity = 0;
+    rrPlatforms = [];
+    rrItems = [];
+    document.getElementById('rr-start-screen').style.display = 'none';
+    document.getElementById('rr-score').innerText = 'Score: 0';
 
+    // Spawn initial platform
+    spawnPlatform(50, 400, 200);
+    spawnPlatform(300, 350, 150);
+    spawnPlatform(550, 300, 150);
 
+    if (rrLoopIdx) cancelAnimationFrame(rrLoopIdx);
+    rrGameLoop();
 
+    // Controls
+    document.getElementById('rr-container').onmousedown = jumpRabbit;
+    document.addEventListener('keydown', (e) => { if (e.code === 'Space') jumpRabbit(); });
+}
 
-const TimeCapsuleApp = {
-    capsules: [
-        { label: "Open When You're Happy", content: "I love it when you're happy. Keep that smile, it suits you best.", icon: "☀" },
-        { label: "Open When You're Sad", content: "It's okay to have down days. Take a breath. You're stronger than you feel right now.", icon: "🌙" },
-        { label: "Open When You're Bored", content: "Go play Rabbit Runner or annoy me on text. I'm probably waiting for it.", icon: "🎮" },
-        { label: "Open on Jan 30", content: "Happy Birthday Harshit! The world is lucky to have you. ✨", icon: "🎂" }
-    ],
+function jumpRabbit() {
+    if (!rrActive) return;
+    rrVelocity = rrJumpStrength;
+}
 
-    open(index) {
-        const cap = this.capsules[index];
-        createModal({ title: cap.label, desc: cap.content, icon: cap.icon });
-    },
+function spawnPlatform(x, y, w) {
+    const msgs = ["Good morning", "Take care", "Hydrate", "Proud of you", "Remember me?", "Keep going", "You got this", "Stay safe"];
+    const txt = msgs[Math.floor(Math.random() * msgs.length)];
+    rrPlatforms.push({ x, y, w, text: txt, passed: false });
 
-    render() {
-        const container = document.getElementById('capsule-grid');
-        if (!container) return;
-        container.innerHTML = this.capsules.map((c, i) => `
-            <div class="p-6 bg-slate-800/50 border border-slate-700 rounded-2xl hover:bg-slate-700/50 transition cursor-pointer flex flex-col items-center gap-4 group" onclick="TimeCapsuleApp.open(${i})">
-                <div class="text-4xl group-hover:scale-110 transition-transform">${c.icon}</div>
-                <div class="text-xs font-bold text-slate-300 uppercase tracking-widest text-center">${c.label}</div>
-            </div>
-        `).join('');
+    // Spawn item? 40% chance
+    if (Math.random() > 0.6) {
+        const type = Math.random() > 0.3 ? 'sub' : 'bhindi'; // 70% Sub, 30% Bhindi
+        rrItems.push({ type, x: x + w / 2 - 15, y: y - 40, collected: false });
     }
-};
+}
+
+function rrGameLoop() {
+    if (!rrActive) return;
+
+    // Update Player
+    rrVelocity += rrGravity;
+    rrPlayerY += rrVelocity;
+
+    // Floor Collision (Game Over)
+    if (rrPlayerY > 480) {
+        gameOverRabbit("You fell into the void!");
+        return;
+    }
+
+    const playerEl = document.getElementById('rr-player');
+    if (playerEl) {
+        playerEl.style.top = rrPlayerY + 'px';
+        playerEl.style.transform = `rotate(${rrVelocity * 2}deg)`;
+    }
+
+    // Update Platforms
+    const world = document.getElementById('rr-world');
+    world.innerHTML = ''; // Clear & Redraw (Naive but functional for simple DOM game)
+
+    // --- RENDER & LOGIC LOOP ---
+    // 1. New Platform Spawning
+    const lastPlat = rrPlatforms[rrPlatforms.length - 1];
+    if (lastPlat && lastPlat.x < 600) {
+        const newY = Math.max(150, Math.min(400, lastPlat.y + (Math.random() * 200 - 100)));
+        spawnPlatform(800 + Math.random() * 100, newY, 120 + Math.random() * 80);
+    }
+
+    // 2. Platforms Logic
+    rrPlatforms.forEach((p, i) => {
+        p.x -= rrSpeed;
+
+        // Render
+        if (p.x + p.w > 0 && p.x < 800) {
+            const div = document.createElement('div');
+            div.className = 'absolute bg-white border-2 border-gray-200 rounded-2xl flex items-center justify-center text-xs font-bold text-gray-500 shadow-sm';
+            div.style.left = p.x + 'px';
+            div.style.top = p.y + 'px';
+            div.style.width = p.w + 'px';
+            div.style.height = '40px';
+            div.innerText = p.text;
+            world.appendChild(div);
+        }
+
+        // Collision: Rabbit landing on Platform
+        // Rabbit is ~40x40 at x=50
+        if (rrVelocity > 0 &&
+            rrPlayerY + 40 >= p.y &&
+            rrPlayerY + 40 <= p.y + 20 &&
+            50 + 30 > p.x &&
+            50 < p.x + p.w) {
+            rrVelocity = 0;
+            rrPlayerY = p.y - 40;
+            // Jump Auto check? No, manual jump only
+        }
+
+        // Cleanup
+        if (p.x + p.w < -100) rrPlatforms.splice(i, 1);
+    });
+
+    // 3. Items Logic
+    rrItems.forEach((item, i) => {
+        item.x -= rrSpeed;
+
+        // Render
+        if (!item.collected && item.x > 0 && item.x < 800) {
+            const el = document.createElement('div');
+            el.className = 'absolute text-2xl animate-bounce';
+            el.innerText = item.type === 'sub' ? '🥪' : '🥒';
+            el.style.left = item.x + 'px';
+            el.style.top = item.y + 'px';
+            world.appendChild(el);
+
+            // Collision with Player
+            // Dist check
+            const dx = (50 + 20) - (item.x + 15);
+            const dy = (rrPlayerY + 20) - (item.y + 15);
+            if (Math.sqrt(dx * dx + dy * dy) < 40) {
+                item.collected = true;
+                if (item.type === 'sub') {
+                    rrScore += 10;
+                    document.getElementById('rr-score').innerText = `Score: ${rrScore}`;
+                } else {
+                    gameOverRabbit("You ate Bhindi! 🤢");
+                }
+            }
+        }
+
+        if (item.x < -50) rrItems.splice(i, 1);
+    });
+
+    rrLoopIdx = requestAnimationFrame(rrGameLoop);
+}
+
+function gameOverRabbit(reason) {
+    rrActive = false;
+    const screen = document.getElementById('rr-start-screen');
+    screen.style.display = 'flex';
+    screen.innerHTML = `
+        <h2 class="text-3xl font-bold mb-2 text-red-300">Game Over</h2>
+        <p class="text-xl mb-6">${reason}</p>
+        <p class="text-2xl font-bold mb-8">Score: ${rrScore}</p>
+        <button onclick="startRabbitGame()" class="px-6 py-3 bg-white text-black rounded-full font-bold hover:bg-gray-200">Try Again</button>
+    `;
+}
+
+window.startRabbitGame = startRabbitGame;
+window.initRabbitGame = initRabbitGame;
 
 apps.push({
-    id: 'app-capsule', title: 'Time Capsule', icon: '<img src="./assets/icons/app_capsule_new.png" alt="capsule" style="width: 100%; height: 100%;">', dock: false, width: 600, height: 500, onOpen: () => TimeCapsuleApp.render(), content: `
-    <div class="h-full bg-[#0f172a] text-white p-8 flex flex-col">
-        <div class="text-center mb-10">
-            <h2 class="text-2xl font-serif font-bold text-indigo-300">Harshit's Time Vault</h2>
-            <p class="text-slate-400 text-sm mt-1">Found memories and future notes.</p>
+    id: 'spotify', title: 'Spotify - Vibe Check', icon: '<img src="./assets/icons/app_spotify.png" alt="spotify">', dock: true, width: 450, height: 600, content: `
+        <div class="h-full bg-gradient-to-b from-[#1DB954] to-black text-white p-6 flex flex-col items-center justify-center relative overflow-hidden">
+            <div class="w-48 h-48 bg-gray-800 shadow-2xl mb-6 rounded-md overflow-hidden relative group album-spin">
+                <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDd4bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BRv0TlsHCqDrG/giphy.gif" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/30">
+                    <i class="fas fa-play text-4xl"></i>
+                </div>
+            </div>
+            <h2 class="text-2xl font-bold mb-1">Tu Hai Kahan</h2>
+            <p class="text-gray-300 text-sm mb-6">AUR • Harshit's Favorites</p>
+            <div class="w-full h-1 bg-gray-600 rounded-full mb-2 overflow-hidden">
+                <div class="h-full bg-white w-1/3 animate-pulse"></div>
+            </div>
+            <div class="w-full flex justify-between text-xs text-gray-400 mb-6">
+                <span>1:21</span><span>4:23</span>
+            </div>
+            <div class="flex items-center gap-8 text-3xl">
+                <i class="fas fa-step-backward cursor-pointer hover:text-white text-gray-400"></i>
+                <div class="w-14 h-14 bg-white text-black rounded-full flex items-center justify-center cursor-pointer hover:scale-105 transition" onclick="toggleSpotify()">
+                    <i id="spotify-play-icon" class="fas fa-play ml-1"></i>
+                </div>
+                <i class="fas fa-step-forward cursor-pointer hover:text-white text-gray-400"></i>
+            </div>
+            <audio id="spotify-audio" loop>
+                <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+            </audio>
         </div>
-        <div id="capsule-grid" class="grid grid-cols-2 gap-6 overflow-y-auto custom-scroll pr-2"></div>
-    </div>
-`});
+    `});
 
-
-
-
-
-
-
-
-
+apps.push({
+    id: 'rabbit-runner', title: 'RabbitRunner.exe', icon: '🐰', dock: true, width: 900, height: 600, onOpen: initRabbitGame, content: `
+        <div id="rr-container" class="relative w-full h-full bg-[#e0f7fa] overflow-hidden select-none font-sans">
+             <div id="rr-score" class="absolute top-4 left-4 text-2xl font-bold text-gray-700 z-10">Score: 0</div>
+             <div id="rr-start-screen" class="absolute inset-0 flex flex-col items-center justify-center bg-black/50 z-20 text-white">
+                <h2 class="text-4xl font-bold mb-4">Rabbit Run 🐰</h2>
+                <div class="space-y-2 text-center text-sm mb-6 opacity-90">
+                    <p>Hop on messages! 💬</p>
+                    <p>Collect Subs 🥪</p>
+                    <p>Dodge Bhindi 🥒</p>
+                </div>
+                <button onclick="startRabbitGame()" class="px-6 py-3 bg-blue-500 rounded-full font-bold hover:bg-blue-600 transition transform hover:scale-105">START GAME</button>
+             </div>
+             
+             <!-- Player -->
+             <div id="rr-player" class="absolute text-4xl transition-transform" style="bottom: 100px; left: 50px;">🐰</div>
+             
+             <!-- Game World (Platforms, Items added via JS) -->
+             <div id="rr-world"></div>
+        </div>
+    `});
 
 apps.push({
     id: 'thank-you',
