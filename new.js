@@ -177,9 +177,8 @@ const journeyData = [
         color: "#3b82f6",
         items: [
             { type: "title", text: "The Beginning" },
-            { type: "scene", text: "It all started with a simple 'Hi'. Who knew it would lead to a special OS built just for you? Every conversation since then has been a building block for us." },
-            { type: "chat", speaker: "System", text: "Connection Established — June 20, 2024 • 12:21 AM" },
-            { type: "scene", text: "We met late at night without knowing it would turn into anything. The conversation was random, easy, and it kept going longer than expected." }
+            { type: "scene", text: "It all started with a simple 'Hi'. Every conversation since then has been a building block for us." },
+
         ]
     },
     {
@@ -189,8 +188,7 @@ const journeyData = [
         color: "#a855f7",
         items: [
             { type: "title", text: "To Knowing" },
-            { type: "scene", text: "From '' to 'Ota', we've built a language of our own. These small moments are what make the journey worth it." },
-            { type: "scene", text: "Over time, you stayed involved and helped wherever you could." },
+            { type: "scene", text: "From 'Strangers' to 'Home', we've built a language of our own. These small moments are what make the journey worth it." },
             { type: "scene", text: "Trust didn’t come all at once. It built slowly, through consistency and effort." }
         ]
     },
@@ -202,7 +200,6 @@ const journeyData = [
         items: [
             { type: "title", text: "Feeling Protected" },
             { type: "scene", text: "There was a moment when I was overthinking and feeling small. You noticed, and you stepped in without being asked." },
-            { type: "chat", speaker: "Harshit", text: "You don’t have to tell people what they want to hear." }
         ]
     },
     {
@@ -212,8 +209,7 @@ const journeyData = [
         color: "#f59e0b",
         items: [
             { type: "title", text: "Comfort" },
-            { type: "scene", text: "Talking to you slowly became a habit. Not something I had to think about — just something that felt natural." },
-            { type: "chat", speaker: "Ota Rules", text: "Don’t hide anything. Just stay real." }
+            { type: "scene", text: "Talking to you slowly became a habit. Not something I had to think about ...just something that felt natural." },
         ]
     },
     {
@@ -224,22 +220,12 @@ const journeyData = [
         items: [
             { type: "title", text: "Late-Night Talks" },
             { type: "scene", text: "Most of our real conversations happened when everything else was quiet." },
-            { type: "scene", text: "Some nights were light, some were heavy — but we stayed, even when it was easier to leave." }
+            { type: "scene", text: "Some nights were light, some were heavy... but we stayed, even when it was easier to leave." }
         ]
     },
+
     {
         chapter: 6,
-        title: "Pride",
-        subtitle: "Seeing You Grow",
-        color: "#3b82f6",
-        items: [
-            { type: "title", text: "Pride" },
-            { type: "scene", text: "Your birthday wasn’t just about the date. It was about seeing how much you’ve grown." },
-            { type: "chat", speaker: "Harshit", text: "Thank you… aapki vajah se hi main ye sab kar paata hoon aur khush rehta hoon." }
-        ]
-    },
-    {
-        chapter: 7,
         title: "Growing Together",
         subtitle: "Side by Side",
         color: "#8b5cf6",
@@ -250,7 +236,7 @@ const journeyData = [
         ]
     },
     {
-        chapter: 8,
+        chapter: 7,
         title: "Fights & Fixing Things",
         subtitle: "Not Walking Away",
         color: "#ef4444",
@@ -261,19 +247,19 @@ const journeyData = [
         ]
     },
     {
-        chapter: 9,
+        chapter: 8,
         title: "Still Here",
         subtitle: "After Everything",
         color: "#22c55e",
         items: [
             { type: "title", text: "Still Here" },
-            { type: "scene", text: "We've faced shifts and changes, but through it all, the care remained. This system isn't just about the past; it's a bridge to what's next." },
-            { type: "scene", text: "After everything — the changes, the late nights, the misunderstandings — we’re still here." },
+            { type: "scene", text: "We've faced shifts and changes, but through it all, the care remained." },
+            { type: "scene", text: "After everything... the changes, the late nights, the misunderstandings — we’re still here." },
             { type: "scene", text: "That, by itself, means more than anything else." }
         ]
     },
     {
-        chapter: 10,
+        chapter: 9,
         title: "The Gallery",
         subtitle: "Us Moments",
         color: "#ec4899",
@@ -292,6 +278,7 @@ const journeyData = [
 ];
 
 const state = { appsOpened: new Set(), countdownFinished: false, vaultUnlockAttempts: 0, birthdaySequenceStarted: false };
+
 
 
 
@@ -472,7 +459,7 @@ const apps = [
                     if (saved) {
                         editor.innerHTML = saved;
                     } else {
-                       
+
                         if (!editor.dataset.original) editor.dataset.original = editor.innerHTML;
                         editor.innerHTML = '';
                         runSmartTypewriter(editor, editor.dataset.original, 30);
@@ -526,8 +513,6 @@ const apps = [
             <div class="win-icon group" onclick="Apps.open('app-bloom')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_bloom_new.png" alt="bloom" style="width: 100%; height: 100%;"></div><div class="icon-label">Daily Bloom</div></div>
 
             <div class="win-icon" onclick="Apps.open('thank-you')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="./assets/icons/app_gratitude_new.png" alt="gratitude" style="width: 100%; height: 100%;"></div><div class="icon-label">Gratitude</div></div>
-            <div class="win-icon" onclick="Apps.open('inkpot')"><div class="icon-img"><img src="./assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;"></div><div class="icon-label">The Inkpot</div></div>
-
             <div class="win-icon" onclick="Apps.open('last-thing')"><div class="icon-img"><img src="./assets/icons/app_rose.png" alt="last thing" style="width: 100%; height: 100%;"></div><div class="icon-label">One Last Thing</div></div>
 
         </div>
@@ -944,8 +929,8 @@ const apps = [
                      </div>
     </div>
 `},
-{
-    id: 'soft-core', title: 'Soft Core', icon: '<img src="./assets/icons/app_softcore.png" alt="softcore" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-system', width: 800, height: 600, content: `
+    {
+        id: 'soft-core', title: 'Soft Core', icon: '<img src="./assets/icons/app_softcore.png" alt="softcore" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-system', width: 800, height: 600, content: `
     <div class="h-full bg-gradient-to-br from-slate-50 to-indigo-50/50 p-8 flex flex-col items-center relative overflow-hidden">
         <!-- Background Watermark -->
         <div class="absolute top-[-20px] right-[-20px] text-[180px] font-serif font-bold text-slate-100 select-none z-0 rotate-12">SOFT</div>
@@ -1026,7 +1011,44 @@ const apps = [
             </div>
 
         </div>
-    `}
+    `},
+    {
+        id: 'shravii', title: 'Shravii.exe', icon: '<img src="./assets/icons/app_shravii.png" alt="shravii" style="width: 100%; height: 100%;">', dock: true, width: 500, height: 600,
+        onOpen: () => {
+            if (typeof initShraviiMessages === 'function') initShraviiMessages();
+        },
+        content: `
+        <div class="shravii-container">
+            <div class="shravii-header">
+                <div class="shravii-avatar">
+                    <img src="./assets/icons/app_shravii.png" alt="Shravii">
+                    <div class="shravii-pulse"></div>
+                </div>
+                <div class="shravii-name-box">
+                    <div class="shravii-name">Shravii</div>
+                    <div class="shravii-status">The part of your life that won’t stop caring.</div>
+                </div>
+            </div>
+            
+            <div class="shravii-chat custom-scroll" id="shravii-chat">
+                <!-- Messages will appear here -->
+            </div>
+
+            <div class="shravii-gif-box">
+                <img src="assets/gifs/bear_hug.gif" alt="Surprise" id="shravii-gif">
+            </div>
+
+            <div class="shravii-controls">
+                <button class="shravii-btn heart" onclick="sendShraviiLove()">
+                    <i class="fas fa-heart"></i> Send Love
+                </button>
+                <button class="shravii-btn glow" onclick="triggerShraviiSurprise()">
+                    <i class="fas fa-sparkles"></i> Surprise ✨
+                </button>
+            </div>
+        </div>
+        `
+    }
 ];
 
 const CapsuleApp = {
@@ -1079,7 +1101,7 @@ const CapsuleApp = {
 
     openCategory(cat) {
         this.currentCat = cat;
-       
+
         this.idx = Math.floor(Math.random() * this.data[cat].length);
         this.isRevealed = false;
 
@@ -1088,7 +1110,7 @@ const CapsuleApp = {
 
         if (view) {
             view.classList.remove('hidden');
-        
+
             void view.offsetWidth;
             view.style.opacity = 1;
         }
@@ -1106,7 +1128,7 @@ const CapsuleApp = {
     },
 
     reveal() {
-        if (this.isRevealed) return; 
+        if (this.isRevealed) return;
 
         const card = document.getElementById('capsule-card');
         if (!card) return;
@@ -1134,10 +1156,10 @@ const CapsuleApp = {
     renderCard(isRevealedParams) {
         const textEl = document.getElementById('capsule-text');
         const iconEl = document.getElementById('capsule-icon');
-        const hintEl = document.getElementById('capsule-hint'); 
+        const hintEl = document.getElementById('capsule-hint');
 
         if (!this.isRevealed) {
-         
+
             if (textEl) textEl.innerHTML = "Tap to open...";
             if (hintEl) {
                 hintEl.innerText = "One message awaits.";
@@ -1145,10 +1167,10 @@ const CapsuleApp = {
             }
             if (iconEl) iconEl.innerText = "✨";
         } else {
-           
+
             if (textEl) textEl.innerHTML = this.data[this.currentCat][this.idx];
             if (hintEl) {
-                hintEl.style.opacity = 0; 
+                hintEl.style.opacity = 0;
             }
 
             let icon = "✨";
@@ -1852,8 +1874,6 @@ window.goToDesktop = enterDesktop;
 
 const bearGifs = [
     'assets/gifs/bear_milk.gif',
-    'assets/gifs/bear_madrid.gif',
-    'assets/gifs/milk-run.gif',
 
 ];
 let mastiActive = false;
@@ -2253,21 +2273,6 @@ function initLetterReveal() {
     setTimeout(processNext, 500);
 }
 
-let isSpotifyPlaying = false;
-function toggleSpotify() {
-    const audio = document.getElementById('spotify-audio');
-    const playIcon = document.getElementById('spotify-play-icon');
-    if (!audio) return;
-
-    if (isSpotifyPlaying) {
-        audio.pause();
-        playIcon.className = "fas fa-play ml-1";
-    } else {
-        audio.play().catch(e => console.log("Audio playback failed:", e));
-        playIcon.className = "fas fa-pause";
-    }
-    isSpotifyPlaying = !isSpotifyPlaying;
-}
 
 window.Apps = {
     open: (id) => {
@@ -2932,7 +2937,6 @@ window.handleTerminalAppCommand = handleTerminalAppCommand;
 
 window.initInkpot = initInkpot;
 window.nextPoem = nextPoem;
-window.toggleSpotify = toggleSpotify;
 window.spawnBears = spawnBears;
 window.playFirstConversation = playFirstConversation;
 window.initLetterReveal = initLetterReveal;
@@ -3592,47 +3596,62 @@ function createModal({ title, desc, icon }) {
 window.createModal = createModal;
 
 
-const poems = [
-    "Some days are heavy,\nBut you carry them well.\nKeep going.",
-    "The world is loud,\nBut your peace is real.\nProtect it.",
-    "Not perfect.\nNot finished.\nJust right.",
-    "You are the best kind of chaos.\nNever change."
-];
-function initInkpot() {
-    poemIdx = 0;
-    const el = document.getElementById('inkpot-text');
-    if (el) el.innerText = "Click the quill...";
-}
-function nextPoem() {
-    const el = document.getElementById('inkpot-text');
-    if (!el) return;
-    el.innerText = "";
-    const txt = poems[poemIdx % poems.length];
-    poemIdx++;
+const FlashApp = {
+    waiting: false,
+    isFake: false,
+    startTime: 0,
+    timeout: null,
+    fakeTimeout: null,
 
-    let i = 0;
-    function type() {
-        if (i < txt.length) {
-            el.innerText += txt.charAt(i);
-            i++;
-            setTimeout(type, 50);
+    init: function () {
+        const bg = document.getElementById('flash-game-bg');
+        if (!bg) return;
+        this.resetGameScreen();
+        this.waiting = true;
+        this.isFake = false;
+
+        const audioWait = document.getElementById('sfx-wait');
+        if (audioWait) { audioWait.currentTime = 0; audioWait.play().catch(e => { }); }
+
+        const delay = 1500 + Math.random() * 3000;
+        this.timeout = setTimeout(() => {
+            this.triggerSignalOrFake();
+        }, delay);
+    },
+
+    showResult: function (time, msg) {
+        this.waiting = false;
+        const bg = document.getElementById('flash-game-bg');
+        const txt = document.getElementById('flash-instruction');
+
+        if (time === null) {
+            bg.className = 'absolute inset-0 bg-red-600 flex flex-col items-center justify-center';
+            txt.innerText = msg;
+            txt.className = 'text-4xl font-bold text-white text-center px-4';
+        } else {
+            bg.className = 'absolute inset-0 bg-indigo-600 flex flex-col items-center justify-center';
+            txt.innerText = `${time}ms`;
+            txt.className = 'text-7xl font-black text-white italic';
+
+            const btn = document.createElement('button');
+            btn.className = 'mt-8 px-6 py-2 bg-white/20 hover:bg-white/30 text-white rounded-full text-sm font-bold backdrop-blur-sm transition';
+            btn.innerText = 'RETRY';
+            btn.onclick = (e) => { e.stopPropagation(); this.init(); };
+            bg.appendChild(btn);
         }
-    }
-    type();
-}
+    },
 
     resetGameScreen: function () {
         const bg = document.getElementById('flash-game-bg');
+        if (!bg) return;
         bg.className = 'absolute inset-0 bg-red-900/90 flex flex-col items-center justify-center';
         document.getElementById('flash-instruction').innerText = "WAIT...";
         document.getElementById('flash-instruction').className = "text-4xl font-black italic text-red-200 tracking-tighter animate-pulse";
-
 
         if (this.fakeTimeout) clearTimeout(this.fakeTimeout);
     },
 
     triggerSignalOrFake: function () {
-
         if (Math.random() < 0.35) {
             this.triggerFake();
         } else {
@@ -3649,7 +3668,6 @@ function nextPoem() {
         const bg = document.getElementById('flash-game-bg');
         const txt = document.getElementById('flash-instruction');
 
-
         const types = [
             { cls: 'bg-blue-600', msg: 'WAIT FOR IT...', textCls: 'text-blue-200' },
             { cls: 'bg-yellow-500', msg: 'NOT YET!', textCls: 'text-yellow-900' }
@@ -3659,7 +3677,6 @@ function nextPoem() {
         bg.className = `absolute inset-0 ${type.cls} flex flex-col items-center justify-center shake-screen`;
         txt.innerText = type.msg;
         txt.className = `text-5xl font-black italic ${type.textCls} tracking-tighter animate-bounce`;
-
 
         this.fakeTimeout = setTimeout(() => {
             if (this.waiting) {
@@ -3672,8 +3689,10 @@ function nextPoem() {
     triggerRealSignal: function () {
         this.waiting = false;
         this.isFake = false;
-        document.getElementById('sfx-wait').pause();
-        document.getElementById('sfx-signal').play().catch(e => { });
+        const sfxWait = document.getElementById('sfx-wait');
+        if (sfxWait) sfxWait.pause();
+        const sfxSignal = document.getElementById('sfx-signal');
+        if (sfxSignal) sfxSignal.play().catch(e => { });
 
         const bg = document.getElementById('flash-game-bg');
         bg.className = 'absolute inset-0 bg-green-500 flex flex-col items-center justify-center shake-screen';
@@ -3683,12 +3702,13 @@ function nextPoem() {
     },
 
     handleTap: function () {
-
         if (this.waiting && this.isFake) {
             clearTimeout(this.timeout);
             if (this.fakeTimeout) clearTimeout(this.fakeTimeout);
-            document.getElementById('sfx-wait').pause();
-            document.getElementById('sfx-fail').play().catch(e => { });
+            const sfxWait = document.getElementById('sfx-wait');
+            if (sfxWait) sfxWait.pause();
+            const sfxFail = document.getElementById('sfx-fail');
+            if (sfxFail) sfxFail.play().catch(e => { });
 
             const roasts = ["It was BLUE! 😂", "Color blind? 🤨", "Too eager! 🐢", "False Start! 🚫"];
             const roast = roasts[Math.floor(Math.random() * roasts.length)];
@@ -3699,21 +3719,26 @@ function nextPoem() {
         if (this.waiting) {
             clearTimeout(this.timeout);
             if (this.fakeTimeout) clearTimeout(this.fakeTimeout);
-            document.getElementById('sfx-wait').pause();
-            document.getElementById('sfx-fail').play().catch(e => { });
+            const sfxWait = document.getElementById('sfx-wait');
+            if (sfxWait) sfxWait.pause();
+            const sfxFail = document.getElementById('sfx-fail');
+            if (sfxFail) sfxFail.play().catch(e => { });
 
             const bg = document.getElementById('flash-game-bg');
-            bg.classList.add('shake-screen');
+            if (bg) bg.classList.add('shake-screen');
 
             this.showResult(null, "Too Early! Trust your instincts.");
             return;
         }
 
+        if (this.startTime === 0) return;
 
         const time = Date.now() - this.startTime;
-        document.getElementById('sfx-success').play().catch(e => { });
+        const sfxSuccess = document.getElementById('sfx-success');
+        if (sfxSuccess) sfxSuccess.play().catch(e => { });
         this.showResult(time);
-    },
+    }
+};
 
 
 const vaultSlides = [
@@ -3875,6 +3900,7 @@ function initMap() {
     });
 }
 window.initMap = initMap;
+
 
 
 
@@ -4363,7 +4389,7 @@ function revealGift(id) {
 
     img.src = gift.img;
     title.innerText = gift.title;
-    desc.innerHTML = ''; 
+    desc.innerHTML = '';
 
     focus.classList.remove('hidden');
     focus.classList.add('visible');
@@ -4731,7 +4757,7 @@ let rrVelocity = 0;
 let rrGravity = 0.6;
 let rrJumpStrength = -10;
 let rrPlatforms = [];
-let rrItems = []; 
+let rrItems = [];
 const rrSpeed = 3;
 
 function initRabbitGame() {
@@ -4798,7 +4824,7 @@ function rrGameLoop() {
 
 
     const world = document.getElementById('rr-world');
-    world.innerHTML = ''; 
+    world.innerHTML = '';
 
     const lastPlat = rrPlatforms[rrPlatforms.length - 1];
     if (lastPlat && lastPlat.x < 600) {
@@ -4876,35 +4902,6 @@ function gameOverRabbit(reason) {
 window.startRabbitGame = startRabbitGame;
 window.initRabbitGame = initRabbitGame;
 
-apps.push({
-    id: 'spotify', title: 'Spotify - Vibe Check', icon: '<img src="./assets/icons/app_spotify.png" alt="spotify">', dock: true, width: 450, height: 600, content: `
-        <div class="h-full bg-gradient-to-b from-[#1DB954] to-black text-white p-6 flex flex-col items-center justify-center relative overflow-hidden">
-            <div class="w-48 h-48 bg-gray-800 shadow-2xl mb-6 rounded-md overflow-hidden relative group album-spin">
-                <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDd4bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bXJ5bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BRv0TlsHCqDrG/giphy.gif" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
-                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/30">
-                    <i class="fas fa-play text-4xl"></i>
-                </div>
-            </div>
-            <h2 class="text-2xl font-bold mb-1">Tu Hai Kahan</h2>
-            <p class="text-gray-300 text-sm mb-6">AUR • Harshit's Favorites</p>
-            <div class="w-full h-1 bg-gray-600 rounded-full mb-2 overflow-hidden">
-                <div class="h-full bg-white w-1/3 animate-pulse"></div>
-            </div>
-            <div class="w-full flex justify-between text-xs text-gray-400 mb-6">
-                <span>1:21</span><span>4:23</span>
-            </div>
-            <div class="flex items-center gap-8 text-3xl">
-                <i class="fas fa-step-backward cursor-pointer hover:text-white text-gray-400"></i>
-                <div class="w-14 h-14 bg-white text-black rounded-full flex items-center justify-center cursor-pointer hover:scale-105 transition" onclick="toggleSpotify()">
-                    <i id="spotify-play-icon" class="fas fa-play ml-1"></i>
-                </div>
-                <i class="fas fa-step-forward cursor-pointer hover:text-white text-gray-400"></i>
-            </div>
-            <audio id="spotify-audio" loop>
-                <source src="https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
-            </audio>
-        </div>
-    `});
 
 apps.push({
     id: 'rabbit-runner', title: 'RabbitRunner.exe', icon: '🐰', dock: true, width: 900, height: 600, onOpen: initRabbitGame, content: `
@@ -6358,9 +6355,9 @@ window.toggleTruth = function (card) {
 
 function checkForSystemUpdates() {
     const now = new Date();
-    const updateDate = new Date(2027, 0, 30); 
+    const updateDate = new Date(2027, 0, 30);
     if (localStorage.getItem('v20_installed')) {
-        start2027BirthdaySurprise(true); 
+        start2027BirthdaySurprise(true);
         return;
     }
     if (now >= updateDate) {
@@ -6376,7 +6373,7 @@ function triggerSystemUpdate(isForced = false) {
         action: () => {
             openUpdateWindow();
         }
-    }, true); 
+    }, true);
 
     if (isForced) {
         setTimeout(openUpdateWindow, 500);
@@ -6579,3 +6576,85 @@ window.runSmartTypewriter = function (target, html, speed) {
     target.innerHTML = '';
     typeRecursive(temp, target);
 };
+
+const shraviiMessagesList = [
+    "Hi. :)",
+    "I’m the part of your life that won’t stop caring.",
+    "Sorry. Not sorry.",
+    "Also, drink water.",
+    "You stay kind, even when things get heavy.",
+    "You don’t give up easily.",
+    "You carry storms quietly.",
+    "You are enough, exactly as you are."
+];
+
+let shraviiMsgIdx = 0;
+
+function initShraviiMessages() {
+    const chat = document.getElementById('shravii-chat');
+    if (chat && chat.children.length === 0) {
+        addShraviiBubble("Hi. :)");
+        setTimeout(() => addShraviiBubble("I’m the part of your life that won’t stop caring."), 1000);
+    }
+}
+
+function addShraviiBubble(text) {
+    const chat = document.getElementById('shravii-chat');
+    if (!chat) return;
+    const b = document.createElement('div');
+    b.className = 'shravii-bubble';
+    b.innerText = text;
+    chat.appendChild(b);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function sendShraviiLove() {
+    const container = document.querySelector('.shravii-container');
+    if (!container) return;
+
+    for (let i = 0; i < 8; i++) {
+        const p = document.createElement('div');
+        p.className = 'shravii-heart-particle';
+        p.innerHTML = '❤️';
+        p.style.left = (Math.random() * 80 + 10) + '%';
+        p.style.top = '80%';
+        p.style.setProperty('--tx', (Math.random() * 200 - 100) + 'px');
+        p.style.setProperty('--ty', (Math.random() * -300 - 100) + 'px');
+        container.appendChild(p);
+        setTimeout(() => p.remove(), 2000);
+    }
+
+    const msg = shraviiMessagesList[shraviiMsgIdx % shraviiMessagesList.length];
+    shraviiMsgIdx++;
+    addShraviiBubble(msg);
+}
+
+function triggerShraviiSurprise() {
+    const gif = document.getElementById('shravii-gif');
+    if (!gif) return;
+
+    const gifs = [
+        'assets/gifs/bear_hug.gif',
+        'assets/gifs/bear_love.gif',
+        'assets/gifs/bear_kiss.gif',
+        'assets/gifs/bear_dance.gif'
+    ];
+    const old = gif.src;
+    let next = gifs[Math.floor(Math.random() * gifs.length)];
+    // Ensure we get a different one if possible
+    if (gifs.length > 1) {
+        while (gif.src.includes(next)) {
+            next = gifs[Math.floor(Math.random() * gifs.length)];
+        }
+    }
+    gif.src = next;
+
+    if (typeof confetti === 'function') {
+        confetti({
+            particleCount: 40,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#ff85a2', '#ffabc1', '#fecdd3']
+        });
+    }
+}

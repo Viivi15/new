@@ -2638,41 +2638,6 @@ body {
     transform: translateY(0);
 }
 
-.spotify-container {
-    background: linear-gradient(to bottom, #1DB954, #000000);
-}
-
-.album-spin {
-    animation: spin 10s linear infinite;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.spotify-scroll::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
-}
-
-.spotify-scroll::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-}
-
-.spotify-scroll::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.spotify-scroll::-webkit-scrollbar-track {
-    background: transparent;
-}
 
 .journey-section {
     position: relative;
@@ -8090,25 +8055,25 @@ body {
 }
 
 @keyframes flyHeart {
-0% {
-transform: translateY(0) scale(1) rotate(0deg);
-opacity: 1;
-}
+    0% {
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 1;
+    }
 
-100% {
-transform: translateY(-100px) scale(1.5) rotate(45deg);
-opacity: 0;
-}
+    100% {
+        transform: translateY(-100px) scale(1.5) rotate(45deg);
+        opacity: 0;
+    }
 }
 
 #vault-passcode {
-color: #000 !important;
-letter-spacing: 0.3em !important;
-font-family: monospace !important;
-font-size: 1.2em !important;
+    color: #000 !important;
+    letter-spacing: 0.3em !important;
+    font-family: monospace !important;
+    font-size: 1.2em !important;
 }
 
 #vault-passcode::placeholder {
-color: #999 !important;
-letter-spacing: normal !important;
+    color: #999 !important;
+    letter-spacing: normal !important;
 }
