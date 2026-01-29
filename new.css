@@ -786,6 +786,14 @@ body {
     }
 }
 
+.animate-fade-in-up {
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+.animate-fade-in {
+    animation: fadeIn 1s ease-out forwards;
+}
+
 #dock-container {
     position: fixed;
     bottom: 0;
@@ -7883,6 +7891,7 @@ body {
 .animate-zoom-in {
     animation: zoomIn 0.5s ease-out forwards;
 }
+
 /* --- The Blueprint App Styles --- */
 .blueprint-container {
     height: 100%;

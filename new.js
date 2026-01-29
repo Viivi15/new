@@ -176,22 +176,22 @@ const journeyData = [
         subtitle: "12:21 AM",
         color: "#3b82f6",
         items: [
-            { type: "title", text: "Chapter 1: The Beginning" },
+            { type: "title", text: "The Beginning" },
+            { type: "scene", text: "It all started with a simple 'Hi'. Who knew it would lead to a special OS built just for you? Every conversation since then has been a building block for us." },
             { type: "chat", speaker: "System", text: "Connection Established — June 20, 2024 • 12:21 AM" },
-            { type: "scene", text: "We met late at night without knowing it would turn into anything. The conversation was random, easy, and it kept going longer than expected." },
-            { type: "scene", text: "Nothing felt forced. It was just comfortable from the very start." }
+            { type: "scene", text: "We met late at night without knowing it would turn into anything. The conversation was random, easy, and it kept going longer than expected." }
         ]
     },
     {
         chapter: 2,
-        title: "Building Trust",
-        subtitle: "Showing Up",
+        title: "To Knowing",
+        subtitle: "Building Trust",
         color: "#a855f7",
         items: [
-            { type: "title", text: "Chapter 2: Building Trust" },
-            { type: "scene", text: "Over time, you stayed involved and helped wherever you could. You didn’t disappear after the first few days, and that mattered." },
-            { type: "scene", text: "Trust didn’t come all at once. It built slowly, through consistency and effort." },
-            { type: "chat", speaker: "Shravii", text: "Aapne server ke growth me sabme help kari." }
+            { type: "title", text: "To Knowing" },
+            { type: "scene", text: "From '' to 'Ota', we've built a language of our own. These small moments are what make the journey worth it." },
+            { type: "scene", text: "Over time, you stayed involved and helped wherever you could." },
+            { type: "scene", text: "Trust didn’t come all at once. It built slowly, through consistency and effort." }
         ]
     },
     {
@@ -200,9 +200,8 @@ const journeyData = [
         subtitle: "When It Counted",
         color: "#22c55e",
         items: [
-            { type: "title", text: "Chapter 3: Feeling Protected" },
+            { type: "title", text: "Feeling Protected" },
             { type: "scene", text: "There was a moment when I was overthinking and feeling small. You noticed, and you stepped in without being asked." },
-            { type: "scene", text: "You didn’t make it dramatic. You just stood up for me, and that changed how safe I felt with you." },
             { type: "chat", speaker: "Harshit", text: "You don’t have to tell people what they want to hear." }
         ]
     },
@@ -212,33 +211,31 @@ const journeyData = [
         subtitle: "Becoming Normal",
         color: "#f59e0b",
         items: [
-            { type: "title", text: "Chapter 4: Comfort" },
+            { type: "title", text: "Comfort" },
             { type: "scene", text: "Talking to you slowly became a habit. Not something I had to think about — just something that felt natural." },
-            { type: "scene", text: "We didn’t need to pretend or explain ourselves. Comfort wasn’t occasional anymore, it became normal." },
             { type: "chat", speaker: "Ota Rules", text: "Don’t hide anything. Just stay real." }
         ]
     },
     {
         chapter: 5,
-        title: "Pride",
-        subtitle: "Seeing You Grow",
-        color: "#3b82f6",
-        items: [
-            { type: "title", text: "Chapter 5: Pride" },
-            { type: "scene", text: "Your birthday wasn’t just about the date. It was about seeing how much you’ve grown and how seriously you carry your responsibilities." },
-            { type: "scene", text: "I wasn’t just wishing you well. I was genuinely proud of the person you’ve become." },
-            { type: "chat", speaker: "Harshit", text: "Thank you… aapki vajah se hi main ye sab kar paata hoon aur khush rehta hoon." }
-        ]
-    },
-    {
-        chapter: 6,
         title: "Late-Night Talks",
         subtitle: "When the World Was Quiet",
         color: "#0ea5e9",
         items: [
-            { type: "title", text: "Chapter 6: Late-Night Talks" },
-            { type: "scene", text: "Most of our real conversations happened when everything else was quiet. Late nights turned into long talks without any rush." },
+            { type: "title", text: "Late-Night Talks" },
+            { type: "scene", text: "Most of our real conversations happened when everything else was quiet." },
             { type: "scene", text: "Some nights were light, some were heavy — but we stayed, even when it was easier to leave." }
+        ]
+    },
+    {
+        chapter: 6,
+        title: "Pride",
+        subtitle: "Seeing You Grow",
+        color: "#3b82f6",
+        items: [
+            { type: "title", text: "Pride" },
+            { type: "scene", text: "Your birthday wasn’t just about the date. It was about seeing how much you’ve grown." },
+            { type: "chat", speaker: "Harshit", text: "Thank you… aapki vajah se hi main ye sab kar paata hoon aur khush rehta hoon." }
         ]
     },
     {
@@ -247,8 +244,8 @@ const journeyData = [
         subtitle: "Side by Side",
         color: "#8b5cf6",
         items: [
-            { type: "title", text: "Chapter 7: Growing Together" },
-            { type: "scene", text: "We both changed over time. Different responsibilities, different pressures — but we kept understanding each other." },
+            { type: "title", text: "Growing Together" },
+            { type: "scene", text: "We both changed over time. Different responsibilities..." },
             { type: "scene", text: "It wasn’t about moving at the same speed. It was about not leaving each other behind." }
         ]
     },
@@ -258,8 +255,8 @@ const journeyData = [
         subtitle: "Not Walking Away",
         color: "#ef4444",
         items: [
-            { type: "title", text: "Chapter 8: Fights & Fixing Things" },
-            { type: "scene", text: "We didn’t always agree. There were misunderstandings and moments where things felt messy." },
+            { type: "title", text: "Fights & Fixing Things" },
+            { type: "scene", text: "We didn’t always agree..." },
             { type: "scene", text: "What mattered was that we talked, fixed things, and chose not to walk away." }
         ]
     },
@@ -269,9 +266,27 @@ const journeyData = [
         subtitle: "After Everything",
         color: "#22c55e",
         items: [
-            { type: "title", text: "Chapter 9: Still Here" },
+            { type: "title", text: "Still Here" },
+            { type: "scene", text: "We've faced shifts and changes, but through it all, the care remained. This system isn't just about the past; it's a bridge to what's next." },
             { type: "scene", text: "After everything — the changes, the late nights, the misunderstandings — we’re still here." },
             { type: "scene", text: "That, by itself, means more than anything else." }
+        ]
+    },
+    {
+        chapter: 10,
+        title: "The Gallery",
+        subtitle: "Us Moments",
+        color: "#ec4899",
+        items: [
+            { type: "title", text: "Moments Captured" },
+            { type: "photo", src: "assets/images/ludo_1.jpg", caption: "ludo time with you ..pehele toh u used to win then i took over 😁😁" },
+            { type: "photo", src: "assets/images/ludo_2.jpg", caption: "ludo time with you ..pehele toh u used to win then i took over 😁😁" },
+            { type: "photo", src: "assets/images/ludo_3.jpg", caption: "ludo time with you ..pehele toh u used to win then i took over 😁😁" },
+            { type: "photo", src: "assets/images/call_1.jpg", caption: "call with uhh 🤌" },
+            { type: "photo", src: "assets/images/call_2.jpg", caption: "call with uhh 🤌" },
+            { type: "photo", src: "assets/images/call_3.jpg", caption: "call with uhh 🤌" },
+            { type: "photo", src: "assets/images/call_study.jpg", caption: "watching you while studying 🧐" },
+            { type: "photo", src: "assets/images/call_jidd.jpg", caption: "remember ur jidd? 🤔🤨" }
         ]
     }
 ];
@@ -648,9 +663,9 @@ const apps = [
     {
         id: 'folder-feelings', title: 'Soft Stuff', icon: '<img src="assets/icons/folder_feelings.png" alt="feelings" style="filter: sepia(0.3) saturate(1.2) hue-rotate(-10deg); width: 100%; height: 100%;">', dock: false, width: 800, height: 600, content: `
         <div class="folder-window-grid">
-            <div class="win-icon group" onclick="Apps.open('app-mixtape')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_mixtape_new.png" alt="mixtape" style="width: 100%; height: 100%;"></div><div class="icon-label">Mixtape</div></div>
+
             <div class="win-icon group" onclick="Apps.open('app-bloom')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_bloom_new.png" alt="bloom" style="width: 100%; height: 100%;"></div><div class="icon-label">Daily Bloom</div></div>
-            <div class="win-icon" onclick="Apps.open('why-matter')"><div class="icon-img"><img src="assets/icons/app_matter.png" alt="why matter" style="width: 100%; height: 100%;"></div><div class="icon-label">Why You Matter</div></div>
+
             <div class="win-icon" onclick="Apps.open('tired')"><div class="icon-img"><img src="assets/icons/app_sleep.png" alt="tired" style="width: 100%; height: 100%;"></div><div class="icon-label">When Tired</div></div>
             <div class="win-icon" onclick="Apps.open('thank-you')"><div class="icon-img group-hover:scale-110 transition-transform duration-300 drop-shadow-md"><img src="assets/icons/app_gratitude_new.png" alt="gratitude" style="width: 100%; height: 100%;"></div><div class="icon-label">Gratitude</div></div>
             <div class="win-icon" onclick="Apps.open('inkpot-new')"><div class="icon-img"><img src="assets/icons/app_inkpot_new.png" alt="inkpot" style="width: 100%; height: 100%;"></div><div class="icon-label">The Inkpot</div></div>
@@ -771,9 +786,9 @@ const apps = [
     },
 
     {
-        id: 'connection-log', title: 'Our Journey', icon: '<img src="assets/icons/app_journey.png" alt="journey" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-system', width: 600, height: 800, onOpen: renderJourney, content: `
+        id: 'connection-log', title: 'Our Journey', icon: '<img src="assets/icons/app_journey.png" alt="journey" style="width: 100%; height: 100%;">', dock: true, folder: 'folder-system', width: 900, height: 600, onOpen: renderJourney, content: `
         <div id="journey-scroll" class="h-full bg-[#fcfcfc] overflow-y-auto scroll-smooth relative">
-            <div id="journey-container" class="min-h-full pb-20"></div>
+            <div id="journey-container" class="h-full"></div>
         </div>
     `},
 
@@ -802,29 +817,7 @@ const apps = [
         </div>
     `},
 
-    {
-        id: 'why-matter', title: 'Why You Matter', icon: '<img src="assets/icons/app_matter.png" alt="why matter" style="width: 100%; height: 100%;">', dock: false, width: 700, height: 500, content: `
-        <div class="h-full bg-gradient-to-br from-rose-50 via-white to-teal-50 p-12 flex flex-col items-center justify-center text-center cursor-pointer relative overflow-y-auto custom-scroll" onclick="nextWhy()">
-             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-rose-200 to-transparent opacity-50"></div>
-            
-            <div class="absolute top-6 left-0 w-full text-center z-10">
-                <div class="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-2">System Log</div>
-                <div class="text-[10px] text-gray-400/80 italic font-medium">Realizations compiled over time.</div>
-            </div>
 
-            <div class="relative z-10">
-                <span class="text-6xl text-rose-100 absolute -top-8 -left-4 font-serif -z-10 opacity-50">“</span>
-                <div id="why-text" class="text-2xl font-serif text-slate-700 leading-relaxed transition-opacity duration-500 drop-shadow-sm">
-                    You show up,<br>even when tired.
-                </div>
-            </div>
-            
-            <div class="absolute bottom-6 flex flex-col items-center gap-2">
-                <div class="w-[1px] h-8 bg-gradient-to-b from-gray-300 to-transparent"></div>
-                <div class="text-[10px] text-slate-400 uppercase tracking-widest animate-pulse font-medium">Click to continue</div>
-            </div>
-        </div>
-    `},
 
 
 
@@ -1908,85 +1901,7 @@ const apps = [
     `},
 
 
-    {
-        id: 'frequency-3015',
-        title: 'Frequency_3015.exe',
-        icon: '<img src="assets/icons/app_radio.png" alt="frequency" style="width: 100%; height: 100%;">',
-        dock: true,
-        width: 550,
-        height: 700,
-        content: `
-        <div class="frequency-app h-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col relative overflow-hidden">
-            <!-- Animated Background -->
-            <div class="absolute inset-0 opacity-10 pointer-events-none">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse"></div>
-                <div class="absolute bottom-0 right-0 w-64 h-64 bg-cyan-500/20 rounded-full blur-[100px]"></div>
-                <div class="absolute top-20 left-10 w-32 h-32 bg-purple-500/10 rounded-full blur-[60px]"></div>
-            </div>
 
-            <!-- Header -->
-            <div class="relative z-10 px-6 py-4 border-b border-cyan-500/20 backdrop-blur-sm bg-slate-800/50">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <div class="w-3 h-3 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,211,238,0.6)]"></div>
-                        <div>
-                            <div class="text-cyan-300 font-bold text-sm tracking-wider">SECURE SIGNAL</div>
-                            <div class="text-cyan-500/60 text-[10px] font-mono uppercase tracking-widest">Frequency: 3015 MHz</div>
-                        </div>
-                    </div>
-                    <div class="text-[10px] font-mono text-cyan-400/40 uppercase">Encrypted</div>
-                </div>
-            </div>
-
-            <!-- Chat Messages Area -->
-            <div id="freq-messages" class="relative z-10 flex-1 overflow-y-auto custom-scroll px-6 py-4 space-y-4">
-                <!-- Initial System Message -->
-                <div class="flex justify-center">
-                    <div class="bg-cyan-950/40 border border-cyan-500/20 rounded-lg px-4 py-2 text-center">
-                        <div class="text-[10px] text-cyan-400/60 uppercase tracking-widest mb-1">System Status</div>
-                        <div class="text-xs text-cyan-300 font-mono">Connection Established</div>
-                        <div class="text-[9px] text-cyan-500/40 mt-1">End-to-End Encrypted</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Input Area -->
-            <div class="relative z-10 px-6 py-4 border-t border-cyan-500/20 bg-slate-800/50 backdrop-blur-sm">
-                <div class="flex items-center gap-3">
-                    <input 
-                        type="text" 
-                        id="freq-input" 
-                        class="flex-1 bg-slate-700/50 border border-cyan-500/30 rounded-lg px-4 py-2.5 text-sm text-cyan-100 placeholder-cyan-500/30 outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 transition font-mono"
-                        placeholder="Type a message..."
-                        onkeydown="if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); FrequencyApp.send(); }"
-                    />
-                    <button 
-                        onclick="FrequencyApp.send()" 
-                        class="bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg px-5 py-2.5 font-bold text-sm transition shadow-lg shadow-cyan-900/50 hover:shadow-cyan-500/30"
-                    >
-                        Send
-                    </button>
-                </div>
-                <div class="mt-2 flex items-center gap-2 text-[10px] text-cyan-500/40 font-mono">
-                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                    <span>Status: Online</span>
-                </div>
-            </div>
-
-            <!-- Watermark -->
-            <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-[8px] text-cyan-500/20 font-mono uppercase tracking-widest pointer-events-none">
-                Classified Communication Channel
-            </div>
-        </div>
-        `,
-        onOpen: () => {
-            setTimeout(() => {
-                const input = document.getElementById('freq-input');
-                if (input) input.focus();
-                FrequencyApp.loadMessages();
-            }, 100);
-        }
-    },
 
     {
         id: 'app-capsule', title: 'Time Capsule', icon: '<img src="assets/icons/app_capsule_new.png" alt="capsule" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 600, height: 700, onOpen: () => CapsuleApp.reset(), content: `
@@ -2248,116 +2163,7 @@ const CapsuleApp = {
     }
 };
 
-const FrequencyApp = {
-    storageKey: 'frequency_3015_messages',
 
-    loadMessages() {
-        try {
-            const stored = localStorage.getItem(this.storageKey);
-            const messages = stored ? JSON.parse(stored) : [];
-            const container = document.getElementById('freq-messages');
-
-            if (!container) return;
-
-            const systemMsg = container.querySelector('.flex.justify-center');
-            container.innerHTML = '';
-            if (systemMsg) container.appendChild(systemMsg);
-
-            messages.forEach(msg => this.renderMessage(msg, false));
-
-            container.scrollTop = container.scrollHeight;
-        } catch (e) {
-            console.error('Failed to load messages:', e);
-        }
-    },
-
-    send() {
-        const input = document.getElementById('freq-input');
-        if (!input) return;
-
-        const text = input.value.trim();
-        if (!text) return;
-
-        const message = {
-            id: Date.now(),
-            text: text,
-            sender: 'user',
-            timestamp: new Date().toISOString()
-        };
-
-        this.saveMessage(message);
-
-        this.renderMessage(message, true);
-
-        input.value = '';
-        input.focus();
-
-        const container = document.getElementById('freq-messages');
-        if (container) {
-            setTimeout(() => {
-                container.scrollTop = container.scrollHeight;
-            }, 100);
-        }
-    },
-
-    saveMessage(message) {
-        try {
-            const stored = localStorage.getItem(this.storageKey);
-            const messages = stored ? JSON.parse(stored) : [];
-            messages.push(message);
-            localStorage.setItem(this.storageKey, JSON.stringify(messages));
-        } catch (e) {
-            console.error('Failed to save message:', e);
-        }
-    },
-
-    renderMessage(msg, animate = false) {
-        const container = document.getElementById('freq-messages');
-        if (!container) return;
-
-        const isUser = msg.sender === 'user';
-        const time = new Date(msg.timestamp).toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-
-        const msgDiv = document.createElement('div');
-        msgDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'} ${animate ? 'opacity-0' : ''}`;
-
-        msgDiv.innerHTML = `
-            <div class="max-w-[75%] ${isUser ? 'bg-cyan-600' : 'bg-slate-700'} rounded-lg px-4 py-2.5 shadow-lg">
-                <div class="text-sm text-white break-words">${this.escapeHtml(msg.text)}</div>
-                <div class="text-[9px] ${isUser ? 'text-cyan-200' : 'text-slate-400'} mt-1 font-mono">${time}</div>
-            </div>
-        `;
-
-        container.appendChild(msgDiv);
-
-        if (animate) {
-            requestAnimationFrame(() => {
-                msgDiv.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
-                msgDiv.style.transform = 'translateY(10px)';
-                requestAnimationFrame(() => {
-                    msgDiv.style.opacity = '1';
-                    msgDiv.style.transform = 'translateY(0)';
-                });
-            });
-        }
-    },
-
-    escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    },
-
-    clearAll() {
-        if (confirm('Clear all messages? This cannot be undone.')) {
-            localStorage.removeItem(this.storageKey);
-            this.loadMessages();
-        }
-    }
-};
 
 const DecisionApp = {
     options: ["Subway 🥪", "Pizza 🍕", "Chinese 🍜", "Nothing (Hawa) 🌬️", "Maggi 🍝", "Ice Cream 🍦"],
@@ -2675,27 +2481,7 @@ function triggerAction(action) {
 
 const affirmations = ["You stay kind, even when things get heavy.", "You don’t give up easily.", "You carry storms quietly.", "You are enough, exactly as you are."];
 
-const whys = [
-    "You show up, even when tired.",
-    "You listen without fixing.",
-    "You stay.",
-    "Your silence is safe.",
-    "You are valid.",
-    "You didn’t disappear when things got heavy.",
-    "You learned me instead of labeling me.",
-    "You stayed even when staying wasn’t easy."
-];
-let wIdx = 0;
-function nextWhy() {
-    const el = document.getElementById('why-text');
-    if (!el) return;
-    el.style.opacity = 0;
-    setTimeout(() => {
-        wIdx = (wIdx + 1) % whys.length;
-        el.innerText = whys[wIdx];
-        el.style.opacity = 1;
-    }, 500);
-}
+
 
 let bondStep = 0;
 const bondSequence = [
@@ -4978,7 +4764,7 @@ function renderJourney() {
     container.innerHTML = `
         <div class="movie-viewport relative h-full w-full bg-black flex flex-col items-center justify-center overflow-hidden">
             <!-- Movie Screen -->
-            <div id="movie-screen" class="w-full max-w-4xl h-full flex items-center justify-center relative">
+            <div id="movie-screen" class="w-full h-full flex items-center justify-center relative">
                 <div id="movie-start" class="text-center cursor-pointer group" onclick="startAutomatedMovie()">
                     <div class="text-7xl mb-6 group-hover:scale-110 transition-transform duration-500">📀</div>
                     <div class="text-3xl font-black text-white tracking-[0.3em] uppercase mb-2">The Journey</div>
@@ -5023,7 +4809,7 @@ function playNextMovieScene() {
     if (item.type === 'title') {
         frame.innerHTML = `
             <div class="movie-title-card scale-90 transition-transform duration-[3s] ease-out">
-                <h1 class="text-6xl font-black text-white mb-4 tracking-tighter">${item.text}</h1>
+                <h1 class="text-4xl font-black text-white mb-4 tracking-tighter">${item.text}</h1>
                 <div class="w-24 h-1 mx-auto rounded-full" style="background: ${item.chapterColor}"></div>
             </div>
         `;
@@ -5032,20 +4818,20 @@ function playNextMovieScene() {
         frame.innerHTML = `
             <div class="movie-chat border-l-4 border-blue-500 bg-white/5 p-8 rounded-r-2xl max-w-lg text-left backdrop-blur-sm">
                 <div class="text-[10px] font-bold text-blue-400 uppercase mb-2 opacity-50 tracking-widest">${item.speaker}</div>
-                <div id="typewriter-id" class="text-2xl font-medium text-white/90"></div>
+                <div id="typewriter-id" class="text-lg font-medium text-white/90"></div>
             </div>
         `;
 
         displayDuration = 2000 + (item.text.length * 60);
     } else if (item.type === 'scene') {
         frame.innerHTML = `
-            <div class="text-3xl font-light italic text-white/70 leading-relaxed px-10">"${item.text}"</div>
+            <div class="text-xl font-light italic text-white/70 leading-relaxed px-10">"${item.text}"</div>
         `;
         displayDuration = 4500;
     } else if (item.type === 'poem') {
         frame.innerHTML = `
             <div class="poem-scroll-card py-16 px-10 border-y border-white/5">
-                <div class="text-2xl font-serif italic text-white/60 leading-[3] tracking-widest whitespace-pre-line">
+                <div class="text-lg font-serif italic text-white/60 leading-[3] tracking-widest whitespace-pre-line">
                     ${item.text}
                 </div>
             </div>
@@ -5055,13 +4841,22 @@ function playNextMovieScene() {
         frame.innerHTML = `
             <div class="recipe-cinematic text-left">
                 <div class="text-xs font-black text-yellow-500 uppercase tracking-widest mb-6 border-b border-yellow-500/20 pb-2">${item.title}</div>
-                <div class="space-y-4 text-2xl font-serif italic text-yellow-100/40">
+                <div class="space-y-4 text-lg font-serif italic text-yellow-100/40">
                     ${item.items.map((i, idx) => `<div class="step-reveal opacity-0" style="transition-delay: ${idx * 0.8}s">• ${i}</div>`).join('')}
                 </div>
             </div>
         `;
         displayDuration = 2000 + (item.items.length * 1500);
+    } else if (item.type === 'photo') {
+        frame.innerHTML = `
+            <div class="movie-photo-container flex flex-col items-center">
+                <img src="${item.src}" class="max-h-[75vh] w-auto rounded-lg shadow-[0_0_50px_rgba(255,255,255,0.1)] border border-white/10 opacity-0 animate-fade-in-up">
+                ${item.caption ? `<div class="mt-6 text-base font-serif italic text-white/60 text-center max-w-2xl animate-fade-in delay-500">${item.caption}</div>` : ''}
+            </div>
+        `;
+        displayDuration = 6000;
     }
+
 
     screen.appendChild(frame);
 
@@ -7256,72 +7051,11 @@ apps.push({
 
 
 
-window.spinCompass = function () {
-    const n = document.getElementById('c-needle');
-    const r = document.getElementById('c-result');
-    if (!n) return;
-
-    n.style.transform = 'translate(-50%, -50%) rotate(' + (720 + Math.random() * 360) + 'deg)';
-    if (r) r.style.opacity = 0;
-
-    setTimeout(() => {
-        const adv = [
-            "Go study.", "Stop overthinking.", "You're doing fine.", "Drink water.", "Ignore the noise."
-        ];
-        if (r) {
-            r.innerText = adv[Math.floor(Math.random() * adv.length)];
-            r.style.opacity = 1;
-        }
-    }, 3000);
-}
-
-apps.push({
-    id: 'app-compass', title: 'The Compass', icon: '<img src="assets/icons/app_compass.png" alt="compass" style="width: 100%; height: 100%;">', dock: false, width: 500, height: 500, content: `
-    <div class="compass-app">
-        <div class="compass-container bg-compass-face">
-            <div class="text-[10px] absolute top-2 left-1/2 -translate-x-1/2 font-bold text-gray-400">N</div>
-            <div id="c-needle" class="compass-needle"></div>
-        </div>
-        
-        <input type="text" class="compass-input" placeholder="What's on your mind?">
-        <div id="c-result" class="compass-msg text-indigo-900 mt-4 transition-opacity duration-500"></div>
-        
-        <button onclick="spinCompass()" class="mt-4 px-6 py-2 bg-slate-800 text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-slate-700">Guide Me</button>
-    </div>
-`});
 
 
 
-apps.push({
-    id: 'app-mixtape', title: 'Soul Mixtape', icon: '<img src="assets/icons/app_mixtape_new.png" alt="mixtape" style="width: 100%; height: 100%;">', dock: false, width: 600, height: 450, content: `
-    <div class="h-full bg-zinc-900 text-white p-6 flex flex-col items-center justify-center">
-        <div class="w-full max-w-sm bg-zinc-800 p-4 rounded-xl border border-zinc-700 shadow-2xl relative">
-            <!-- Cassette Look -->
-            <div class="bg-zinc-900 h-32 rounded mb-4 flex items-center justify-center relative overflow-hidden border border-zinc-700">
-                <div class="absolute inset-0 flex items-center justify-center gap-12">
-                    <div class="w-16 h-16 rounded-full border-4 border-zinc-700 animate-spin-slow"></div>
-                    <div class="w-16 h-16 rounded-full border-4 border-zinc-700 animate-spin-slow"></div>
-                </div>
-                <div class="z-10 bg-white text-black px-2 py-1 text-[10px] font-bold font-mono rotate-[-2deg]">MIX: JUNE 2024</div>
-            </div>
-            
-            <div class="text-center mb-6">
-                <div class="text-xl font-bold text-gray-100">Study Beats & Rain</div>
-                <div class="text-xs text-gray-500 uppercase tracking-widest">Side A</div>
-            </div>
-            
-            <div class="flex justify-center gap-6 text-2xl text-gray-400">
-                <button class="hover:text-white"><i class="fas fa-backward"></i></button>
-                <button class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-110 transition"><i class="fas fa-play"></i></button>
-                <button class="hover:text-white"><i class="fas fa-forward"></i></button>
-            </div>
-        </div>
-        
-        <div class="mt-6 text-center text-xs text-gray-600 font-mono">
-            "Remember that song we listened to?"
-        </div>
-    </div>
-`});
+
+
 
 
 
@@ -8176,14 +7910,7 @@ const NotificationDatabase = {
             emoji: '🌱',
             action: () => showWalkEncouragement()
         },
-        {
-            id: 'music-25min',
-            minutes: 25,
-            title: '🎵 Music Break',
-            body: 'Time to listen to a favorite song and just vibe.',
-            emoji: '🎧',
-            action: () => Apps.open('app-mixtape')
-        },
+
         {
             id: 'cleanup-38min',
             minutes: 38,

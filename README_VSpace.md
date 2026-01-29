@@ -36,7 +36,7 @@ Essential tools and records of your bond.
 Emotional and sentimental content.
 - **Letters**: Heartfelt messages.
 - **Mixtape**: Curated tracks.
-- **Why You Matter**: A reminder of his value.
+
 - **Deep Truths**: Validated core personality traits.
 - **Time Capsule & Paper Planes**: Memories preserved for the future.
 
