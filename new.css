@@ -3782,25 +3782,6 @@ body {
     padding-top: 15px;
 }
 
-.madrid-dashboard {
-    background: linear-gradient(135deg, #001b44 0%, #004d98 100%);
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
-}
-
-.madrid-header {
-    background: rgba(254, 190, 16, 0.1);
-    border-bottom: 2px solid #FEBE10;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 
 .about-container {
     cursor: default;
@@ -7680,35 +7661,6 @@ body {
     text-align: center;
     font-size: 10px;
     color: rgba(255, 255, 255, 0.7);
-}
-
-.madrid-button-effect {
-    animation: madridPop 0.3s ease-out;
-}
-
-@keyframes madridPop {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.1);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-.madrid-modern-dash {
-    background: radial-gradient(circle at top right, #1e3a8a 0%, #0f172a 40%, #000000 100%);
-    color: white;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Inter', sans-serif;
-    overflow: hidden;
-    position: relative;
 }
 
 

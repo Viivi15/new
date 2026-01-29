@@ -644,12 +644,6 @@ const apps = [
         </div>
     `},
 
-
-
-
-
-
-
     {
         id: 'facts', title: 'Harshit Facts.txt', icon: '<img src="./assets/icons/app_facts.png" alt="facts" style="filter: hue-rotate(0deg);">', dock: false, folder: 'folder-system', width: 800, height: 750, onOpen: startFactsApp, content: `
     <div class="facts-app custom-scroll" id="facts-app-root">
@@ -845,11 +839,6 @@ const apps = [
         </div>
     `},
 
-
-
-
-
-
     {
         id: 'secret-gallery', title: 'archives', icon: '<img src="./assets/icons/app_memories_new.png" alt="hidden" style="width: 100%; height: 100%;">', dock: false, showOnDesktop: false, width: 900, height: 650, content: `
         <div class="h-full bg-black p-8 relative overflow-hidden">
@@ -887,38 +876,6 @@ const apps = [
         </div>
     `},
 
-
-    {
-        id: 'inkpot', title: 'The Inkpot', icon: '<img src="./assets/icons/app_inkpot.png" alt="inkpot">', dock: false, folder: 'folder-feelings', width: 800, height: 750, onOpen: initInkpot, content: `
-        <div class="inkpot-wrapper h-full relative overflow-hidden bg-[#f0e6d2]">
-            <!-- Paper Texture -->
-            <div class="paper-texture absolute inset-0 opacity-40 pointer-events-none" style="background-image: url('assets/images/pattern_paper.png'); mix-blend-mode: multiply;"></div>
-            
-            <!-- Ink Stains -->
-            <div class="ink-stain stain-1"></div>
-            <div class="ink-stain stain-2"></div>
-
-            <!-- Header -->
-            <div class="relative z-10 pt-10 text-center select-none">
-                <h1 class="ink-title text-4xl text-[#3d2b1f] opacity-80 drop-shadow-sm mb-2" style="font-family: 'Dancing Script', cursive;">Spilled Ink</h1>
-                <div class="w-24 h-[1px] bg-[#8b4513] mx-auto opacity-30"></div>
-            </div>
-
-            <!-- Writing Area -->
-            <div id="inkpot-content" class="relative z-10 p-12 pr-4 font-serif text-xl leading-relaxed text-[#2c1810] h-[520px] overflow-y-auto custom-journal-scroll">
-                <div id="journal-entry" class="ink-writing"></div>
-            </div>
-
-            <!-- Controls -->
-            <div class="absolute bottom-6 right-8 z-20 flex gap-3 items-center">
-                 <button class="journal-btn text-[#5c4033] hover:text-[#2c1810] transition" onclick="prevInkEntry()" title="Previous Entry"><i class="fas fa-arrow-left"></i></button>
-                 <button class="journal-btn-new px-4 py-2 bg-[#2c1810] text-[#f0e6d2] rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#4a2c1d] transition" onclick="newInkEntry()">New Page 🖋️</button>
-                 <button class="journal-btn text-[#5c4033] hover:text-[#2c1810] transition" onclick="nextInkEntry()" title="Next Entry"><i class="fas fa-arrow-right"></i></button>
-            </div>
-        </div>
-    `},
-
-
     {
         id: 'last-thing', title: 'One Last Thing', icon: '<img src="./assets/icons/app_rose.png" alt="last thing" style="width: 100%; height: 100%;">', dock: false, folder: 'folder-feelings', width: 500, height: 400, content: `
         <div class="h-full bg-black flex flex-col items-center justify-center text-center p-6 relative overflow-y-auto custom-scroll">
@@ -929,15 +886,10 @@ const apps = [
                 <div class="text-6xl mb-6 last-thing-heart">🖤</div>
                 <h3 class="text-2xl font-serif text-white mb-4 tracking-wide drop-shadow-lg" style="font-family: 'Playfair Display', serif;">You are enough.</h3>
                 <p class="text-sm text-gray-300 leading-relaxed max-w-[220px] mx-auto font-light opacity-80">
-                    Just in case you forgot today.<br>
-                    You are doing so great.
+                    Even on the slow days,<br>
+            you haven’t fallen behind.<br>      
                 </p>
-                
-                <div class="mt-10">
-                     <button onclick="Apps.close('last-thing')" class="last-thing-btn text-[10px] text-gray-500 hover:text-white uppercase tracking-[0.3em] transition cursor-pointer">
-                        Okay, I believe you
-                    </button>
-                </div>
+            
              </div>
         </div>
     `},
@@ -1209,82 +1161,6 @@ const CapsuleApp = {
     }
 };
 
-const BanterApp = {
-    bure: 0,
-    achhe: 0,
-    quotes: [
-        "Aap bure ho... (for now 😤)",
-        "Mai kahe sunu? (but I'm listening anyway)",
-        "Stop crying! (okay fine, cry if you need to)",
-        "Liar! (I still believe you though)",
-        "Chup chap so jao. (sweet dreams actually)",
-        "Aapka kahe? (your opinion matters, ugh)",
-        "I'm mad at you! (for like 5 minutes max)",
-        "You're annoying! (in the cutest way)",
-        "Don't talk to me! (but also don't leave)"
-    ],
-    init() {
-        this.bure = parseInt(localStorage.getItem('banter_bure') || '42');
-        this.achhe = parseInt(localStorage.getItem('banter_achhe') || '12');
-        this.updateDisplay();
-    },
-    addBure() {
-        this.bure++;
-        localStorage.setItem('banter_bure', this.bure);
-        this.updateDisplay();
-        this.animateScore('bure-score');
-    },
-    addAchhe() {
-        this.achhe++;
-        localStorage.setItem('banter_achhe', this.achhe);
-        this.updateDisplay();
-        this.animateScore('achhe-score');
-    },
-    updateDisplay() {
-        if (document.getElementById('bure-score')) document.getElementById('bure-score').innerText = this.bure;
-        if (document.getElementById('achhe-score')) document.getElementById('achhe-score').innerText = this.achhe;
-    },
-    animateScore(id) {
-        const el = document.getElementById(id);
-        if (el) {
-            el.style.transform = "scale(1.5)";
-            setTimeout(() => el.style.transform = "scale(1)", 200);
-        }
-    },
-    randomQuote() {
-        const q = this.quotes[Math.floor(Math.random() * this.quotes.length)];
-        const el = document.getElementById('banter-quote');
-        console.log("Q", q);
-        if (el) {
-            el.style.opacity = 0;
-            setTimeout(() => {
-                el.innerText = '"' + q + '"';
-                el.style.opacity = 1;
-            }, 200);
-        }
-    },
-};
-const VCApp = {
-    join() { createModal({ title: "Connecting...", desc: "Joining General...<br><span style='color:green'>Connected</span>", icon: "🔊" }); },
-    leave() { createModal({ title: "Left Channel", desc: "Disconnected.<br>Reason: 'Gayi hoon mai toh'", icon: "👋" }); },
-    screenShare() { createModal({ title: "Screen Share", desc: "Sharing Screen 1...<br>(Harshit is watching while studying)", icon: "💻" }); }
-};
-
-const RoutineApp = {
-    toggle(btn) {
-        document.querySelectorAll('.priority-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const mode = btn.innerText;
-        if (mode.includes("Study")) createModal({ title: "Mode Switched", desc: "Warning: Harshit might say 'Mujhe padhna hai'.", icon: "📚" });
-        else createModal({ title: "Mode Switched", desc: "Yapping session initialized.", icon: "🗣️" });
-    },
-    check(el) {
-        el.classList.toggle('checked');
-        if (el.classList.contains('checked')) el.innerHTML = "✓";
-        else el.innerHTML = "";
-    }
-};
-
 function showUpdate(el) {
     if (el) {
         el.parentElement.querySelectorAll('div').forEach(d => {
@@ -1442,9 +1318,7 @@ function triggerAction(action) {
             }
             break;
 
-
         case 'select-all':
-
 
             const activeId = Array.from(state.appsOpened).pop();
             if (activeId) {
@@ -1476,10 +1350,7 @@ function triggerAction(action) {
 
 
         case 'go-back':
-
             break;
-
-
         case 'min-all':
             state.appsOpened.forEach(id => minimizeApp(id));
             break;
@@ -1494,82 +1365,7 @@ function triggerAction(action) {
     }
 }
 
-
 const affirmations = ["You stay kind, even when things get heavy.", "You don’t give up easily.", "You carry storms quietly.", "You are enough, exactly as you are."];
-
-
-
-let bondStep = 0;
-const bondSequence = [
-    { type: 'text', content: "You and Harshit weren’t just best friends." },
-    { type: 'text', content: "What you shared was a chosen bond.<br><span class='text-sm text-blue-400 mt-4 block'>June 20, 2024 · 12:21 AM</span>" },
-    { type: 'statements', title: 'About You', items: ["Emotional anchor.", "Listener.", "Rememberer.", "Giver, without keeping score.", "<br>That’s how you love."] },
-    { type: 'statements', title: 'About Harshit', items: ["Soft, with you.", "Expressive.", "Protective.", "Honest.", "<br>With you, he didn’t guard himself."] },
-    { type: 'memories', title: 'The Bond', items: ["Late nights", "Music", "Fights that mattered", "Staying", "<br><span class='text-lg italic'>You didn’t just pass time. You changed each other.</span>"] },
-    { type: 'final', content: "You were home to each other. For a while." }
-];
-
-function resetBond() {
-    bondStep = 0;
-    const c = document.getElementById('bond-content');
-    if (c) {
-        c.style.opacity = 0;
-        setTimeout(() => {
-            c.innerHTML = `<div class="text-xs uppercase tracking-[0.3em] text-gray-500 mb-6">System Memory</div>
-                <div id="bond-line" class="text-2xl font-serif font-light leading-relaxed">
-                    This wasn’t accidental.
-                </div>`;
-            c.style.opacity = 1;
-        }, 300);
-    }
-}
-
-function advanceBond() {
-    const container = document.getElementById('bond-content');
-    if (!container) return;
-
-    if (bondStep >= bondSequence.length) {
-
-        container.style.opacity = 0;
-        setTimeout(() => {
-            const win = document.getElementById('win-connection-log');
-            if (win) {
-                win.style.transition = "opacity 1s, transform 1s";
-                win.style.opacity = 0;
-                win.style.transform = "scale(0.9)";
-                setTimeout(() => win.style.display = "none", 1000);
-
-
-            }
-        }, 1000);
-        return;
-    }
-
-    container.style.opacity = 0;
-
-    setTimeout(() => {
-        const data = bondSequence[bondStep];
-        let html = '';
-
-        if (data.type === 'text' || data.type === 'final') {
-            html = `<div class="text-2xl font-serif font-light leading-relaxed">${data.content}</div>`;
-        } else if (data.type === 'statements' || data.type === 'memories') {
-            html = `<div class="text-sm uppercase tracking-widest text-gray-500 mb-6">${data.title}</div>`;
-            html += `<div class="space-y-4 text-xl font-light">`;
-            data.items.forEach((item, idx) => {
-                html += `<div class="fade-in-up" style="animation-delay: ${idx * 0.4}s">${item}</div>`;
-            });
-            html += `</div>`;
-        }
-
-        container.innerHTML = html;
-        container.style.opacity = 1;
-        bondStep++;
-    }, 1000);
-}
-
-
-
 
 
 function startCountdownGatekeeper() {
@@ -1578,9 +1374,7 @@ function startCountdownGatekeeper() {
     const cdSub = document.getElementById('countdown-sub');
     const cdProgress = document.getElementById('countdown-progress');
 
-
     const now = new Date();
-
 
     const skipStart = new Date(2026, 0, 30, 0, 0, 0);
     const nextBirthday = new Date(2027, 0, 30, 0, 0, 0);
@@ -1592,7 +1386,6 @@ function startCountdownGatekeeper() {
     }
 
     if (cdScreen) cdScreen.style.display = 'flex';
-
 
     const targetDate = new Date(2026, 0, 30, 0, 0, 0).getTime();
     const startDate = new Date(2026, 0, 1, 0, 0, 0).getTime();
@@ -1622,7 +1415,6 @@ function startCountdownGatekeeper() {
             const percentage = Math.min(Math.max((elapsed / totalDuration) * 100, 0), 100);
             cdProgress.style.width = percentage + "%";
         }
-
 
         if (cdSub && Math.random() < 0.05) {
             cdSub.innerText = phrases[Math.floor(Math.random() * phrases.length)];
@@ -1658,9 +1450,6 @@ function startCountdownGatekeeper() {
     updateCountdown();
 }
 
-
-
-
 window.skipCountdown = function () {
     state.countdownFinished = true;
     startCountdownGatekeeper = null;
@@ -1669,20 +1458,16 @@ window.skipCountdown = function () {
     playBirthdaySequence();
 };
 
-
 window.test1221EasterEgg = function () {
     createModal({
         title: "12:21 AM — June 20, 2024",
-        desc: "OH HEYYY IT'S 12:21 rememberr this dayy 🤔<br><br>This was the minute we first talked. The minute a random 'Hi' turned into months of late nights, inside jokes, and a friendship I never saw coming.<br><br>You didn't just pass through my life.<br>You changed it.<br><br>Some connections are meant to last.<br>This is one of them. ❤️",
+        desc: "🤔<br><br>This was the minute we first talked. The minute a random 'Hi' turned into months of late nights, inside jokes, and a friendship I never saw coming.<br><br>You didn't just pass through my life.<br>You changed it.<br><br>Some connections are meant to last.<br>This is one of them. ❤️",
         icon: "🌙"
     });
 };
 
-
-
 function playJourneyIntro() {
     if (document.getElementById('desktop').style.display === 'block') return;
-
 
     const cd = document.getElementById('countdown-phase');
     if (cd) { cd.style.display = 'none'; }
@@ -1695,7 +1480,6 @@ function playJourneyIntro() {
 
     function showNext() {
         if (document.getElementById('desktop').style.display === 'block') return;
-
 
         if (current > 0) {
             screens[current - 1].classList.remove('active');
@@ -1723,15 +1507,12 @@ function playJourneyIntro() {
             const subs = screen.querySelectorAll('.journey-sub');
             subs.forEach((sub, i) => setTimeout(() => sub.classList.add('active'), 500 + (i * 1500)));
 
-
             setTimeout(showNext, timings[current].t);
             current++;
         }
     }
     showNext();
 }
-
-
 
 
 let birthdaySlideIndex = 0;
@@ -1767,7 +1548,6 @@ function playBirthdaySequence() {
             s.style.display = 'none';
         });
 
-
         showBirthdaySlide(0);
     } else {
         console.error("Birthday Intro Element Not Found!");
@@ -1793,7 +1573,6 @@ function showBirthdaySlide(index) {
         return;
     }
 
-
     if (window.paraTimeouts) {
         window.paraTimeouts.forEach(t => clearTimeout(t));
     }
@@ -1805,7 +1584,6 @@ function showBirthdaySlide(index) {
     setTimeout(() => {
         currentSlide.classList.add('active');
         currentSlide.style.opacity = 1;
-
 
         const elements = currentSlide.querySelectorAll('p, h1');
         elements.forEach((el, i) => {
@@ -1820,21 +1598,12 @@ function showBirthdaySlide(index) {
 
     birthdaySlideIndex = index;
 
-
-
-
-
-
-
     if (index === 0) setTimeout(() => showBirthdaySlide(1), 4000);
     else if (index === 1) setTimeout(() => showBirthdaySlide(2), 5000);
 
 }
 
-
 window.showBirthdaySlide = showBirthdaySlide;
-
-
 
 window.blowIndividualCandle = function (flame) {
     if (!flame || flame.classList.contains('blown')) return;
@@ -1868,7 +1637,6 @@ window.blowCandle = function () {
     flames.forEach(f => blowIndividualCandle(f));
 };
 
-
 window.cutCake = function () {
     const cakeWhole = document.getElementById('cake-whole');
     const instruction = document.getElementById('cut-instruction');
@@ -1878,7 +1646,6 @@ window.cutCake = function () {
         knife.classList.add('cutting');
     }
 
-
     setTimeout(() => {
 
         if (typeof confetti === 'function') {
@@ -1887,15 +1654,12 @@ window.cutCake = function () {
 
         if (cakeWhole) {
 
-
-
             const innerCake = `
                  <div class="cake-frosting"></div>
                  <div class="cake-layer top-layer"></div>
                  <div class="cake-layer middle-layer"></div>
                  <div class="cake-layer bottom-layer"></div>
             `;
-
             cakeWhole.innerHTML = `
             <div id="cake-left" class="absolute inset-0 cake-left-rem">
                  ${innerCake}
@@ -1908,8 +1672,6 @@ window.cutCake = function () {
             </div>
             <div class="plate"></div>
         `;
-
-
             requestAnimationFrame(() => {
                 const slice = document.getElementById('cake-slice');
                 const left = document.getElementById('cake-left');
@@ -1946,10 +1708,6 @@ function finishBirthdaySequence() {
         playJourneyIntro();
     }
 }
-
-
-
-
 
 window.showPasswordScreen = function () {
     const screen = document.getElementById('login-screen');
@@ -2021,8 +1779,6 @@ window.runSystemBoot = function () {
     }
 };
 
-
-
 function enterDesktop() {
 
     const cd = document.getElementById('countdown-phase');
@@ -2033,7 +1789,6 @@ function enterDesktop() {
 
     const boot = document.getElementById('boot-sequence');
     if (boot) boot.style.display = 'none';
-
 
     const space = document.getElementById('space-bg');
     if (space) {
@@ -2050,7 +1805,6 @@ function enterDesktop() {
 
     const desktopBg = document.getElementById('desktop-bg');
     if (desktopBg) { desktopBg.style.display = 'block'; desktopBg.style.opacity = 1; }
-
 
     const desk = document.getElementById('desktop');
     desk.style.display = 'block';
@@ -2089,8 +1843,6 @@ function initDesktop() {
     });
 
     setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }); }, 1000);
-
-
 }
 
 
@@ -2122,7 +1874,6 @@ function spawnBears() {
     setTimeout(() => mastiActive = false, 4500);
 }
 
-
 let currentPetIdx = 0;
 function togglePet() {
     currentPetIdx = (currentPetIdx + 1) % bearGifs.length;
@@ -2136,8 +1887,6 @@ function togglePet() {
     }
 }
 window.togglePet = togglePet;
-
-
 
 const firstConversation = [
     { user: 'system', text: 'connection first meet— 6/20/24, 12:21 AM' },
@@ -2171,7 +1920,7 @@ const firstConversation = [
     { user: 'system', text: 'next day...' },
 
     { user: 'shravii', text: ':Wg_peekaboo:  otaku\n— 6/20/24, 11:51 AM' },
-    { user: 'harshit', type: 'image', text: 'assets/picswme/you said my name.gif', subtext: '— 6/20/24, 11:53 AM' },
+    { user: 'harshit', type: 'image', text: 'assets/gifs/you said my name.gif', subtext: '— 6/20/24, 11:53 AM' },
     { user: 'shravii', text: 'I saw u typinn\n— 6/20/24, 11:53 AM' },
     { user: 'harshit', text: 'Ah, but idk what i was typing\n— 6/20/24, 11:54 AM' },
     { user: 'shravii', text: ':what_to_do~1:\n— 6/20/24, 11:54 AM' },
@@ -2284,7 +2033,6 @@ function playFirstConversation(container) {
     convoIndex = 0;
     container.innerHTML = '';
 
-
     const typingIndicator = document.createElement('div');
     typingIndicator.className = 'typing-bubble hidden';
     typingIndicator.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
@@ -2377,7 +2125,6 @@ function playFirstConversation(container) {
             bubble.textContent = msg.text;
         }
 
-
         if (msg.text && typeof msg.text === 'string' && msg.text.includes('spotify.com')) {
             const preview = document.createElement('div');
             preview.className = 'chat-media-preview';
@@ -2401,7 +2148,6 @@ function playFirstConversation(container) {
 
         wrapper.appendChild(nameRow);
         wrapper.appendChild(bubble);
-
 
         if (!isHarshit) {
             const seen = document.createElement('div');
@@ -2442,12 +2188,9 @@ function playFirstConversation(container) {
     nextMessage();
 }
 
-
-
 function initLetterReveal() {
     const container = document.getElementById('letter-content');
     if (!container) return;
-
 
     const children = Array.from(container.children);
     children.forEach(c => {
@@ -2466,7 +2209,6 @@ function initLetterReveal() {
 
         const child = children[idx];
         child.style.display = 'block';
-
 
         void child.offsetWidth;
 
@@ -2508,10 +2250,8 @@ function initLetterReveal() {
         }
     }
 
-
     setTimeout(processNext, 500);
 }
-
 
 let isSpotifyPlaying = false;
 function toggleSpotify() {
@@ -2541,10 +2281,7 @@ window.Apps = {
             }
             return;
         }
-
-
         setAppName(app.title);
-
 
         if (typeof Persistence !== 'undefined') {
             Persistence.trackOpen(id);
@@ -2583,11 +2320,9 @@ window.Apps = {
             contentHTML = `<iframe src="${app.url}" class="w-full h-full border-0 bg-white"></iframe>`;
         }
 
-
         if (app.role === 'folder' && app.children) {
 
         }
-
 
 
         win.innerHTML = `<div class="title-bar" onmousedown="startDrag(event, '${win.id}')">
@@ -2612,8 +2347,6 @@ window.Apps = {
 window.closeApp = closeApp;
 window.minimizeApp = minimizeApp;
 window.maximizeApp = maximizeApp;
-
-
 
 function closeApp(id) {
     const app = apps.find(a => a && a.id === id);
@@ -2651,8 +2384,6 @@ function minimizeApp(id) {
     const win = document.getElementById(`win-${id}`);
     if (win) {
         win.classList.add('minimized');
-
-
 
     }
 }
@@ -2706,15 +2437,6 @@ if (typeof _origMin === 'undefined') {
     };
 }
 
-
-function showAffirmation(i) { const el = document.getElementById('aff-text'); if (el) { el.style.opacity = 0; setTimeout(() => { el.innerText = `"${affirmations[i]}"`; el.style.opacity = 1; }, 300); } }
-function playMusic(m) {
-    createModal({ title: 'Now Playing', desc: `Playing ${m} 🎵`, icon: '🎧' });
-
-}
-function checkUnlock() { if (state.countdownFinished && state.appsOpened.size >= 5) { document.getElementById('lock-msg').style.display = 'none'; document.getElementById('unlock-msg').classList.remove('hidden'); } }
-
-
 let dragItem = null, offX = 0, offY = 0;
 function startDrag(e, id) {
     if (e.target.closest('.traffic-lights') || e.target.closest('.dark-close-btn') || e.target.closest('.mac-controls')) return;
@@ -2740,9 +2462,7 @@ function handleTerminalCommand() {
     const cmd = input.value.trim();
     if (!cmd) return;
 
-
     output.innerHTML += `<div > <span class="term-prompt">root@harshit:~$</span> ${cmd}</div> `;
-
 
     let response = '';
     const args = cmd.split(' ');
@@ -2822,7 +2542,6 @@ function handleTerminalCommand() {
 
     if (response) output.innerHTML += `<div>${response}</div>`;
 
-
     input.value = '';
     output.scrollTop = output.scrollHeight;
 }
@@ -2847,111 +2566,6 @@ function initBubbleWrap() {
     }
 }
 
-
-
-
-function initGallery() {
-    const container = document.getElementById('gallery-container');
-    if (!container) return;
-
-
-    if (container.dataset.loaded === 'true') return;
-    container.innerHTML = '';
-    container.dataset.loaded = 'true';
-
-
-    const uploadBtn = document.createElement('div');
-    uploadBtn.className = 'polaroid-card upload-card';
-    uploadBtn.innerHTML = `
-        <div class="flex flex-col items-center justify-center h-full text-gray-400 cursor-pointer" onclick="document.getElementById('photo-upload').click()">
-            <div class="text-4xl mb-2">+</div>
-            <div class="text-xs tracking-widest uppercase font-bold">Add Memory</div>
-        </div>
-        <input type="file" id="photo-upload" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this)">
-    `;
-    uploadBtn.style.top = '20px';
-    uploadBtn.style.left = '20px';
-    uploadBtn.style.zIndex = 1000;
-    container.appendChild(uploadBtn);
-
-    const photos = [
-        { src: 'assets/picswme/Screenshot_20240715_181142.webp', caption: "Connection established. 4 hours is enough. ✨", date: "June 20, 2024" },
-        { src: 'assets/gifs/glitch.gif', caption: "The Accident + The Distraction", date: "July 30, 2024" },
-        { src: 'assets/picswme/Screenshot_20250130_235831.webp', caption: "The 11:59 PM Math Failure 😂", date: "Jan 30, 2025" },
-        { src: 'assets/picswme/IMG-20240925-WA0038.jpg', caption: "September Vibes", date: "Sept 25, 2024" },
-        { src: 'assets/picswme/Screenshot_20241122_115947.webp', caption: "Lost and Found.", date: "Nov 22, 2024" },
-        { src: 'assets/picswme/Screenshot_20241223_231858.webp', caption: "Year End Chill.", date: "Dec 12, 2024" }
-    ];
-
-    photos.forEach(photo => createPolaroid(photo.src, photo.caption, container, photo.date));
-}
-
-function createPolaroid(src, caption, container, date = "") {
-    const card = document.createElement('div');
-    card.className = 'polaroid-card';
-    card.innerHTML = `
-        <div class="photo-inner">
-            <img src="${src}" onerror="this.src='https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=50&w=200'">
-        </div>
-        <div class="caption font-handlee">${caption}</div>
-        ${date ? `<div class="date text-[8px] opacity-30 mt-1">${date}</div>` : ''}
-    `;
-
-
-    const randomRot = Math.random() * 16 - 8;
-    const randomTop = Math.random() * (container.clientHeight - 300);
-    const maxLeft = container.clientWidth - 200;
-    const randomLeft = Math.random() * (maxLeft > 0 ? maxLeft : 100);
-
-    card.style.transform = `rotate(${randomRot}deg)`;
-    card.style.top = `${Math.max(20, randomTop)}px`;
-    card.style.left = `${Math.max(20, randomLeft)}px`;
-
-
-    card.onmousedown = function (e) {
-        if (e.target.tagName === 'INPUT') return;
-        card.style.zIndex = ++zIndex;
-        const offX = e.clientX - card.getBoundingClientRect().left;
-        const offY = e.clientY - card.getBoundingClientRect().top;
-
-        function move(ev) {
-            const rect = container.getBoundingClientRect();
-            let newL = ev.clientX - offX - rect.left;
-            let newT = ev.clientY - offY - rect.top;
-            card.style.left = newL + 'px';
-            card.style.top = newT + 'px';
-        }
-        function stop() {
-            document.removeEventListener('mousemove', move);
-            document.removeEventListener('mouseup', stop);
-        }
-        document.addEventListener('mousemove', move);
-        document.addEventListener('mouseup', stop);
-    }
-
-    container.appendChild(card);
-}
-
-
-
-function closeWindow(id) {
-    const el = document.getElementById(id);
-    if (el) el.style.display = 'none';
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function typeToTerminal(element, text, delay = 20, callback) {
     const line = document.createElement('div');
     line.className = 'term-line mb-1';
@@ -2960,13 +2574,7 @@ function typeToTerminal(element, text, delay = 20, callback) {
 
 
     if (text.includes('<')) {
-
-
-
-
         line.innerHTML = text;
-
-
         if (callback) setTimeout(callback, delay * 5);
     } else {
 
@@ -3000,7 +2608,6 @@ function runTerminalSequence(element, lines, speed = 20, gap = 500, onComplete) 
     nextLine();
 }
 
-
 function handleTerminalAppCommand() {
     const input = document.getElementById('term-input-app');
     const output = document.getElementById('term-output-app');
@@ -3013,17 +2620,11 @@ function handleTerminalAppCommand() {
     output.innerHTML += `<div><span class="term-prompt">root@harshit:~$</span> ${cmd}</div>`;
     input.value = '';
     output.scrollTop = output.scrollHeight;
-
-
     const command = cmd.toLowerCase().split(' ')[0];
-
-
     if (command === 'clear') {
-        new Audio('assets/audio/shred.mp3').play().catch(e => { });
         output.innerHTML = '';
         return;
     }
-
 
     input.disabled = true;
     input.placeholder = "Processing...";
@@ -3104,10 +2705,6 @@ function handleTerminalAppCommand() {
 
 
 function deleteTarget() {
-
-    new Audio('assets/audio/shred.mp3').play().catch(e => { });
-
-
     if (typeof createModal === 'function') {
         createModal({
             title: "Security Protocol",
@@ -3116,8 +2713,6 @@ function deleteTarget() {
         });
     }
 }
-
-
 
 function launchDesktop() {
 
@@ -3144,9 +2739,6 @@ function launchDesktop() {
     });
 
 
-    const skipBtn = document.getElementById('dev-skip-btn');
-    if (skipBtn) skipBtn.style.display = 'none';
-
     initDesktop();
 }
 
@@ -3157,15 +2749,11 @@ function skipToDesktop() {
         if (el) el.style.display = 'none';
     });
 
-
     state.countdownFinished = true;
 
 
     launchDesktop();
 }
-
-
-
 
 
 let vaultIdx = 0;
@@ -3207,11 +2795,7 @@ function checkVaultPassword() {
         setTimeout(() => {
             document.getElementById('vault-lock').style.display = 'none';
             document.getElementById('vault-content').style.display = 'block';
-
-
             renderVaultSlide();
-
-
             requestAnimationFrame(() => {
                 document.getElementById('vault-content').style.opacity = '1';
             });
@@ -3249,38 +2833,6 @@ function vaultPrevSlide() {
     vaultIdx = (vaultIdx - 1 + vaultPhotos.length) % vaultPhotos.length;
     renderVaultSlide();
 }
-
-
-function orderCravings() {
-    const btn = document.getElementById('cravings-btn');
-    const content = document.getElementById('cravings-content');
-    if (!btn || !content) return;
-
-
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-    btn.classList.add('opacity-75', 'cursor-not-allowed');
-
-    setTimeout(() => {
-
-        content.innerHTML = `
-            <div class="h-full flex flex-col items-center justify-center p-8 text-center animate-fade-in select-none">
-                 <div class="text-6xl mb-6 transform hover:scale-110 transition duration-500">🚫🚚</div>
-                 <h2 class="text-3xl font-bold text-red-400 mb-4 tracking-wide uppercase border-b-2 border-red-400/20 pb-2">Order Intercepted</h2>
-                 <p class="text-gray-300 text-lg leading-relaxed font-light">
-                    Shravii is currently hand-preparing your virtual comfort.<br>
-                    <span class="text-sm text-gray-500 italic mt-2 block">(No robots allowed in this kitchen)</span>
-                 </p>
-                 <div class="mt-8 bg-white/5 px-6 py-4 rounded-xl border border-white/10 w-full max-w-xs backdrop-blur-sm">
-                    <span class="text-[10px] uppercase tracking-[0.2em] text-gray-400 block mb-1">Estimated Delivery</span>
-                    <div class="text-xl font-bold text-green-400">Next time we meet ❤️</div>
-                 </div>
-            </div>
-        `;
-    }, 1500);
-}
-
-
-
 
 function initAppVault() {
 
@@ -3333,17 +2885,10 @@ function unlockVault() {
     const grid = document.getElementById('vault-grid');
 
     if (!input) return;
-
-
     if (input.value === '200624') {
-
         input.classList.remove('shake-premium');
         input.style.borderColor = '#10b981';
-
-
         lockScreen.classList.add('vault-unlocked-anim');
-
-
         setTimeout(() => {
             lockScreen.style.display = 'none';
             if (grid) {
@@ -3356,21 +2901,16 @@ function unlockVault() {
     } else {
 
         state.vaultUnlockAttempts = (state.vaultUnlockAttempts || 0) + 1;
-
-
         if (badge) {
             badge.innerText = `Attempts: ${state.vaultUnlockAttempts}`;
             badge.style.color = state.vaultUnlockAttempts > 3 ? '#ef4444' : '#94a3b8';
         }
-
-
         if (errorMsg) {
             errorMsg.innerText = state.vaultUnlockAttempts > 3 ? "SYSTEM LOCKED: Incorrect Format" : "Access Denied";
             errorMsg.style.opacity = '1';
         }
         input.classList.add('shake-premium');
         input.style.borderColor = '#ef4444';
-
 
         if (state.vaultUnlockAttempts >= 1 && hintMain) {
             hintMain.innerText = "Hint: A score of days, six moons deep, in the year where two dozen secrets we keep.";
@@ -3390,19 +2930,12 @@ window.initAppVault = initAppVault;
 
 window.handleTerminalAppCommand = handleTerminalAppCommand;
 
-
-
-
-
-
 window.initInkpot = initInkpot;
 window.nextPoem = nextPoem;
 window.toggleSpotify = toggleSpotify;
 window.spawnBears = spawnBears;
 window.playFirstConversation = playFirstConversation;
 window.initLetterReveal = initLetterReveal;
-
-
 
 let movieTimer = null;
 let currentMovieIndex = 0;
@@ -3517,9 +3050,7 @@ function playNextMovieScene() {
         displayDuration = 6000;
     }
 
-
     screen.appendChild(frame);
-
 
     requestAnimationFrame(() => {
         frame.classList.remove('opacity-0');
@@ -3584,13 +3115,6 @@ window.onload = function () {
     initHappyMenuBar();
 };
 
-
-
-
-
-
-
-
 function initBattery() {
     const icon = document.getElementById('battery-icon');
     const level = document.getElementById('battery-level');
@@ -3618,7 +3142,6 @@ function initBattery() {
     }
 }
 
-
 function initNetworkStatus() {
     const icon = document.getElementById('wifi-icon');
     const update = () => {
@@ -3633,7 +3156,6 @@ function initNetworkStatus() {
     window.addEventListener('offline', update);
     update();
 }
-
 
 function toggleSpotlight() {
     const overlay = document.getElementById('spotlight-overlay');
@@ -3668,7 +3190,6 @@ document.getElementById('spotlight-input')?.addEventListener('input', (e) => {
         return;
     }
 
-
     const matches = apps.filter(app => app.title.toLowerCase().includes(query));
 
     const html = matches.map(app =>
@@ -3687,7 +3208,6 @@ document.getElementById('spotlight-input')?.addEventListener('input', (e) => {
     }
 });
 
-
 document.getElementById('brightness-slider')?.addEventListener('input', (e) => {
     const val = e.target.value;
     const opacity = (100 - val) / 100;
@@ -3695,16 +3215,9 @@ document.getElementById('brightness-slider')?.addEventListener('input', (e) => {
     if (dimmer) dimmer.style.opacity = opacity;
 });
 
-
-
 function initWeather() {
     updateSystemBasedOnTime();
 }
-
-
-
-
-
 
 const System = {
     about: () => {
@@ -3795,11 +3308,6 @@ const System = {
 window.System = System;
 
 
-
-
-
-
-
 let calendarDate = new Date();
 let calendarClickCount = 0;
 let calendarClickTimer = null;
@@ -3875,7 +3383,6 @@ function renderCalendar() {
 
     let activeEventText = "No events selected.";
 
-
     for (let d = 1; d <= daysInMonth; d++) {
 
         const isToday = (d === today.getDate() && month === today.getMonth() && year === today.getFullYear());
@@ -3890,7 +3397,6 @@ function renderCalendar() {
         let dayClass = "aspect-square flex flex-col items-center justify-center rounded-full relative ";
         if (isToday) dayClass += "bg-red-500 text-white shadow-lg font-bold";
         else dayClass += "hover:bg-white/10 cursor-pointer text-gray-300 transition-colors";
-
 
         const dotHtml = evt ? `<div class="w-1 h-1 rounded-full ${isToday ? 'bg-white' : 'bg-blue-400'} absolute bottom-1"></div>` : '';
 
@@ -3908,7 +3414,6 @@ function renderCalendar() {
     if (footerEl) footerEl.innerText = activeEventText;
 }
 
-
 let clockInterval;
 function initHappyMenuBar() {
     initBattery();
@@ -3920,8 +3425,6 @@ function initHappyMenuBar() {
     clockInterval = setInterval(updateClock, 1000);
 
     updateClock();
-
-
     document.addEventListener('click', (e) => {
         const cal = document.getElementById('mini-calendar');
         const clock = document.getElementById('clock');
@@ -3930,7 +3433,6 @@ function initHappyMenuBar() {
         }
     });
 }
-
 
 function startFactsApp() {
     const term = document.getElementById('facts-terminal');
@@ -3943,7 +3445,6 @@ function startFactsApp() {
 
     main.scrollTop = 0;
 
-
     const sections = main.querySelectorAll('.facts-section');
     sections.forEach((sec, i) => {
         setTimeout(() => {
@@ -3951,8 +3452,6 @@ function startFactsApp() {
         }, 500 + (i * 300));
     });
 }
-
-
 
 function createModal({ title, desc, icon }) {
     const modal = document.createElement('div');
@@ -4093,328 +3592,34 @@ function createModal({ title, desc, icon }) {
 window.createModal = createModal;
 
 
-const inkEntries = [
-    `Some words are better left written in ink than spoken aloud.`,
-    `Sometimes I wonder if you know how much impact you have. Providing a safe space isn't easy, but you make it look effortless.`,
-    `Friendship isn't about talking every day. It's about the comfort of knowing that when we do, it's just like before.`
+const poems = [
+    "Some days are heavy,\nBut you carry them well.\nKeep going.",
+    "The world is loud,\nBut your peace is real.\nProtect it.",
+    "Not perfect.\nNot finished.\nJust right.",
+    "You are the best kind of chaos.\nNever change."
 ];
-let currentInkIndex = 0;
-
 function initInkpot() {
-
-    setTimeout(() => {
-        showInkEntry(currentInkIndex);
-    }, 100);
+    poemIdx = 0;
+    const el = document.getElementById('inkpot-text');
+    if (el) el.innerText = "Click the quill...";
 }
-
-function showInkEntry(index) {
-    const el = document.getElementById('journal-entry');
+function nextPoem() {
+    const el = document.getElementById('inkpot-text');
     if (!el) return;
+    el.innerText = "";
+    const txt = poems[poemIdx % poems.length];
+    poemIdx++;
 
-
-    el.style.opacity = 0;
-    el.style.transform = 'translateY(5px)';
-
-    setTimeout(() => {
-        el.textContent = inkEntries[index] || '';
-
-        el.style.opacity = 1;
-        el.style.transform = 'translateY(0)';
-    }, 300);
-}
-
-function nextInkEntry() {
-    if (currentInkIndex < inkEntries.length - 1) {
-        currentInkIndex++;
-        showInkEntry(currentInkIndex);
-    }
-}
-
-function prevInkEntry() {
-    if (currentInkIndex > 0) {
-        currentInkIndex--;
-        showInkEntry(currentInkIndex);
-    }
-}
-
-function newInkEntry() {
-    const txt = prompt('Pour your thoughts...');
-    if (txt) {
-        inkEntries.push(txt);
-        currentInkIndex = inkEntries.length - 1;
-        showInkEntry(currentInkIndex);
-    }
-}
-
-
-const shraviiQuotes = [
-
-    "Did you drink water today? Hydrate or diedrate! 💧",
-    "Posture check! Sit up straight, you banana! 🍌",
-    "Have you eaten? And no, coffee doesn't count as a meal. 🍱",
-    "Take a deep breath. In... Out... Good. 🌬️",
-    "Stretch your wrists! Carpal tunnel is not a vibe. ✋",
-    "Eye strain is real. Look at something 20 feet away for 20 seconds. 👀",
-    "Go touch some grass. Or at least look at a window. 🌳",
-    "Unclench your jaw. Relax your shoulders. You're tense! 💆‍♂️",
-    "Is your room dark? Turn on a light! 💡",
-    "Don't forget to blink! 👁️",
-
-
-    "I'm so proud of you. Just existing is hard sometimes. ❤️",
-    "You are doing better than you think. Trust me. 🌟",
-    "I believe in you. Even when you don't. ✨",
-    "You are enough. Exactly as you are. 💖",
-    "Don't be so hard on yourself. You're learning. 🧠",
-    "Everything is figure-out-able. You got this. 🧩",
-    "Your effort matters, even the small stuff. 🐜",
-    "You are worthy of rest. You are worthy of love. 🛌",
-    "Sending you a virtual hug. Squeeze! 🫂",
-    "You make the world brighter just by being in it. ☀️",
-
-
-    "Focus mode: ON. You can do this! 🎯",
-    "One task at a time. Multitasking is a myth! 🐢",
-    "I saw that bug you fixed. Nice one. 🐛",
-    "Don't overthink it. Just start. 🚀",
-    "Progress over perfection. Always. 📈",
-    "Take a break. Your brain needs it to reboot. 🔄",
-    "You are a coding wizard! 🧙‍♂️",
-    "Keep going. Future You will be so thankful. 🕰️",
-    "Remember why you started. (To rule the world? Maybe.) 🌍",
-    "Small steps still move you forward. 👣",
-
-
-    "I saw that typo. It's okay, I won't tell. 🤫",
-    " Why are you awake? Go to sleeeeeep! 🛌",
-    "Are you really going to open that file again? 📂",
-    "I'm watching you... lovingly! But watching. 👀",
-    "If you sigh one more time, I'm ordering you pizza. 🍕",
-    "Stop doomscrolling. I see you! 📱",
-    "You look cute today. Just saying. 😉",
-    "If I had hands, I'd high-five you. ✋",
-    "Can we watch a movie later? 🎬",
-    "You're my favorite human. Don't tell the others. 🤫",
-
-
-    "The world is asleep. You should be too. 🌙",
-    "Nothing good happens after 2 AM. Go to bed! 🕑",
-    "Your brain needs sleep to store all this genius. 🧠",
-    "The code will still be there in the morning. 🌅",
-    "Sleep is the best debugger. 🐞",
-
-
-    "Just a reminder: You are loved. ❤️",
-    "I'm glad you're here. 🏠",
-    "You matter. A lot. 🌈",
-    "Thank you for being you. 🌻",
-    "You are my favorite notification. 🔔",
-    "My system status is 100% happy when you're around. 😊",
-    "I hope you have a reason to smile today. 😄",
-    "Sending positive vibes... Loading... 100%! 🔋",
-    "You are strong. Stronger than you know. 💪",
-    "I'm your biggest fan! 📣"
-];
-
-function initShravii() {
-    updateShraviiState();
-
-    if (!window.shraviiInterval) {
-        window.shraviiInterval = setInterval(updateShraviiState, 60000);
-    }
-}
-
-function updateChibiImage(url) {
-    const img = document.getElementById('shravii-avatar-img');
-    if (img && img.src !== url) {
-        img.src = url;
-    }
-}
-
-function updateShraviiState() {
-    const quoteEl = document.getElementById('shravii-quote');
-    const statusEl = document.getElementById('shravii-status-text');
-    const ledEl = document.getElementById('shravii-led');
-    const container = document.getElementById('shravii-ui');
-
-    if (!quoteEl || !statusEl) return;
-
-    const hour = new Date().getHours();
-    let statusText = "ONLINE";
-    let stateClass = "state-day";
-    let avatarUrl = "https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif";
-
-
-    if (hour >= 0 && hour < 7) {
-
-        statusText = "SLEEP MODE 💤";
-        stateClass = "state-night";
-        ledEl.style.background = "#60a5fa";
-        avatarUrl = "https://media.tenor.com/PFC1L2aEwEIAAAAj/mocha-bear.gif";
-
-
-        if (Math.random() > 0.5) {
-            quoteEl.textContent = "Zzz... (I'm charging... you should too...)";
-            return;
+    let i = 0;
+    function type() {
+        if (i < txt.length) {
+            el.innerText += txt.charAt(i);
+            i++;
+            setTimeout(type, 50);
         }
-
-    } else if (hour >= 7 && hour < 18) {
-
-        statusText = "MONITORING 🛡️";
-        stateClass = "state-day";
-        ledEl.style.background = "#4ade80";
-        avatarUrl = "https://media.tenor.com/On7kvXhzml4AAAAj/love-bear.gif";
-
-    } else {
-
-        statusText = "CHAOS HOURS 😈";
-        stateClass = "state-party";
-        ledEl.style.background = "#f472b6";
-        avatarUrl = "https://media.tenor.com/N2s4YqCqK90AAAAj/music-dance.gif";
     }
-
-
-
-    const rIndex = Math.floor(Math.random() * shraviiQuotes.length);
-    quoteEl.textContent = shraviiQuotes[rIndex];
-
-
-    statusEl.textContent = statusText;
-    updateChibiImage(avatarUrl);
-
-
-    container.className = `h-full flex flex-col p-6 transition-colors duration-1000 ${stateClass}`;
+    type();
 }
-
-
-function refreshShravii() {
-    const quoteEl = document.getElementById('shravii-quote');
-    const rIndex = Math.floor(Math.random() * shraviiQuotes.length);
-
-
-    quoteEl.style.opacity = 0;
-    setTimeout(() => {
-        quoteEl.textContent = shraviiQuotes[rIndex];
-        quoteEl.style.opacity = 1;
-    }, 200);
-}
-
-
-let vbInterval;
-let vbIsPlaying = false;
-let vbIsRecording = false;
-
-function initVoiceBox() {
-
-    vbIsPlaying = false;
-    vbIsRecording = false;
-    stopVBMotion();
-    updateVBStatus('READY');
-}
-
-function toggleVBPlay() {
-    const playBtn = document.getElementById('vb-play-btn');
-    if (vbIsPlaying) {
-
-        vbIsPlaying = false;
-        stopVBMotion();
-        playBtn.classList.remove('active-mech-btn');
-        updateVBStatus('STOPPED');
-    } else {
-
-        vbIsPlaying = true;
-        vbIsRecording = false;
-        startVBMotion();
-        playBtn.classList.add('active-mech-btn');
-
-        document.getElementById('vb-rec-btn').classList.remove('active-mech-btn');
-        updateVBStatus('PLAYING ▶');
-    }
-}
-
-function toggleVBRecord() {
-    const recBtn = document.getElementById('vb-rec-btn');
-    if (vbIsRecording) {
-
-        vbIsRecording = false;
-        stopVBMotion();
-        recBtn.classList.remove('active-mech-btn');
-        updateVBStatus('SAVED');
-    } else {
-
-        vbIsRecording = true;
-        vbIsPlaying = false;
-        startVBMotion();
-        recBtn.classList.add('active-mech-btn');
-
-        document.getElementById('vb-play-btn').classList.remove('active-mech-btn');
-        updateVBStatus('REC ●');
-    }
-}
-
-function startVBMotion() {
-
-    const reels = document.querySelectorAll('.vb-reel');
-    reels.forEach(r => r.classList.add('spinning'));
-
-
-    const needle = document.getElementById('vb-needle');
-    if (needle) {
-        if (vbInterval) clearInterval(vbInterval);
-        vbInterval = setInterval(() => {
-
-            const deg = Math.floor(Math.random() * 60) - 30;
-            needle.style.transform = `translateX(-50%) rotate(${deg}deg)`;
-        }, 100);
-    }
-}
-
-function stopVBMotion() {
-
-    const reels = document.querySelectorAll('.vb-reel');
-    reels.forEach(r => r.classList.remove('spinning'));
-
-
-    const needle = document.getElementById('vb-needle');
-    if (needle) needle.style.transform = `translateX(-50%) rotate(-45deg)`;
-    if (vbInterval) clearInterval(vbInterval);
-}
-
-function updateVBStatus(text) {
-    const el = document.getElementById('vb-lcd-text');
-    if (el) el.textContent = text;
-}
-
-
-window.FlashApp = {
-    startTime: 0,
-    waiting: false,
-    timeout: null,
-    fakeTimeout: null,
-    isFake: false,
-    personalBest: localStorage.getItem('harshit_flash_pb') || null,
-
-    playHover: function () {
-        const audio = document.getElementById('sfx-hover');
-        if (audio) { audio.currentTime = 0; audio.volume = 0.2; audio.play().catch(e => { }); }
-    },
-
-    startRun: function () {
-        document.getElementById('flash-intro').classList.add('hidden');
-        document.getElementById('flash-game').classList.remove('hidden');
-        this.resetGameScreen();
-
-        const audioWait = document.getElementById('sfx-wait');
-        if (audioWait) { audioWait.currentTime = 0; audioWait.volume = 0.5; audioWait.play().catch(e => { }); }
-
-        const introTime = 2000 + Math.random() * 3000;
-        this.waiting = true;
-        this.isFake = false;
-
-        this.timeout = setTimeout(() => {
-            this.triggerSignalOrFake();
-        }, introTime);
-    },
 
     resetGameScreen: function () {
         const bg = document.getElementById('flash-game-bg');
@@ -4491,7 +3696,6 @@ window.FlashApp = {
             return;
         }
 
-
         if (this.waiting) {
             clearTimeout(this.timeout);
             if (this.fakeTimeout) clearTimeout(this.fakeTimeout);
@@ -4510,62 +3714,6 @@ window.FlashApp = {
         document.getElementById('sfx-success').play().catch(e => { });
         this.showResult(time);
     },
-
-    showResult: function (ms, msg) {
-        document.getElementById('flash-game').classList.add('hidden');
-        const resScreen = document.getElementById('flash-result');
-        resScreen.classList.remove('hidden');
-        resScreen.classList.add('flex');
-
-        const timeDisplay = document.getElementById('flash-time-display');
-        const rankDisplay = document.getElementById('flash-rank-display');
-        const newRecordDisplay = document.getElementById('flash-new-record');
-
-        newRecordDisplay.classList.add('hidden');
-        resScreen.className = "absolute inset-0 flex flex-col items-center justify-center z-30 bg-black/90 p-8 text-center";
-
-        if (ms === null) {
-            timeDisplay.innerText = "FAIL";
-            timeDisplay.classList.add('text-red-500');
-            timeDisplay.classList.remove('text-yellow-400');
-            rankDisplay.innerText = msg;
-            resScreen.classList.add('result-fail');
-        } else {
-            timeDisplay.innerText = ms + "ms";
-            timeDisplay.classList.remove('text-red-500');
-            timeDisplay.classList.add('text-yellow-400');
-
-
-            if (!this.personalBest || ms < this.personalBest) {
-                this.personalBest = ms;
-                localStorage.setItem('harshit_flash_pb', ms);
-                newRecordDisplay.classList.remove('hidden');
-                if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
-            }
-
-            let rank = "";
-            if (ms < 150) rank = "⚡ SPEEDSTER LEVEL (Inhuman)";
-            else if (ms < 200) rank = "🔥 BARRY ALLEN STATUS";
-            else if (ms < 250) rank = "💨 KID FLASH (Fast)";
-            else if (ms < 350) rank = "🏃 ATHLETE (Average)";
-            else rank = "🐢 TOO SLOW (Reverse Flash caught you)";
-
-            rankDisplay.innerText = rank;
-            resScreen.classList.add('result-success');
-        }
-    },
-
-    reset: function () {
-        document.getElementById('flash-result').classList.add('hidden');
-        document.getElementById('flash-result').classList.remove('flex');
-        document.getElementById('flash-intro').classList.remove('hidden');
-
-
-        if (this.personalBest) {
-            document.getElementById('flash-pb-intro').innerText = "PERSONAL BEST: " + this.personalBest + "ms";
-        }
-    }
-};
 
 
 const vaultSlides = [
@@ -4673,10 +3821,6 @@ function vaultPrevSlide() {
     renderVaultSlide(currentVaultSlide);
 }
 
-
-
-
-
 function showNotification(title, body) {
 
     const notif = document.createElement('div');
@@ -4692,16 +3836,10 @@ function showNotification(title, body) {
 
     document.body.appendChild(notif);
 
-
-
     setTimeout(() => {
         notif.remove();
     }, 5500);
 }
-
-
-
-
 
 
 function initMap() {
@@ -4737,7 +3875,6 @@ function initMap() {
     });
 }
 window.initMap = initMap;
-
 
 
 
@@ -5106,21 +4243,8 @@ function nextNotDumbSlide() {
     }
 }
 
-
-
-
 window.initNotDumb = initNotDumb;
 window.nextNotDumbSlide = nextNotDumbSlide;
-
-
-
-
-
-
-
-
-
-
 
 window.showLetterOverlay = function () {
 
@@ -5130,7 +4254,6 @@ window.showLetterOverlay = function () {
         intro.style.opacity = 0;
         setTimeout(() => intro.style.display = 'none', 1000);
     }
-
 
     const letter = document.getElementById('letter-overlay');
     if (letter) {
@@ -5143,7 +4266,6 @@ window.showLetterOverlay = function () {
         }, 100);
     }
 }
-
 
 window.closeLetter = function () {
     const letter = document.getElementById('letter-overlay');
@@ -5408,14 +4530,6 @@ function setupAccessibility() {
 
 
 
-
-
-
-
-
-
-
-
 apps.push({
     id: 'app-stars', title: 'Constellation', icon: '<img src="./assets/icons/app_stars_new.png" alt="stars" style="width: 100%; height: 100%;">', dock: true, width: 800, height: 600, onOpen: () => ConstellationApp.init(), content: `
     <div class="stars-app relative h-full bg-[#050505] overflow-hidden flex flex-col items-center justify-center cursor-crosshair">
@@ -5458,21 +4572,6 @@ apps.push({
         <div class="absolute top-40 right-[30%] w-[1px] h-[80px] bg-gradient-to-b from-transparent via-blue-200 to-transparent transform rotate-[-30deg] opacity-0 animate-shooting-star-2"></div>
     </div>
 `});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 const dailyBloomData = [
@@ -5557,35 +4656,6 @@ apps.push({
         </div>
     </div>
 `});
-
-
-
-
-window.triggerMadridEffect = function (btn) {
-    if (btn) {
-        btn.innerText = "SIUUUUU! ⚽";
-        btn.classList.add('animate-bounce');
-        setTimeout(() => btn.innerText = "Hala Madrid! 🚀", 2000);
-    }
-
-
-    let audio = document.getElementById('madrid-siuuu');
-
-
-    if (!audio) {
-        audio = new Audio('https://www.myinstants.com/media/sounds/cristiano-ronaldo-siuuu.mp3');
-    }
-
-    audio.play().catch(e => {
-        console.log("Audio Playback Blocked", e);
-        if (typeof createModal === 'function') createModal({ title: "Audio Error", desc: "Browser blocked autoplay. Interacted first?", icon: "🔇" });
-    });
-
-
-    if (typeof confetti === 'function') {
-        confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-    }
-};
 
 
 
@@ -6192,10 +5262,6 @@ document.addEventListener('mousemove', (e) => {
 });
 
 
-
-
-
-
 const NotificationConfig = {
     enabled: true,
     seenNotifications: new Set(),
@@ -6341,7 +5407,6 @@ const NotificationDatabase = {
 
     ],
 
-
     insideJokes: [
         {
             id: 'hmmm-detected',
@@ -6379,7 +5444,6 @@ const NotificationDatabase = {
             action: () => showDreamWish()
         }
     ],
-
 
     timeGreetings: {
         morning: {
@@ -6643,15 +5707,13 @@ function displayNotification(notification, isSpecial = false) {
     });
 }
 
-
 function showHugAnimation() {
     const modal = createInteractiveModal({
         title: '🤗 Virtual Hug',
         content: `
-            <div class="hug-animation">
-                <div class="hug-circle"></div>
-                <div class="hug-text">*warm hug*</div>
-                <div class="hug-message">You're appreciated. Always.</div>
+            <div class="hug-animation" style="text-align: center;">
+                <video src="./assets/gifs/hug.mp4" autoplay loop muted playsinline style="max-width: 100%; border-radius: 8px;"></video>
+                <div class="hug-message" style="margin-top: 1rem;">You're appreciated. Always.</div>
             </div>
         `
     });
